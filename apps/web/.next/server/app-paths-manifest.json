@@ -14,5 +14,8 @@
   "/login/user/page": "app/login/user/page.js",
   "/page": "app/page.js",
   "/request/guest/page": "app/request/guest/page.js",
-  "/student/page": "app/student/page.js"
+  "/student/messages/page": "app/student/messages/page.js",
+  "/student/page": "app/student/page.js",
+  "/student/profile/page": "app/student/profile/page.js",
+  "/student/requests/page": "app/student/requests/page.js"
 }

@@ -120,6 +120,24 @@
       "regex": "^/student(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/student(?:/)?$"
+    },
+    {
+      "page": "/student/messages",
+      "regex": "^/student/messages(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/messages(?:/)?$"
+    },
+    {
+      "page": "/student/profile",
+      "regex": "^/student/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/profile(?:/)?$"
+    },
+    {
+      "page": "/student/requests",
+      "regex": "^/student/requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/requests(?:/)?$"
     }
   ],
   "dataRoutes": [],

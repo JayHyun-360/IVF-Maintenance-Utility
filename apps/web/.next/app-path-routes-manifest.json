@@ -14,5 +14,8 @@
   "/login/user/page": "/login/user",
   "/page": "/",
   "/request/guest/page": "/request/guest",
-  "/student/page": "/student"
+  "/student/messages/page": "/student/messages",
+  "/student/page": "/student",
+  "/student/profile/page": "/student/profile",
+  "/student/requests/page": "/student/requests"
 }
