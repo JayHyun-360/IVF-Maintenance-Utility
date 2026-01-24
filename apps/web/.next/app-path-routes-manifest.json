@@ -1,0 +1,18 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/dashboard/page": "/admin/dashboard",
+  "/admin/physical-plant-request/page": "/admin/physical-plant-request",
+  "/admin/summary-request/page": "/admin/summary-request",
+  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
+  "/auth/page": "/auth",
+  "/auth/user-roles/page": "/auth/user-roles",
+  "/favicon.ico/route": "/favicon.ico",
+  "/login/admin/page": "/login/admin",
+  "/login/page": "/login",
+  "/login/student/page": "/login/student",
+  "/login/user/page": "/login/user",
+  "/page": "/",
+  "/request/guest/page": "/request/guest",
+  "/student/page": "/student"
+}

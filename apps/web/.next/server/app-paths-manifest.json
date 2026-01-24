@@ -1,0 +1,18 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/physical-plant-request/page": "app/admin/physical-plant-request/page.js",
+  "/admin/summary-request/page": "app/admin/summary-request/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/auth/page": "app/auth/page.js",
+  "/auth/user-roles/page": "app/auth/user-roles/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/login/admin/page": "app/login/admin/page.js",
+  "/login/page": "app/login/page.js",
+  "/login/student/page": "app/login/student/page.js",
+  "/login/user/page": "app/login/user/page.js",
+  "/page": "app/page.js",
+  "/request/guest/page": "app/request/guest/page.js",
+  "/student/page": "app/student/page.js"
+}
