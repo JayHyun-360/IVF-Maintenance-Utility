@@ -72,15 +72,16 @@ export const themes: Record<Theme, ThemeConfig> = {
   },
   special: {
     name: "special",
-    displayName: "Special Theme",
+    displayName: "Special Theme (Greenery)",
     colors: {
-      primary: "#10B981",
+      primary: "#065F46",
       secondary: "#F0FDF4",
-      accent: "#34D399",
-      background: "#F0FDF4",
-      surface: "#FFFFFF",
-      text: "#064E3B",
-      textSecondary: "#047857",
+      accent: "#10B981",
+      background:
+        "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 25%, #BBF7D0 50%, #A7F3D0 75%, #F0FDF4 100%)",
+      surface: "rgba(255, 255, 255, 0.9)",
+      text: "#1F2937",
+      textSecondary: "#4B5563",
       border: "#A7F3D0",
       success: "#10B981",
       warning: "#F59E0B",
