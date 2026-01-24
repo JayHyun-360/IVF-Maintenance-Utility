@@ -83,15 +83,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Mobile First Design */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
-        <div className="w-full max-w-sm">
-          {/* Mobile Header - Minimalistic */}
+    <div className="min-h-screen bg-white">
+      {/* Simple Mobile Login */}
+      <div className="px-4 py-8">
+        <div className="w-full max-w-sm mx-auto">
+          {/* Simple Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl mb-4 shadow-lg">
+            <div className="w-16 h-16 bg-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
               <svg
-                className="w-6 h-6 sm:w-8 sm:h-8 text-white"
+                className="w-8 h-8 text-white"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -103,15 +103,11 @@ export default function LoginPage() {
                 <path d="M19 14l-2-2m0 0l-2 2m2-2v6" />
               </svg>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-              Sign In
-            </h1>
-            <p className="text-sm sm:text-base text-gray-600">
-              Access your maintenance account
-            </p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Sign In</h1>
+            <p className="text-gray-600">Enter your account details</p>
           </div>
 
-          {/* Mobile Login Form - Clean & Modern */}
+          {/* Simple Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
@@ -120,41 +116,33 @@ export default function LoginPage() {
             )}
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Email Address
+              <label className="block text-sm font-medium text-gray-900 mb-1">
+                Email
               </label>
               <input
                 type="email"
-                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                placeholder="Enter your email"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500"
+                placeholder="your@email.com"
                 autoComplete="email"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Password
               </label>
               <input
                 type="password"
-                id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                placeholder="Enter your password"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500"
+                placeholder="Enter password"
                 autoComplete="current-password"
               />
             </div>
@@ -162,45 +150,29 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-medium rounded-lg hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg disabled:opacity-50"
             >
-              {isLoading ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Signing in...</span>
-                </div>
-              ) : (
-                "Sign In"
-              )}
+              {isLoading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
-          {/* Demo Accounts - Minimal */}
-          <div className="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
-            <h3 className="text-sm font-semibold text-emerald-900 mb-3">
+          {/* Demo Info */}
+          <div className="mt-6 p-3 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-600 font-medium mb-2">
               Demo Accounts:
-            </h3>
-            <div className="space-y-2 text-xs text-emerald-700">
-              <div>
-                <span className="font-medium">Admin:</span> admin@ivf.edu /
-                admin123
-              </div>
-              <div>
-                <span className="font-medium">Student:</span> student@ivf.edu /
-                student123
-              </div>
-              <div>
-                <span className="font-medium">Staff:</span> staff@ivf.edu /
-                staff123
-              </div>
+            </p>
+            <div className="space-y-1 text-xs text-gray-500">
+              <div>Admin: admin@ivf.edu / admin123</div>
+              <div>Student: student@ivf.edu / student123</div>
+              <div>Staff: staff@ivf.edu / staff123</div>
             </div>
           </div>
 
-          {/* Navigation - Clean */}
+          {/* Back Link */}
           <div className="mt-6 text-center">
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-gray-600 hover:text-emerald-600 transition-colors"
+              className="text-sm text-gray-600"
             >
               ← Back to Home
             </button>
