@@ -280,24 +280,24 @@ export default function AdminDashboard() {
     switch (status) {
       case "PENDING":
         return isDark
-          ? "bg-yellow-900/30 text-yellow-300 border border-yellow-700/50"
-          : "bg-yellow-100 text-yellow-800 border border-yellow-200";
+          ? "bg-amber-900/40 text-amber-200 border border-amber-700/60"
+          : "bg-amber-50 text-amber-900 border border-amber-200";
       case "IN_PROGRESS":
         return isDark
-          ? "bg-blue-900/30 text-blue-300 border border-blue-700/50"
-          : "bg-blue-100 text-blue-800 border border-blue-200";
+          ? "bg-indigo-900/40 text-indigo-200 border border-indigo-700/60"
+          : "bg-indigo-50 text-indigo-900 border border-indigo-200";
       case "COMPLETED":
         return isDark
-          ? "bg-green-900/30 text-green-300 border border-green-700/50"
-          : "bg-green-100 text-green-800 border border-green-200";
+          ? "bg-emerald-900/40 text-emerald-200 border border-emerald-700/60"
+          : "bg-emerald-50 text-emerald-900 border border-emerald-200";
       case "CANCELLED":
         return isDark
-          ? "bg-red-900/30 text-red-300 border border-red-700/50"
-          : "bg-red-100 text-red-800 border border-red-200";
+          ? "bg-rose-900/40 text-rose-200 border border-rose-700/60"
+          : "bg-rose-50 text-rose-900 border border-rose-200";
       default:
         return isDark
-          ? "bg-gray-800/30 text-gray-300 border border-gray-700/50"
-          : "bg-gray-100 text-gray-800 border border-gray-200";
+          ? "bg-slate-800/40 text-slate-300 border border-slate-700/60"
+          : "bg-slate-50 text-slate-900 border border-slate-200";
     }
   };
 
@@ -306,16 +306,16 @@ export default function AdminDashboard() {
     switch (priority) {
       case "LOW":
         return isDark
-          ? "bg-gray-800/30 text-gray-300 border border-gray-700/50"
-          : "bg-gray-100 text-gray-800 border border-gray-200";
+          ? "bg-slate-800/40 text-slate-300 border border-slate-700/60"
+          : "bg-slate-50 text-slate-900 border border-slate-200";
       case "MEDIUM":
         return isDark
-          ? "bg-blue-900/30 text-blue-300 border border-blue-700/50"
-          : "bg-blue-100 text-blue-800 border border-blue-200";
+          ? "bg-sky-900/40 text-sky-200 border border-sky-700/60"
+          : "bg-sky-50 text-sky-900 border border-sky-200";
       case "HIGH":
         return isDark
-          ? "bg-orange-900/30 text-orange-300 border border-orange-700/50"
-          : "bg-orange-100 text-orange-800 border border-orange-200";
+          ? "bg-orange-900/40 text-orange-200 border border-orange-700/60"
+          : "bg-orange-50 text-orange-900 border border-orange-200";
       case "URGENT":
         return isDark
           ? "bg-red-900/30 text-red-300 border border-red-700/50"
@@ -916,7 +916,7 @@ export default function AdminDashboard() {
                       };
                       loadData();
                     }}
-                    className="px-4 py-2 bg-[#1B4332] text-white rounded-lg hover:bg-[#2d5a47] transition-colors"
+                    className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-sm"
                   >
                     Refresh Data
                   </button>
@@ -1122,12 +1122,12 @@ export default function AdminDashboard() {
                 style={{
                   backgroundColor:
                     themeConfig.name === "dark"
-                      ? "rgba(239, 68, 68, 0.1)"
-                      : "rgba(239, 68, 68, 0.05)",
+                      ? "rgba(239, 68, 68, 0.08)"
+                      : "rgba(239, 68, 68, 0.04)",
                   borderColor:
                     themeConfig.name === "dark"
-                      ? "rgba(239, 68, 68, 0.3)"
-                      : "rgba(239, 68, 68, 0.2)",
+                      ? "rgba(239, 68, 68, 0.25)"
+                      : "rgba(239, 68, 68, 0.15)",
                 }}
               >
                 <div className="flex items-center justify-between">
@@ -1137,8 +1137,8 @@ export default function AdminDashboard() {
                       style={{
                         backgroundColor:
                           themeConfig.name === "dark"
-                            ? "rgba(239, 68, 68, 0.2)"
-                            : "rgba(239, 68, 68, 0.15)",
+                            ? "rgba(239, 68, 68, 0.15)"
+                            : "rgba(239, 68, 68, 0.1)",
                       }}
                     >
                       <svg
@@ -1345,12 +1345,12 @@ export default function AdminDashboard() {
                       }}
                       className="px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center space-x-1 shadow-sm"
                       style={{
-                        backgroundColor: themeConfig.colors.primary,
+                        backgroundColor: themeConfig.colors.accent,
                         color: "#ffffff",
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.backgroundColor =
-                          themeConfig.name === "dark" ? "#2d5a47" : "#14532d";
+                          themeConfig.name === "dark" ? "#059669" : "#047857";
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.backgroundColor =
