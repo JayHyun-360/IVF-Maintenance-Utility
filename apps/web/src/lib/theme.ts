@@ -1,4 +1,4 @@
-export type Theme = "standard" | "light" | "dark" | "system";
+export type Theme = "standard" | "light" | "dark" | "special";
 
 export interface ThemeConfig {
   name: string;
@@ -70,18 +70,18 @@ export const themes: Record<Theme, ThemeConfig> = {
       error: "#F87171",
     },
   },
-  system: {
-    name: "system",
-    displayName: "System Theme",
+  special: {
+    name: "special",
+    displayName: "Special Theme",
     colors: {
-      primary: "#3B82F6",
-      secondary: "#FFFFFF",
-      accent: "#60A5FA",
-      background: "#FFFFFF",
-      surface: "#F3F4F6",
-      text: "#1F2937",
-      textSecondary: "#6B7280",
-      border: "#D1D5DB",
+      primary: "#10B981",
+      secondary: "#F0FDF4",
+      accent: "#34D399",
+      background: "#F0FDF4",
+      surface: "#FFFFFF",
+      text: "#064E3B",
+      textSecondary: "#047857",
+      border: "#A7F3D0",
       success: "#10B981",
       warning: "#F59E0B",
       error: "#EF4444",
