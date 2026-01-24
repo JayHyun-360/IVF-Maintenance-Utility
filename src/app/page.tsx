@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { getMaintenanceStats } from "@/lib/data";
+import { Theme } from "@/lib/theme";
 
 export default function Home() {
   const router = useRouter();
@@ -168,7 +169,7 @@ export default function Home() {
                               <button
                                 key={theme.name}
                                 onClick={() => {
-                                  setTheme(theme.name as any);
+                                  setTheme(theme.name as Theme);
                                   setShowSettings(false);
                                 }}
                                 className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
@@ -309,7 +310,7 @@ export default function Home() {
                           <button
                             key={theme.name}
                             onClick={() => {
-                              setTheme(theme.name as any);
+                              setTheme(theme.name as Theme);
                               setShowSettings(false);
                             }}
                             className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
