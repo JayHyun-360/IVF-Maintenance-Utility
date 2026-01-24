@@ -925,55 +925,20 @@ export default function AdminDashboard() {
 
               {/* Status Summary */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div
-                  className="rounded-lg p-4 border transition-all duration-200 hover:shadow-lg"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(245, 158, 11, 0.1)"
-                        : "rgba(245, 158, 11, 0.05)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(245, 158, 11, 0.3)"
-                        : "rgba(245, 158, 11, 0.2)",
-                  }}
-                >
+                <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p
-                        className="text-sm font-medium"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#F59E0B" : "#92400e",
-                        }}
-                      >
-                        Pending
-                      </p>
-                      <p
-                        className="text-2xl font-bold"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#FCD34D" : "#78350f",
-                        }}
-                      >
+                      <p className="text-amber-100 text-sm">Pending</p>
+                      <p className="text-3xl font-bold">
                         {stats.pendingRequests}
                       </p>
+                      <p className="text-amber-100 text-xs mt-2">
+                        Awaiting processing
+                      </p>
                     </div>
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{
-                        backgroundColor:
-                          themeConfig.name === "dark"
-                            ? "rgba(245, 158, 11, 0.2)"
-                            : "rgba(245, 158, 11, 0.15)",
-                      }}
-                    >
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
                       <svg
-                        className="w-4 h-4"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#F59E0B" : "#d97706",
-                        }}
+                        className="w-6 h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -988,55 +953,20 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
-                <div
-                  className="rounded-lg p-4 border transition-all duration-200 hover:shadow-lg"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.1)"
-                        : "rgba(59, 130, 246, 0.05)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.3)"
-                        : "rgba(59, 130, 246, 0.2)",
-                  }}
-                >
+                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p
-                        className="text-sm font-medium"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#60A5FA" : "#1e40af",
-                        }}
-                      >
-                        In Progress
-                      </p>
-                      <p
-                        className="text-2xl font-bold"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#93C5FD" : "#1e3a8a",
-                        }}
-                      >
+                      <p className="text-indigo-100 text-sm">In Progress</p>
+                      <p className="text-3xl font-bold">
                         {stats.inProgressRequests}
                       </p>
+                      <p className="text-indigo-100 text-xs mt-2">
+                        Currently being processed
+                      </p>
                     </div>
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{
-                        backgroundColor:
-                          themeConfig.name === "dark"
-                            ? "rgba(59, 130, 246, 0.2)"
-                            : "rgba(59, 130, 246, 0.15)",
-                      }}
-                    >
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
                       <svg
-                        className="w-4 h-4"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#60A5FA" : "#2563eb",
-                        }}
+                        className="w-6 h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -1051,55 +981,20 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
-                <div
-                  className="rounded-lg p-4 border transition-all duration-200 hover:shadow-lg"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.1)"
-                        : "rgba(34, 197, 94, 0.05)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.3)"
-                        : "rgba(34, 197, 94, 0.2)",
-                  }}
-                >
+                <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-lg p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p
-                        className="text-sm font-medium"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#4ADE80" : "#166534",
-                        }}
-                      >
-                        Completed
-                      </p>
-                      <p
-                        className="text-2xl font-bold"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#86EFAC" : "#14532d",
-                        }}
-                      >
+                      <p className="text-emerald-100 text-sm">Completed</p>
+                      <p className="text-3xl font-bold">
                         {stats.completedRequests}
                       </p>
+                      <p className="text-emerald-100 text-xs mt-2">
+                        Successfully resolved
+                      </p>
                     </div>
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{
-                        backgroundColor:
-                          themeConfig.name === "dark"
-                            ? "rgba(34, 197, 94, 0.2)"
-                            : "rgba(34, 197, 94, 0.15)",
-                      }}
-                    >
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
                       <svg
-                        className="w-4 h-4"
-                        style={{
-                          color:
-                            themeConfig.name === "dark" ? "#4ADE80" : "#16a34a",
-                        }}
+                        className="w-6 h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
