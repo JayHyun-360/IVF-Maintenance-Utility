@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 model User {
@@ -69,8 +69,8 @@ model MaintenanceRequest {
   status      Status    @default(PENDING)
   priority    Priority  @default(MEDIUM)
   location    String?
-  images      String[]
-  documents   String[]
+  images      String?
+  documents   String?
   requestedBy String
   assignedTo  String?
   createdAt   DateTime  @default(now())

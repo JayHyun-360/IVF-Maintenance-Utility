@@ -5,7 +5,9 @@ import { config } from "dotenv";
 // Load environment variables
 config();
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  adapter: undefined,
+});
 
 // Define enums locally to avoid import issues
 enum Role {
