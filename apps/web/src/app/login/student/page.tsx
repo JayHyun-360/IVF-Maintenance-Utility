@@ -45,15 +45,15 @@ export default function StudentLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex">
-      {/* Left Side - Student Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          {/* Header */}
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Mobile First Design */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
+        <div className="w-full max-w-sm">
+          {/* Mobile Header - Minimalistic */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mb-4 shadow-lg">
               <svg
-                className="w-8 h-8 text-white"
+                className="w-6 h-6 sm:w-8 sm:h-8 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -66,18 +66,18 @@ export default function StudentLoginPage() {
                 />
               </svg>
             </div>
-            <h1 className="text-3xl font-bold text-blue-600 mb-2">
-              Student Sign In
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              Student Portal
             </h1>
-            <p className="text-[#64748B]">
-              Access your student portal and submit maintenance requests
+            <p className="text-sm sm:text-base text-gray-600">
+              Sign in to access your account
             </p>
           </div>
 
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Mobile Login Form - Clean & Modern */}
+          <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
@@ -85,9 +85,9 @@ export default function StudentLoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-blue-600 mb-2"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Student Email
+                Email Address
               </label>
               <input
                 type="email"
@@ -96,17 +96,18 @@ export default function StudentLoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 placeholder="student@ivf.edu"
+                autoComplete="email"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-blue-600 mb-2"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Student ID / Password
+                Password
               </label>
               <input
                 type="password"
@@ -115,51 +116,64 @@ export default function StudentLoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                placeholder="Enter your student password"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                placeholder="Enter your password"
+                autoComplete="current-password"
               />
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              {isLoading ? "Signing in..." : "Access Student Portal"}
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                "Sign In"
+              )}
             </button>
           </form>
 
-          {/* Demo Account */}
-          <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-            <h3 className="text-sm font-semibold text-blue-600 mb-2">
-              Demo Student Account:
+          {/* Demo Account - Minimal */}
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+            <h3 className="text-sm font-semibold text-blue-900 mb-2">
+              Demo Account
             </h3>
-            <div className="text-xs text-gray-600">
-              <div>Email: student@ivf.edu</div>
-              <div>Password: student123</div>
+            <div className="text-xs text-blue-700 space-y-1">
+              <div>
+                <span className="font-medium">Email:</span> student@ivf.edu
+              </div>
+              <div>
+                <span className="font-medium">Password:</span> student123
+              </div>
             </div>
           </div>
 
-          {/* Navigation */}
-          <div className="mt-6 text-center space-y-2">
+          {/* Navigation - Clean */}
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm">
             <button
               onClick={() => router.push("/auth")}
-              className="text-sm text-[#64748B] hover:text-blue-600 block"
+              className="text-gray-600 hover:text-blue-600 transition-colors"
             >
-              ← Different user type?
+              Different user type?
             </button>
+            <span className="text-gray-300 hidden sm:inline">•</span>
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-[#64748B] hover:text-blue-600 block"
+              className="text-gray-600 hover:text-blue-600 transition-colors"
             >
-              ← Back to Home
+              Back to Home
             </button>
           </div>
         </div>
       </div>
 
-      {/* Right Side - Student Features */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-blue-700 items-center justify-center p-8">
+      {/* Desktop Side - Hidden on Mobile */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 items-center justify-center p-8">
         <div className="text-center text-white max-w-md">
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl mb-6">

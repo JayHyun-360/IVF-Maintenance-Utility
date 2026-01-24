@@ -83,15 +83,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex">
-      {/* Left Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          {/* Header */}
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Mobile First Design */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
+        <div className="w-full max-w-sm">
+          {/* Mobile Header - Minimalistic */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl mb-4 shadow-lg">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl mb-4 shadow-lg">
               <svg
-                className="w-8 h-8 text-white"
+                className="w-6 h-6 sm:w-8 sm:h-8 text-white"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -103,16 +103,18 @@ export default function LoginPage() {
                 <path d="M19 14l-2-2m0 0l-2 2m2-2v6" />
               </svg>
             </div>
-            <h1 className="text-3xl font-bold text-[#1B4332] mb-2">Sign In</h1>
-            <p className="text-[#64748B]">
-              Access your maintenance utility account
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              Sign In
+            </h1>
+            <p className="text-sm sm:text-base text-gray-600">
+              Access your maintenance account
             </p>
           </div>
 
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Mobile Login Form - Clean & Modern */}
+          <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
@@ -120,7 +122,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-[#1B4332] mb-2"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Email Address
               </label>
@@ -131,15 +133,16 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B4332] focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 placeholder="Enter your email"
+                autoComplete="email"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-[#1B4332] mb-2"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Password
               </label>
@@ -150,26 +153,34 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B4332] focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 placeholder="Enter your password"
+                autoComplete="current-password"
               />
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-[#1B4332] text-white font-medium rounded-lg hover:bg-[#2d5a47] focus:outline-none focus:ring-2 focus:ring-[#1B4332] focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-medium rounded-lg hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                "Sign In"
+              )}
             </button>
           </form>
 
-          {/* Demo Accounts */}
-          <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-sm font-semibold text-[#1B4332] mb-3">
+          {/* Demo Accounts - Minimal */}
+          <div className="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
+            <h3 className="text-sm font-semibold text-emerald-900 mb-3">
               Demo Accounts:
             </h3>
-            <div className="space-y-2 text-xs">
+            <div className="space-y-2 text-xs text-emerald-700">
               <div>
                 <span className="font-medium">Admin:</span> admin@ivf.edu /
                 admin123
@@ -185,11 +196,11 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Back to Home */}
+          {/* Navigation - Clean */}
           <div className="mt-6 text-center">
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-[#64748B] hover:text-[#1B4332]"
+              className="text-sm text-gray-600 hover:text-emerald-600 transition-colors"
             >
               ← Back to Home
             </button>

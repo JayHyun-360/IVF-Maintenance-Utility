@@ -4,10 +4,20 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addMaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
+import dynamic from "next/dynamic";
+
+// Dynamically import mobile component to avoid SSR issues
+const MobileStudentPage = dynamic(
+  () => import("./mobile-page").then((mod) => mod.default),
+  {
+    ssr: false,
+  },
+);
 
 export default function StudentPage() {
   const router = useRouter();
   const { themeConfig, setTheme, availableThemes } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -19,6 +29,22 @@ export default function StudentPage() {
   const [showSettings, setShowSettings] = useState(false);
   const [attachedImages, setAttachedImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // LG breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // If mobile, render the mobile-specific component
+  if (isMobile) {
+    return <MobileStudentPage />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
