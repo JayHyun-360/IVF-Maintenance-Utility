@@ -4,9 +4,8 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["sin1"],
-  "rootDirectory": "apps/web",
   "functions": {
-    "apps/web/src/app/api/**/*.ts": {
+    "src/app/api/**/*.ts": {
       "maxDuration": 30
     }
   },
