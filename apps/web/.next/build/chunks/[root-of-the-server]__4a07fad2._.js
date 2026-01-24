@@ -17,16 +17,17 @@ const mod = __turbopack_context__.x("fs", () => require("fs"));
 
 module.exports = mod;
 }),
-"[project]/postcss.config.mjs [postcss] (ecmascript)", ((__turbopack_context__) => {
+"[project]/apps/web/postcss.config.mjs [postcss] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([
     "default",
     ()=>__TURBOPACK__default__export__
 ]);
-const config = {
+/** @type {import('postcss-load-config').Config} */ const config = {
     plugins: {
-        "@tailwindcss/postcss": {}
+        "@tailwindcss/postcss": {},
+        autoprefixer: {}
     }
 };
 const __TURBOPACK__default__export__ = config;
@@ -79,7 +80,7 @@ function getReadEnvVariables() {
     return Array.from(readEnvVars);
 }
 }),
-"[turbopack-node]/transforms/postcss.ts { CONFIG => \"[project]/postcss.config.mjs [postcss] (ecmascript)\" } [postcss] (ecmascript)", ((__turbopack_context__) => {
+"[turbopack-node]/transforms/postcss.ts { CONFIG => \"[project]/apps/web/postcss.config.mjs [postcss] (ecmascript)\" } [postcss] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([
@@ -91,14 +92,14 @@ __turbopack_context__.s([
 // @ts-ignore
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$postcss$2f$lib$2f$postcss$2e$mjs__$5b$postcss$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/postcss/lib/postcss.mjs [postcss] (ecmascript)");
 // @ts-ignore
-var __TURBOPACK__imported__module__$5b$project$5d2f$postcss$2e$config$2e$mjs__$5b$postcss$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/postcss.config.mjs [postcss] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$postcss$2e$config$2e$mjs__$5b$postcss$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/postcss.config.mjs [postcss] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$turbopack$2d$node$5d2f$transforms$2f$transforms$2e$ts__$5b$postcss$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[turbopack-node]/transforms/transforms.ts [postcss] (ecmascript)");
 ;
 ;
 ;
 let processor;
 const init = async (ipc)=>{
-    let config = __TURBOPACK__imported__module__$5b$project$5d2f$postcss$2e$config$2e$mjs__$5b$postcss$5d$__$28$ecmascript$29$__["default"];
+    let config = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$postcss$2e$config$2e$mjs__$5b$postcss$5d$__$28$ecmascript$29$__["default"];
     if (typeof config === 'function') {
         config = await config({
             env: 'development'
@@ -203,4 +204,4 @@ async function transform(ipc, cssContent, name, sourceMap) {
 }),
 ];
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__51225daf._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__4a07fad2._.js.map
