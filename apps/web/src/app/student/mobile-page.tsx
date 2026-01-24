@@ -108,12 +108,12 @@ export default function MobileStudentPage() {
 
   return (
     <div className="flex h-screen bg-white">
-      {/* Mobile Sidebar */}
-      <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-6">
-        {/* Logo */}
-        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+      {/* Mobile Sidebar - Optimized Width */}
+      <div className="w-12 bg-gray-900 flex flex-col items-center py-3 space-y-4">
+        {/* Logo - Smaller */}
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
           <svg
-            className="w-6 h-6 text-white"
+            className="w-4 h-4 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -127,14 +127,14 @@ export default function MobileStudentPage() {
           </svg>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 flex flex-col space-y-4">
+        {/* Navigation Items - Proper Touch Targets */}
+        <nav className="flex-1 flex flex-col space-y-3">
           <button
             onClick={() => router.push("/student")}
-            className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white"
+            className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -149,10 +149,10 @@ export default function MobileStudentPage() {
           </button>
           <button
             onClick={() => router.push("/student/requests")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -167,10 +167,10 @@ export default function MobileStudentPage() {
           </button>
           <button
             onClick={() => router.push("/student/messages")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -185,10 +185,10 @@ export default function MobileStudentPage() {
           </button>
           <button
             onClick={() => router.push("/student/profile")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -203,10 +203,10 @@ export default function MobileStudentPage() {
           </button>
         </nav>
 
-        {/* User Avatar */}
-        <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+        {/* User Avatar - Smaller */}
+        <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
           <svg
-            className="w-5 h-5 text-gray-300"
+            className="w-4 h-4 text-gray-300"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -223,12 +223,12 @@ export default function MobileStudentPage() {
 
       {/* Main Content - Full Height No Scroll */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        {/* Header */}
-        <header className="bg-blue-600 px-6 py-4 flex items-center justify-between">
-          <h1 className="text-white font-semibold text-lg">New Request</h1>
-          <button onClick={() => router.push("/")} className="text-white">
+        {/* Header - Compact */}
+        <header className="bg-blue-600 px-4 py-3 flex items-center justify-between">
+          <h1 className="text-white font-medium text-base">New Request</h1>
+          <button onClick={() => router.push("/")} className="text-white p-1">
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -244,11 +244,11 @@ export default function MobileStudentPage() {
         </header>
 
         {/* Form Content - Scrollable Only This Section */}
-        <div className="flex-1 overflow-y-auto px-6 py-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="flex-1 overflow-y-auto px-4 py-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-900 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 What needs to be fixed?
               </label>
               <input
@@ -257,14 +257,14 @@ export default function MobileStudentPage() {
                 value={formData.title}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 text-sm"
                 placeholder="e.g., Leaky faucet"
               />
             </div>
 
             {/* Location */}
             <div>
-              <label className="block text-sm font-medium text-gray-900 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Where is it?
               </label>
               <input
@@ -273,14 +273,14 @@ export default function MobileStudentPage() {
                 value={formData.location}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 text-sm"
                 placeholder="e.g., Dorm 2, Room 301"
               />
             </div>
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-900 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Describe the problem
               </label>
               <textarea
@@ -288,23 +288,23 @@ export default function MobileStudentPage() {
                 value={formData.description}
                 onChange={handleChange}
                 required
-                rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 resize-none"
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 resize-none text-sm"
                 placeholder="What's wrong?"
               />
             </div>
 
             {/* Category and Priority */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Type
                 </label>
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 text-sm"
                 >
                   <option value="PLUMBING">Plumbing</option>
                   <option value="ELECTRICAL">Electrical</option>
@@ -314,14 +314,14 @@ export default function MobileStudentPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Priority
                 </label>
                 <select
                   name="priority"
                   value={formData.priority}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 text-sm"
                 >
                   <option value="LOW">Low</option>
                   <option value="MEDIUM">Medium</option>
@@ -332,10 +332,10 @@ export default function MobileStudentPage() {
 
             {/* Photos */}
             <div>
-              <label className="block text-sm font-medium text-gray-900 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Add photos (optional)
               </label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
                 <input
                   type="file"
                   multiple
@@ -346,7 +346,7 @@ export default function MobileStudentPage() {
                 />
                 <label htmlFor="photos" className="cursor-pointer">
                   <svg
-                    className="w-12 h-12 text-gray-400 mx-auto mb-3"
+                    className="w-8 h-8 text-gray-400 mx-auto mb-2"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -358,25 +358,25 @@ export default function MobileStudentPage() {
                       d="M12 4v16m8-8H4"
                     />
                   </svg>
-                  <p className="text-sm text-gray-600">Tap to add photos</p>
+                  <p className="text-xs text-gray-600">Tap to add photos</p>
                   <p className="text-xs text-gray-500">Max 5MB each</p>
                 </label>
               </div>
 
               {/* Image Previews */}
               {imagePreviews.length > 0 && (
-                <div className="mt-4 grid grid-cols-3 gap-3">
+                <div className="mt-3 grid grid-cols-3 gap-2">
                   {imagePreviews.map((preview, index) => (
                     <div key={index} className="relative">
                       <img
                         src={preview}
                         alt={`Preview ${index + 1}`}
-                        className="w-full h-24 object-cover rounded-lg"
+                        className="w-full h-16 object-cover rounded-lg"
                       />
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-sm"
+                        className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-xs"
                       >
                         ×
                       </button>
@@ -390,7 +390,7 @@ export default function MobileStudentPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 bg-blue-600 text-white font-medium rounded-lg disabled:opacity-50"
+              className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg disabled:opacity-50 text-sm"
             >
               {isSubmitting ? "Submitting..." : "Submit Request"}
             </button>

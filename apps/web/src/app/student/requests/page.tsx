@@ -66,12 +66,12 @@ export default function MobileRequestsPage() {
 
   return (
     <div className="flex h-screen bg-white">
-      {/* Mobile Sidebar */}
-      <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-6">
-        {/* Logo */}
-        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+      {/* Mobile Sidebar - Optimized Width */}
+      <div className="w-12 bg-gray-900 flex flex-col items-center py-3 space-y-4">
+        {/* Logo - Smaller */}
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
           <svg
-            className="w-6 h-6 text-white"
+            className="w-4 h-4 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -85,14 +85,14 @@ export default function MobileRequestsPage() {
           </svg>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 flex flex-col space-y-4">
+        {/* Navigation Items - Proper Touch Targets */}
+        <nav className="flex-1 flex flex-col space-y-3">
           <button
             onClick={() => router.push("/student")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -107,10 +107,10 @@ export default function MobileRequestsPage() {
           </button>
           <button
             onClick={() => router.push("/student/requests")}
-            className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white"
+            className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -125,10 +125,10 @@ export default function MobileRequestsPage() {
           </button>
           <button
             onClick={() => router.push("/student/messages")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -143,10 +143,10 @@ export default function MobileRequestsPage() {
           </button>
           <button
             onClick={() => router.push("/student/profile")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -161,10 +161,10 @@ export default function MobileRequestsPage() {
           </button>
         </nav>
 
-        {/* User Avatar */}
-        <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+        {/* User Avatar - Smaller */}
+        <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
           <svg
-            className="w-5 h-5 text-gray-300"
+            className="w-4 h-4 text-gray-300"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -181,12 +181,12 @@ export default function MobileRequestsPage() {
 
       {/* Main Content - Full Height No Scroll */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        {/* Header */}
-        <header className="bg-blue-600 px-6 py-4 flex items-center justify-between">
-          <h1 className="text-white font-semibold text-lg">My Requests</h1>
-          <button onClick={() => router.push("/")} className="text-white">
+        {/* Header - Compact */}
+        <header className="bg-blue-600 px-4 py-3 flex items-center justify-between">
+          <h1 className="text-white font-medium text-base">My Requests</h1>
+          <button onClick={() => router.push("/")} className="text-white p-1">
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -201,11 +201,11 @@ export default function MobileRequestsPage() {
           </button>
         </header>
 
-        {/* Tabs */}
+        {/* Tabs - Compact */}
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setActiveTab("pending")}
-            className={`flex-1 py-3 text-sm font-medium ${
+            className={`flex-1 py-2 text-xs font-medium ${
               activeTab === "pending"
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -215,7 +215,7 @@ export default function MobileRequestsPage() {
           </button>
           <button
             onClick={() => setActiveTab("inProgress")}
-            className={`flex-1 py-3 text-sm font-medium ${
+            className={`flex-1 py-2 text-xs font-medium ${
               activeTab === "inProgress"
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -225,7 +225,7 @@ export default function MobileRequestsPage() {
           </button>
           <button
             onClick={() => setActiveTab("completed")}
-            className={`flex-1 py-3 text-sm font-medium ${
+            className={`flex-1 py-2 text-xs font-medium ${
               activeTab === "completed"
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -236,11 +236,11 @@ export default function MobileRequestsPage() {
         </div>
 
         {/* Requests List - Scrollable Only This Section */}
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="flex-1 overflow-y-auto px-4 py-3">
           {currentRequests.length === 0 ? (
             <div className="text-center py-8">
               <svg
-                className="w-16 h-16 text-gray-300 mx-auto mb-4"
+                className="w-12 h-12 text-gray-300 mx-auto mb-3"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -252,28 +252,30 @@ export default function MobileRequestsPage() {
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                 />
               </svg>
-              <p className="text-gray-500">
+              <p className="text-sm text-gray-500">
                 No {activeTab.replace("_", " ").toLowerCase()} requests
               </p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {currentRequests.map((request) => (
                 <div
                   key={request.id}
-                  className="bg-white border border-gray-200 rounded-lg p-4"
+                  className="bg-white border border-gray-200 rounded-lg p-3"
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-medium text-gray-900">
+                  <div className="flex items-start justify-between mb-1">
+                    <h3 className="font-medium text-gray-900 text-sm">
                       {request.title}
                     </h3>
                     <span
-                      className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(request.priority)}`}
+                      className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(
+                        request.priority,
+                      )}`}
                     >
                       {request.priority}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-1">
+                  <p className="text-xs text-gray-600 mb-1">
                     {request.location}
                   </p>
                   <p className="text-xs text-gray-500">{request.date}</p>

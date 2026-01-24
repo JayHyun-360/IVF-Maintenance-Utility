@@ -26,12 +26,12 @@ export default function MobileProfilePage() {
 
   return (
     <div className="flex h-screen bg-white">
-      {/* Mobile Sidebar */}
-      <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-6">
-        {/* Logo */}
-        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+      {/* Mobile Sidebar - Optimized Width */}
+      <div className="w-12 bg-gray-900 flex flex-col items-center py-3 space-y-4">
+        {/* Logo - Smaller */}
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
           <svg
-            className="w-6 h-6 text-white"
+            className="w-4 h-4 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -45,14 +45,14 @@ export default function MobileProfilePage() {
           </svg>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 flex flex-col space-y-4">
+        {/* Navigation Items - Proper Touch Targets */}
+        <nav className="flex-1 flex flex-col space-y-3">
           <button
             onClick={() => router.push("/student")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -67,10 +67,10 @@ export default function MobileProfilePage() {
           </button>
           <button
             onClick={() => router.push("/student/requests")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -85,10 +85,10 @@ export default function MobileProfilePage() {
           </button>
           <button
             onClick={() => router.push("/student/messages")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -103,10 +103,10 @@ export default function MobileProfilePage() {
           </button>
           <button
             onClick={() => router.push("/student/profile")}
-            className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white"
+            className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -121,10 +121,10 @@ export default function MobileProfilePage() {
           </button>
         </nav>
 
-        {/* User Avatar */}
-        <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+        {/* User Avatar - Smaller */}
+        <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
           <svg
-            className="w-5 h-5 text-gray-300"
+            className="w-4 h-4 text-gray-300"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -141,12 +141,12 @@ export default function MobileProfilePage() {
 
       {/* Main Content - Full Height No Scroll */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        {/* Header */}
-        <header className="bg-blue-600 px-6 py-4 flex items-center justify-between">
-          <h1 className="text-white font-semibold text-lg">Profile</h1>
-          <button onClick={() => router.push("/")} className="text-white">
+        {/* Header - Compact */}
+        <header className="bg-blue-600 px-4 py-3 flex items-center justify-between">
+          <h1 className="text-white font-medium text-base">Profile</h1>
+          <button onClick={() => router.push("/")} className="text-white p-1">
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -161,11 +161,11 @@ export default function MobileProfilePage() {
           </button>
         </header>
 
-        {/* Tabs */}
+        {/* Tabs - Compact */}
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setActiveTab("info")}
-            className={`flex-1 py-3 text-sm font-medium ${
+            className={`flex-1 py-2 text-xs font-medium ${
               activeTab === "info"
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -175,7 +175,7 @@ export default function MobileProfilePage() {
           </button>
           <button
             onClick={() => setActiveTab("stats")}
-            className={`flex-1 py-3 text-sm font-medium ${
+            className={`flex-1 py-2 text-xs font-medium ${
               activeTab === "stats"
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -185,7 +185,7 @@ export default function MobileProfilePage() {
           </button>
           <button
             onClick={() => setActiveTab("settings")}
-            className={`flex-1 py-3 text-sm font-medium ${
+            className={`flex-1 py-2 text-xs font-medium ${
               activeTab === "settings"
                 ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -196,14 +196,14 @@ export default function MobileProfilePage() {
         </div>
 
         {/* Profile Content - Scrollable Only This Section */}
-        <div className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="flex-1 overflow-y-auto px-4 py-4">
           {activeTab === "info" && (
-            <div className="space-y-6">
-              {/* Profile Header */}
+            <div className="space-y-4">
+              {/* Profile Header - Compact */}
               <div className="text-center">
-                <div className="w-20 h-20 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-3 flex items-center justify-center">
                   <svg
-                    className="w-10 h-10 text-gray-600"
+                    className="w-8 h-8 text-gray-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -216,33 +216,35 @@ export default function MobileProfilePage() {
                     />
                   </svg>
                 </div>
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-lg font-semibold text-gray-900">
                   {user.name}
                 </h2>
-                <p className="text-gray-600">{user.email}</p>
+                <p className="text-sm text-gray-600">{user.email}</p>
               </div>
 
-              {/* Personal Information */}
-              <div className="space-y-4">
-                <h3 className="font-medium text-gray-900">
+              {/* Personal Information - Compact */}
+              <div className="space-y-3">
+                <h3 className="font-medium text-gray-900 text-sm">
                   Personal Information
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Student ID</span>
-                    <span className="text-gray-900">{user.studentId}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Room</span>
-                    <span className="text-gray-900">{user.dorm}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Phone</span>
-                    <span className="text-gray-900">{user.phone}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Emergency Contact</span>
+                    <span className="text-gray-600 text-sm">Student ID</span>
                     <span className="text-gray-900 text-sm">
+                      {user.studentId}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 text-sm">Room</span>
+                    <span className="text-gray-900 text-sm">{user.dorm}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 text-sm">Phone</span>
+                    <span className="text-gray-900 text-sm">{user.phone}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 text-sm">Emergency</span>
+                    <span className="text-gray-900 text-xs text-right">
                       {user.emergencyContact}
                     </span>
                   </div>
@@ -252,46 +254,48 @@ export default function MobileProfilePage() {
           )}
 
           {activeTab === "stats" && (
-            <div className="space-y-6">
-              <h3 className="font-medium text-gray-900">Your Statistics</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-blue-600">
+            <div className="space-y-4">
+              <h3 className="font-medium text-gray-900 text-sm">
+                Your Statistics
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-blue-50 rounded-lg p-3 text-center">
+                  <div className="text-xl font-bold text-blue-600">
                     {stats.totalRequests}
                   </div>
-                  <div className="text-sm text-blue-600">Total Requests</div>
+                  <div className="text-xs text-blue-600">Total</div>
                 </div>
-                <div className="bg-yellow-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-yellow-600">
+                <div className="bg-yellow-50 rounded-lg p-3 text-center">
+                  <div className="text-xl font-bold text-yellow-600">
                     {stats.pendingRequests}
                   </div>
-                  <div className="text-sm text-yellow-600">Pending</div>
+                  <div className="text-xs text-yellow-600">Pending</div>
                 </div>
-                <div className="bg-green-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-green-600">
+                <div className="bg-green-50 rounded-lg p-3 text-center">
+                  <div className="text-xl font-bold text-green-600">
                     {stats.completedRequests}
                   </div>
-                  <div className="text-sm text-green-600">Completed</div>
+                  <div className="text-xs text-green-600">Completed</div>
                 </div>
-                <div className="bg-purple-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-purple-600">
+                <div className="bg-purple-50 rounded-lg p-3 text-center">
+                  <div className="text-xl font-bold text-purple-600">
                     {stats.avgResponseTime}
                   </div>
-                  <div className="text-sm text-purple-600">Avg Response</div>
+                  <div className="text-xs text-purple-600">Avg Response</div>
                 </div>
               </div>
             </div>
           )}
 
           {activeTab === "settings" && (
-            <div className="space-y-6">
-              <h3 className="font-medium text-gray-900">Settings</h3>
-              <div className="space-y-4">
-                <button className="w-full text-left px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <div className="space-y-3">
+              <h3 className="font-medium text-gray-900 text-sm">Settings</h3>
+              <div className="space-y-2">
+                <button className="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-900">Notifications</span>
+                    <span className="text-gray-900 text-sm">Notifications</span>
                     <svg
-                      className="w-5 h-5 text-gray-400"
+                      className="w-4 h-4 text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -305,11 +309,11 @@ export default function MobileProfilePage() {
                     </svg>
                   </div>
                 </button>
-                <button className="w-full text-left px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <button className="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-900">Privacy</span>
+                    <span className="text-gray-900 text-sm">Privacy</span>
                     <svg
-                      className="w-5 h-5 text-gray-400"
+                      className="w-4 h-4 text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -323,11 +327,13 @@ export default function MobileProfilePage() {
                     </svg>
                   </div>
                 </button>
-                <button className="w-full text-left px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <button className="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-900">Change Password</span>
+                    <span className="text-gray-900 text-sm">
+                      Change Password
+                    </span>
                     <svg
-                      className="w-5 h-5 text-gray-400"
+                      className="w-4 h-4 text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -341,11 +347,11 @@ export default function MobileProfilePage() {
                     </svg>
                   </div>
                 </button>
-                <button className="w-full text-left px-4 py-3 border border-red-200 rounded-lg hover:bg-red-50">
+                <button className="w-full text-left px-3 py-2 border border-red-200 rounded-lg hover:bg-red-50">
                   <div className="flex items-center justify-between">
-                    <span className="text-red-600">Sign Out</span>
+                    <span className="text-red-600 text-sm">Sign Out</span>
                     <svg
-                      className="w-5 h-5 text-red-400"
+                      className="w-4 h-4 text-red-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

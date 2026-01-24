@@ -42,12 +42,12 @@ export default function MobileMessagesPage() {
 
   return (
     <div className="flex h-screen bg-white">
-      {/* Mobile Sidebar */}
-      <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-6">
-        {/* Logo */}
-        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+      {/* Mobile Sidebar - Optimized Width */}
+      <div className="w-12 bg-gray-900 flex flex-col items-center py-3 space-y-4">
+        {/* Logo - Smaller */}
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
           <svg
-            className="w-6 h-6 text-white"
+            className="w-4 h-4 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -61,14 +61,14 @@ export default function MobileMessagesPage() {
           </svg>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 flex flex-col space-y-4">
+        {/* Navigation Items - Proper Touch Targets */}
+        <nav className="flex-1 flex flex-col space-y-3">
           <button
             onClick={() => router.push("/student")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -83,10 +83,10 @@ export default function MobileMessagesPage() {
           </button>
           <button
             onClick={() => router.push("/student/requests")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -101,10 +101,10 @@ export default function MobileMessagesPage() {
           </button>
           <button
             onClick={() => router.push("/student/messages")}
-            className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white"
+            className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -119,10 +119,10 @@ export default function MobileMessagesPage() {
           </button>
           <button
             onClick={() => router.push("/student/profile")}
-            className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
+            className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-gray-600"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -137,10 +137,10 @@ export default function MobileMessagesPage() {
           </button>
         </nav>
 
-        {/* User Avatar */}
-        <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+        {/* User Avatar - Smaller */}
+        <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
           <svg
-            className="w-5 h-5 text-gray-300"
+            className="w-4 h-4 text-gray-300"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -157,12 +157,12 @@ export default function MobileMessagesPage() {
 
       {/* Main Content - Full Height No Scroll */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        {/* Header */}
-        <header className="bg-blue-600 px-6 py-4 flex items-center justify-between">
-          <h1 className="text-white font-semibold text-lg">Messages</h1>
-          <button onClick={() => router.push("/")} className="text-white">
+        {/* Header - Compact */}
+        <header className="bg-blue-600 px-4 py-3 flex items-center justify-between">
+          <h1 className="text-white font-medium text-base">Messages</h1>
+          <button onClick={() => router.push("/")} className="text-white p-1">
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -182,10 +182,10 @@ export default function MobileMessagesPage() {
           {selectedMessage ? (
             /* Message Detail View */
             <div className="h-full flex flex-col">
-              <div className="border-b border-gray-200 px-6 py-4">
+              <div className="border-b border-gray-200 px-4 py-3">
                 <button
                   onClick={() => setSelectedMessage(null)}
-                  className="mb-3 text-blue-600 text-sm flex items-center"
+                  className="mb-2 text-blue-600 text-sm flex items-center"
                 >
                   <svg
                     className="w-4 h-4 mr-1"
@@ -202,18 +202,20 @@ export default function MobileMessagesPage() {
                   </svg>
                   Back to messages
                 </button>
-                <h2 className="font-semibold text-gray-900">
+                <h2 className="font-semibold text-gray-900 text-sm">
                   {selectedMessageData?.subject}
                 </h2>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs text-gray-600">
                   From: {selectedMessageData?.sender}
                 </p>
                 <p className="text-xs text-gray-500">
                   {selectedMessageData?.time}
                 </p>
               </div>
-              <div className="flex-1 overflow-y-auto px-6 py-4">
-                <p className="text-gray-700">{selectedMessageData?.message}</p>
+              <div className="flex-1 overflow-y-auto px-4 py-4">
+                <p className="text-gray-700 text-sm">
+                  {selectedMessageData?.message}
+                </p>
               </div>
             </div>
           ) : (
@@ -222,7 +224,7 @@ export default function MobileMessagesPage() {
               {messages.length === 0 ? (
                 <div className="text-center py-8">
                   <svg
-                    className="w-16 h-16 text-gray-300 mx-auto mb-4"
+                    className="w-12 h-12 text-gray-300 mx-auto mb-3"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -234,7 +236,7 @@ export default function MobileMessagesPage() {
                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                     />
                   </svg>
-                  <p className="text-gray-500">No messages</p>
+                  <p className="text-sm text-gray-500">No messages</p>
                 </div>
               ) : (
                 <div className="divide-y divide-gray-200">
@@ -242,22 +244,22 @@ export default function MobileMessagesPage() {
                     <button
                       key={message.id}
                       onClick={() => setSelectedMessage(message.id)}
-                      className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors"
+                      className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-start justify-between mb-1">
                         <div className="flex-1">
                           <div className="flex items-center mb-1">
-                            <h3 className="font-medium text-gray-900">
+                            <h3 className="font-medium text-gray-900 text-sm">
                               {message.sender}
                             </h3>
                             {message.unread && (
                               <span className="ml-2 w-2 h-2 bg-blue-600 rounded-full"></span>
                             )}
                           </div>
-                          <p className="text-sm text-gray-900 font-medium">
+                          <p className="text-sm text-gray-900 font-medium truncate">
                             {message.subject}
                           </p>
-                          <p className="text-sm text-gray-600 truncate">
+                          <p className="text-xs text-gray-600 truncate">
                             {message.message}
                           </p>
                         </div>
