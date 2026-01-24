@@ -117,25 +117,21 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 👥 Default Users
 
-The seed script creates these default users:
+The system includes these demo users for testing:
 
 ### Admin User
 
-- **Email**: admin@ivf.edu
-- **Password**: admin123
+- **Email**: admin@test.com
+- **Password**: admin12345
 - **Role**: Administrator
+- **Access**: Full admin dashboard, user management, analytics
 
-### Student User
+### General User
 
-- **Email**: student@ivf.edu
-- **Password**: student123
-- **Role**: Student
-
-### Staff User
-
-- **Email**: staff@ivf.edu
-- **Password**: staff123
-- **Role**: Maintenance Staff
+- **Email**: user@test.com
+- **Password**: user12345
+- **Role**: User
+- **Access**: Submit requests, track status
 
 ## 🏗 Project Structure
 
