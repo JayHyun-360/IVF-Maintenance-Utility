@@ -10,8 +10,8 @@
     }
   },
   "env": {
-    "NEXTAUTH_URL": "https://ivf-maintenance-utility.vercel.app",
-    "NEXTAUTH_SECRET": "your-nextauth-secret-here"
+    "NEXTAUTH_URL": "@nextauth_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret"
   },
   "headers": [
     {

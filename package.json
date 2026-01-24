@@ -20,7 +20,8 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "db:deploy:prod": "prisma migrate deploy && npm run db:seed"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
