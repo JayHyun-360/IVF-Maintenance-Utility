@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addMaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
+import { InteractiveLeaves } from "@/components/InteractiveLeaves";
 
 export default function StudentPage() {
   const router = useRouter();
@@ -119,6 +120,7 @@ export default function StudentPage() {
         color: themeConfig.colors.text,
       }}
     >
+      <InteractiveLeaves />
       {/* Header */}
       <div
         className="shadow-sm border-b theme-card"
