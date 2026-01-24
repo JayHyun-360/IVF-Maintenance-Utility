@@ -73,7 +73,7 @@ export async function PUT(
     const { status, priority, assignedTo, location } = body;
 
     const user = await prisma.user.findUnique({
-      where: { email: session.user?.email },
+      where: { email: session.user?.email || "" },
     });
 
     if (!user) {
@@ -167,7 +167,7 @@ export async function DELETE(
     const { id } = await params;
 
     const user = await prisma.user.findUnique({
-      where: { email: session.user?.email },
+      where: { email: session.user?.email || "" },
     });
 
     if (!user || user.role !== "ADMIN") {

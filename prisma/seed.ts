@@ -35,6 +35,15 @@ enum Status {
   CANCELLED = "CANCELLED",
 }
 
+enum NotificationType {
+  REQUEST_CREATED = "REQUEST_CREATED",
+  REQUEST_UPDATED = "REQUEST_UPDATED",
+  REQUEST_ASSIGNED = "REQUEST_ASSIGNED",
+  REQUEST_COMPLETED = "REQUEST_COMPLETED",
+  COMMENT_ADDED = "COMMENT_ADDED",
+  SYSTEM_ANNOUNCEMENT = "SYSTEM_ANNOUNCEMENT",
+}
+
 async function main() {
   console.log("Start seeding...");
 
@@ -136,16 +145,15 @@ async function main() {
   ];
 
   for (const requestData of sampleRequests) {
-    await prisma.maintenanceRequest.upsert({
-      where: {
-        title_location: {
-          title: requestData.title,
-          location: requestData.location,
-        },
-      },
-      update: {},
-      create: requestData,
+    const existing = await prisma.maintenanceRequest.findFirst({
+      where: { title: requestData.title },
     });
+
+    if (!existing) {
+      await prisma.maintenanceRequest.create({
+        data: requestData,
+      });
+    }
   }
 
   // Create sample comments
@@ -175,13 +183,13 @@ async function main() {
     {
       title: "New Maintenance Request",
       message: "A new maintenance request has been submitted by John Student",
-      type: "REQUEST_CREATED",
+      type: NotificationType.REQUEST_CREATED,
       userId: admin.id,
     },
     {
       title: "Request Assigned",
       message: "You have been assigned to a new maintenance request",
-      type: "REQUEST_ASSIGNED",
+      type: NotificationType.REQUEST_ASSIGNED,
       userId: staff.id,
     },
   ];
