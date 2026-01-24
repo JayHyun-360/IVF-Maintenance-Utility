@@ -1,4 +1,4 @@
-export type Theme = "standard" | "light" | "dark" | "special";
+export type Theme = "standard" | "light" | "dark";
 
 export interface ThemeConfig {
   name: string;
@@ -68,24 +68,6 @@ export const themes: Record<Theme, ThemeConfig> = {
       success: "#34D399",
       warning: "#FBBF24",
       error: "#F87171",
-    },
-  },
-  special: {
-    name: "special",
-    displayName: "Special Theme (Greenery)",
-    colors: {
-      primary: "#FFFFFF",
-      secondary: "#F0FDF4",
-      accent: "#FBBF24",
-      background:
-        "linear-gradient(135deg, #065F46 0%, #047857 25%, #059669 50%, #10B981 75%, #34D399 100%)",
-      surface: "#FFFFFF",
-      text: "#064E3B",
-      textSecondary: "#047857",
-      border: "#A7F3D0",
-      success: "#10B981",
-      warning: "#F59E0B",
-      error: "#EF4444",
     },
   },
 };

@@ -5,7 +5,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
-import { InteractiveLeaves } from "@/components/InteractiveLeaves";
 import { getMaintenanceStats } from "@/lib/data";
 import { Theme } from "@/lib/theme";
 
@@ -50,7 +49,6 @@ export default function Home() {
         color: themeConfig.colors.text,
       }}
     >
-      <InteractiveLeaves />
       {/* Enhanced Header */}
       <div
         className="shadow-sm border-b theme-card"

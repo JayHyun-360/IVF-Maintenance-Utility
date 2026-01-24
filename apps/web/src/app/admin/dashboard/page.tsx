@@ -13,7 +13,6 @@ import {
   MaintenanceRequest,
 } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
-import { InteractiveLeaves } from "@/components/InteractiveLeaves";
 import { Theme } from "@/lib/theme";
 
 export default function AdminDashboard() {
@@ -336,7 +335,6 @@ export default function AdminDashboard() {
         color: themeConfig.colors.text,
       }}
     >
-      <InteractiveLeaves />
       {/* Header */}
       <div
         className="shadow-sm border-b theme-card"
