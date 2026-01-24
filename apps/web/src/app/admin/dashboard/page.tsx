@@ -924,21 +924,23 @@ export default function AdminDashboard() {
               </div>
 
               {/* Status Summary */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg p-6 text-white">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg p-4 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-amber-100 text-sm">Pending</p>
-                      <p className="text-3xl font-bold">
+                    <div className="flex-1">
+                      <p className="text-amber-100 text-xs sm:text-sm">
+                        Pending
+                      </p>
+                      <p className="text-2xl sm:text-3xl font-bold">
                         {stats.pendingRequests}
                       </p>
-                      <p className="text-amber-100 text-xs mt-2">
+                      <p className="text-amber-100 text-xs mt-1 sm:mt-2">
                         Awaiting processing
                       </p>
                     </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 ml-2 sm:ml-4">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -953,20 +955,22 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg p-6 text-white">
+                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg p-4 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-indigo-100 text-sm">In Progress</p>
-                      <p className="text-3xl font-bold">
+                    <div className="flex-1">
+                      <p className="text-indigo-100 text-xs sm:text-sm">
+                        In Progress
+                      </p>
+                      <p className="text-2xl sm:text-3xl font-bold">
                         {stats.inProgressRequests}
                       </p>
-                      <p className="text-indigo-100 text-xs mt-2">
+                      <p className="text-indigo-100 text-xs mt-1 sm:mt-2">
                         Currently being processed
                       </p>
                     </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 ml-2 sm:ml-4">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -981,20 +985,22 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-lg p-6 text-white">
+                <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-lg p-4 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-emerald-100 text-sm">Completed</p>
-                      <p className="text-3xl font-bold">
+                    <div className="flex-1">
+                      <p className="text-emerald-100 text-xs sm:text-sm">
+                        Completed
+                      </p>
+                      <p className="text-2xl sm:text-3xl font-bold">
                         {stats.completedRequests}
                       </p>
-                      <p className="text-emerald-100 text-xs mt-2">
+                      <p className="text-emerald-100 text-xs mt-1 sm:mt-2">
                         Successfully resolved
                       </p>
                     </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 ml-2 sm:ml-4">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -1733,19 +1739,23 @@ export default function AdminDashboard() {
               </div>
 
               {/* Key Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-6 text-white">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-blue-100 text-sm">Total Requests</p>
-                      <p className="text-3xl font-bold">
+                    <div className="flex-1">
+                      <p className="text-blue-100 text-xs sm:text-sm">
+                        Total Requests
+                      </p>
+                      <p className="text-2xl sm:text-3xl font-bold">
                         {stats.totalRequests}
                       </p>
-                      <p className="text-blue-100 text-xs mt-2">All time</p>
+                      <p className="text-blue-100 text-xs mt-1 sm:mt-2">
+                        All time
+                      </p>
                     </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 ml-2 sm:ml-4">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -1761,18 +1771,22 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-6 text-white">
+                <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-green-100 text-sm">Completion Rate</p>
-                      <p className="text-3xl font-bold">{completionRate}%</p>
-                      <p className="text-green-100 text-xs mt-2">
+                    <div className="flex-1">
+                      <p className="text-green-100 text-xs sm:text-sm">
+                        Completion Rate
+                      </p>
+                      <p className="text-2xl sm:text-3xl font-bold">
+                        {completionRate}%
+                      </p>
+                      <p className="text-green-100 text-xs mt-1 sm:mt-2">
                         {stats.completedRequests} of {stats.totalRequests}
                       </p>
                     </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 ml-2 sm:ml-4">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -1788,20 +1802,22 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-6 text-white">
+                <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-4 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-yellow-100 text-sm">Pending Work</p>
-                      <p className="text-3xl font-bold">
+                    <div className="flex-1">
+                      <p className="text-yellow-100 text-xs sm:text-sm">
+                        Pending Work
+                      </p>
+                      <p className="text-2xl sm:text-3xl font-bold">
                         {stats.pendingRequests}
                       </p>
-                      <p className="text-yellow-100 text-xs mt-2">
+                      <p className="text-yellow-100 text-xs mt-1 sm:mt-2">
                         {stats.inProgressRequests} in progress
                       </p>
                     </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 ml-2 sm:ml-4">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -1817,18 +1833,20 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-6 text-white">
+                <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-purple-100 text-sm">Avg. Processing</p>
-                      <p className="text-3xl font-bold">2.5</p>
-                      <p className="text-purple-100 text-xs mt-2">
+                    <div className="flex-1">
+                      <p className="text-purple-100 text-xs sm:text-sm">
+                        Avg. Processing
+                      </p>
+                      <p className="text-2xl sm:text-3xl font-bold">2.5</p>
+                      <p className="text-purple-100 text-xs mt-1 sm:mt-2">
                         Days per request
                       </p>
                     </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 ml-2 sm:ml-4">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
