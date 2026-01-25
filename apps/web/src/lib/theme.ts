@@ -36,7 +36,8 @@ export const themes: Record<Theme, ThemeConfig> = {
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
-    backgroundImage: "/images/nature-bg.jpg",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=400&fit=crop", // Temporary test image
   },
   light: {
     name: "light",
