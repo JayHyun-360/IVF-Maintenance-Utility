@@ -32,10 +32,9 @@ export default function Button({
       case "primary":
         return {
           background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-          color:
-            themeConfig.colors.background === "#000000" ? "#000000" : "#FFFFFF", // Dynamic text color based on theme
+          color: "#FFFFFF",
           border: `1px solid ${themeConfig.colors.primary}`,
-          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}20`,
+          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}25`,
         };
       case "secondary":
         return {
@@ -48,7 +47,7 @@ export default function Button({
           background: `linear-gradient(135deg, ${themeConfig.colors.error} 0%, #DC2626 100%)`,
           color: "#FFFFFF",
           border: `1px solid ${themeConfig.colors.error}`,
-          boxShadow: `0 4px 14px 0 ${themeConfig.colors.error}20`,
+          boxShadow: `0 4px 14px 0 ${themeConfig.colors.error}25`,
         };
       case "ghost":
         return {
@@ -59,10 +58,9 @@ export default function Button({
       default:
         return {
           background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-          color:
-            themeConfig.colors.background === "#000000" ? "#000000" : "#FFFFFF", // Dynamic text color based on theme
+          color: "#FFFFFF",
           border: `1px solid ${themeConfig.colors.primary}`,
-          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}20`,
+          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}25`,
         };
     }
   };

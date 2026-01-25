@@ -26,17 +26,17 @@ const themes: {
   },
   {
     value: "light",
-    label: "Minimal",
-    icon: "⚪",
-    colors: { primary: "#000000", secondary: "#374151" },
-    description: "Pure black and white minimalism",
+    label: "Soft Light",
+    icon: "☁️",
+    colors: { primary: "#4F46E5", secondary: "#7C3AED" },
+    description: "Gentle indigo and purple tones",
   },
   {
     value: "dark",
-    label: "Dark",
-    icon: "⚫",
-    colors: { primary: "#FFFFFF", secondary: "#D1D5DB" },
-    description: "True black and white contrast",
+    label: "Comfort Dark",
+    icon: "🌙",
+    colors: { primary: "#818CF8", secondary: "#A78BFA" },
+    description: "Easy on the eyes dark theme",
   },
 ];
 
