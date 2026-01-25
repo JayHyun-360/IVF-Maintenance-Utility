@@ -563,22 +563,22 @@ export default function Home() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
           {/* Left Side - Main Actions */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-3 sm:space-y-6">
             {/* Quick Actions */}
             <div
-              className="rounded-lg shadow-lg p-6 theme-card"
+              className="rounded-lg shadow-lg p-3 sm:p-6 theme-card"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
               }}
             >
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="flex items-center justify-between mb-3 sm:mb-6">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
                     <svg
-                      className="w-6 h-6 text-white"
+                      className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -593,13 +593,14 @@ export default function Home() {
                   </div>
                   <div>
                     <h2
-                      className="text-xl font-bold"
+                      className="text-sm sm:text-xl font-bold"
                       style={{ color: themeConfig.colors.text }}
                     >
-                      Quick Actions
+                      <span className="hidden sm:inline">Quick Actions</span>
+                      <span className="sm:hidden">Actions</span>
                     </h2>
                     <p
-                      className="text-sm"
+                      className="text-xs hidden sm:block"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Get started with maintenance operations
@@ -608,15 +609,15 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 gap-2 sm:gap-6">
                 <button
                   onClick={() => router.push("/auth")}
-                  className="p-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 text-left"
+                  className="p-3 sm:p-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 text-left"
                 >
-                  <div className="flex items-center space-x-4 mb-3">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center space-x-2 sm:space-x-4 mb-2 sm:mb-3">
+                    <div className="w-6 h-6 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -629,18 +630,19 @@ export default function Home() {
                         />
                       </svg>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-bold">
-                      Submit Request
+                    <h3 className="text-sm sm:text-lg sm:text-xl font-bold">
+                      <span className="hidden sm:inline">Submit Request</span>
+                      <span className="sm:hidden">Request</span>
                     </h3>
                   </div>
-                  <p className="text-base sm:text-lg opacity-90 leading-relaxed mb-3">
+                  <p className="text-xs sm:text-base sm:text-lg opacity-90 leading-relaxed mb-2 hidden sm:block">
                     Report maintenance issues with image support
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-sm">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
+                    <span className="inline-block px-2 py-0.5 sm:px-3 sm:py-1 bg-white/20 rounded-full text-xs">
                       Fast Response
                     </span>
-                    <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-sm">
+                    <span className="inline-block px-2 py-0.5 sm:px-3 sm:py-1 bg-white/20 rounded-full text-xs hidden sm:inline">
                       Photo Upload
                     </span>
                   </div>
@@ -648,12 +650,12 @@ export default function Home() {
 
                 <button
                   onClick={() => router.push("/auth")}
-                  className="p-6 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 text-left"
+                  className="p-3 sm:p-6 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 text-left"
                 >
-                  <div className="flex items-center space-x-4 mb-3">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center space-x-2 sm:space-x-4 mb-2 sm:mb-3">
+                    <div className="w-6 h-6 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                       <svg
-                        className="w-6 h-6 text-white"
+                        className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -666,18 +668,19 @@ export default function Home() {
                         />
                       </svg>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-bold">
-                      Admin Dashboard
+                    <h3 className="text-sm sm:text-lg sm:text-xl font-bold">
+                      <span className="hidden sm:inline">Admin Dashboard</span>
+                      <span className="sm:hidden">Admin</span>
                     </h3>
                   </div>
-                  <p className="text-base sm:text-lg opacity-90 leading-relaxed mb-3">
+                  <p className="text-xs sm:text-base sm:text-lg opacity-90 leading-relaxed mb-2 hidden sm:block">
                     Manage requests and analytics
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-sm">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
+                    <span className="inline-block px-2 py-0.5 sm:px-3 sm:py-1 bg-white/20 rounded-full text-xs">
                       Analytics
                     </span>
-                    <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-sm">
+                    <span className="inline-block px-2 py-0.5 sm:px-3 sm:py-1 bg-white/20 rounded-full text-xs hidden sm:inline">
                       Management
                     </span>
                   </div>
@@ -687,16 +690,16 @@ export default function Home() {
 
             {/* Features Section */}
             <div
-              className="rounded-lg shadow-lg p-6 theme-card"
+              className="rounded-lg shadow-lg p-3 sm:p-6 theme-card"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
               }}
             >
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <div className="flex items-center space-x-2 mb-3 sm:mb-6">
+                <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-white"
+                    className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -711,13 +714,14 @@ export default function Home() {
                 </div>
                 <div>
                   <h2
-                    className="text-xl font-bold"
+                    className="text-sm sm:text-xl font-bold"
                     style={{ color: themeConfig.colors.text }}
                   >
-                    Key Features
+                    <span className="hidden sm:inline">Key Features</span>
+                    <span className="sm:hidden">Features</span>
                   </h2>
                   <p
-                    className="text-sm"
+                    className="text-xs hidden sm:block"
                     style={{ color: themeConfig.colors.textSecondary }}
                   >
                     Powerful tools for efficient maintenance management
@@ -725,9 +729,9 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6">
                 <div
-                  className="p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
+                  className="p-3 sm:p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
                   style={{
                     backgroundColor:
                       themeConfig.name === "dark"
@@ -739,9 +743,9 @@ export default function Home() {
                         : "rgb(191, 219, 254)",
                   }}
                 >
-                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                  <div className="w-6 h-6 sm:w-12 sm:h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-2 sm:mb-4">
                     <svg
-                      className="w-6 h-6 text-white"
+                      className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -755,22 +759,26 @@ export default function Home() {
                     </svg>
                   </div>
                   <h3
-                    className="font-semibold mb-2 text-lg"
+                    className="font-semibold mb-1 sm:mb-2 text-sm sm:text-lg"
                     style={{
                       color:
                         themeConfig.name === "dark" ? "#60a5fa" : "#1e40af",
                     }}
                   >
-                    Real-time Updates
+                    <span className="hidden sm:inline">Real-time Updates</span>
+                    <span className="sm:hidden">Real-time</span>
                   </h3>
                   <p
-                    className="text-base leading-relaxed"
+                    className="text-xs sm:text-base leading-relaxed"
                     style={{
                       color:
                         themeConfig.name === "dark" ? "#93c5fd" : "#1e40af",
                     }}
                   >
-                    Instant notifications on request status
+                    <span className="hidden sm:inline">
+                      Instant notifications on request status
+                    </span>
+                    <span className="sm:hidden">Instant notifications</span>
                   </p>
                 </div>
 

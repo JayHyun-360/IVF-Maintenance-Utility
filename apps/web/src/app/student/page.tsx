@@ -749,18 +749,16 @@ export default function StudentPage() {
                 {/* Image Attachment Section */}
                 <div>
                   <label
-                    className="block text-xs font-medium mb-1 sm:mb-2"
+                    className="block text-xs font-medium mb-1"
                     style={{
                       color: themeConfig.colors.text,
                     }}
                   >
-                    <span className="hidden sm:inline">
-                      📷 Attach Images (Optional)
-                    </span>
-                    <span className="sm:hidden">📷 Photos</span>
+                    <span className="hidden sm:inline">📷 Images</span>
+                    <span className="sm:hidden">📷</span>
                   </label>
                   <div
-                    className="border-2 border-dashed rounded-lg p-2 sm:p-6 text-center transition-all duration-200 hover:border-purple-400"
+                    className="border-2 border-dashed rounded-lg p-1 sm:p-6 text-center transition-all duration-200 hover:border-purple-400"
                     style={{
                       borderColor: themeConfig.colors.border,
                       backgroundColor: themeConfig.colors.background,
@@ -776,11 +774,11 @@ export default function StudentPage() {
                     />
                     <label
                       htmlFor="images"
-                      className="cursor-pointer flex flex-col items-center space-y-1 sm:space-y-2"
+                      className="cursor-pointer flex flex-col items-center space-y-0.5 sm:space-y-2"
                     >
-                      <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                      <div className="w-4 h-4 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
                         <svg
-                          className="w-3 h-3 sm:w-6 sm:h-6 text-white"
+                          className="w-2 h-2 sm:w-6 sm:h-6 text-white"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -793,36 +791,22 @@ export default function StudentPage() {
                           />
                         </svg>
                       </div>
-                      <p className="text-xs text-gray-600">
-                        <span className="hidden sm:inline">
-                          Click to upload images
-                        </span>
-                        <span className="sm:hidden">Add photos</span>
-                      </p>
-                      <p className="text-xs text-gray-500 hidden sm:block">
-                        Max 5MB each
+                      <p className="text-xs text-gray-600 hidden sm:block">
+                        Click to upload
                       </p>
                     </label>
                   </div>
 
                   {/* Image Previews */}
                   {imagePreviews.length > 0 && (
-                    <div className="mt-3 sm:mt-4">
-                      <p
-                        className="text-xs sm:text-sm font-medium mb-2"
-                        style={{
-                          color: themeConfig.colors.text,
-                        }}
-                      >
-                        Attached Images ({imagePreviews.length})
-                      </p>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
+                    <div className="mt-1 sm:mt-4">
+                      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-1 sm:gap-3">
                         {imagePreviews.map((preview, index) => (
                           <div key={index} className="relative group">
                             <img
                               src={preview}
                               alt={`Preview ${index + 1}`}
-                              className="w-full h-16 sm:h-20 md:h-24 object-cover rounded-lg border-2 transition-all duration-200 hover:shadow-lg"
+                              className="w-full h-10 sm:h-20 md:h-24 object-cover rounded border-2 transition-all duration-200 hover:shadow-lg"
                               style={{
                                 borderColor: themeConfig.colors.border,
                               }}
@@ -830,10 +814,10 @@ export default function StudentPage() {
                             <button
                               type="button"
                               onClick={() => removeImage(index)}
-                              className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600 text-xs sm:text-sm"
+                              className="absolute -top-1 -right-1 w-3 h-3 sm:w-6 sm:h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600 text-xs sm:text-sm"
                             >
                               <svg
-                                className="w-2.5 h-2.5 sm:w-3 sm:h-3"
+                                className="w-2 h-2 sm:w-3 sm:h-3"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -846,9 +830,6 @@ export default function StudentPage() {
                                 />
                               </svg>
                             </button>
-                            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 truncate">
-                              {attachedImages[index]?.name}
-                            </div>
                           </div>
                         ))}
                       </div>
@@ -856,23 +837,24 @@ export default function StudentPage() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-1 sm:gap-6">
                   <div>
                     <label
                       htmlFor="category"
-                      className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
+                      className="block text-xs font-medium mb-0.5 sm:mb-2"
                       style={{
                         color: themeConfig.colors.text,
                       }}
                     >
-                      Category *
+                      <span className="hidden sm:inline">Category *</span>
+                      <span className="sm:hidden">Type *</span>
                     </label>
                     <select
                       id="category"
                       name="category"
                       value={formData.category}
                       onChange={handleChange}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-sm sm:text-base"
+                      className="w-full px-2 sm:px-4 py-1.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-xs sm:text-base"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
@@ -925,19 +907,20 @@ export default function StudentPage() {
                   <div>
                     <label
                       htmlFor="priority"
-                      className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
+                      className="block text-xs font-medium mb-0.5 sm:mb-2"
                       style={{
                         color: themeConfig.colors.text,
                       }}
                     >
-                      Priority Level *
+                      <span className="hidden sm:inline">Priority Level *</span>
+                      <span className="sm:hidden">Priority *</span>
                     </label>
                     <select
                       id="priority"
                       name="priority"
                       value={formData.priority}
                       onChange={handleChange}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-sm sm:text-base"
+                      className="w-full px-2 sm:px-4 py-1.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-xs sm:text-base"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
@@ -989,7 +972,7 @@ export default function StudentPage() {
                 </div>
 
                 <div
-                  className="flex flex-col sm:flex-row items-center justify-between pt-4 sm:pt-6 border-t gap-3"
+                  className="flex flex-col sm:flex-row items-center justify-between pt-2 sm:pt-6 border-t gap-2"
                   style={{
                     borderColor: themeConfig.colors.border,
                   }}
@@ -997,7 +980,7 @@ export default function StudentPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:flex-1 py-2.5 sm:py-3 px-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 text-sm sm:text-base"
+                    className="w-full sm:flex-1 py-1.5 sm:py-3 px-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 text-xs sm:text-base"
                   >
                     {isSubmitting ? (
                       <div className="flex items-center justify-center space-x-2">
