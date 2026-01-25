@@ -24,41 +24,31 @@ export default function Home() {
   });
 
   const handleStudentClick = () => {
-    console.log("Student clicked - session:", session, "status:", status);
     if (status === "loading") {
       // Don't do anything while loading
       return;
     }
     if (!session) {
-      console.log("Redirecting to login");
       router.push("/login");
     } else {
-      console.log("Redirecting to student");
       router.push("/student");
     }
   };
 
   const handleAdminClick = () => {
-    console.log("Admin clicked - session:", session, "status:", status);
     if (status === "loading") {
       // Don't do anything while loading
       return;
     }
     if (!session) {
-      console.log("Redirecting to login");
       router.push("/login");
     } else if (session.user?.role !== "ADMIN") {
-      console.log("Not admin, redirecting to login");
       router.push("/login");
     } else {
-      console.log("Redirecting to admin dashboard");
       router.push("/admin/dashboard");
     }
   };
   useEffect(() => {
-    console.log("Session status:", status);
-    console.log("Session data:", session);
-
     const loadData = () => {
       const realStats = getMaintenanceStats();
       setStats(realStats);
