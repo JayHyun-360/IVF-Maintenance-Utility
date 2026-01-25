@@ -153,15 +153,26 @@ export default function Home() {
           <h1
             className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3"
             style={{
-              color: themeConfig.colors.text,
-              textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+              color: themeConfig.backgroundImage
+                ? "#FFFFFF"
+                : themeConfig.colors.text,
+              textShadow: themeConfig.backgroundImage
+                ? `0 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px ${themeConfig.colors.primary}40`
+                : `0 1px 2px ${themeConfig.colors.primary}20`,
             }}
           >
             IVF Maintenance Utility
           </h1>
           <p
             className="text-sm sm:text-base md:text-lg"
-            style={{ color: themeConfig.colors.textSecondary }}
+            style={{
+              color: themeConfig.backgroundImage
+                ? "rgba(255, 255, 255, 0.9)"
+                : themeConfig.colors.textSecondary,
+              textShadow: themeConfig.backgroundImage
+                ? `0 1px 2px rgba(0, 0, 0, 0.5)`
+                : "none",
+            }}
           >
             Streamlined maintenance request management system
           </p>
@@ -203,13 +214,19 @@ export default function Home() {
               </div>
               <div
                 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
-                style={{ color: themeConfig.colors.text }}
+                style={{
+                  color: themeConfig.colors.text,
+                  textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+                }}
               >
                 {stats.totalRequests}
               </div>
               <div
                 className="text-xs sm:text-sm font-medium"
-                style={{ color: themeConfig.colors.textSecondary }}
+                style={{
+                  color: themeConfig.colors.textSecondary,
+                  textShadow: `0 1px 1px ${themeConfig.colors.primary}10`,
+                }}
               >
                 Total Requests
               </div>
@@ -245,13 +262,19 @@ export default function Home() {
               </div>
               <div
                 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
-                style={{ color: themeConfig.colors.text }}
+                style={{
+                  color: themeConfig.colors.text,
+                  textShadow: `0 1px 2px ${themeConfig.colors.warning}20`,
+                }}
               >
                 {stats.pendingRequests}
               </div>
               <div
                 className="text-xs sm:text-sm font-medium"
-                style={{ color: themeConfig.colors.textSecondary }}
+                style={{
+                  color: themeConfig.colors.textSecondary,
+                  textShadow: `0 1px 1px ${themeConfig.colors.warning}10`,
+                }}
               >
                 Pending
               </div>
@@ -287,13 +310,19 @@ export default function Home() {
               </div>
               <div
                 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
-                style={{ color: themeConfig.colors.text }}
+                style={{
+                  color: themeConfig.colors.text,
+                  textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+                }}
               >
                 {stats.inProgressRequests}
               </div>
               <div
                 className="text-xs sm:text-sm font-medium"
-                style={{ color: themeConfig.colors.textSecondary }}
+                style={{
+                  color: themeConfig.colors.textSecondary,
+                  textShadow: `0 1px 1px ${themeConfig.colors.primary}10`,
+                }}
               >
                 In Progress
               </div>
@@ -329,13 +358,19 @@ export default function Home() {
               </div>
               <div
                 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
-                style={{ color: themeConfig.colors.text }}
+                style={{
+                  color: themeConfig.colors.text,
+                  textShadow: `0 1px 2px ${themeConfig.colors.success}20`,
+                }}
               >
                 {stats.completedRequests}
               </div>
               <div
                 className="text-xs sm:text-sm font-medium"
-                style={{ color: themeConfig.colors.textSecondary }}
+                style={{
+                  color: themeConfig.colors.textSecondary,
+                  textShadow: `0 1px 1px ${themeConfig.colors.success}10`,
+                }}
               >
                 Completed
               </div>
@@ -378,19 +413,28 @@ export default function Home() {
               </div>
               <h3
                 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4"
-                style={{ color: themeConfig.colors.text }}
+                style={{
+                  color: themeConfig.colors.text,
+                  textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+                }}
               >
                 Go to login section
               </h3>
               <p
                 className="text-xs sm:text-sm mb-4 sm:mb-6"
-                style={{ color: themeConfig.colors.textSecondary }}
+                style={{
+                  color: themeConfig.colors.textSecondary,
+                  textShadow: `0 1px 1px ${themeConfig.colors.primary}10`,
+                }}
               >
                 Access your account to submit requests or manage the system
               </p>
               <div
                 className="inline-flex items-center text-xs sm:text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
-                style={{ color: themeConfig.colors.primary }}
+                style={{
+                  color: themeConfig.colors.primary,
+                  textShadow: `0 1px 1px ${themeConfig.colors.primary}20`,
+                }}
               >
                 Login Now
                 <svg
