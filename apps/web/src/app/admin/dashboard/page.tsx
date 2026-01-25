@@ -359,12 +359,38 @@ export default function AdminDashboard() {
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-medium ${
                             request.status === "COMPLETED"
-                              ? "bg-green-100 text-green-800"
+                              ? ""
                               : request.status === "IN_PROGRESS"
-                                ? "bg-blue-100 text-blue-800"
-                                : "bg-yellow-100 text-yellow-800"
+                                ? ""
+                                : ""
                           }`}
+                          style={{
+                            background:
+                              request.status === "COMPLETED"
+                                ? `linear-gradient(135deg, ${themeConfig.colors.success}20 0%, ${themeConfig.colors.success}10 100%)`
+                                : request.status === "IN_PROGRESS"
+                                  ? `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.primary}10 100%)`
+                                  : `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`,
+                            color:
+                              request.status === "COMPLETED"
+                                ? themeConfig.colors.success
+                                : request.status === "IN_PROGRESS"
+                                  ? themeConfig.colors.primary
+                                  : themeConfig.colors.warning,
+                            border: `1px solid ${
+                              request.status === "COMPLETED"
+                                ? themeConfig.colors.success
+                                : request.status === "IN_PROGRESS"
+                                  ? themeConfig.colors.primary
+                                  : themeConfig.colors.warning
+                            }30`,
+                          }}
                         >
+                          {request.status === "COMPLETED"
+                            ? "🟢 "
+                            : request.status === "IN_PROGRESS"
+                              ? "🔵 "
+                              : "🟡 "}
                           {request.status.replace("_", " ")}
                         </span>
                         <span
@@ -540,9 +566,9 @@ export default function AdminDashboard() {
                               border: "1px solid",
                             }}
                           >
-                            <option value="PENDING">Pending</option>
-                            <option value="IN_PROGRESS">In Progress</option>
-                            <option value="COMPLETED">Completed</option>
+                            <option value="PENDING">🟡 Pending</option>
+                            <option value="IN_PROGRESS">🔵 In Progress</option>
+                            <option value="COMPLETED">🟢 Completed</option>
                           </select>
                         </td>
                         <td className="px-6 py-4">
