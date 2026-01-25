@@ -50,13 +50,13 @@ export default function Home() {
     >
       {/* Header with Gradient Background */}
       <header
-        className="px-8 py-16 text-center relative overflow-hidden"
+        className="px-8 py-16 text-center relative"
         style={{
           background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
         }}
       >
         {/* Decorative Elements */}
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-20 overflow-hidden">
           <div
             className="absolute top-10 left-10 w-32 h-32 rounded-full"
             style={{ backgroundColor: themeConfig.colors.accent }}

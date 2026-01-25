@@ -90,11 +90,11 @@ export default function ThemeSwitcher() {
 
       {isOpen && (
         <div
-          className="absolute top-full right-0 mt-2 w-56 rounded-xl shadow-lg border"
+          className="absolute top-full right-0 mt-2 w-64 rounded-xl shadow-lg border"
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
-            zIndex: Z_INDEX.DROPDOWN,
+            zIndex: Z_INDEX.DROPDOWN_CONTENT,
           }}
         >
           <div className="p-2">

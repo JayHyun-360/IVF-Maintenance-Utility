@@ -3,6 +3,7 @@ export const Z_INDEX = {
   // Base layers
   BASE: 0,
   DROPDOWN: 10,
+  DROPDOWN_CONTENT: 11, // For dropdown content to appear above dropdown trigger
   STICKY: 20,
 
   // Overlay layers
