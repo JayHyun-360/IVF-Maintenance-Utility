@@ -565,7 +565,7 @@ export default function Home() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
           {/* Left Side - Main Actions */}
-          <div className="lg:col-span-2 space-y-3 sm:space-y-6">
+          <div className="lg:col-span-3 space-y-3 sm:space-y-6">
             {/* Quick Actions */}
             <div
               className="rounded-lg shadow-lg p-3 sm:p-6 theme-card"
@@ -688,265 +688,20 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Features Section */}
-            <div
-              className="rounded-lg shadow-lg p-3 sm:p-6 theme-card"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-              }}
-            >
-              <div className="flex items-center space-x-2 mb-3 sm:mb-6">
-                <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-                  <svg
-                    className="w-3 h-3 sm:w-6 sm:h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h2
-                    className="text-sm sm:text-xl font-bold"
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    <span className="hidden sm:inline">Key Features</span>
-                    <span className="sm:hidden">Features</span>
-                  </h2>
-                  <p
-                    className="text-xs hidden sm:block"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Powerful tools for efficient maintenance management
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6">
-                <div
-                  className="p-3 sm:p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.1)"
-                        : "rgb(239, 246, 255)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.3)"
-                        : "rgb(191, 219, 254)",
-                  }}
-                >
-                  <div className="w-6 h-6 sm:w-12 sm:h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-2 sm:mb-4">
+            {/* Bottom Section: Features (Left) and Status (Right) */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
+              {/* Features Section - Left */}
+              <div
+                className="rounded-lg shadow-lg p-3 sm:p-6 theme-card"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  borderColor: themeConfig.colors.border,
+                }}
+              >
+                <div className="flex items-center space-x-2 mb-3 sm:mb-6">
+                  <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                     <svg
                       className="w-3 h-3 sm:w-6 sm:h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                  </div>
-                  <h3
-                    className="font-semibold mb-1 sm:mb-2 text-sm sm:text-lg"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#60a5fa" : "#1e40af",
-                    }}
-                  >
-                    <span className="hidden sm:inline">Real-time Updates</span>
-                    <span className="sm:hidden">Real-time</span>
-                  </h3>
-                  <p
-                    className="text-xs sm:text-base leading-relaxed"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#93c5fd" : "#1e40af",
-                    }}
-                  >
-                    <span className="hidden sm:inline">
-                      Instant notifications on request status
-                    </span>
-                    <span className="sm:hidden">Instant notifications</span>
-                  </p>
-                </div>
-
-                <div
-                  className="p-2 sm:p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.1)"
-                        : "rgb(240, 253, 244)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.3)"
-                        : "rgb(187, 247, 208)",
-                  }}
-                >
-                  <div className="w-4 h-4 sm:w-12 sm:h-12 bg-green-500 rounded-lg flex items-center justify-center mb-1 sm:mb-4">
-                    <svg
-                      className="w-2 h-2 sm:w-6 sm:h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <h3
-                    className="font-semibold mb-0.5 sm:mb-2 text-xs sm:text-lg"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#4ade80" : "#166534",
-                    }}
-                  >
-                    <span className="hidden sm:inline">Image Support</span>
-                    <span className="sm:hidden">Images</span>
-                  </h3>
-                  <p
-                    className="text-xs leading-relaxed hidden sm:block"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#86efac" : "#166534",
-                    }}
-                  >
-                    Attach photos to requests
-                  </p>
-                </div>
-
-                <div
-                  className="p-2 sm:p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(168, 85, 247, 0.1)"
-                        : "rgb(250, 245, 255)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(168, 85, 247, 0.3)"
-                        : "rgb(233, 213, 255)",
-                  }}
-                >
-                  <div className="w-4 h-4 sm:w-12 sm:h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-1 sm:mb-4">
-                    <svg
-                      className="w-2 h-2 sm:w-6 sm:h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                      />
-                    </svg>
-                  </div>
-                  <h3
-                    className="font-semibold mb-0.5 sm:mb-2 text-xs sm:text-lg"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#c084fc" : "#7c3aed",
-                    }}
-                  >
-                    <span className="hidden sm:inline">
-                      Priority Management
-                    </span>
-                    <span className="sm:hidden">Priority</span>
-                  </h3>
-                  <p
-                    className="text-xs leading-relaxed hidden sm:block"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#e9d5ff" : "#7c3aed",
-                    }}
-                  >
-                    Urgent requests get attention
-                  </p>
-                </div>
-
-                <div
-                  className="p-2 sm:p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(245, 158, 11, 0.1)"
-                        : "rgb(255, 251, 235)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(245, 158, 11, 0.3)"
-                        : "rgb(252, 211, 77)",
-                  }}
-                >
-                  <div className="w-4 h-4 sm:w-12 sm:h-12 bg-amber-500 rounded-lg flex items-center justify-center mb-1 sm:mb-4">
-                    <svg
-                      className="w-2 h-2 sm:w-6 sm:h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3
-                    className="font-semibold mb-0.5 sm:mb-2 text-xs sm:text-lg"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#fbbf24" : "#d97706",
-                    }}
-                  >
-                    <span className="hidden sm:inline">Quick Response</span>
-                    <span className="sm:hidden">Response</span>
-                  </h3>
-                  <p
-                    className="text-xs leading-relaxed hidden sm:block"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#fde68a" : "#d97706",
-                    }}
-                  >
-                    Fast processing of requests
-                  </p>
-                </div>
-
-                <div
-                  className="p-2 sm:p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(239, 68, 68, 0.1)"
-                        : "rgb(254, 242, 242)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(239, 68, 68, 0.3)"
-                        : "rgb(254, 226, 226)",
-                  }}
-                >
-                  <div className="w-4 h-4 sm:w-12 sm:h-12 bg-red-500 rounded-lg flex items-center justify-center mb-1 sm:mb-4">
-                    <svg
-                      className="w-2 h-2 sm:w-6 sm:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -959,41 +714,88 @@ export default function Home() {
                       />
                     </svg>
                   </div>
-                  <h3
-                    className="font-semibold mb-0.5 sm:mb-2 text-xs sm:text-lg"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#f87171" : "#dc2626",
-                    }}
-                  >
-                    <span className="hidden sm:inline">Status Tracking</span>
-                    <span className="sm:hidden">Tracking</span>
-                  </h3>
-                  <p
-                    className="text-xs leading-relaxed hidden sm:block"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#fca5a5" : "#dc2626",
-                    }}
-                  >
-                    Track progress in real-time
-                  </p>
+                  <div>
+                    <h2
+                      className="text-sm sm:text-xl font-bold"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      <span className="hidden sm:inline">Key Features</span>
+                      <span className="sm:hidden">Features</span>
+                    </h2>
+                    <p
+                      className="text-xs hidden sm:block"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Powerful tools for efficient maintenance
+                    </p>
+                  </div>
                 </div>
 
-                <div
-                  className="p-2 sm:p-6 rounded-lg border transition-all duration-200 hover:shadow-md"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(14, 165, 233, 0.1)"
-                        : "rgb(240, 249, 255)",
-                    borderColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(14, 165, 233, 0.3)"
-                        : "rgb(186, 230, 253)",
-                  }}
-                >
-                  <div className="w-4 h-4 sm:w-12 sm:h-12 bg-sky-500 rounded-lg flex items-center justify-center mb-1 sm:mb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-3">
+                  <div
+                    className="p-2 sm:p-3 rounded-lg border transition-all duration-200 hover:shadow-md"
+                    style={{
+                      backgroundColor:
+                        themeConfig.name === "dark"
+                          ? "rgba(59, 130, 246, 0.1)"
+                          : "rgb(239, 246, 255)",
+                      borderColor:
+                        themeConfig.name === "dark"
+                          ? "rgba(59, 130, 246, 0.3)"
+                          : "rgb(191, 219, 254)",
+                    }}
+                  >
+                    <div className="w-4 h-4 sm:w-8 sm:h-8 bg-blue-500 rounded-lg flex items-center justify-center mb-1 sm:mb-2">
+                      <svg
+                        className="w-2 h-2 sm:w-4 sm:h-4 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                      </svg>
+                    </div>
+                    <h3
+                      className="font-semibold text-xs sm:text-sm mb-0.5"
+                      style={{
+                        color:
+                          themeConfig.name === "dark" ? "#60a5fa" : "#1e40af",
+                      }}
+                    >
+                      <span className="hidden sm:inline">Real-time</span>
+                      <span className="sm:hidden">Live</span>
+                    </h3>
+                    <p
+                      className="text-xs leading-relaxed hidden sm:block"
+                      style={{
+                        color:
+                          themeConfig.name === "dark" ? "#93c5fd" : "#1e40af",
+                      }}
+                    >
+                      Instant updates
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Status Section - Right */}
+              <div
+                className="rounded-lg shadow-lg p-2 sm:p-6 theme-card border-2"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  borderColor:
+                    themeConfig.name === "dark"
+                      ? "rgba(34, 197, 94, 0.3)"
+                      : "#22c55e",
+                }}
+              >
+                <div className="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-4">
+                  <div className="w-4 h-4 sm:w-10 sm:h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
                     <svg
                       className="w-2 h-2 sm:w-6 sm:h-6 text-white"
                       fill="none"
@@ -1004,98 +806,70 @@ export default function Home() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
                   </div>
-                  <h3
-                    className="font-semibold mb-0.5 sm:mb-2 text-xs sm:text-lg"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#38bdf8" : "#0284c7",
-                    }}
-                  >
-                    <span className="hidden sm:inline">Cloud Storage</span>
-                    <span className="sm:hidden">Cloud</span>
-                  </h3>
-                  <p
-                    className="text-xs leading-relaxed hidden sm:block"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#7dd3fc" : "#0284c7",
-                    }}
-                  >
-                    Secure cloud-based storage
-                  </p>
+                  <div>
+                    <h3
+                      className="text-xs sm:text-lg font-bold"
+                      style={{
+                        color:
+                          themeConfig.name === "dark" ? "#4ade80" : "#166534",
+                      }}
+                    >
+                      <span className="hidden sm:inline">System Status</span>
+                      <span className="sm:hidden">Status</span>
+                    </h3>
+                    <p
+                      className="text-xs hidden sm:block"
+                      style={{
+                        color:
+                          themeConfig.name === "dark" ? "#86efac" : "#166534",
+                      }}
+                    >
+                      All systems operational
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Right Side - Status & Info */}
-          <div className="space-y-3 sm:space-y-6">
-            {/* System Status */}
-            <div
-              className="rounded-lg shadow-lg p-2 sm:p-6 theme-card border-2"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor:
-                  themeConfig.name === "dark"
-                    ? "rgba(34, 197, 94, 0.3)"
-                    : "#22c55e",
-              }}
-            >
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-4">
-                <div className="w-4 h-4 sm:w-10 sm:h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
-                  <svg
-                    className="w-2 h-2 sm:w-6 sm:h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3
-                    className="text-xs sm:text-lg font-bold"
+                <div className="space-y-1 sm:space-y-3">
+                  <div
+                    className="flex items-center justify-between p-1 sm:p-3 rounded-lg transition-colors"
                     style={{
-                      color:
-                        themeConfig.name === "dark" ? "#4ade80" : "#166534",
+                      backgroundColor:
+                        themeConfig.name === "dark"
+                          ? "rgba(34, 197, 94, 0.1)"
+                          : "rgb(240, 253, 244)",
                     }}
                   >
-                    <span className="hidden sm:inline">System Status</span>
-                    <span className="sm:hidden">Status</span>
-                  </h3>
-                  <p
-                    className="text-xs hidden sm:block"
+                    <div className="flex items-center space-x-1 sm:space-x-2">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <span
+                        className="text-xs font-medium"
+                        style={{
+                          color:
+                            themeConfig.name === "dark" ? "#4ade80" : "#166534",
+                        }}
+                      >
+                        <span className="hidden sm:inline">Application</span>
+                        <span className="sm:hidden">App</span>
+                      </span>
+                    </div>
+                    <span className="px-1 sm:px-2 py-0.5 sm:py-1 bg-green-600 text-white text-xs rounded-full">
+                      <span className="hidden sm:inline">Online</span>
+                      <span className="sm:hidden">✓</span>
+                    </span>
+                  </div>
+                  <div
+                    className="flex items-center justify-between p-1 sm:p-3 rounded-lg transition-colors"
                     style={{
-                      color:
-                        themeConfig.name === "dark" ? "#86efac" : "#166534",
+                      backgroundColor:
+                        themeConfig.name === "dark"
+                          ? "rgba(34, 197, 94, 0.1)"
+                          : "rgb(240, 253, 244)",
                     }}
                   >
-                    All systems operational
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-1 sm:space-y-3">
-                <div
-                  className="flex items-center justify-between p-1 sm:p-3 rounded-lg transition-colors"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.1)"
-                        : "rgb(240, 253, 244)",
-                  }}
-                >
-                  <div className="flex items-center space-x-1 sm:space-x-2">
-                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
                     <span
                       className="text-xs font-medium"
                       style={{
@@ -1103,427 +877,83 @@ export default function Home() {
                           themeConfig.name === "dark" ? "#4ade80" : "#166534",
                       }}
                     >
-                      <span className="hidden sm:inline">Application</span>
-                      <span className="sm:hidden">App</span>
+                      <span className="hidden sm:inline">Database</span>
+                      <span className="sm:hidden">DB</span>
+                    </span>
+                    <span className="px-1 sm:px-2 py-0.5 sm:py-1 bg-green-600 text-white text-xs rounded-full">
+                      <span className="hidden sm:inline">Connected</span>
+                      <span className="sm:hidden">✓</span>
                     </span>
                   </div>
-                  <span className="px-1 sm:px-2 py-0.5 sm:py-1 bg-green-600 text-white text-xs rounded-full">
-                    <span className="hidden sm:inline">Online</span>
-                    <span className="sm:hidden">✓</span>
-                  </span>
-                </div>
-                <div
-                  className="flex items-center justify-between p-1 sm:p-3 rounded-lg transition-colors"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.1)"
-                        : "rgb(240, 253, 244)",
-                  }}
-                >
-                  <span
-                    className="text-xs font-medium"
+                  <div
+                    className="flex items-center justify-between p-1 sm:p-3 rounded-lg transition-colors"
                     style={{
-                      color:
-                        themeConfig.name === "dark" ? "#4ade80" : "#166534",
-                    }}
-                  >
-                    <span className="hidden sm:inline">Database</span>
-                    <span className="sm:hidden">DB</span>
-                  </span>
-                  <span className="px-1 sm:px-2 py-0.5 sm:py-1 bg-green-600 text-white text-xs rounded-full">
-                    <span className="hidden sm:inline">Connected</span>
-                    <span className="sm:hidden">✓</span>
-                  </span>
-                </div>
-                <div
-                  className="flex items-center justify-between p-1 sm:p-3 rounded-lg transition-colors"
-                  style={{
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.1)"
-                        : "rgb(239, 246, 255)",
-                  }}
-                >
-                  <span
-                    className="text-xs font-medium"
-                    style={{
-                      color:
-                        themeConfig.name === "dark" ? "#60a5fa" : "#1e40af",
-                    }}
-                  >
-                    <span className="hidden sm:inline">Deployment</span>
-                    <span className="sm:hidden">Deploy</span>
-                  </span>
-                  <span className="px-1 sm:px-2 py-0.5 sm:py-1 bg-blue-600 text-white text-xs rounded-full">
-                    <span className="hidden sm:inline">Vercel</span>
-                    <span className="sm:hidden">V</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div
-              className="rounded-lg shadow-lg p-6 theme-card border-2"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor:
-                  themeConfig.name === "dark"
-                    ? "rgba(99, 102, 241, 0.3)"
-                    : themeConfig.colors.border,
-              }}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-7 h-7 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3
-                      className="text-xl font-bold"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      Quick Links
-                    </h3>
-                    <p
-                      className="text-sm"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Fast access to key features
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-medium">
-                    POPULAR
-                  </span>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <button
-                  onClick={() => router.push("/auth")}
-                  className="w-full p-4 text-left rounded-xl transition-all duration-300 flex items-center space-x-4 group hover:shadow-lg transform hover:scale-[1.02]"
-                  style={{
-                    color: themeConfig.colors.text,
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.05)"
-                        : "rgba(59, 130, 246, 0.02)",
-                    border: `1px solid ${themeConfig.name === "dark" ? "rgba(59, 130, 246, 0.2)" : "rgba(59, 130, 246, 0.1)"}`,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.15)"
-                        : "rgba(59, 130, 246, 0.08)";
-                    e.currentTarget.style.borderColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.4)"
-                        : "rgba(59, 130, 246, 0.3)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.05)"
-                        : "rgba(59, 130, 246, 0.02)";
-                    e.currentTarget.style.borderColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(59, 130, 246, 0.2)"
-                        : "rgba(59, 130, 246, 0.1)";
-                  }}
-                >
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-lg">🔧</span>
-                  </div>
-                  <div className="flex-1">
-                    <div
-                      className="font-semibold text-sm"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      Submit Maintenance Request
-                    </div>
-                    <div
-                      className="text-xs"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Report issues with image support
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
-                      NEW
-                    </span>
-                    <svg
-                      className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => router.push("/auth")}
-                  className="w-full p-4 text-left rounded-xl transition-all duration-300 flex items-center space-x-4 group hover:shadow-lg transform hover:scale-[1.02]"
-                  style={{
-                    color: themeConfig.colors.text,
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.05)"
-                        : "rgba(34, 197, 94, 0.02)",
-                    border: `1px solid ${themeConfig.name === "dark" ? "rgba(34, 197, 94, 0.2)" : "rgba(34, 197, 94, 0.1)"}`,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.15)"
-                        : "rgba(34, 197, 94, 0.08)";
-                    e.currentTarget.style.borderColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.4)"
-                        : "rgba(34, 197, 94, 0.3)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.05)"
-                        : "rgba(34, 197, 94, 0.02)";
-                    e.currentTarget.style.borderColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(34, 197, 94, 0.2)"
-                        : "rgba(34, 197, 94, 0.1)";
-                  }}
-                >
-                  <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-lg">📊</span>
-                  </div>
-                  <div className="flex-1">
-                    <div
-                      className="font-semibold text-sm"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      Admin Dashboard
-                    </div>
-                    <div
-                      className="text-xs"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Manage requests and analytics
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
-                      ADMIN
-                    </span>
-                    <svg
-                      className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => router.push("/request/guest")}
-                  className="w-full p-4 text-left rounded-xl transition-all duration-300 flex items-center space-x-4 group hover:shadow-lg transform hover:scale-[1.02]"
-                  style={{
-                    color: themeConfig.colors.text,
-                    backgroundColor:
-                      themeConfig.name === "dark"
-                        ? "rgba(168, 85, 247, 0.05)"
-                        : "rgba(168, 85, 247, 0.02)",
-                    border: `1px solid ${themeConfig.name === "dark" ? "rgba(168, 85, 247, 0.2)" : "rgba(168, 85, 247, 0.1)"}`,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(168, 85, 247, 0.15)"
-                        : "rgba(168, 85, 247, 0.08)";
-                    e.currentTarget.style.borderColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(168, 85, 247, 0.4)"
-                        : "rgba(168, 85, 247, 0.3)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(168, 85, 247, 0.05)"
-                        : "rgba(168, 85, 247, 0.02)";
-                    e.currentTarget.style.borderColor =
-                      themeConfig.name === "dark"
-                        ? "rgba(168, 85, 247, 0.2)"
-                        : "rgba(168, 85, 247, 0.1)";
-                  }}
-                >
-                  <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-lg">👤</span>
-                  </div>
-                  <div className="flex-1">
-                    <div
-                      className="font-semibold text-sm"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      Guest Request
-                    </div>
-                    <div
-                      className="text-xs"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Quick submission without login
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">
-                      GUEST
-                    </span>
-                    <svg
-                      className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                </button>
-              </div>
-
-              {/* Additional Quick Actions */}
-              <div
-                className="mt-6 pt-4 border-t"
-                style={{ borderColor: themeConfig.colors.border }}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span
-                    className="text-xs font-medium"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Quick Actions
-                  </span>
-                  <span
-                    className="text-xs"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    ⚡ Fast access
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => router.push("/student")}
-                    className="p-2 text-center rounded-lg transition-all duration-200 hover:bg-gray-100 text-xs"
-                    style={{
-                      color: themeConfig.colors.text,
                       backgroundColor:
                         themeConfig.name === "dark"
-                          ? "rgba(255, 255, 255, 0.05)"
-                          : "rgba(0, 0, 0, 0.02)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        themeConfig.name === "dark"
-                          ? "rgba(255, 255, 255, 0.1)"
-                          : "rgba(0, 0, 0, 0.05)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        themeConfig.name === "dark"
-                          ? "rgba(255, 255, 255, 0.05)"
-                          : "rgba(0, 0, 0, 0.02)";
+                          ? "rgba(59, 130, 246, 0.1)"
+                          : "rgb(239, 246, 255)",
                     }}
                   >
-                    🎓 Student Portal
-                  </button>
-                  <button
-                    onClick={() => router.push("/admin/dashboard")}
-                    className="p-2 text-center rounded-lg transition-all duration-200 hover:bg-gray-100 text-xs"
-                    style={{
-                      color: themeConfig.colors.text,
-                      backgroundColor:
-                        themeConfig.name === "dark"
-                          ? "rgba(255, 255, 255, 0.05)"
-                          : "rgba(0, 0, 0, 0.02)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        themeConfig.name === "dark"
-                          ? "rgba(255, 255, 255, 0.1)"
-                          : "rgba(0, 0, 0, 0.05)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        themeConfig.name === "dark"
-                          ? "rgba(255, 255, 255, 0.05)"
-                          : "rgba(0, 0, 0, 0.02)";
-                    }}
-                  >
-                    ⚙️ Admin Panel
-                  </button>
+                    <span
+                      className="text-xs font-medium"
+                      style={{
+                        color:
+                          themeConfig.name === "dark" ? "#60a5fa" : "#1e40af",
+                      }}
+                    >
+                      <span className="hidden sm:inline">Deployment</span>
+                      <span className="sm:hidden">Deploy</span>
+                    </span>
+                    <span className="px-1 sm:px-2 py-0.5 sm:py-1 bg-blue-600 text-white text-xs rounded-full">
+                      <span className="hidden sm:inline">Vercel</span>
+                      <span className="sm:hidden">V</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Footer Info */}
-            <div
-              className="rounded-lg shadow-lg p-6 theme-card"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-              }}
-            >
-              <div className="text-center">
-                <p
-                  className="text-sm"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  © 2026 IVF Maintenance Utility
-                </p>
-                <p
-                  className="text-xs mt-2"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Version 1.0.0 • Deployed on Vercel
-                </p>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Footer */}
+        <footer
+          className="mt-12 py-6 border-t"
+          style={{ borderColor: themeConfig.colors.border }}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+              <p
+                className="text-sm"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                © 2024 IVF Maintenance Utility. All rights reserved.
+              </p>
+              <div className="flex space-x-4 mt-4 sm:mt-0">
+                <a
+                  href="#"
+                  className="text-sm hover:opacity-80 transition-opacity"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Privacy
+                </a>
+                <a
+                  href="#"
+                  className="text-sm hover:opacity-80 transition-opacity"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Terms
+                </a>
+                <a
+                  href="#"
+                  className="text-sm hover:opacity-80 transition-opacity"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Support
+                </a>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
