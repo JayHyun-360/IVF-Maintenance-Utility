@@ -53,7 +53,8 @@ export const themes: Record<Theme, ThemeConfig> = {
       warning: "#D97706", // Orange
       error: "#DC2626", // Red
     },
-    backgroundImage: "/images/ocean-light-bg.jpg",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&h=400&fit=crop", // Temporary test image
   },
   dark: {
     name: "dark",

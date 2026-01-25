@@ -60,6 +60,23 @@ export default function Home() {
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
         }}
       >
+        {/* Debug info - remove this later */}
+        {themeConfig.backgroundImage && (
+          <div
+            style={{
+              position: "absolute",
+              top: "10px",
+              left: "10px",
+              backgroundColor: "rgba(255,255,255,0.9)",
+              padding: "4px 8px",
+              borderRadius: "4px",
+              fontSize: "12px",
+              zIndex: 100,
+            }}
+          >
+            BG: {themeConfig.backgroundImage}
+          </div>
+        )}
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-20 overflow-hidden">
           <div
