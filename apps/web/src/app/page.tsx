@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
+import AccountDropdown from "@/components/AccountDropdown";
 
 export default function Home() {
   const router = useRouter();
@@ -106,11 +107,13 @@ export default function Home() {
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10">
-          <div
-            className="absolute top-4 right-4"
-            style={{ zIndex: Z_INDEX.DROPDOWN }}
-          >
-            <ThemeSwitcher />
+          <div className="absolute top-4 right-4 flex items-center space-x-4">
+            <div style={{ zIndex: Z_INDEX.DROPDOWN }}>
+              <AccountDropdown />
+            </div>
+            <div style={{ zIndex: Z_INDEX.DROPDOWN }}>
+              <ThemeSwitcher />
+            </div>
           </div>
           <div
             className="w-24 h-24 mx-auto rounded-3xl flex items-center justify-center mb-8 shadow-2xl transform hover:scale-110 transition-all duration-500"
@@ -378,19 +381,48 @@ export default function Home() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
+              </div>
+              <div>
+                <h3
+                  className="text-xl font-bold mb-3"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Submit Request
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Report maintenance issues and track progress
+                </p>
+                <div
+                  className="inline-flex items-center text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
+                  style={{ color: themeConfig.colors.primary }}
+                >
+                  Get Started
+                  <svg
+                    className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
               </div>
             </button>
 
             <button
               onClick={handleAdminClick}
-              disabled={status === "loading"}
+              disabled={status === 'loading'}
               className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
@@ -415,98 +447,42 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m2 0h2a2 2 0 002-2v-1m-8 0V7a2 2 0 012-2h2a2 2 0 012 2v8m-6 0h6"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2 2v5a2 2 0 002 2h6a2 2 0 002-2v-5a2 2 0 00-2-2H9z"
                   />
                 </svg>
               </div>
-              <h3
-                className="text-xl font-bold mb-3"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Admin Dashboard
-              </h3>
-              <p
-                className="text-sm mb-4"
-                style={{ color: themeConfig.colors.textSecondary }}
-              >
-                Manage requests, view analytics, and coordinate responses
-              </p>
-              <div
-                className="inline-flex items-center text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
-                style={{ color: themeConfig.colors.accent }}
-              >
-                Enter Dashboard
-                <svg
-                  className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div>
+                <h3
+                  className="text-xl font-bold mb-3"
+                  style={{ color: themeConfig.colors.text }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </div>
-            </button>
-
-            <button
-              onClick={() => router.push("/emergency")}
-              className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group border-2"
-              style={{
-                background: `linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(252, 165, 165, 0.1) 100%)`,
-                borderColor: "#FCA5A5",
-                boxShadow: `0 10px 30px rgba(239, 68, 68, 0.15), 0 0 0 1px rgba(252, 165, 165, 0.2)`,
-              }}
-            >
-              <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 animate-pulse"
-                style={{
-                  background: `linear-gradient(135deg, #EF4444 0%, #DC2626 100%)`,
-                  boxShadow: `0 8px 20px rgba(239, 68, 68, 0.25)`,
-                }}
-              >
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  Admin Dashboard
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-red-600">
-                Emergency Report
-              </h3>
-              <p
-                className="text-sm mb-4"
-                style={{ color: themeConfig.colors.textSecondary }}
-              >
-                Report critical maintenance emergencies requiring immediate
-                attention
-              </p>
-              <div className="inline-flex items-center text-sm font-medium text-red-600 transform group-hover:translate-x-1 transition-all duration-300">
-                Emergency
-                <svg
-                  className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  Manage requests, users, and system settings
+                </p>
+                <div
+                  className="inline-flex items-center text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
+                  style={{ color: themeConfig.colors.accent }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
+                  Admin Panel
+                  <svg
+                    className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
               </div>
             </button>
           </div>
