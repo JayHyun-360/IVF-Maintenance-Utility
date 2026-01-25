@@ -106,7 +106,7 @@ export default function Home() {
       <main className="px-8 pb-12">
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Stats Grid */}
-          <div className="grid grid-cols-4 gap-6 mb-12 -mt-8">
+          <div className="grid grid-cols-4 gap-6 mb-12 mt-8">
             <div
               className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
               style={{
