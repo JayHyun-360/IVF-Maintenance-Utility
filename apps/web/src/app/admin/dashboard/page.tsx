@@ -176,10 +176,16 @@ export default function AdminDashboard() {
       >
         <div className="max-w-7xl mx-auto px-8">
           <nav className="flex space-x-8">
-            {["overview", "requests", "analytics"].map((tab) => (
+            {["overview", "requests", "analytics", "summary"].map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => {
+                  if (tab === "summary") {
+                    router.push("/admin/summary-request");
+                  } else {
+                    setActiveTab(tab);
+                  }
+                }}
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                   activeTab === tab
                     ? "border-blue-500 text-blue-600"
@@ -309,6 +315,99 @@ export default function AdminDashboard() {
                 >
                   Completion Rate
                 </div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div
+              className="rounded-xl shadow-lg p-6"
+              style={{
+                backgroundColor: themeConfig.colors.surface,
+                borderColor: themeConfig.colors.border,
+                border: "1px solid",
+              }}
+            >
+              <h2
+                className="text-lg font-semibold mb-4"
+                style={{ color: themeConfig.colors.text }}
+              >
+                Quick Actions
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <button
+                  onClick={() => router.push("/admin/summary-request")}
+                  className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.secondary}05 100%)`,
+                    border: `1px solid ${themeConfig.colors.border}`,
+                  }}
+                >
+                  <div className="flex items-center mb-2">
+                    <span className="text-2xl mr-3">📋</span>
+                    <span
+                      className="font-medium"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      Generate Summary
+                    </span>
+                  </div>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Create summary reports from maintenance requests
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => router.push("/admin/reports")}
+                  className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`,
+                    border: `1px solid ${themeConfig.colors.border}`,
+                  }}
+                >
+                  <div className="flex items-center mb-2">
+                    <span className="text-2xl mr-3">📊</span>
+                    <span
+                      className="font-medium"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      View Reports
+                    </span>
+                  </div>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Access detailed analytics and reports
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => router.push("/admin/users")}
+                  className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.success}10 0%, ${themeConfig.colors.success}05 100%)`,
+                    border: `1px solid ${themeConfig.colors.border}`,
+                  }}
+                >
+                  <div className="flex items-center mb-2">
+                    <span className="text-2xl mr-3">👥</span>
+                    <span
+                      className="font-medium"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      Manage Users
+                    </span>
+                  </div>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Add, edit, or remove user accounts
+                  </p>
+                </button>
               </div>
             </div>
 

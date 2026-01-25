@@ -30,7 +30,7 @@ export default function AuthGuard({
     if (requiredRole && session.user?.role !== requiredRole) {
       // If user is logged in but doesn't have required role
       if (requiredRole === "ADMIN" && session.user?.role !== "ADMIN") {
-        router.push("/"); // Redirect non-admin users to home
+        router.push("/student"); // Redirect non-admin users to student dashboard
       } else {
         router.push("/login"); // Redirect to login for other cases
       }

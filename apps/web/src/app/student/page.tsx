@@ -60,15 +60,16 @@ export default function StudentPage() {
       // Reset form
       setFormData({
         title: "",
-        description: "",
-        category: "PLUMBING",
-        priority: "MEDIUM",
+        category: "",
         location: "",
+        description: "",
+        priority: "MEDIUM",
       });
       setAttachedImages([]);
       setImagePreviews([]);
 
-      router.push("/");
+      // Show success message and redirect to student dashboard
+      router.push("/student");
     } catch (error) {
       console.error("Error submitting request:", error);
       alert("Failed to submit request. Please try again.");
