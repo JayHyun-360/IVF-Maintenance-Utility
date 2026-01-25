@@ -562,6 +562,7 @@ export default function AdminDashboard() {
                             style={{
                               backgroundColor: themeConfig.colors.background,
                               borderColor: themeConfig.colors.border,
+                              color: themeConfig.colors.text,
                               border: "1px solid",
                             }}
                           >
