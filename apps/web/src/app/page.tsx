@@ -42,15 +42,16 @@ export default function Home() {
 
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen transition-all duration-700 ease-in-out"
       style={{
         backgroundColor: themeConfig.colors.background,
         color: themeConfig.colors.text,
+        transition: "background-color 0.7s ease-in-out, color 0.7s ease-in-out",
       }}
     >
       {/* Header with Gradient Background */}
       <header
-        className="px-8 py-16 text-center relative"
+        className="px-8 py-16 text-center relative transition-all duration-1000 ease-in-out"
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "light"
@@ -62,25 +63,10 @@ export default function Home() {
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
           backgroundPosition: themeConfig.backgroundImage ? "center" : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
+          transition:
+            "background 1s ease-in-out, background-color 1s ease-in-out",
         }}
       >
-        {/* Debug info - remove this later */}
-        {themeConfig.backgroundImage && (
-          <div
-            style={{
-              position: "absolute",
-              top: "10px",
-              left: "10px",
-              backgroundColor: "rgba(255,255,255,0.9)",
-              padding: "4px 8px",
-              borderRadius: "4px",
-              fontSize: "12px",
-              zIndex: 100,
-            }}
-          >
-            BG: {themeConfig.backgroundImage}
-          </div>
-        )}
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-20 overflow-hidden">
           <div
@@ -320,11 +306,12 @@ export default function Home() {
           <div className="flex justify-center">
             <button
               onClick={() => router.push("/login")}
-              className="p-12 rounded-2xl text-center transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
+              className="p-12 rounded-2xl text-center transition-all duration-700 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
                 boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
+                transition: "all 0.7s ease-in-out, transform 0.3s ease-in-out",
               }}
             >
               <div

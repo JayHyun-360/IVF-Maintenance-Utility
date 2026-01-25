@@ -56,6 +56,11 @@ export default function ThemeSwitcher() {
     applyTheme(theme);
     setTheme(theme);
     setIsOpen(false);
+
+    // Add a small delay to ensure smooth transition
+    setTimeout(() => {
+      document.body.style.transition = "all 0.7s ease-in-out";
+    }, 50);
   };
 
   const currentThemeData = themes.find((t) => t.value === currentTheme);
@@ -64,11 +69,12 @@ export default function ThemeSwitcher() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+        className="flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105 transform active:scale-95"
         style={{
           backgroundColor: themeConfig.colors.surface,
           border: `1px solid ${themeConfig.colors.border}`,
           color: themeConfig.colors.text,
+          transition: "all 0.3s ease-in-out, transform 0.2s ease-in-out",
         }}
       >
         <span className="text-lg">{currentThemeData?.icon}</span>
@@ -102,8 +108,10 @@ export default function ThemeSwitcher() {
               <button
                 key={theme.value}
                 onClick={() => handleThemeChange(theme.value)}
-                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
-                  currentTheme === theme.value ? "scale-105" : "hover:scale-105"
+                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-300 transform ${
+                  currentTheme === theme.value
+                    ? "scale-105"
+                    : "hover:scale-105 active:scale-95"
                 }`}
                 style={{
                   backgroundColor:
@@ -111,6 +119,8 @@ export default function ThemeSwitcher() {
                       ? `${theme.colors.primary}20`
                       : "transparent",
                   color: themeConfig.colors.text,
+                  transition:
+                    "all 0.3s ease-in-out, transform 0.2s ease-in-out",
                 }}
               >
                 <div className="flex items-center space-x-2">
