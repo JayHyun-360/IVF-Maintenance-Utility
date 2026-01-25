@@ -644,7 +644,7 @@ export default function AdminDashboard() {
                       backgroundClip: "text",
                     }}
                   >
-                    📊 Analytics Dashboard
+                    🎯 Analytics Dashboard
                   </h1>
                   <p
                     className="text-lg"
@@ -663,7 +663,7 @@ export default function AdminDashboard() {
                     boxShadow: `0 10px 25px rgba(0,0,0,0.2), 0 0 20px ${themeConfig.colors.primary}30`,
                   }}
                 >
-                  <span className="text-3xl">📈</span>
+                  <span className="text-3xl">📊</span>
                 </div>
               </div>
             </div>
@@ -685,7 +685,7 @@ export default function AdminDashboard() {
                     boxShadow: `0 8px 20px rgba(0,0,0,0.15), 0 0 15px ${themeConfig.colors.primary}40`,
                   }}
                 >
-                  <span className="text-2xl">📋</span>
+                  <span className="text-2xl">📝</span>
                 </div>
                 <div
                   className="text-3xl font-bold mb-2"
@@ -725,7 +725,7 @@ export default function AdminDashboard() {
                     boxShadow: `0 8px 20px rgba(0,0,0,0.15), 0 0 15px ${themeConfig.colors.warning}40`,
                   }}
                 >
-                  <span className="text-2xl">⏳</span>
+                  <span className="text-2xl">⏱️</span>
                 </div>
                 <div
                   className="text-3xl font-bold mb-2"
@@ -765,7 +765,7 @@ export default function AdminDashboard() {
                     boxShadow: `0 8px 20px rgba(0,0,0,0.15), 0 0 15px ${themeConfig.colors.success}40`,
                   }}
                 >
-                  <span className="text-2xl">✅</span>
+                  <span className="text-2xl">✨</span>
                 </div>
                 <div
                   className="text-3xl font-bold mb-2"
@@ -808,7 +808,7 @@ export default function AdminDashboard() {
                     boxShadow: `0 6px 15px rgba(0,0,0,0.15), 0 0 12px ${themeConfig.colors.primary}40`,
                   }}
                 >
-                  <span className="text-xl">📂</span>
+                  <span className="text-xl">🎨</span>
                 </div>
                 <h2
                   className="text-2xl font-bold"
@@ -853,10 +853,10 @@ export default function AdminDashboard() {
                             {index === 0
                               ? "🔧"
                               : index === 1
-                                ? "💡"
+                                ? "💫"
                                 : index === 2
-                                  ? "🚿"
-                                  : "📱"}
+                                  ? "🌊"
+                                  : "🎯"}
                           </span>
                         </div>
                         <span
@@ -952,7 +952,7 @@ export default function AdminDashboard() {
                     boxShadow: `0 6px 15px rgba(0,0,0,0.15), 0 0 12px ${themeConfig.colors.warning}40`,
                   }}
                 >
-                  <span className="text-xl">⚡</span>
+                  <span className="text-xl">🚀</span>
                 </div>
                 <h2
                   className="text-2xl font-bold"
@@ -1000,8 +1000,8 @@ export default function AdminDashboard() {
                           {priority === "HIGH"
                             ? "🔥"
                             : priority === "MEDIUM"
-                              ? "⚠️"
-                              : "📌"}
+                              ? "⭐"
+                              : "🌟"}
                         </span>
                       </div>
                       <span
