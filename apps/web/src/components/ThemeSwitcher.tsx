@@ -14,24 +14,28 @@ const themes: {
   label: string;
   icon: string;
   colors: { primary: string; secondary: string };
+  description: string;
 }[] = [
   {
     value: "standard",
-    label: "Warm Harmony",
-    icon: "🎨",
-    colors: { primary: "#FF6B6B", secondary: "#4ECDC4" },
-  },
-  {
-    value: "dark",
-    label: "Dark Mode",
-    icon: "🌙",
-    colors: { primary: "#1F2937", secondary: "#111827" },
+    label: "Standard",
+    icon: "🌅",
+    colors: { primary: "#3B82F6", secondary: "#10B981" },
+    description: "Clean and professional blue theme",
   },
   {
     value: "light",
-    label: "Light Mode",
+    label: "Light",
     icon: "☀️",
-    colors: { primary: "#FFFFFF", secondary: "#F3F4F6" },
+    colors: { primary: "#0EA5E9", secondary: "#06B6D4" },
+    description: "Bright and airy sky theme",
+  },
+  {
+    value: "dark",
+    label: "Dark",
+    icon: "🌙",
+    colors: { primary: "#6366F1", secondary: "#8B5CF6" },
+    description: "Professional dark slate theme",
   },
 ];
 
@@ -128,6 +132,12 @@ export default function ThemeSwitcher() {
                 </div>
                 <div className="flex-1 text-left">
                   <div className="text-sm font-medium">{theme.label}</div>
+                  <div
+                    className="text-xs"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    {theme.description}
+                  </div>
                 </div>
                 {currentTheme === theme.value && (
                   <svg

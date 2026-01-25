@@ -31,9 +31,10 @@ export default function Button({
     switch (variant) {
       case "primary":
         return {
-          background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.accent} 100%)`,
+          background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           color: "#FFFFFF",
           border: `1px solid ${themeConfig.colors.primary}`,
+          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}20`,
         };
       case "secondary":
         return {
@@ -46,6 +47,7 @@ export default function Button({
           background: `linear-gradient(135deg, ${themeConfig.colors.error} 0%, #DC2626 100%)`,
           color: "#FFFFFF",
           border: `1px solid ${themeConfig.colors.error}`,
+          boxShadow: `0 4px 14px 0 ${themeConfig.colors.error}20`,
         };
       case "ghost":
         return {
@@ -55,9 +57,10 @@ export default function Button({
         };
       default:
         return {
-          background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.accent} 100%)`,
+          background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           color: "#FFFFFF",
           border: `1px solid ${themeConfig.colors.primary}`,
+          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}20`,
         };
     }
   };
@@ -85,10 +88,10 @@ export default function Button({
       className={`
         ${getSizeStyles()}
         ${fullWidth ? "w-full" : ""}
-        rounded-xl font-medium transition-all duration-200 
-        hover:scale-105 shadow-lg hover:shadow-xl
+        rounded-xl font-medium transition-all duration-300 
+        hover:scale-105 hover:shadow-xl active:scale-95
         disabled:opacity-50 disabled:cursor-not-allowed
-        disabled:hover:scale-100
+        disabled:hover:scale-100 disabled:hover:shadow-lg
         ${className}
       `}
       style={styles}

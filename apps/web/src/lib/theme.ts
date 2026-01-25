@@ -23,51 +23,51 @@ export const themes: Record<Theme, ThemeConfig> = {
     name: "standard",
     displayName: "Warm Harmony",
     colors: {
-      primary: "#FF6B6B",
-      secondary: "#4ECDC4",
-      accent: "#FFE66D",
-      background: "#FFF8F3",
-      surface: "#FFFFFF",
-      text: "#2D3436",
-      textSecondary: "#636E72",
-      border: "#E8F4F8",
-      success: "#00B894",
-      warning: "#FDCB6E",
-      error: "#FF7675",
+      primary: "#3B82F6", // Modern blue
+      secondary: "#10B981", // Emerald green
+      accent: "#F59E0B", // Amber
+      background: "#F8FAFC", // Light slate background
+      surface: "#FFFFFF", // Pure white
+      text: "#1E293B", // Dark slate text
+      textSecondary: "#64748B", // Muted slate text
+      border: "#E2E8F0", // Light border
+      success: "#10B981", // Emerald green
+      warning: "#F59E0B", // Amber
+      error: "#EF4444", // Red
     },
   },
   light: {
     name: "light",
-    displayName: "Cool Breeze",
+    displayName: "Light Professional",
     colors: {
-      primary: "#74B9FF",
-      secondary: "#A29BFE",
-      accent: "#FD79A8",
-      background: "#F8F9FA",
-      surface: "#FFFFFF",
-      text: "#2D3436",
-      textSecondary: "#636E72",
-      border: "#E8F4FD",
-      success: "#00CEC9",
-      warning: "#FDCB6E",
-      error: "#FF7675",
+      primary: "#0EA5E9", // Sky blue
+      secondary: "#06B6D4", // Cyan
+      accent: "#F97316", // Orange
+      background: "#FFFFFF", // Pure white
+      surface: "#F8FAFC", // Very light slate
+      text: "#0F172A", // Dark slate text
+      textSecondary: "#475569", // Muted slate text
+      border: "#CBD5E1", // Light border
+      success: "#10B981", // Emerald green
+      warning: "#F59E0B", // Amber
+      error: "#EF4444", // Red
     },
   },
   dark: {
     name: "dark",
-    displayName: "Midnight Velvet",
+    displayName: "Dark Professional",
     colors: {
-      primary: "#E17055",
-      secondary: "#74B9FF",
-      accent: "#A29BFE",
-      background: "#2D3436",
-      surface: "#34495E",
-      text: "#F8F9FA",
-      textSecondary: "#B2BEC3",
-      border: "#4A5568",
-      success: "#00CEC9",
-      warning: "#FDCB6E",
-      error: "#FF7675",
+      primary: "#6366F1", // Modern indigo
+      secondary: "#8B5CF6", // Purple accent
+      accent: "#EC4899", // Pink accent
+      background: "#0F172A", // Deep slate
+      surface: "#1E293B", // Dark slate surface
+      text: "#F1F5F9", // Light slate text
+      textSecondary: "#94A3B8", // Muted slate text
+      border: "#334155", // Border slate
+      success: "#10B981", // Emerald green
+      warning: "#F59E0B", // Amber
+      error: "#EF4444", // Red
     },
   },
 };
