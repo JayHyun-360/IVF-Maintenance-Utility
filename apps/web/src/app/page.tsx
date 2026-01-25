@@ -51,23 +51,61 @@ export default function Home() {
     >
       {/* Header with Gradient Background */}
       <header
-        className="px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 text-center relative"
+        className="px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 text-center relative overflow-hidden"
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "light"
-              ? `linear-gradient(rgba(14, 165, 233, 0.3), rgba(6, 182, 212, 0.3)), url("${themeConfig.backgroundImage}")`
+              ? `linear-gradient(rgba(14, 165, 233, 0.4), rgba(6, 182, 212, 0.4)), url("${themeConfig.backgroundImage}")`
               : themeConfig.name === "standard"
-                ? `linear-gradient(rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.3)), url("${themeConfig.backgroundImage}")`
-                : `linear-gradient(rgba(59, 130, 246, 0.3), rgba(29, 78, 216, 0.3)), url("${themeConfig.backgroundImage}")`
+                ? `linear-gradient(rgba(16, 185, 129, 0.4), rgba(5, 150, 105, 0.4)), url("${themeConfig.backgroundImage}")`
+                : `linear-gradient(rgba(59, 130, 246, 0.4), rgba(29, 78, 216, 0.4)), url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
-          backgroundPosition: themeConfig.backgroundImage ? "center" : "auto",
+          backgroundPosition: themeConfig.backgroundImage
+            ? "center center"
+            : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
+          backgroundAttachment: themeConfig.backgroundImage
+            ? "fixed"
+            : "scroll",
           transition:
             "background-image 1.2s ease-in-out, background 1.2s ease-in-out, background-color 1.2s ease-in-out",
-          minHeight: themeConfig.backgroundImage ? "60vh" : "auto",
+          minHeight: themeConfig.backgroundImage ? "70vh" : "auto",
+          height: themeConfig.backgroundImage ? "70vh" : "auto",
         }}
       >
+        {/* Desktop-specific background adjustments */}
+        {themeConfig.backgroundImage && (
+          <style jsx>{`
+            @media (min-width: 1024px) {
+              header {
+                background-size: cover !important;
+                background-position: center center !important;
+                background-attachment: fixed !important;
+                min-height: 80vh !important;
+                height: 80vh !important;
+              }
+            }
+            @media (min-width: 1280px) {
+              header {
+                background-size: cover !important;
+                background-position: center center !important;
+                background-attachment: fixed !important;
+                min-height: 85vh !important;
+                height: 85vh !important;
+              }
+            }
+            @media (min-width: 1536px) {
+              header {
+                background-size: cover !important;
+                background-position: center center !important;
+                background-attachment: fixed !important;
+                min-height: 90vh !important;
+                height: 90vh !important;
+              }
+            }
+          `}</style>
+        )}
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-20 overflow-hidden">
           <div
