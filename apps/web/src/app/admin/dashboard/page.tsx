@@ -624,103 +624,345 @@ export default function AdminDashboard() {
 
         {activeTab === "analytics" && (
           <div className="space-y-8">
-            {/* Category Chart */}
+            {/* Enhanced Header */}
             <div
-              className="rounded-xl shadow-lg p-6"
+              className="rounded-2xl p-8 shadow-xl transform hover:scale-[1.02] transition-all duration-500"
               style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-                border: "1px solid",
+                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                border: `1px solid ${themeConfig.colors.border}`,
+                boxShadow: `0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
-              <h2
-                className="text-lg font-semibold mb-4"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Requests by Category
-              </h2>
-              <div className="space-y-4">
-                {Object.entries(categoryData).map(([category, count]) => (
-                  <div
-                    key={category}
-                    className="flex items-center justify-between"
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1
+                    className="text-3xl font-bold mb-2"
+                    style={{ color: themeConfig.colors.text }}
                   >
-                    <span
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {category}
-                    </span>
-                    <div className="flex items-center space-x-4">
-                      <div className="w-32 bg-gray-200 rounded-full h-2">
-                        <div
-                          className="h-2 rounded-full"
-                          style={{
-                            width: `${(count / stats.totalRequests) * 100}%`,
-                            backgroundColor: "#3B82F6",
-                          }}
-                        ></div>
-                      </div>
-                      <span
-                        className="text-sm font-medium"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {count}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                    📊 Analytics Dashboard
+                  </h1>
+                  <p
+                    className="text-lg"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Comprehensive insights into maintenance requests
+                  </p>
+                </div>
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                    boxShadow: `0 10px 20px rgba(0,0,0,0.1)`,
+                  }}
+                >
+                  <span className="text-2xl">📈</span>
+                </div>
               </div>
             </div>
 
-            {/* Priority Chart */}
+            {/* Enhanced Stats Cards */}
+            <div className="grid grid-cols-3 gap-6 mb-8">
+              <div
+                className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+                style={{
+                  background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                }}
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.primary}10 100%)`,
+                    color: themeConfig.colors.primary,
+                  }}
+                >
+                  📋
+                </div>
+                <div
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  {stats.totalRequests}
+                </div>
+                <div
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Total Requests
+                </div>
+              </div>
+
+              <div
+                className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+                style={{
+                  background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                }}
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`,
+                    color: themeConfig.colors.warning,
+                  }}
+                >
+                  ⏳
+                </div>
+                <div
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  {stats.pendingRequests}
+                </div>
+                <div
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Pending
+                </div>
+              </div>
+
+              <div
+                className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+                style={{
+                  background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                }}
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.success}20 0%, ${themeConfig.colors.success}10 100%)`,
+                    color: themeConfig.colors.success,
+                  }}
+                >
+                  ✅
+                </div>
+                <div
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  {stats.completedRequests}
+                </div>
+                <div
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Completed
+                </div>
+              </div>
+            </div>
+
+            {/* Enhanced Category Chart */}
             <div
-              className="rounded-xl shadow-lg p-6"
+              className="rounded-2xl p-8 shadow-xl transform hover:scale-[1.01] transition-all duration-500"
               style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-                border: "1px solid",
+                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                border: `1px solid ${themeConfig.colors.border}`,
+                boxShadow: `0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
-              <h2
-                className="text-lg font-semibold mb-4"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Requests by Priority
-              </h2>
-              <div className="space-y-4">
+              <div className="flex items-center mb-6">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.primary}10 100%)`,
+                    color: themeConfig.colors.primary,
+                  }}
+                >
+                  📂
+                </div>
+                <h2
+                  className="text-xl font-bold"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Requests by Category
+                </h2>
+              </div>
+              <div className="space-y-6">
+                {Object.entries(categoryData).map(
+                  ([category, count], index) => (
+                    <div
+                      key={category}
+                      className="flex items-center justify-between p-4 rounded-xl transform hover:scale-[1.02] transition-all duration-300"
+                      style={{
+                        background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
+                        border: `1px solid ${themeConfig.colors.border}30`,
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <div
+                          className="w-8 h-8 rounded-lg flex items-center justify-center mr-4"
+                          style={{
+                            background: `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.secondary}20 100%)`,
+                            color: themeConfig.colors.primary,
+                          }}
+                        >
+                          {index === 0
+                            ? "🔧"
+                            : index === 1
+                              ? "💡"
+                              : index === 2
+                                ? "🚿"
+                                : "📱"}
+                        </div>
+                        <span
+                          className="text-sm font-semibold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          {category}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div
+                          className="w-48 rounded-full h-3"
+                          style={{
+                            backgroundColor: themeConfig.colors.border + "30",
+                          }}
+                        >
+                          <div
+                            className="h-3 rounded-full transform transition-all duration-1000 ease-out"
+                            style={{
+                              width: `${(count / stats.totalRequests) * 100}%`,
+                              background: `linear-gradient(90deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                              boxShadow: `0 2px 8px rgba(0,0,0,0.1)`,
+                            }}
+                          ></div>
+                        </div>
+                        <div
+                          className="px-3 py-1 rounded-full text-sm font-bold"
+                          style={{
+                            background: `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.primary}10 100%)`,
+                            color: themeConfig.colors.primary,
+                            border: `1px solid ${themeConfig.colors.primary}30`,
+                          }}
+                        >
+                          {count}
+                        </div>
+                      </div>
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+
+            {/* Enhanced Priority Chart */}
+            <div
+              className="rounded-2xl p-8 shadow-xl transform hover:scale-[1.01] transition-all duration-500"
+              style={{
+                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                border: `1px solid ${themeConfig.colors.border}`,
+                boxShadow: `0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+              }}
+            >
+              <div className="flex items-center mb-6">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`,
+                    color: themeConfig.colors.warning,
+                  }}
+                >
+                  ⚡
+                </div>
+                <h2
+                  className="text-xl font-bold"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Requests by Priority
+                </h2>
+              </div>
+              <div className="space-y-6">
                 {Object.entries(priorityData).map(([priority, count]) => (
                   <div
                     key={priority}
-                    className="flex items-center justify-between"
+                    className="flex items-center justify-between p-4 rounded-xl transform hover:scale-[1.02] transition-all duration-300"
+                    style={{
+                      background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
+                      border: `1px solid ${themeConfig.colors.border}30`,
+                    }}
                   >
-                    <span
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {priority}
-                    </span>
-                    <div className="flex items-center space-x-4">
-                      <div className="w-32 bg-gray-200 rounded-full h-2">
-                        <div
-                          className={`h-2 rounded-full ${
+                    <div className="flex items-center">
+                      <div
+                        className="w-8 h-8 rounded-lg flex items-center justify-center mr-4"
+                        style={{
+                          background:
                             priority === "HIGH"
-                              ? "bg-red-500"
+                              ? `linear-gradient(135deg, ${themeConfig.colors.error}20 0%, ${themeConfig.colors.error}10 100%)`
                               : priority === "MEDIUM"
-                                ? "bg-yellow-500"
-                                : "bg-gray-500"
-                          }`}
+                                ? `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`
+                                : `linear-gradient(135deg, ${themeConfig.colors.textSecondary}20 0%, ${themeConfig.colors.textSecondary}10 100%)`,
+                          color:
+                            priority === "HIGH"
+                              ? themeConfig.colors.error
+                              : priority === "MEDIUM"
+                                ? themeConfig.colors.warning
+                                : themeConfig.colors.textSecondary,
+                        }}
+                      >
+                        {priority === "HIGH"
+                          ? "🔥"
+                          : priority === "MEDIUM"
+                            ? "⚠️"
+                            : "📌"}
+                      </div>
+                      <span
+                        className="text-sm font-semibold"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        {priority}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className="w-48 rounded-full h-3"
+                        style={{
+                          backgroundColor: themeConfig.colors.border + "30",
+                        }}
+                      >
+                        <div
+                          className="h-3 rounded-full transform transition-all duration-1000 ease-out"
                           style={{
                             width: `${(count / stats.totalRequests) * 100}%`,
+                            background:
+                              priority === "HIGH"
+                                ? `linear-gradient(90deg, ${themeConfig.colors.error} 0%, ${themeConfig.colors.warning} 100%)`
+                                : priority === "MEDIUM"
+                                  ? `linear-gradient(90deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`
+                                  : `linear-gradient(90deg, ${themeConfig.colors.textSecondary} 0%, ${themeConfig.colors.border} 100%)`,
+                            boxShadow: `0 2px 8px rgba(0,0,0,0.1)`,
                           }}
                         ></div>
                       </div>
-                      <span
-                        className="text-sm font-medium"
-                        style={{ color: themeConfig.colors.text }}
+                      <div
+                        className="px-3 py-1 rounded-full text-sm font-bold"
+                        style={{
+                          background:
+                            priority === "HIGH"
+                              ? `linear-gradient(135deg, ${themeConfig.colors.error}20 0%, ${themeConfig.colors.error}10 100%)`
+                              : priority === "MEDIUM"
+                                ? `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`
+                                : `linear-gradient(135deg, ${themeConfig.colors.textSecondary}20 0%, ${themeConfig.colors.textSecondary}10 100%)`,
+                          color:
+                            priority === "HIGH"
+                              ? themeConfig.colors.error
+                              : priority === "MEDIUM"
+                                ? themeConfig.colors.warning
+                                : themeConfig.colors.textSecondary,
+                          border: `1px solid ${
+                            priority === "HIGH"
+                              ? themeConfig.colors.error
+                              : priority === "MEDIUM"
+                                ? themeConfig.colors.warning
+                                : themeConfig.colors.textSecondary
+                          }30`,
+                        }}
                       >
                         {count}
-                      </span>
+                      </div>
                     </div>
                   </div>
                 ))}
