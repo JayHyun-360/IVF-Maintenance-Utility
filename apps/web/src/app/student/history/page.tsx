@@ -93,9 +93,24 @@ export default function StudentHistoryPage() {
                   }}
                 >
                   <option value="all">All Status</option>
-                  <option value="PENDING">🟡 Pending</option>
-                  <option value="IN_PROGRESS">🔵 In Progress</option>
-                  <option value="COMPLETED">🟢 Completed</option>
+                  <option
+                    value="PENDING"
+                    style={{ color: themeConfig.colors.warning }}
+                  >
+                    ⬤ Pending
+                  </option>
+                  <option
+                    value="IN_PROGRESS"
+                    style={{ color: themeConfig.colors.primary }}
+                  >
+                    ⬤ In Progress
+                  </option>
+                  <option
+                    value="COMPLETED"
+                    style={{ color: themeConfig.colors.success }}
+                  >
+                    ⬤ Completed
+                  </option>
                 </select>
               </div>
               <div className="flex items-end">

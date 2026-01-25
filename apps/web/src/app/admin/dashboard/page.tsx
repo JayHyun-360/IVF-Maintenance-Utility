@@ -566,9 +566,24 @@ export default function AdminDashboard() {
                               border: "1px solid",
                             }}
                           >
-                            <option value="PENDING">🟡 Pending</option>
-                            <option value="IN_PROGRESS">🔵 In Progress</option>
-                            <option value="COMPLETED">🟢 Completed</option>
+                            <option
+                              value="PENDING"
+                              style={{ color: themeConfig.colors.warning }}
+                            >
+                              ⬤ Pending
+                            </option>
+                            <option
+                              value="IN_PROGRESS"
+                              style={{ color: themeConfig.colors.primary }}
+                            >
+                              ⬤ In Progress
+                            </option>
+                            <option
+                              value="COMPLETED"
+                              style={{ color: themeConfig.colors.success }}
+                            >
+                              ⬤ Completed
+                            </option>
                           </select>
                         </td>
                         <td className="px-6 py-4">
