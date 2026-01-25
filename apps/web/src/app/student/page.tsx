@@ -123,11 +123,11 @@ export default function StudentPage() {
       >
         {/* Enhanced Header with Gradient */}
         <header
-          className="px-8 py-6 border-b relative overflow-hidden"
+          className="px-8 py-6 border-b relative"
           style={{ borderColor: themeConfig.colors.border }}
         >
           <div
-            className="absolute inset-0 opacity-10"
+            className="absolute inset-0 opacity-10 overflow-hidden"
             style={{
               background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
             }}
