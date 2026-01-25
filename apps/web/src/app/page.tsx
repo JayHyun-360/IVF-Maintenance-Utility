@@ -492,7 +492,7 @@ export default function Home() {
           </div>
 
           {/* Additional Functions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mt-4 lg:mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mt-4 lg:mt-6">
             <button
               onClick={() => router.push("/student/history")}
               className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
@@ -503,10 +503,11 @@ export default function Home() {
             >
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ backgroundColor: "rgba(16, 185, 129, 0.1)" }}
+                style={{ backgroundColor: `${themeConfig.colors.success}20` }}
               >
                 <svg
-                  className="w-6 h-6 text-green-500"
+                  className="w-6 h-6"
+                  style={{ color: themeConfig.colors.success }}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -543,10 +544,11 @@ export default function Home() {
             >
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ backgroundColor: "rgba(251, 191, 36, 0.1)" }}
+                style={{ backgroundColor: `${themeConfig.colors.warning}20` }}
               >
                 <svg
-                  className="w-6 h-6 text-yellow-500"
+                  className="w-6 h-6"
+                  style={{ color: themeConfig.colors.warning }}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -574,46 +576,6 @@ export default function Home() {
             </button>
 
             <button
-              onClick={() => router.push("/admin/users")}
-              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                border: `1px solid ${themeConfig.colors.border}`,
-              }}
-            >
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ backgroundColor: "rgba(99, 102, 241, 0.1)" }}
-              >
-                <svg
-                  className="w-6 h-6 text-indigo-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
-              </div>
-              <h4
-                className="font-semibold mb-2"
-                style={{ color: themeConfig.colors.text }}
-              >
-                User Management
-              </h4>
-              <p
-                className="text-xs"
-                style={{ color: themeConfig.colors.textSecondary }}
-              >
-                Manage system users
-              </p>
-            </button>
-
-            <button
               onClick={() => router.push("/settings")}
               className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
               style={{
@@ -623,10 +585,11 @@ export default function Home() {
             >
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ backgroundColor: "rgba(139, 92, 246, 0.1)" }}
+                style={{ backgroundColor: `${themeConfig.colors.accent}20` }}
               >
                 <svg
-                  className="w-6 h-6 text-purple-500"
+                  className="w-6 h-6"
+                  style={{ color: themeConfig.colors.accent }}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
