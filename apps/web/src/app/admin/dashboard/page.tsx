@@ -624,232 +624,198 @@ export default function AdminDashboard() {
 
         {activeTab === "analytics" && (
           <div className="space-y-8">
-            {/* Enhanced Header with Strong Warm/Cool Colors */}
+            {/* Minimalistic Header with Subtle Warm/Cool Colors */}
             <div
-              className="rounded-2xl p-8 shadow-xl transform hover:scale-[1.02] transition-all duration-500"
+              className="rounded-2xl p-8 transition-all duration-300"
               style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.primary}15 0%, ${themeConfig.colors.secondary}10 50%, ${themeConfig.colors.warning}08 100%)`,
-                border: `2px solid ${themeConfig.colors.primary}30`,
-                boxShadow: `0 20px 40px rgba(0,0,0,0.15), 0 0 0 1px ${themeConfig.colors.primary}20, inset 0 1px 0 rgba(255,255,255,0.1)`,
+                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                border: `1px solid ${themeConfig.colors.border}`,
+                boxShadow: `0 4px 12px rgba(0,0,0,0.05)`,
               }}
             >
               <div className="flex items-center justify-between">
                 <div>
                   <h1
                     className="text-3xl font-bold mb-2"
-                    style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
+                    style={{ color: themeConfig.colors.text }}
                   >
                     🎯 Analytics Dashboard
                   </h1>
                   <p
                     className="text-lg"
-                    style={{
-                      color: themeConfig.colors.textSecondary,
-                      fontWeight: "500",
-                    }}
+                    style={{ color: themeConfig.colors.textSecondary }}
                   >
                     Comprehensive insights into maintenance requests
                   </p>
                 </div>
                 <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center transform hover:rotate-12 transition-all duration-300"
+                  className="w-14 h-14 rounded-xl flex items-center justify-center"
                   style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.warning} 50%, ${themeConfig.colors.secondary} 100%)`,
-                    boxShadow: `0 10px 25px rgba(0,0,0,0.2), 0 0 20px ${themeConfig.colors.primary}30`,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.secondary}05 100%)`,
+                    color: themeConfig.colors.primary,
                   }}
                 >
-                  <span className="text-3xl">📊</span>
+                  <span className="text-2xl">📊</span>
                 </div>
               </div>
             </div>
 
-            {/* Enhanced Stats Cards with Vibrant Warm/Cool Colors */}
+            {/* Minimalistic Stats Cards */}
             <div className="grid grid-cols-3 gap-6 mb-8">
               <div
-                className="rounded-2xl p-6 text-center transform hover:scale-105 hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl"
+                className="rounded-2xl p-6 text-center transition-all duration-300"
                 style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.primary}15 0%, ${themeConfig.colors.surface} 100%)`,
-                  border: `2px solid ${themeConfig.colors.primary}40`,
-                  boxShadow: `0 15px 35px rgba(0,0,0,0.12), 0 0 0 1px ${themeConfig.colors.primary}20`,
+                  background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  boxShadow: `0 2px 8px rgba(0,0,0,0.04)`,
                 }}
               >
                 <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transform hover:rotate-12 transition-all duration-300"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                   style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                    boxShadow: `0 8px 20px rgba(0,0,0,0.15), 0 0 15px ${themeConfig.colors.primary}40`,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.primary}05 100%)`,
+                    color: themeConfig.colors.primary,
                   }}
                 >
-                  <span className="text-2xl">📝</span>
+                  <span className="text-xl">📝</span>
                 </div>
                 <div
-                  className="text-3xl font-bold mb-2"
-                  style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: themeConfig.colors.text }}
                 >
                   {stats.totalRequests}
                 </div>
                 <div
-                  className="text-sm font-semibold"
-                  style={{
-                    color: themeConfig.colors.textSecondary,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
+                  className="text-sm font-medium"
+                  style={{ color: themeConfig.colors.textSecondary }}
                 >
                   Total Requests
                 </div>
               </div>
 
               <div
-                className="rounded-2xl p-6 text-center transform hover:scale-105 hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl"
+                className="rounded-2xl p-6 text-center transition-all duration-300"
                 style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.warning}15 0%, ${themeConfig.colors.surface} 100%)`,
-                  border: `2px solid ${themeConfig.colors.warning}40`,
-                  boxShadow: `0 15px 35px rgba(0,0,0,0.12), 0 0 0 1px ${themeConfig.colors.warning}20`,
+                  background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  boxShadow: `0 2px 8px rgba(0,0,0,0.04)`,
                 }}
               >
                 <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transform hover:rotate-12 transition-all duration-300"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                   style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`,
-                    boxShadow: `0 8px 20px rgba(0,0,0,0.15), 0 0 15px ${themeConfig.colors.warning}40`,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`,
+                    color: themeConfig.colors.warning,
                   }}
                 >
-                  <span className="text-2xl">⏱️</span>
+                  <span className="text-xl">⏱️</span>
                 </div>
                 <div
-                  className="text-3xl font-bold mb-2"
-                  style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: themeConfig.colors.text }}
                 >
                   {stats.pendingRequests}
                 </div>
                 <div
-                  className="text-sm font-semibold"
-                  style={{
-                    color: themeConfig.colors.textSecondary,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
+                  className="text-sm font-medium"
+                  style={{ color: themeConfig.colors.textSecondary }}
                 >
                   Pending
                 </div>
               </div>
 
               <div
-                className="rounded-2xl p-6 text-center transform hover:scale-105 hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl"
+                className="rounded-2xl p-6 text-center transition-all duration-300"
                 style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.success}15 0%, ${themeConfig.colors.surface} 100%)`,
-                  border: `2px solid ${themeConfig.colors.success}40`,
-                  boxShadow: `0 15px 35px rgba(0,0,0,0.12), 0 0 0 1px ${themeConfig.colors.success}20`,
+                  background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  boxShadow: `0 2px 8px rgba(0,0,0,0.04)`,
                 }}
               >
                 <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transform hover:rotate-12 transition-all duration-300"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                   style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.success} 0%, ${themeConfig.colors.primary} 100%)`,
-                    boxShadow: `0 8px 20px rgba(0,0,0,0.15), 0 0 15px ${themeConfig.colors.success}40`,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.success}10 0%, ${themeConfig.colors.success}05 100%)`,
+                    color: themeConfig.colors.success,
                   }}
                 >
-                  <span className="text-2xl">✨</span>
+                  <span className="text-xl">✨</span>
                 </div>
                 <div
-                  className="text-3xl font-bold mb-2"
-                  style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.success} 0%, ${themeConfig.colors.primary} 100%)`,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: themeConfig.colors.text }}
                 >
                   {stats.completedRequests}
                 </div>
                 <div
-                  className="text-sm font-semibold"
-                  style={{
-                    color: themeConfig.colors.textSecondary,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
+                  className="text-sm font-medium"
+                  style={{ color: themeConfig.colors.textSecondary }}
                 >
                   Completed
                 </div>
               </div>
             </div>
 
-            {/* Enhanced Category Chart with Warm/Cool Gradients */}
+            {/* Minimalistic Category Chart */}
             <div
-              className="rounded-2xl p-8 shadow-xl transform hover:scale-[1.01] transition-all duration-500"
+              className="rounded-2xl p-8 transition-all duration-300"
               style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 50%, ${themeConfig.colors.primary}05 100%)`,
-                border: `2px solid ${themeConfig.colors.primary}30`,
-                boxShadow: `0 20px 40px rgba(0,0,0,0.15), 0 0 0 1px ${themeConfig.colors.primary}20`,
+                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                border: `1px solid ${themeConfig.colors.border}`,
+                boxShadow: `0 4px 12px rgba(0,0,0,0.05)`,
               }}
             >
               <div className="flex items-center mb-6">
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4"
                   style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                    boxShadow: `0 6px 15px rgba(0,0,0,0.15), 0 0 12px ${themeConfig.colors.primary}40`,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.primary}05 100%)`,
+                    color: themeConfig.colors.primary,
                   }}
                 >
-                  <span className="text-xl">🎨</span>
+                  <span className="text-lg">🎨</span>
                 </div>
                 <h2
-                  className="text-2xl font-bold"
-                  style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                  className="text-xl font-bold"
+                  style={{ color: themeConfig.colors.text }}
                 >
                   Requests by Category
                 </h2>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {Object.entries(categoryData).map(
                   ([category, count], index) => (
                     <div
                       key={category}
-                      className="flex items-center justify-between p-5 rounded-xl transform hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
+                      className="flex items-center justify-between p-4 rounded-xl transition-all duration-300"
                       style={{
                         background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
-                        border: `2px solid ${themeConfig.colors.primary}20`,
-                        boxShadow: `0 8px 20px rgba(0,0,0,0.08), 0 0 0 1px ${themeConfig.colors.primary}10`,
+                        border: `1px solid ${themeConfig.colors.border}`,
                       }}
                     >
                       <div className="flex items-center">
                         <div
-                          className="w-10 h-10 rounded-lg flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
+                          className="w-8 h-8 rounded-lg flex items-center justify-center mr-4"
                           style={{
                             background:
                               index === 0
-                                ? `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.warning} 100%)`
+                                ? `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.primary}05 100%)`
                                 : index === 1
-                                  ? `linear-gradient(135deg, ${themeConfig.colors.secondary} 0%, ${themeConfig.colors.primary} 100%)`
+                                  ? `linear-gradient(135deg, ${themeConfig.colors.secondary}10 0%, ${themeConfig.colors.secondary}05 100%)`
                                   : index === 2
-                                    ? `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`
-                                    : `linear-gradient(135deg, ${themeConfig.colors.success} 0%, ${themeConfig.colors.secondary} 100%)`,
-                            boxShadow: `0 6px 15px rgba(0,0,0,0.15), 0 0 12px ${themeConfig.colors.primary}40`,
+                                    ? `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`
+                                    : `linear-gradient(135deg, ${themeConfig.colors.success}10 0%, ${themeConfig.colors.success}05 100%)`,
+                            color:
+                              index === 0
+                                ? themeConfig.colors.primary
+                                : index === 1
+                                  ? themeConfig.colors.secondary
+                                  : index === 2
+                                    ? themeConfig.colors.warning
+                                    : themeConfig.colors.success,
                           }}
                         >
-                          <span className="text-lg">
+                          <span className="text-sm">
                             {index === 0
                               ? "🔧"
                               : index === 1
@@ -860,52 +826,45 @@ export default function AdminDashboard() {
                           </span>
                         </div>
                         <span
-                          className="text-base font-bold"
-                          style={{
-                            background: `linear-gradient(135deg, ${themeConfig.colors.text} 0%, ${themeConfig.colors.primary} 100%)`,
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
-                          }}
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.text }}
                         >
                           {category}
                         </span>
                       </div>
                       <div className="flex items-center space-x-4">
                         <div
-                          className="w-56 rounded-full h-4"
+                          className="w-48 rounded-full h-2"
                           style={{
-                            background: `linear-gradient(90deg, ${themeConfig.colors.border}20 0%, ${themeConfig.colors.border}10 100%)`,
-                            boxShadow: `inset 0 2px 4px rgba(0,0,0,0.1)`,
+                            background: themeConfig.colors.border + "20",
                           }}
                         >
                           <div
-                            className="h-4 rounded-full transform transition-all duration-1000 ease-out"
+                            className="h-2 rounded-full transition-all duration-700 ease-out"
                             style={{
                               width: `${(count / stats.totalRequests) * 100}%`,
                               background:
                                 index === 0
-                                  ? `linear-gradient(90deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.warning} 100%)`
+                                  ? themeConfig.colors.primary
                                   : index === 1
-                                    ? `linear-gradient(90deg, ${themeConfig.colors.secondary} 0%, ${themeConfig.colors.primary} 100%)`
+                                    ? themeConfig.colors.secondary
                                     : index === 2
-                                      ? `linear-gradient(90deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`
-                                      : `linear-gradient(90deg, ${themeConfig.colors.success} 0%, ${themeConfig.colors.secondary} 100%)`,
-                              boxShadow: `0 4px 12px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.2)`,
+                                      ? themeConfig.colors.warning
+                                      : themeConfig.colors.success,
                             }}
                           ></div>
                         </div>
                         <div
-                          className="px-4 py-2 rounded-full text-sm font-bold transform hover:scale-110 transition-all duration-300"
+                          className="px-3 py-1 rounded-full text-sm font-medium"
                           style={{
                             background:
                               index === 0
-                                ? `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.warning}10 100%)`
+                                ? `${themeConfig.colors.primary}10`
                                 : index === 1
-                                  ? `linear-gradient(135deg, ${themeConfig.colors.secondary}20 0%, ${themeConfig.colors.primary}10 100%)`
+                                  ? `${themeConfig.colors.secondary}10`
                                   : index === 2
-                                    ? `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.accent}10 100%)`
-                                    : `linear-gradient(135deg, ${themeConfig.colors.success}20 0%, ${themeConfig.colors.secondary}10 100%)`,
+                                    ? `${themeConfig.colors.warning}10`
+                                    : `${themeConfig.colors.success}10`,
                             color:
                               index === 0
                                 ? themeConfig.colors.primary
@@ -914,16 +873,6 @@ export default function AdminDashboard() {
                                   : index === 2
                                     ? themeConfig.colors.warning
                                     : themeConfig.colors.success,
-                            border: `2px solid ${
-                              index === 0
-                                ? themeConfig.colors.primary
-                                : index === 1
-                                  ? themeConfig.colors.secondary
-                                  : index === 2
-                                    ? themeConfig.colors.warning
-                                    : themeConfig.colors.success
-                            }40`,
-                            boxShadow: `0 4px 12px rgba(0,0,0,0.1)`,
                           }}
                         >
                           {count}
@@ -935,68 +884,61 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Enhanced Priority Chart with Strong Warm/Cool Contrasts */}
+            {/* Minimalistic Priority Chart */}
             <div
-              className="rounded-2xl p-8 shadow-xl transform hover:scale-[1.01] transition-all duration-500"
+              className="rounded-2xl p-8 transition-all duration-300"
               style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 50%, ${themeConfig.colors.warning}05 100%)`,
-                border: `2px solid ${themeConfig.colors.warning}30`,
-                boxShadow: `0 20px 40px rgba(0,0,0,0.15), 0 0 0 1px ${themeConfig.colors.warning}20`,
+                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                border: `1px solid ${themeConfig.colors.border}`,
+                boxShadow: `0 4px 12px rgba(0,0,0,0.05)`,
               }}
             >
               <div className="flex items-center mb-6">
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4"
                   style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.error} 100%)`,
-                    boxShadow: `0 6px 15px rgba(0,0,0,0.15), 0 0 12px ${themeConfig.colors.warning}40`,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`,
+                    color: themeConfig.colors.warning,
                   }}
                 >
-                  <span className="text-xl">🚀</span>
+                  <span className="text-lg">🚀</span>
                 </div>
                 <h2
-                  className="text-2xl font-bold"
-                  style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.error} 100%)`,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                  className="text-xl font-bold"
+                  style={{ color: themeConfig.colors.text }}
                 >
                   Requests by Priority
                 </h2>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {Object.entries(priorityData).map(([priority, count]) => (
                   <div
                     key={priority}
-                    className="flex items-center justify-between p-5 rounded-xl transform hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
+                    className="flex items-center justify-between p-4 rounded-xl transition-all duration-300"
                     style={{
                       background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
-                      border: `2px solid ${themeConfig.colors.warning}20`,
-                      boxShadow: `0 8px 20px rgba(0,0,0,0.08), 0 0 0 1px ${themeConfig.colors.warning}10`,
+                      border: `1px solid ${themeConfig.colors.border}`,
                     }}
                   >
                     <div className="flex items-center">
                       <div
-                        className="w-10 h-10 rounded-lg flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
+                        className="w-8 h-8 rounded-lg flex items-center justify-center mr-4"
                         style={{
                           background:
                             priority === "HIGH"
-                              ? `linear-gradient(135deg, ${themeConfig.colors.error} 0%, ${themeConfig.colors.warning} 100%)`
+                              ? `linear-gradient(135deg, ${themeConfig.colors.error}10 0%, ${themeConfig.colors.error}05 100%)`
                               : priority === "MEDIUM"
-                                ? `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`
-                                : `linear-gradient(135deg, ${themeConfig.colors.textSecondary} 0%, ${themeConfig.colors.primary} 100%)`,
-                          boxShadow: `0 6px 15px rgba(0,0,0,0.15), 0 0 12px ${
+                                ? `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`
+                                : `linear-gradient(135deg, ${themeConfig.colors.textSecondary}10 0%, ${themeConfig.colors.textSecondary}05 100%)`,
+                          color:
                             priority === "HIGH"
                               ? themeConfig.colors.error
                               : priority === "MEDIUM"
                                 ? themeConfig.colors.warning
-                                : themeConfig.colors.textSecondary
-                          }40`,
+                                : themeConfig.colors.textSecondary,
                         }}
                       >
-                        <span className="text-lg">
+                        <span className="text-sm">
                           {priority === "HIGH"
                             ? "🔥"
                             : priority === "MEDIUM"
@@ -1005,67 +947,47 @@ export default function AdminDashboard() {
                         </span>
                       </div>
                       <span
-                        className="text-base font-bold"
-                        style={{
-                          background:
-                            priority === "HIGH"
-                              ? `linear-gradient(135deg, ${themeConfig.colors.error} 0%, ${themeConfig.colors.warning} 100%)`
-                              : priority === "MEDIUM"
-                                ? `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`
-                                : `linear-gradient(135deg, ${themeConfig.colors.textSecondary} 0%, ${themeConfig.colors.primary} 100%)`,
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          backgroundClip: "text",
-                        }}
+                        className="text-sm font-medium"
+                        style={{ color: themeConfig.colors.text }}
                       >
                         {priority}
                       </span>
                     </div>
                     <div className="flex items-center space-x-4">
                       <div
-                        className="w-56 rounded-full h-4"
+                        className="w-48 rounded-full h-2"
                         style={{
-                          background: `linear-gradient(90deg, ${themeConfig.colors.border}20 0%, ${themeConfig.colors.border}10 100%)`,
-                          boxShadow: `inset 0 2px 4px rgba(0,0,0,0.1)`,
+                          background: themeConfig.colors.border + "20",
                         }}
                       >
                         <div
-                          className="h-4 rounded-full transform transition-all duration-1000 ease-out"
+                          className="h-2 rounded-full transition-all duration-700 ease-out"
                           style={{
                             width: `${(count / stats.totalRequests) * 100}%`,
                             background:
                               priority === "HIGH"
-                                ? `linear-gradient(90deg, ${themeConfig.colors.error} 0%, ${themeConfig.colors.warning} 100%)`
+                                ? themeConfig.colors.error
                                 : priority === "MEDIUM"
-                                  ? `linear-gradient(90deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`
-                                  : `linear-gradient(90deg, ${themeConfig.colors.textSecondary} 0%, ${themeConfig.colors.primary} 100%)`,
-                            boxShadow: `0 4px 12px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.2)`,
+                                  ? themeConfig.colors.warning
+                                  : themeConfig.colors.textSecondary,
                           }}
                         ></div>
                       </div>
                       <div
-                        className="px-4 py-2 rounded-full text-sm font-bold transform hover:scale-110 transition-all duration-300"
+                        className="px-3 py-1 rounded-full text-sm font-medium"
                         style={{
                           background:
                             priority === "HIGH"
-                              ? `linear-gradient(135deg, ${themeConfig.colors.error}20 0%, ${themeConfig.colors.warning}10 100%)`
+                              ? `${themeConfig.colors.error}10`
                               : priority === "MEDIUM"
-                                ? `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.accent}10 100%)`
-                                : `linear-gradient(135deg, ${themeConfig.colors.textSecondary}20 0%, ${themeConfig.colors.primary}10 100%)`,
+                                ? `${themeConfig.colors.warning}10`
+                                : `${themeConfig.colors.textSecondary}10`,
                           color:
                             priority === "HIGH"
                               ? themeConfig.colors.error
                               : priority === "MEDIUM"
                                 ? themeConfig.colors.warning
                                 : themeConfig.colors.textSecondary,
-                          border: `2px solid ${
-                            priority === "HIGH"
-                              ? themeConfig.colors.error
-                              : priority === "MEDIUM"
-                                ? themeConfig.colors.warning
-                                : themeConfig.colors.textSecondary
-                          }40`,
-                          boxShadow: `0 4px 12px rgba(0,0,0,0.1)`,
                         }}
                       >
                         {count}
