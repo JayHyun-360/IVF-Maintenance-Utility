@@ -38,36 +38,36 @@ export const themes: Record<Theme, ThemeConfig> = {
   },
   light: {
     name: "light",
-    displayName: "Soft Light",
+    displayName: "Ocean Light",
     colors: {
-      primary: "#4F46E5", // Soft indigo
-      secondary: "#7C3AED", // Soft purple
-      accent: "#EC4899", // Soft pink
-      background: "#FEFEFE", // Very soft white
-      surface: "#F8FAFC", // Soft gray surface
-      text: "#1E293B", // Soft dark text
+      primary: "#0EA5E9", // Sky blue
+      secondary: "#06B6D4", // Cyan
+      accent: "#0891B2", // Darker cyan
+      background: "#F0F9FF", // Very light blue background
+      surface: "#FFFFFF", // Pure white surface
+      text: "#0C4A6E", // Deep blue text
       textSecondary: "#64748B", // Muted text
-      border: "#E2E8F0", // Light border
-      success: "#10B981", // Emerald green
-      warning: "#F59E0B", // Amber
-      error: "#EF4444", // Red
+      border: "#E0F2FE", // Light blue border
+      success: "#059669", // Emerald green
+      warning: "#D97706", // Orange
+      error: "#DC2626", // Red
     },
   },
   dark: {
     name: "dark",
-    displayName: "Comfort Dark",
+    displayName: "Midnight Dark",
     colors: {
-      primary: "#818CF8", // Light indigo
-      secondary: "#A78BFA", // Light purple
-      accent: "#F472B6", // Light pink
-      background: "#1A1B26", // Soft dark background (not pure black)
-      surface: "#24283B", // Dark surface with warmth
-      text: "#E4E4E7", // Soft white text
-      textSecondary: "#A1A1AA", // Muted light text
-      border: "#3F3F46", // Soft border
-      success: "#34D399", // Light green
-      warning: "#FBBF24", // Light amber
-      error: "#F87171", // Light red
+      primary: "#3B82F6", // Blue
+      secondary: "#1D4ED8", // Darker blue
+      accent: "#60A5FA", // Light blue
+      background: "#0F172A", // Slate background
+      surface: "#1E293B", // Dark slate surface
+      text: "#F1F5F9", // Light slate text
+      textSecondary: "#94A3B8", // Muted slate text
+      border: "#334155", // Slate border
+      success: "#10B981", // Emerald green
+      warning: "#F59E0B", // Amber
+      error: "#EF4444", // Red
     },
   },
 };

@@ -54,7 +54,7 @@ export default function StudentHistoryPage() {
             onClick={() => router.push("/student")}
             className="px-6 py-3 rounded-xl font-semibold"
             style={{
-              background: "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
+              background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
               color: "#FFFFFF",
             }}
           >

@@ -158,7 +158,7 @@ export default function StudentPage() {
               className="text-3xl font-bold mb-2"
               style={{
                 color: themeConfig.colors.text,
-                textShadow: "0 1px 2px rgba(0,0,0,0.05)",
+                textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
               }}
             >
               Submit Maintenance Request
@@ -187,7 +187,7 @@ export default function StudentPage() {
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 borderColor: themeConfig.colors.border,
                 border: "1px solid",
-                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
               <div className="flex items-center mb-6">
@@ -384,10 +384,13 @@ export default function StudentPage() {
                 >
                   <div
                     className="w-20 h-20 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "rgba(59, 130, 246, 0.1)" }}
+                    style={{
+                      backgroundColor: `${themeConfig.colors.primary}10`,
+                    }}
                   >
                     <svg
-                      className="w-10 h-10 text-blue-500"
+                      className="w-10 h-10"
+                      style={{ color: themeConfig.colors.primary }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

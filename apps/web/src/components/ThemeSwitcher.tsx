@@ -26,17 +26,17 @@ const themes: {
   },
   {
     value: "light",
-    label: "Soft Light",
-    icon: "☁️",
-    colors: { primary: "#4F46E5", secondary: "#7C3AED" },
-    description: "Gentle indigo and purple tones",
+    label: "Ocean Light",
+    icon: "🌊",
+    colors: { primary: "#0EA5E9", secondary: "#06B6D4" },
+    description: "Fresh sky blue and cyan theme",
   },
   {
     value: "dark",
-    label: "Comfort Dark",
-    icon: "🌙",
-    colors: { primary: "#818CF8", secondary: "#A78BFA" },
-    description: "Easy on the eyes dark theme",
+    label: "Midnight Dark",
+    icon: "🌃",
+    colors: { primary: "#3B82F6", secondary: "#1D4ED8" },
+    description: "Professional blue slate theme",
   },
 ];
 

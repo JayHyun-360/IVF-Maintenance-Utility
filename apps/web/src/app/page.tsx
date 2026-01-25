@@ -75,7 +75,7 @@ export default function Home() {
             className="w-24 h-24 mx-auto rounded-3xl flex items-center justify-center mb-8 shadow-2xl transform hover:scale-110 transition-all duration-500"
             style={{
               background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
-              boxShadow: `0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.1)`,
+              boxShadow: `0 20px 40px ${themeConfig.colors.primary}30, 0 0 0 1px ${themeConfig.colors.primary}20`,
             }}
           >
             <svg
@@ -94,13 +94,13 @@ export default function Home() {
           </div>
           <h1
             className="text-5xl font-bold mb-4 text-white"
-            style={{ textShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
+            style={{ textShadow: `0 2px 4px ${themeConfig.colors.primary}50` }}
           >
             Maintenance Portal
           </h1>
           <p
             className="text-xl text-white opacity-90"
-            style={{ textShadow: "0 1px 2px rgba(0,0,0,0.1)" }}
+            style={{ textShadow: `0 1px 2px ${themeConfig.colors.primary}30` }}
           >
             Integrated Visual Feedback & Maintenance Utility
           </p>
@@ -117,7 +117,7 @@ export default function Home() {
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
               <div
@@ -159,7 +159,7 @@ export default function Home() {
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
               <div
@@ -201,7 +201,7 @@ export default function Home() {
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
               <div
@@ -243,7 +243,7 @@ export default function Home() {
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
               <div
@@ -289,14 +289,14 @@ export default function Home() {
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
               <div
                 className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                  boxShadow: `0 8px 20px rgba(0,0,0,0.15)`,
+                  boxShadow: `0 8px 20px ${themeConfig.colors.primary}25`,
                 }}
               >
                 <svg
@@ -352,14 +352,14 @@ export default function Home() {
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
               <div
                 className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
-                  boxShadow: `0 8px 20px rgba(0,0,0,0.15)`,
+                  boxShadow: `0 8px 20px ${themeConfig.colors.primary}25`,
                 }}
               >
                 <svg
