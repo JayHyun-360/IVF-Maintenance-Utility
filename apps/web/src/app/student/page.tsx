@@ -153,12 +153,12 @@ export default function StudentPage() {
           borderColor: themeConfig.colors.border,
         }}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg backdrop-blur-sm flex-shrink-0">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-10 sm:h-16">
+            <div className="flex items-center space-x-1 sm:space-x-3 min-w-0 flex-1">
+              <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg sm:rounded-2xl flex items-center justify-center shadow-lg backdrop-blur-sm flex-shrink-0">
                 <svg
-                  className="w-4 h-4 sm:w-6 sm:h-6 text-white"
+                  className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={2}
@@ -172,7 +172,7 @@ export default function StudentPage() {
               </div>
               <div className="min-w-0">
                 <h1
-                  className="text-base sm:text-xl font-bold truncate"
+                  className="text-xs sm:text-xl font-bold truncate"
                   style={{
                     color: themeConfig.colors.text,
                   }}
@@ -183,7 +183,7 @@ export default function StudentPage() {
                   <span className="sm:hidden">Maintenance</span>
                 </h1>
                 <p
-                  className="text-xs sm:text-sm hidden sm:block"
+                  className="text-xs hidden sm:block"
                   style={{
                     color: themeConfig.colors.textSecondary,
                   }}
@@ -192,18 +192,18 @@ export default function StudentPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="flex items-center space-x-1 sm:space-x-3">
               {/* Settings Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => setShowSettings(!showSettings)}
-                  className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105"
+                  className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105"
                   style={{
                     color: themeConfig.colors.text,
                   }}
                 >
                   <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    className="w-3 h-3 sm:w-5 sm:h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -354,25 +354,25 @@ export default function StudentPage() {
 
               <button
                 onClick={() => router.push("/")}
-                className="px-2 sm:px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 transform hover:scale-105 text-xs sm:text-base"
+                className="px-1 sm:px-4 py-1 sm:py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 transform hover:scale-105 text-xs sm:text-base"
                 style={{
                   color: themeConfig.colors.text,
                   borderColor: themeConfig.colors.border,
                 }}
               >
                 <span className="hidden sm:inline">← Back to Home</span>
-                <span className="sm:hidden">← Back</span>
+                <span className="sm:hidden">←</span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 sm:gap-6 mb-2 sm:mb-8">
           <div
-            className="rounded-lg shadow-lg p-3 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+            className="rounded-lg shadow-lg p-1 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
@@ -387,15 +387,15 @@ export default function StudentPage() {
                   Active
                 </p>
                 <p
-                  className="text-lg sm:text-2xl font-bold"
+                  className="text-sm sm:text-2xl font-bold"
                   style={{ color: themeConfig.colors.text }}
                 >
                   0
                 </p>
               </div>
-              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+              <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-1">
                 <svg
-                  className="w-4 h-4 sm:w-6 sm:h-6 text-white"
+                  className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -412,7 +412,7 @@ export default function StudentPage() {
           </div>
 
           <div
-            className="rounded-lg shadow-lg p-3 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+            className="rounded-lg shadow-lg p-1 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
@@ -427,15 +427,15 @@ export default function StudentPage() {
                   Completed
                 </p>
                 <p
-                  className="text-lg sm:text-2xl font-bold"
+                  className="text-sm sm:text-2xl font-bold"
                   style={{ color: themeConfig.colors.text }}
                 >
                   0
                 </p>
               </div>
-              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+              <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-1">
                 <svg
-                  className="w-4 h-4 sm:w-6 sm:h-6 text-white"
+                  className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -452,7 +452,7 @@ export default function StudentPage() {
           </div>
 
           <div
-            className="rounded-lg shadow-lg p-3 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+            className="rounded-lg shadow-lg p-1 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
@@ -467,15 +467,15 @@ export default function StudentPage() {
                   Pending
                 </p>
                 <p
-                  className="text-lg sm:text-2xl font-bold"
+                  className="text-sm sm:text-2xl font-bold"
                   style={{ color: themeConfig.colors.text }}
                 >
                   0
                 </p>
               </div>
-              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+              <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-1">
                 <svg
-                  className="w-4 h-4 sm:w-6 sm:h-6 text-white"
+                  className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -492,7 +492,7 @@ export default function StudentPage() {
           </div>
 
           <div
-            className="rounded-lg shadow-lg p-3 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+            className="rounded-lg shadow-lg p-1 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
@@ -507,15 +507,15 @@ export default function StudentPage() {
                   Avg. Response
                 </p>
                 <p
-                  className="text-lg sm:text-2xl font-bold"
+                  className="text-sm sm:text-2xl font-bold"
                   style={{ color: themeConfig.colors.text }}
                 >
                   24h
                 </p>
               </div>
-              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+              <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-1">
                 <svg
-                  className="w-4 h-4 sm:w-6 sm:h-6 text-white"
+                  className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -532,22 +532,22 @@ export default function StudentPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-3 sm:gap-8">
           {/* Left Side - Main Content */}
-          <div className="xl:col-span-2 space-y-4 sm:space-y-6">
+          <div className="xl:col-span-2 space-y-2 sm:space-y-6">
             {/* Quick Actions Bar */}
             <div
-              className="rounded-lg shadow-lg p-3 sm:p-4 theme-card"
+              className="rounded-lg shadow-lg p-2 sm:p-4 theme-card"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
               }}
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                  <button className="px-3 sm:px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 flex items-center justify-center space-x-2 text-sm sm:text-base">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
+                  <button className="px-2 sm:px-4 py-1 sm:py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 flex items-center justify-center space-x-1 sm:space-x-2 text-xs sm:text-base">
                     <svg
-                      className="w-4 h-4"
+                      className="w-3 h-3 sm:w-4 sm:h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -559,17 +559,18 @@ export default function StudentPage() {
                         d="M12 4v16m8-8H4"
                       />
                     </svg>
-                    <span>New Request</span>
+                    <span className="hidden sm:inline">New Request</span>
+                    <span className="sm:hidden">+</span>
                   </button>
                   <button
-                    className="px-3 sm:px-4 py-2 border rounded-lg hover:bg-gray-50 transition-all duration-200 flex items-center justify-center space-x-2 text-sm sm:text-base"
+                    className="px-2 sm:px-4 py-1 sm:py-2 border rounded-lg hover:bg-gray-50 transition-all duration-200 flex items-center justify-center space-x-1 sm:space-x-2 text-xs sm:text-base"
                     style={{
                       borderColor: themeConfig.colors.border,
                       color: themeConfig.colors.text,
                     }}
                   >
                     <svg
-                      className="w-4 h-4"
+                      className="w-3 h-3 sm:w-4 sm:h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -581,10 +582,11 @@ export default function StudentPage() {
                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                       />
                     </svg>
-                    <span>My Requests</span>
+                    <span className="hidden sm:inline">My Requests</span>
+                    <span className="sm:hidden">📋</span>
                   </button>
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="hidden sm:flex flex-wrap items-center gap-2">
                   <span
                     className="text-xs sm:text-sm"
                     style={{ color: themeConfig.colors.textSecondary }}
@@ -603,17 +605,17 @@ export default function StudentPage() {
 
             {/* Main Form Card */}
             <div
-              className="rounded-lg shadow-lg p-4 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+              className="rounded-lg shadow-lg p-3 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
               }}
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 sm:mb-6 gap-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg
-                      className="w-4 h-4 sm:w-6 sm:h-6 text-white"
+                      className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -628,20 +630,23 @@ export default function StudentPage() {
                   </div>
                   <div className="min-w-0">
                     <h2
-                      className="text-lg sm:text-xl font-bold"
+                      className="text-sm sm:text-xl font-bold"
                       style={{ color: themeConfig.colors.text }}
                     >
-                      Submit New Request
+                      <span className="hidden sm:inline">
+                        Submit New Request
+                      </span>
+                      <span className="sm:hidden">New Request</span>
                     </h2>
                     <p
-                      className="text-xs sm:text-sm hidden sm:block"
+                      className="text-xs hidden sm:block"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Fill in the details below to report a maintenance issue
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="hidden sm:flex flex-wrap items-center gap-2">
                   <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
                     📷 Images Supported
                   </span>
@@ -651,17 +656,18 @@ export default function StudentPage() {
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-6">
                   <div>
                     <label
                       htmlFor="title"
-                      className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
+                      className="block text-xs font-medium mb-1 sm:mb-2"
                       style={{
                         color: themeConfig.colors.text,
                       }}
                     >
-                      Request Title *
+                      <span className="hidden sm:inline">Request Title *</span>
+                      <span className="sm:hidden">Title *</span>
                     </label>
                     <input
                       type="text"
@@ -671,7 +677,7 @@ export default function StudentPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, title: e.target.value })
                       }
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-600 text-sm sm:text-base"
+                      className="w-full px-2 sm:px-4 py-2 sm:py-3 rounded-lg border transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-600 text-xs sm:text-base"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
@@ -684,12 +690,13 @@ export default function StudentPage() {
                   <div>
                     <label
                       htmlFor="location"
-                      className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
+                      className="block text-xs font-medium mb-1 sm:mb-2"
                       style={{
                         color: themeConfig.colors.text,
                       }}
                     >
-                      Location *
+                      <span className="hidden sm:inline">Location *</span>
+                      <span className="sm:hidden">Where *</span>
                     </label>
                     <input
                       type="text"
@@ -698,7 +705,7 @@ export default function StudentPage() {
                       value={formData.location}
                       onChange={handleChange}
                       required
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-sm sm:text-base"
+                      className="w-full px-2 sm:px-4 py-2 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-xs sm:text-base"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
@@ -712,12 +719,15 @@ export default function StudentPage() {
                 <div>
                   <label
                     htmlFor="description"
-                    className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
+                    className="block text-xs font-medium mb-1 sm:mb-2"
                     style={{
                       color: themeConfig.colors.text,
                     }}
                   >
-                    Detailed Description *
+                    <span className="hidden sm:inline">
+                      Detailed Description *
+                    </span>
+                    <span className="sm:hidden">Details *</span>
                   </label>
                   <textarea
                     id="description"
@@ -725,8 +735,8 @@ export default function StudentPage() {
                     value={formData.description}
                     onChange={handleChange}
                     required
-                    rows={3}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-sm sm:text-base resize-none"
+                    rows={2}
+                    className="w-full px-2 sm:px-4 py-2 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-600 text-xs sm:text-base resize-none"
                     style={{
                       backgroundColor: themeConfig.colors.background,
                       borderColor: themeConfig.colors.border,
@@ -739,15 +749,18 @@ export default function StudentPage() {
                 {/* Image Attachment Section */}
                 <div>
                   <label
-                    className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
+                    className="block text-xs font-medium mb-1 sm:mb-2"
                     style={{
                       color: themeConfig.colors.text,
                     }}
                   >
-                    📷 Attach Images (Optional)
+                    <span className="hidden sm:inline">
+                      📷 Attach Images (Optional)
+                    </span>
+                    <span className="sm:hidden">📷 Photos</span>
                   </label>
                   <div
-                    className="border-2 border-dashed rounded-lg p-4 sm:p-6 text-center transition-all duration-200 hover:border-purple-400"
+                    className="border-2 border-dashed rounded-lg p-2 sm:p-6 text-center transition-all duration-200 hover:border-purple-400"
                     style={{
                       borderColor: themeConfig.colors.border,
                       backgroundColor: themeConfig.colors.background,
@@ -763,11 +776,11 @@ export default function StudentPage() {
                     />
                     <label
                       htmlFor="images"
-                      className="cursor-pointer flex flex-col items-center space-y-2"
+                      className="cursor-pointer flex flex-col items-center space-y-1 sm:space-y-2"
                     >
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                      <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
                         <svg
-                          className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                          className="w-3 h-3 sm:w-6 sm:h-6 text-white"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -776,28 +789,19 @@ export default function StudentPage() {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            d="M12 4v16m8-8H4"
                           />
                         </svg>
                       </div>
-                      <div>
-                        <p
-                          className="text-xs sm:text-sm font-medium"
-                          style={{
-                            color: themeConfig.colors.text,
-                          }}
-                        >
+                      <p className="text-xs text-gray-600">
+                        <span className="hidden sm:inline">
                           Click to upload images
-                        </p>
-                        <p
-                          className="text-xs"
-                          style={{
-                            color: themeConfig.colors.textSecondary,
-                          }}
-                        >
-                          PNG, JPG, GIF up to 5MB each
-                        </p>
-                      </div>
+                        </span>
+                        <span className="sm:hidden">Add photos</span>
+                      </p>
+                      <p className="text-xs text-gray-500 hidden sm:block">
+                        Max 5MB each
+                      </p>
                     </label>
                   </div>
 

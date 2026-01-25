@@ -57,12 +57,12 @@ export default function Home() {
           borderColor: themeConfig.colors.border,
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3 sm:space-x-4">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-12 sm:h-16">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg sm:rounded-2xl flex items-center justify-center shadow-lg backdrop-blur-sm">
                 <svg
-                  className="w-5 h-5 sm:w-7 sm:h-7 text-white"
+                  className="w-3 h-3 sm:w-7 sm:h-7 text-white"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={2}
@@ -76,7 +76,7 @@ export default function Home() {
               </div>
               <div className="hidden sm:block">
                 <h1
-                  className="text-lg sm:text-xl font-bold"
+                  className="text-sm sm:text-xl font-bold"
                   style={{
                     color: themeConfig.colors.text,
                   }}
@@ -95,7 +95,7 @@ export default function Home() {
               {/* Mobile-only title */}
               <div className="sm:hidden">
                 <h1
-                  className="text-lg font-bold"
+                  className="text-sm font-bold"
                   style={{
                     color: themeConfig.colors.text,
                   }}
@@ -216,13 +216,13 @@ export default function Home() {
             <div className="sm:hidden">
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
+                className="p-1 rounded-lg hover:bg-gray-100 transition-all duration-200"
                 style={{
                   color: themeConfig.colors.text,
                 }}
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -355,13 +355,13 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Stats Cards */}
-        <div className="mb-8">
+        <div className="mb-4 sm:mb-8">
           {/* Mobile and Desktop Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
             <div
-              className="rounded-lg shadow-lg p-4 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+              className="rounded-lg shadow-lg p-2 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
@@ -376,13 +376,13 @@ export default function Home() {
                     Total Requests
                   </p>
                   <p
-                    className="text-2xl sm:text-3xl font-bold mt-1"
+                    className="text-lg sm:text-3xl font-bold mt-1"
                     style={{ color: themeConfig.colors.text }}
                   >
                     {stats.totalRequests}
                   </p>
                   <p
-                    className="text-xs sm:text-sm mt-2"
+                    className="text-xs sm:text-sm mt-1"
                     style={{
                       color:
                         themeConfig.name === "dark" ? "#60a5fa" : "#3b82f6",
@@ -393,9 +393,9 @@ export default function Home() {
                       : "All resolved"}
                   </p>
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-3">
+                <div className="w-8 h-8 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
                   <svg
-                    className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -412,7 +412,7 @@ export default function Home() {
             </div>
 
             <div
-              className="rounded-lg shadow-lg p-4 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+              className="rounded-lg shadow-lg p-2 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
@@ -427,13 +427,13 @@ export default function Home() {
                     In Progress
                   </p>
                   <p
-                    className="text-2xl sm:text-3xl font-bold mt-1"
+                    className="text-lg sm:text-3xl font-bold mt-1"
                     style={{ color: themeConfig.colors.text }}
                   >
                     {stats.inProgressRequests}
                   </p>
                   <p
-                    className="text-xs sm:text-sm mt-2"
+                    className="text-xs sm:text-sm mt-1"
                     style={{
                       color:
                         themeConfig.name === "dark" ? "#f59e0b" : "#d97706",
@@ -444,9 +444,9 @@ export default function Home() {
                       : "None active"}
                   </p>
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-3">
+                <div className="w-8 h-8 sm:w-14 sm:h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
                   <svg
-                    className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -463,7 +463,7 @@ export default function Home() {
             </div>
 
             <div
-              className="rounded-lg shadow-lg p-4 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+              className="rounded-lg shadow-lg p-2 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
@@ -478,13 +478,13 @@ export default function Home() {
                     Pending
                   </p>
                   <p
-                    className="text-2xl sm:text-3xl font-bold mt-1"
+                    className="text-lg sm:text-3xl font-bold mt-1"
                     style={{ color: themeConfig.colors.text }}
                   >
                     {stats.pendingRequests}
                   </p>
                   <p
-                    className="text-xs sm:text-sm mt-2"
+                    className="text-xs sm:text-sm mt-1"
                     style={{
                       color:
                         themeConfig.name === "dark" ? "#ef4444" : "#dc2626",
@@ -493,9 +493,9 @@ export default function Home() {
                     {stats.pendingRequests > 0 ? "Awaiting action" : "No queue"}
                   </p>
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-3">
+                <div className="w-8 h-8 sm:w-14 sm:h-14 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
                   <svg
-                    className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -512,7 +512,7 @@ export default function Home() {
             </div>
 
             <div
-              className="rounded-lg shadow-lg p-4 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
+              className="rounded-lg shadow-lg p-2 sm:p-6 theme-card transform transition-all duration-200 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
@@ -527,13 +527,13 @@ export default function Home() {
                     Completion Rate
                   </p>
                   <p
-                    className="text-2xl sm:text-3xl font-bold mt-1"
+                    className="text-lg sm:text-3xl font-bold mt-1"
                     style={{ color: themeConfig.colors.text }}
                   >
                     {completionRate}%
                   </p>
                   <p
-                    className="text-xs sm:text-sm mt-2"
+                    className="text-xs sm:text-sm mt-1"
                     style={{
                       color:
                         themeConfig.name === "dark" ? "#4ade80" : "#22c55e",
@@ -542,9 +542,9 @@ export default function Home() {
                     {stats.completedRequests} of {stats.totalRequests} completed
                   </p>
                 </div>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-3">
+                <div className="w-8 h-8 sm:w-14 sm:h-14 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
                   <svg
-                    className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
