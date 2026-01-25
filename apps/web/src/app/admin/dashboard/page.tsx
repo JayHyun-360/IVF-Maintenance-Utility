@@ -4,17 +4,18 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
+  getMaintenanceRequests,
   getMaintenanceStats,
   getRecentRequests,
-  getRequestsByCategory,
-  getRequestsByPriority,
-  getMaintenanceRequests,
   updateRequestStatus,
   deleteMaintenanceRequest,
+  getRequestsByCategory,
+  getRequestsByPriority,
   MaintenanceRequest,
 } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { Z_INDEX } from "@/lib/z-index";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -1005,11 +1006,16 @@ export default function AdminDashboard() {
 
       {/* Image Modal */}
       {showImageModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+          style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
+        >
           <div
             className="rounded-xl p-6 max-w-4xl max-h-[80vh] overflow-auto"
             style={{
               backgroundColor: themeConfig.colors.surface,
+              border: `1px solid ${themeConfig.colors.border}`,
+              zIndex: Z_INDEX.MODAL,
             }}
           >
             <div className="flex justify-between items-center mb-4">
@@ -1042,11 +1048,16 @@ export default function AdminDashboard() {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+          style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
+        >
           <div
             className="rounded-xl p-6 max-w-md"
             style={{
               backgroundColor: themeConfig.colors.surface,
+              border: `1px solid ${themeConfig.colors.border}`,
+              zIndex: Z_INDEX.MODAL,
             }}
           >
             <h2

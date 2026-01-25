@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
+import { Z_INDEX } from "@/lib/z-index";
 
 interface User {
   id: string;
@@ -450,12 +451,16 @@ export default function AdminUsersPage() {
 
       {/* Add User Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+          style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
+        >
           <div
             className="rounded-2xl p-6 w-full max-w-md"
             style={{
               backgroundColor: themeConfig.colors.surface,
               border: `1px solid ${themeConfig.colors.border}`,
+              zIndex: Z_INDEX.MODAL,
             }}
           >
             <h2
@@ -581,12 +586,16 @@ export default function AdminUsersPage() {
 
       {/* Edit User Modal */}
       {showEditModal && selectedUser && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+          style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
+        >
           <div
             className="rounded-2xl p-6 w-full max-w-md"
             style={{
               backgroundColor: themeConfig.colors.surface,
               border: `1px solid ${themeConfig.colors.border}`,
+              zIndex: Z_INDEX.MODAL,
             }}
           >
             <h2
@@ -712,12 +721,16 @@ export default function AdminUsersPage() {
 
       {/* Delete User Modal */}
       {showDeleteModal && selectedUser && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+          style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
+        >
           <div
             className="rounded-2xl p-6 w-full max-w-md"
             style={{
               backgroundColor: themeConfig.colors.surface,
               border: `1px solid ${themeConfig.colors.border}`,
+              zIndex: Z_INDEX.MODAL,
             }}
           >
             <h2

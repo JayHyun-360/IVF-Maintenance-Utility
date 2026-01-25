@@ -32,7 +32,8 @@ export default function Button({
       case "primary":
         return {
           background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-          color: "#FFFFFF",
+          color:
+            themeConfig.colors.background === "#000000" ? "#000000" : "#FFFFFF", // Dynamic text color based on theme
           border: `1px solid ${themeConfig.colors.primary}`,
           boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}20`,
         };
@@ -53,12 +54,13 @@ export default function Button({
         return {
           backgroundColor: "transparent",
           color: themeConfig.colors.text,
-          border: `1px solid transparent`,
+          border: `1px solid ${themeConfig.colors.border}`,
         };
       default:
         return {
           background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-          color: "#FFFFFF",
+          color:
+            themeConfig.colors.background === "#000000" ? "#000000" : "#FFFFFF", // Dynamic text color based on theme
           border: `1px solid ${themeConfig.colors.primary}`,
           boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}20`,
         };

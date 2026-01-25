@@ -8,6 +8,7 @@ import {
   applyTheme,
   type Theme,
 } from "@/lib/theme";
+import { Z_INDEX } from "@/lib/z-index";
 
 const themes: {
   value: Theme;
@@ -18,24 +19,24 @@ const themes: {
 }[] = [
   {
     value: "standard",
-    label: "Standard",
-    icon: "🌅",
-    colors: { primary: "#3B82F6", secondary: "#10B981" },
-    description: "Clean and professional blue theme",
+    label: "Nature",
+    icon: "🌿",
+    colors: { primary: "#10B981", secondary: "#059669" },
+    description: "Clean green and white theme",
   },
   {
     value: "light",
-    label: "Light",
-    icon: "☀️",
-    colors: { primary: "#0EA5E9", secondary: "#06B6D4" },
-    description: "Bright and airy sky theme",
+    label: "Minimal",
+    icon: "⚪",
+    colors: { primary: "#000000", secondary: "#374151" },
+    description: "Pure black and white minimalism",
   },
   {
     value: "dark",
     label: "Dark",
-    icon: "🌙",
-    colors: { primary: "#6366F1", secondary: "#8B5CF6" },
-    description: "Professional dark slate theme",
+    icon: "⚫",
+    colors: { primary: "#FFFFFF", secondary: "#D1D5DB" },
+    description: "True black and white contrast",
   },
 ];
 
@@ -89,10 +90,11 @@ export default function ThemeSwitcher() {
 
       {isOpen && (
         <div
-          className="absolute top-full right-0 mt-2 w-56 rounded-xl shadow-lg border z-50"
+          className="absolute top-full right-0 mt-2 w-56 rounded-xl shadow-lg border"
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
+            zIndex: Z_INDEX.DROPDOWN,
           }}
         >
           <div className="p-2">

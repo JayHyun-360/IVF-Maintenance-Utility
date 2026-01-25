@@ -21,16 +21,16 @@ export interface ThemeConfig {
 export const themes: Record<Theme, ThemeConfig> = {
   standard: {
     name: "standard",
-    displayName: "Warm Harmony",
+    displayName: "Nature",
     colors: {
-      primary: "#3B82F6", // Modern blue
-      secondary: "#10B981", // Emerald green
-      accent: "#F59E0B", // Amber
-      background: "#F8FAFC", // Light slate background
-      surface: "#FFFFFF", // Pure white
-      text: "#1E293B", // Dark slate text
-      textSecondary: "#64748B", // Muted slate text
-      border: "#E2E8F0", // Light border
+      primary: "#10B981", // Emerald green
+      secondary: "#059669", // Darker green
+      accent: "#F3F4F6", // Light gray
+      background: "#FFFFFF", // Pure white
+      surface: "#F9FAFB", // Very light gray
+      text: "#111827", // Dark gray
+      textSecondary: "#6B7280", // Medium gray
+      border: "#E5E7EB", // Light gray border
       success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
@@ -38,16 +38,16 @@ export const themes: Record<Theme, ThemeConfig> = {
   },
   light: {
     name: "light",
-    displayName: "Light Professional",
+    displayName: "Minimal",
     colors: {
-      primary: "#0EA5E9", // Sky blue
-      secondary: "#06B6D4", // Cyan
-      accent: "#F97316", // Orange
+      primary: "#000000", // Pure black
+      secondary: "#374151", // Dark gray
+      accent: "#9CA3AF", // Medium gray
       background: "#FFFFFF", // Pure white
-      surface: "#F8FAFC", // Very light slate
-      text: "#0F172A", // Dark slate text
-      textSecondary: "#475569", // Muted slate text
-      border: "#CBD5E1", // Light border
+      surface: "#FAFAFA", // Off-white
+      text: "#000000", // Pure black
+      textSecondary: "#6B7280", // Medium gray
+      border: "#E5E7EB", // Light gray border
       success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
@@ -55,16 +55,16 @@ export const themes: Record<Theme, ThemeConfig> = {
   },
   dark: {
     name: "dark",
-    displayName: "Dark Professional",
+    displayName: "Dark",
     colors: {
-      primary: "#6366F1", // Modern indigo
-      secondary: "#8B5CF6", // Purple accent
-      accent: "#EC4899", // Pink accent
-      background: "#0F172A", // Deep slate
-      surface: "#1E293B", // Dark slate surface
-      text: "#F1F5F9", // Light slate text
-      textSecondary: "#94A3B8", // Muted slate text
-      border: "#334155", // Border slate
+      primary: "#FFFFFF", // Pure white
+      secondary: "#D1D5DB", // Light gray
+      accent: "#374151", // Medium gray
+      background: "#000000", // Pure black
+      surface: "#111827", // Very dark gray
+      text: "#FFFFFF", // Pure white
+      textSecondary: "#9CA3AF", // Light gray
+      border: "#374151", // Medium gray border
       success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
