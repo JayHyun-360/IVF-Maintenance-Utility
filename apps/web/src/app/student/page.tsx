@@ -116,17 +116,23 @@ export default function StudentPage() {
       className="min-h-screen"
       style={{ backgroundColor: themeConfig.colors.background }}
     >
-      {/* Header */}
+      {/* Enhanced Header with Gradient */}
       <header
-        className="px-8 py-6 border-b"
+        className="px-8 py-6 border-b relative overflow-hidden"
         style={{ borderColor: themeConfig.colors.border }}
       >
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+          }}
+        ></div>
+        <div className="max-w-4xl mx-auto flex items-center justify-between relative z-10">
           <button
             onClick={() => router.push("/")}
-            className="p-3 rounded-xl transition-all duration-300 hover:scale-105"
+            className="p-3 rounded-xl mr-4 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
             style={{
-              backgroundColor: themeConfig.colors.surface,
+              background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
               color: themeConfig.colors.text,
               border: `1px solid ${themeConfig.colors.border}`,
             }}
@@ -145,15 +151,18 @@ export default function StudentPage() {
               />
             </svg>
           </button>
-          <div className="text-center">
+          <div className="text-center flex-1">
             <h1
-              className="text-2xl font-bold"
-              style={{ color: themeConfig.colors.text }}
+              className="text-3xl font-bold mb-2"
+              style={{
+                color: themeConfig.colors.text,
+                textShadow: "0 1px 2px rgba(0,0,0,0.05)",
+              }}
             >
               Submit Maintenance Request
             </h1>
             <p
-              className="text-sm mt-1"
+              className="text-base"
               style={{ color: themeConfig.colors.textSecondary }}
             >
               Report issues and track resolution progress
@@ -167,21 +176,44 @@ export default function StudentPage() {
       <main className="px-8 py-8">
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Request Details */}
+            {/* Enhanced Request Details */}
             <div
-              className="rounded-2xl p-8 shadow-lg"
+              className="rounded-2xl p-8 shadow-xl transform transition-all duration-300 hover:shadow-2xl"
               style={{
-                backgroundColor: themeConfig.colors.surface,
+                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 borderColor: themeConfig.colors.border,
                 border: "1px solid",
+                boxShadow: `0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px ${themeConfig.colors.border}20`,
               }}
             >
-              <h2
-                className="text-xl font-semibold mb-6"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Request Details
-              </h2>
+              <div className="flex items-center mb-6">
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center mr-3"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                  }}
+                >
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </div>
+                <h2
+                  className="text-xl font-semibold"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Request Details
+                </h2>
+              </div>
 
               <div className="grid grid-cols-2 gap-6 mb-6">
                 <div>
@@ -197,11 +229,12 @@ export default function StudentPage() {
                     value={formData.title}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                     style={{
                       backgroundColor: themeConfig.colors.background,
                       borderColor: themeConfig.colors.border,
                       color: themeConfig.colors.text,
+                      border: "1px solid",
                     }}
                     placeholder="Brief description of the issue"
                   />
@@ -220,11 +253,12 @@ export default function StudentPage() {
                     value={formData.location}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                     style={{
                       backgroundColor: themeConfig.colors.background,
                       borderColor: themeConfig.colors.border,
                       color: themeConfig.colors.text,
+                      border: "1px solid",
                     }}
                     placeholder="Building, room, or area"
                   />
@@ -244,11 +278,12 @@ export default function StudentPage() {
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent resize-none"
                   style={{
                     backgroundColor: themeConfig.colors.background,
                     borderColor: themeConfig.colors.border,
                     color: themeConfig.colors.text,
+                    border: "1px solid",
                   }}
                   placeholder="Detailed description of the maintenance issue..."
                 />
@@ -266,11 +301,12 @@ export default function StudentPage() {
                     name="category"
                     value={formData.category}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                     style={{
                       backgroundColor: themeConfig.colors.background,
                       borderColor: themeConfig.colors.border,
                       color: themeConfig.colors.text,
+                      border: "1px solid",
                     }}
                   >
                     <option value="PLUMBING">🔧 Plumbing</option>
@@ -291,11 +327,12 @@ export default function StudentPage() {
                     name="priority"
                     value={formData.priority}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                     style={{
                       backgroundColor: themeConfig.colors.background,
                       borderColor: themeConfig.colors.border,
                       color: themeConfig.colors.text,
+                      border: "1px solid",
                     }}
                   >
                     <option value="LOW">🟢 Low</option>
@@ -407,21 +444,20 @@ export default function StudentPage() {
               )}
             </div>
 
-            {/* Submit Button */}
+            {/* Enhanced Submit Button */}
             <div className="flex justify-center">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-12 py-4 rounded-2xl font-semibold transition-all duration-300 transform active:scale-95 disabled:opacity-50 shadow-lg"
+                className="px-12 py-4 rounded-2xl font-semibold transition-all duration-500 transform active:scale-95 disabled:opacity-50 shadow-xl hover:shadow-2xl group relative overflow-hidden"
                 style={{
-                  background:
-                    "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
+                  background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
                   color: "#FFFFFF",
-                  boxShadow:
-                    "0 8px 24px 0 rgba(27, 67, 50, 0.4), 0 4px 12px 0 rgba(27, 67, 50, 0.3)",
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1)`,
                 }}
               >
-                <span className="flex items-center space-x-3">
+                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                <span className="relative flex items-center space-x-3">
                   {isSubmitting ? (
                     <>
                       <svg
@@ -442,7 +478,7 @@ export default function StudentPage() {
                   ) : (
                     <>
                       <svg
-                        className="w-5 h-5"
+                        className="w-5 h-5 transform group-hover:rotate-12 transition-transform duration-300"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
