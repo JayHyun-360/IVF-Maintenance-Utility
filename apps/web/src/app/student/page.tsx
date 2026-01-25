@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { addMaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Button from "@/components/Button";
 
 export default function StudentPage() {
   const router = useRouter();
@@ -449,55 +450,15 @@ export default function StudentPage() {
 
             {/* Enhanced Submit Button */}
             <div className="flex justify-center">
-              <button
+              <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-12 py-4 rounded-2xl font-semibold transition-all duration-500 transform active:scale-95 disabled:opacity-50 shadow-xl hover:shadow-2xl group relative overflow-hidden"
-                style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                  color: "#FFFFFF",
-                  boxShadow: `0 10px 30px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1)`,
-                }}
+                loading={isSubmitting}
+                size="lg"
+                fullWidth
               >
-                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                <span className="relative flex items-center space-x-3">
-                  {isSubmitting ? (
-                    <>
-                      <svg
-                        className="w-5 h-5 animate-spin"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 12v8a8 8 0 008 0a8 8 0 008 0 4 8 0 008 0-4 8 0 008 0-8 0 0 0-8 0z"
-                        />
-                      </svg>
-                      <span>Submitting...</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg
-                        className="w-5 h-5 transform group-hover:rotate-12 transition-transform duration-300"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                      <span>Submit Request</span>
-                    </>
-                  )}
-                </span>
-              </button>
+                {isSubmitting ? "Submitting..." : "Submit Request"}
+              </Button>
             </div>
           </form>
         </div>

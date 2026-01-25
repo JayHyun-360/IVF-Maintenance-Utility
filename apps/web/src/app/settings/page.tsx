@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Button from "@/components/Button";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -261,15 +262,9 @@ export default function SettingsPage() {
 
           {/* Save Button */}
           <div className="flex justify-end">
-            <button
-              className="px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105"
-              style={{
-                backgroundColor: themeConfig.colors.primary,
-                color: themeConfig.colors.secondary,
-              }}
-            >
+            <Button onClick={() => console.log("Settings saved")}>
               Save Settings
-            </button>
+            </Button>
           </div>
         </div>
       </main>

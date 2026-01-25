@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { getMaintenanceStats } from "@/lib/data";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Button from "@/components/Button";
 
 export default function Home() {
   const router = useRouter();

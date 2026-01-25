@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Button from "@/components/Button";
 
 interface User {
   id: string;
@@ -251,16 +253,7 @@ export default function AdminUsersPage() {
               </h1>
             </div>
           </div>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="px-6 py-3 rounded-xl font-semibold"
-            style={{
-              background: "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
-              color: "#FFFFFF",
-            }}
-          >
-            Add User
-          </button>
+          <Button onClick={() => setShowAddModal(true)}>Add User</Button>
         </div>
       </header>
 
@@ -572,24 +565,15 @@ export default function AdminUsersPage() {
               </select>
             </div>
             <div className="flex justify-end space-x-3 mt-6">
-              <button
+              <Button
+                variant="secondary"
                 onClick={() => setShowAddModal(false)}
-                className="px-4 py-2 rounded-lg"
-                style={{
-                  backgroundColor: themeConfig.colors.background,
-                  color: themeConfig.colors.text,
-                }}
               >
                 Cancel
-              </button>
-              <button
-                onClick={handleAddUser}
-                disabled={isLoading}
-                className="px-4 py-2 rounded-lg text-white transition-all duration-200 disabled:opacity-50"
-                style={{ backgroundColor: themeConfig.colors.primary }}
-              >
-                {isLoading ? "Adding..." : "Add User"}
-              </button>
+              </Button>
+              <Button onClick={handleAddUser} loading={isLoading}>
+                Add User
+              </Button>
             </div>
           </div>
         </div>
@@ -712,24 +696,15 @@ export default function AdminUsersPage() {
               </select>
             </div>
             <div className="flex justify-end space-x-3 mt-6">
-              <button
+              <Button
+                variant="secondary"
                 onClick={() => setShowEditModal(false)}
-                className="px-4 py-2 rounded-lg"
-                style={{
-                  backgroundColor: themeConfig.colors.background,
-                  color: themeConfig.colors.text,
-                }}
               >
                 Cancel
-              </button>
-              <button
-                onClick={handleEditUser}
-                disabled={isLoading}
-                className="px-4 py-2 rounded-lg text-white transition-all duration-200 disabled:opacity-50"
-                style={{ backgroundColor: themeConfig.colors.primary }}
-              >
-                {isLoading ? "Saving..." : "Save Changes"}
-              </button>
+              </Button>
+              <Button onClick={handleEditUser} loading={isLoading}>
+                Save Changes
+              </Button>
             </div>
           </div>
         </div>
@@ -756,24 +731,19 @@ export default function AdminUsersPage() {
               cannot be undone.
             </p>
             <div className="flex justify-end space-x-3 mt-6">
-              <button
+              <Button
+                variant="secondary"
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 rounded-lg"
-                style={{
-                  backgroundColor: themeConfig.colors.background,
-                  color: themeConfig.colors.text,
-                }}
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="danger"
                 onClick={handleDeleteUser}
-                disabled={isLoading}
-                className="px-4 py-2 rounded-lg text-white transition-all duration-200 disabled:opacity-50"
-                style={{ backgroundColor: "#EF4444" }}
+                loading={isLoading}
               >
-                {isLoading ? "Deleting..." : "Delete User"}
-              </button>
+                Delete User
+              </Button>
             </div>
           </div>
         </div>
