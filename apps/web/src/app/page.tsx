@@ -23,31 +23,6 @@ export default function Home() {
     completedRequests: 0,
   });
 
-  const handleStudentClick = () => {
-    if (status === "loading") {
-      // Don't do anything while loading
-      return;
-    }
-    if (!session) {
-      router.push("/login");
-    } else {
-      router.push("/student");
-    }
-  };
-
-  const handleAdminClick = () => {
-    if (status === "loading") {
-      // Don't do anything while loading
-      return;
-    }
-    if (!session) {
-      router.push("/login");
-    } else if (session.user?.role !== "ADMIN") {
-      router.push("/login");
-    } else {
-      router.push("/admin/dashboard");
-    }
-  };
   useEffect(() => {
     const loadData = () => {
       const realStats = getMaintenanceStats();
@@ -315,12 +290,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Enhanced Action Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+          {/* Enhanced Action Card */}
+          <div className="flex justify-center">
             <button
-              onClick={handleStudentClick}
-              disabled={status === "loading"}
-              className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              onClick={() => router.push("/login")}
+              className="p-12 rounded-2xl text-center transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
@@ -328,14 +302,14 @@ export default function Home() {
               }}
             >
               <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300"
+                className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-all duration-300"
                 style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                  background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.accent} 100%)`,
                   boxShadow: `0 8px 20px ${themeConfig.colors.primary}25`,
                 }}
               >
                 <svg
-                  className="w-8 h-8 text-white"
+                  className="w-10 h-10 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -344,27 +318,27 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                   />
                 </svg>
               </div>
               <h3
-                className="text-xl font-bold mb-3"
+                className="text-2xl font-bold mb-4"
                 style={{ color: themeConfig.colors.text }}
               >
-                Submit Request
+                Go to login section
               </h3>
               <p
-                className="text-sm mb-4"
+                className="text-sm mb-6"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
-                Report maintenance issues and track resolution progress
+                Access your account to submit requests or manage the system
               </p>
               <div
                 className="inline-flex items-center text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
                 style={{ color: themeConfig.colors.primary }}
               >
-                Get Started
+                Login Now
                 <svg
                   className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
                   fill="none"
@@ -378,72 +352,6 @@ export default function Home() {
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
-              </div>
-            </button>
-
-            <button
-              onClick={handleAdminClick}
-              disabled={status === "loading"}
-              className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
-              }}
-            >
-              <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300"
-                style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
-                  boxShadow: `0 8px 20px ${themeConfig.colors.primary}25`,
-                }}
-              >
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2 2v5a2 2 0 002 2h6a2 2 0 002-2v-5a2 2 0 00-2-2H9z"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h3
-                  className="text-xl font-bold mb-3"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Admin Dashboard
-                </h3>
-                <p
-                  className="text-sm"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Manage requests, users, and system settings
-                </p>
-                <div
-                  className="inline-flex items-center text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
-                  style={{ color: themeConfig.colors.accent }}
-                >
-                  Admin Panel
-                  <svg
-                    className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
               </div>
             </button>
           </div>
