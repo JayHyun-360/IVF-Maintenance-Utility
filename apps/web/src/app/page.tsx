@@ -51,7 +51,7 @@ export default function Home() {
     >
       {/* Header with Gradient Background */}
       <header
-        className="px-8 py-16 text-center relative"
+        className="px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 text-center relative"
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "light"
@@ -65,26 +65,27 @@ export default function Home() {
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           transition:
             "background-image 1.2s ease-in-out, background 1.2s ease-in-out, background-color 1.2s ease-in-out",
+          minHeight: themeConfig.backgroundImage ? "60vh" : "auto",
         }}
       >
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-20 overflow-hidden">
           <div
-            className="absolute top-10 left-10 w-32 h-32 rounded-full"
+            className="absolute top-4 sm:top-6 md:top-10 left-4 sm:left-6 md:left-10 w-16 sm:w-20 md:w-32 h-16 sm:h-20 md:h-32 rounded-full hidden sm:block"
             style={{ backgroundColor: themeConfig.colors.accent }}
           ></div>
           <div
-            className="absolute bottom-10 right-10 w-48 h-48 rounded-full"
+            className="absolute bottom-4 sm:bottom-6 md:bottom-10 right-4 sm:right-6 md:right-10 w-20 sm:w-32 md:w-48 h-20 sm:h-32 md:h-48 rounded-full hidden sm:block"
             style={{ backgroundColor: themeConfig.colors.accent }}
           ></div>
           <div
-            className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full"
+            className="absolute top-1/2 left-1/4 w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 rounded-full hidden md:block"
             style={{ backgroundColor: themeConfig.colors.accent }}
           ></div>
         </div>
 
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="absolute top-4 right-4 flex items-center space-x-4">
+        <div className="max-w-4xl mx-auto relative z-10 px-4 sm:px-6">
+          <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex items-center space-x-2 sm:space-x-4">
             <div style={{ zIndex: Z_INDEX.DROPDOWN }}>
               <AccountDropdown />
             </div>
@@ -93,14 +94,14 @@ export default function Home() {
             </div>
           </div>
           <div
-            className="w-24 h-24 mx-auto rounded-3xl flex items-center justify-center mb-8 shadow-2xl transform hover:scale-110 transition-all duration-500"
+            className="w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 mx-auto rounded-2xl sm:rounded-3xl flex items-center justify-center mb-6 sm:mb-8 shadow-2xl transform hover:scale-110 transition-all duration-500"
             style={{
               background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
               boxShadow: `0 20px 40px ${themeConfig.colors.primary}30, 0 0 0 1px ${themeConfig.colors.primary}20`,
             }}
           >
             <svg
-              className="w-12 h-12 text-white"
+              className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -114,16 +115,19 @@ export default function Home() {
             </svg>
           </div>
           <h1
-            className="text-5xl font-bold mb-4 text-white"
-            style={{ textShadow: `0 2px 4px ${themeConfig.colors.primary}50` }}
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3"
+            style={{
+              color: themeConfig.colors.text,
+              textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+            }}
           >
-            Maintenance Portal
+            IVF Maintenance Utility
           </h1>
           <p
-            className="text-xl text-white opacity-90"
-            style={{ textShadow: `0 1px 2px ${themeConfig.colors.primary}30` }}
+            className="text-sm sm:text-base md:text-lg"
+            style={{ color: themeConfig.colors.textSecondary }}
           >
-            Integrated Visual Feedback & Maintenance Utility
+            Streamlined maintenance request management system
           </p>
         </div>
       </header>
@@ -132,9 +136,9 @@ export default function Home() {
       <main className="px-4 sm:px-6 lg:px-8 pb-8 lg:pb-12">
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8 lg:mb-12 mt-6 lg:mt-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8 lg:mb-12 mt-4 sm:mt-6 lg:mt-8">
             <div
-              className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+              className="rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
@@ -142,13 +146,13 @@ export default function Home() {
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
                 }}
               >
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -162,13 +166,13 @@ export default function Home() {
                 </svg>
               </div>
               <div
-                className="text-3xl font-bold mb-2"
+                className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
                 {stats.totalRequests}
               </div>
               <div
-                className="text-sm font-medium"
+                className="text-xs sm:text-sm font-medium"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Total Requests
@@ -176,7 +180,7 @@ export default function Home() {
             </div>
 
             <div
-              className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+              className="rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
@@ -184,13 +188,13 @@ export default function Home() {
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.warning} 0%, ${themeConfig.colors.accent} 100%)`,
                 }}
               >
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -204,13 +208,13 @@ export default function Home() {
                 </svg>
               </div>
               <div
-                className="text-3xl font-bold mb-2"
+                className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
                 {stats.pendingRequests}
               </div>
               <div
-                className="text-sm font-medium"
+                className="text-xs sm:text-sm font-medium"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Pending
@@ -218,7 +222,7 @@ export default function Home() {
             </div>
 
             <div
-              className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+              className="rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
@@ -226,13 +230,13 @@ export default function Home() {
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.accent} 100%)`,
                 }}
               >
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -246,13 +250,13 @@ export default function Home() {
                 </svg>
               </div>
               <div
-                className="text-3xl font-bold mb-2"
+                className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
                 {stats.inProgressRequests}
               </div>
               <div
-                className="text-sm font-medium"
+                className="text-xs sm:text-sm font-medium"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 In Progress
@@ -260,7 +264,7 @@ export default function Home() {
             </div>
 
             <div
-              className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+              className="rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
@@ -268,13 +272,13 @@ export default function Home() {
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.success} 0%, ${themeConfig.colors.secondary} 100%)`,
                 }}
               >
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -288,13 +292,13 @@ export default function Home() {
                 </svg>
               </div>
               <div
-                className="text-3xl font-bold mb-2"
+                className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
                 {stats.completedRequests}
               </div>
               <div
-                className="text-sm font-medium"
+                className="text-xs sm:text-sm font-medium"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Completed
@@ -303,10 +307,10 @@ export default function Home() {
           </div>
 
           {/* Enhanced Action Card */}
-          <div className="flex justify-center">
+          <div className="flex justify-center px-4 sm:px-6">
             <button
               onClick={() => router.push("/login")}
-              className="p-12 rounded-2xl text-center transition-all duration-800 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
+              className="p-8 sm:p-10 md:p-12 rounded-2xl text-center transition-all duration-800 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
@@ -316,14 +320,14 @@ export default function Home() {
               }}
             >
               <div
-                className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-all duration-300"
+                className="w-16 sm:w-18 md:w-20 h-16 sm:h-18 md:h-20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto transform group-hover:scale-110 transition-all duration-300"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.accent} 100%)`,
                   boxShadow: `0 8px 20px ${themeConfig.colors.primary}25`,
                 }}
               >
                 <svg
-                  className="w-10 h-10 text-white"
+                  className="w-8 h-8 sm:w-10 sm:h-10 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -337,19 +341,19 @@ export default function Home() {
                 </svg>
               </div>
               <h3
-                className="text-2xl font-bold mb-4"
+                className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4"
                 style={{ color: themeConfig.colors.text }}
               >
                 Go to login section
               </h3>
               <p
-                className="text-sm mb-6"
+                className="text-xs sm:text-sm mb-4 sm:mb-6"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Access your account to submit requests or manage the system
               </p>
               <div
-                className="inline-flex items-center text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
+                className="inline-flex items-center text-xs sm:text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
                 style={{ color: themeConfig.colors.primary }}
               >
                 Login Now
