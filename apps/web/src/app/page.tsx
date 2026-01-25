@@ -9,11 +9,12 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function Home() {
   const router = useRouter();
   const { themeConfig } = useTheme();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [stats, setStats] = useState({
     totalRequests: 0,
     pendingRequests: 0,
@@ -22,23 +23,41 @@ export default function Home() {
   });
 
   const handleStudentClick = () => {
+    console.log("Student clicked - session:", session, "status:", status);
+    if (status === "loading") {
+      // Don't do anything while loading
+      return;
+    }
     if (!session) {
+      console.log("Redirecting to login");
       router.push("/login");
     } else {
+      console.log("Redirecting to student");
       router.push("/student");
     }
   };
 
   const handleAdminClick = () => {
+    console.log("Admin clicked - session:", session, "status:", status);
+    if (status === "loading") {
+      // Don't do anything while loading
+      return;
+    }
     if (!session) {
+      console.log("Redirecting to login");
       router.push("/login");
     } else if (session.user?.role !== "ADMIN") {
+      console.log("Not admin, redirecting to login");
       router.push("/login");
     } else {
+      console.log("Redirecting to admin dashboard");
       router.push("/admin/dashboard");
     }
   };
   useEffect(() => {
+    console.log("Session status:", status);
+    console.log("Session data:", session);
+
     const loadData = () => {
       const realStats = getMaintenanceStats();
       setStats(realStats);
@@ -47,7 +66,7 @@ export default function Home() {
     loadData();
     const interval = setInterval(loadData, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [session, status]);
 
   // Calculate completion rate
   const completionRate =
@@ -307,7 +326,8 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             <button
               onClick={handleStudentClick}
-              className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group"
+              disabled={status === "loading"}
+              className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
@@ -370,7 +390,8 @@ export default function Home() {
 
             <button
               onClick={handleAdminClick}
-              className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group"
+              disabled={status === "loading"}
+              className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
