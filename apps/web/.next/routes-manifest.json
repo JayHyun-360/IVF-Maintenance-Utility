@@ -62,22 +62,28 @@
       "namedRegex": "^/admin/physical\\-plant\\-request(?:/)?$"
     },
     {
+      "page": "/admin/reports",
+      "regex": "^/admin/reports(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/reports(?:/)?$"
+    },
+    {
       "page": "/admin/summary-request",
       "regex": "^/admin/summary\\-request(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/summary\\-request(?:/)?$"
     },
     {
-      "page": "/auth",
-      "regex": "^/auth(?:/)?$",
+      "page": "/admin/users",
+      "regex": "^/admin/users(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/auth(?:/)?$"
+      "namedRegex": "^/admin/users(?:/)?$"
     },
     {
-      "page": "/auth/user-roles",
-      "regex": "^/auth/user\\-roles(?:/)?$",
+      "page": "/emergency",
+      "regex": "^/emergency(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/auth/user\\-roles(?:/)?$"
+      "namedRegex": "^/emergency(?:/)?$"
     },
     {
       "page": "/favicon.ico",
@@ -92,28 +98,10 @@
       "namedRegex": "^/login(?:/)?$"
     },
     {
-      "page": "/login/admin",
-      "regex": "^/login/admin(?:/)?$",
+      "page": "/settings",
+      "regex": "^/settings(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/login/admin(?:/)?$"
-    },
-    {
-      "page": "/login/student",
-      "regex": "^/login/student(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/login/student(?:/)?$"
-    },
-    {
-      "page": "/login/user",
-      "regex": "^/login/user(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/login/user(?:/)?$"
-    },
-    {
-      "page": "/request/guest",
-      "regex": "^/request/guest(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/request/guest(?:/)?$"
+      "namedRegex": "^/settings(?:/)?$"
     },
     {
       "page": "/student",
@@ -122,22 +110,10 @@
       "namedRegex": "^/student(?:/)?$"
     },
     {
-      "page": "/student/messages",
-      "regex": "^/student/messages(?:/)?$",
+      "page": "/student/history",
+      "regex": "^/student/history(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/student/messages(?:/)?$"
-    },
-    {
-      "page": "/student/profile",
-      "regex": "^/student/profile(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/student/profile(?:/)?$"
-    },
-    {
-      "page": "/student/requests",
-      "regex": "^/student/requests(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/student/requests(?:/)?$"
+      "namedRegex": "^/student/history(?:/)?$"
     }
   ],
   "dataRoutes": [],

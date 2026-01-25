@@ -12,19 +12,19 @@
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
+    "[project]/apps/web/src/app/admin/reports/page": [
+      "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
+      "static/media/797e433ab948586e-s.p.dbea232f.woff2"
+    ],
     "[project]/apps/web/src/app/admin/summary-request/page": [
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
-    "[project]/apps/web/src/app/auth/page": [
+    "[project]/apps/web/src/app/admin/users/page": [
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
-    "[project]/apps/web/src/app/auth/user-roles/page": [
-      "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
-      "static/media/797e433ab948586e-s.p.dbea232f.woff2"
-    ],
-    "[project]/apps/web/src/app/login/admin/page": [
+    "[project]/apps/web/src/app/emergency/page": [
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
@@ -32,35 +32,19 @@
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
-    "[project]/apps/web/src/app/login/student/page": [
-      "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
-      "static/media/797e433ab948586e-s.p.dbea232f.woff2"
-    ],
-    "[project]/apps/web/src/app/login/user/page": [
-      "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
-      "static/media/797e433ab948586e-s.p.dbea232f.woff2"
-    ],
     "[project]/apps/web/src/app/page": [
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
-    "[project]/apps/web/src/app/request/guest/page": [
+    "[project]/apps/web/src/app/settings/page": [
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
-    "[project]/apps/web/src/app/student/messages/page": [
+    "[project]/apps/web/src/app/student/history/page": [
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ],
     "[project]/apps/web/src/app/student/page": [
-      "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
-      "static/media/797e433ab948586e-s.p.dbea232f.woff2"
-    ],
-    "[project]/apps/web/src/app/student/profile/page": [
-      "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
-      "static/media/797e433ab948586e-s.p.dbea232f.woff2"
-    ],
-    "[project]/apps/web/src/app/student/requests/page": [
       "static/media/caa3a2e1cccd8315-s.p.853070df.woff2",
       "static/media/797e433ab948586e-s.p.dbea232f.woff2"
     ]

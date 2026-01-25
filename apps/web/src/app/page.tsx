@@ -381,6 +381,10 @@ export default function Home() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
@@ -422,7 +426,7 @@ export default function Home() {
 
             <button
               onClick={handleAdminClick}
-              disabled={status === 'loading'}
+              disabled={status === "loading"}
               className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
