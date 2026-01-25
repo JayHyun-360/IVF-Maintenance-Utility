@@ -624,13 +624,13 @@ export default function AdminDashboard() {
 
         {activeTab === "analytics" && (
           <div className="space-y-8">
-            {/* Minimalistic Header with Subtle Warm/Cool Colors */}
+            {/* Header with Reduced Glow but Maintained Hover Effects */}
             <div
-              className="rounded-2xl p-8 transition-all duration-300"
+              className="rounded-2xl p-8 transform hover:scale-[1.02] transition-all duration-500"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 4px 12px rgba(0,0,0,0.05)`,
+                boxShadow: `0 8px 20px rgba(0,0,0,0.08)`,
               }}
             >
               <div className="flex items-center justify-between">
@@ -649,7 +649,7 @@ export default function AdminDashboard() {
                   </p>
                 </div>
                 <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center"
+                  className="w-14 h-14 rounded-xl flex items-center justify-center transform hover:rotate-12 transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.secondary}05 100%)`,
                     color: themeConfig.colors.primary,
@@ -660,18 +660,18 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Minimalistic Stats Cards */}
+            {/* Stats Cards with Hover Effects but Reduced Glow */}
             <div className="grid grid-cols-3 gap-6 mb-8">
               <div
-                className="rounded-2xl p-6 text-center transition-all duration-300"
+                className="rounded-2xl p-6 text-center transform hover:scale-105 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                   border: `1px solid ${themeConfig.colors.border}`,
-                  boxShadow: `0 2px 8px rgba(0,0,0,0.04)`,
+                  boxShadow: `0 4px 12px rgba(0,0,0,0.06)`,
                 }}
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 transform hover:rotate-12 transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.primary}05 100%)`,
                     color: themeConfig.colors.primary,
@@ -694,15 +694,15 @@ export default function AdminDashboard() {
               </div>
 
               <div
-                className="rounded-2xl p-6 text-center transition-all duration-300"
+                className="rounded-2xl p-6 text-center transform hover:scale-105 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                   border: `1px solid ${themeConfig.colors.border}`,
-                  boxShadow: `0 2px 8px rgba(0,0,0,0.04)`,
+                  boxShadow: `0 4px 12px rgba(0,0,0,0.06)`,
                 }}
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 transform hover:rotate-12 transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`,
                     color: themeConfig.colors.warning,
@@ -725,15 +725,15 @@ export default function AdminDashboard() {
               </div>
 
               <div
-                className="rounded-2xl p-6 text-center transition-all duration-300"
+                className="rounded-2xl p-6 text-center transform hover:scale-105 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                   border: `1px solid ${themeConfig.colors.border}`,
-                  boxShadow: `0 2px 8px rgba(0,0,0,0.04)`,
+                  boxShadow: `0 4px 12px rgba(0,0,0,0.06)`,
                 }}
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 transform hover:rotate-12 transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${themeConfig.colors.success}10 0%, ${themeConfig.colors.success}05 100%)`,
                     color: themeConfig.colors.success,
@@ -756,18 +756,18 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Minimalistic Category Chart */}
+            {/* Category Chart with Hover Effects but Reduced Glow */}
             <div
-              className="rounded-2xl p-8 transition-all duration-300"
+              className="rounded-2xl p-8 transform hover:scale-[1.01] transition-all duration-500"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 4px 12px rgba(0,0,0,0.05)`,
+                boxShadow: `0 8px 20px rgba(0,0,0,0.08)`,
               }}
             >
               <div className="flex items-center mb-6">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.primary}05 100%)`,
                     color: themeConfig.colors.primary,
@@ -787,7 +787,7 @@ export default function AdminDashboard() {
                   ([category, count], index) => (
                     <div
                       key={category}
-                      className="flex items-center justify-between p-4 rounded-xl transition-all duration-300"
+                      className="flex items-center justify-between p-4 rounded-xl transform hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
                       style={{
                         background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
                         border: `1px solid ${themeConfig.colors.border}`,
@@ -795,7 +795,7 @@ export default function AdminDashboard() {
                     >
                       <div className="flex items-center">
                         <div
-                          className="w-8 h-8 rounded-lg flex items-center justify-center mr-4"
+                          className="w-8 h-8 rounded-lg flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
                           style={{
                             background:
                               index === 0
@@ -840,7 +840,7 @@ export default function AdminDashboard() {
                           }}
                         >
                           <div
-                            className="h-2 rounded-full transition-all duration-700 ease-out"
+                            className="h-2 rounded-full transform transition-all duration-700 ease-out"
                             style={{
                               width: `${(count / stats.totalRequests) * 100}%`,
                               background:
@@ -855,7 +855,7 @@ export default function AdminDashboard() {
                           ></div>
                         </div>
                         <div
-                          className="px-3 py-1 rounded-full text-sm font-medium"
+                          className="px-3 py-1 rounded-full text-sm font-medium transform hover:scale-110 transition-all duration-300"
                           style={{
                             background:
                               index === 0
@@ -884,18 +884,18 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Minimalistic Priority Chart */}
+            {/* Priority Chart with Hover Effects but Reduced Glow */}
             <div
-              className="rounded-2xl p-8 transition-all duration-300"
+              className="rounded-2xl p-8 transform hover:scale-[1.01] transition-all duration-500"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 4px 12px rgba(0,0,0,0.05)`,
+                boxShadow: `0 8px 20px rgba(0,0,0,0.08)`,
               }}
             >
               <div className="flex items-center mb-6">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`,
                     color: themeConfig.colors.warning,
@@ -914,7 +914,7 @@ export default function AdminDashboard() {
                 {Object.entries(priorityData).map(([priority, count]) => (
                   <div
                     key={priority}
-                    className="flex items-center justify-between p-4 rounded-xl transition-all duration-300"
+                    className="flex items-center justify-between p-4 rounded-xl transform hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
                     style={{
                       background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
                       border: `1px solid ${themeConfig.colors.border}`,
@@ -922,7 +922,7 @@ export default function AdminDashboard() {
                   >
                     <div className="flex items-center">
                       <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center mr-4"
+                        className="w-8 h-8 rounded-lg flex items-center justify-center mr-4 transform hover:rotate-12 transition-all duration-300"
                         style={{
                           background:
                             priority === "HIGH"
@@ -961,7 +961,7 @@ export default function AdminDashboard() {
                         }}
                       >
                         <div
-                          className="h-2 rounded-full transition-all duration-700 ease-out"
+                          className="h-2 rounded-full transform transition-all duration-700 ease-out"
                           style={{
                             width: `${(count / stats.totalRequests) * 100}%`,
                             background:
@@ -974,7 +974,7 @@ export default function AdminDashboard() {
                         ></div>
                       </div>
                       <div
-                        className="px-3 py-1 rounded-full text-sm font-medium"
+                        className="px-3 py-1 rounded-full text-sm font-medium transform hover:scale-110 transition-all duration-300"
                         style={{
                           background:
                             priority === "HIGH"
