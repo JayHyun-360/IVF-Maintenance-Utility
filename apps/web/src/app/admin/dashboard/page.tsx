@@ -568,19 +568,28 @@ export default function AdminDashboard() {
                           >
                             <option
                               value="PENDING"
-                              style={{ color: themeConfig.colors.warning }}
+                              style={{
+                                color: themeConfig.colors.warning,
+                                fontWeight: "bold",
+                              }}
                             >
                               ⬤ Pending
                             </option>
                             <option
                               value="IN_PROGRESS"
-                              style={{ color: themeConfig.colors.primary }}
+                              style={{
+                                color: themeConfig.colors.primary,
+                                fontWeight: "bold",
+                              }}
                             >
                               ⬤ In Progress
                             </option>
                             <option
                               value="COMPLETED"
-                              style={{ color: themeConfig.colors.success }}
+                              style={{
+                                color: themeConfig.colors.success,
+                                fontWeight: "bold",
+                              }}
                             >
                               ⬤ Completed
                             </option>
