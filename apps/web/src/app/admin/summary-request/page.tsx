@@ -1,359 +1,382 @@
 "use client";
 
-import { useState, useEffect } from "react";
+// Summary Request - Desktop Only Version
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
-import {
-  getMaintenanceRequests,
-  getRequestsByCategory,
-  MaintenanceRequest,
-} from "@/lib/data";
-
-interface SummaryData {
-  category: string;
-  totalRequests: number;
-  locations: string[];
-  priorities: string[];
-  descriptions: string[];
-  requesters: string[];
-  dates: string[];
-  summaryDescription: string;
-}
+import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
 
 export default function SummaryRequestPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
-  const [allRequests, setAllRequests] = useState<MaintenanceRequest[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [summaryData, setSummaryData] = useState<SummaryData | null>(null);
+  const [summaryData, setSummaryData] = useState<any>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [categoryData, setCategoryData] = useState<Record<string, number>>({});
 
-  useEffect(() => {
-    const requests = getMaintenanceRequests();
-    const categories = getRequestsByCategory();
-    setAllRequests(requests);
-    setCategoryData(categories);
-  }, []);
+  const categories = ["PLUMBING", "ELECTRICAL", "CARPENTRY", "PERSONNEL"];
 
   const generateSummary = async () => {
     if (!selectedCategory) return;
 
     setIsGenerating(true);
+    try {
+      // Simulate API call to generate summary
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Simulate processing time
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+      const allRequests = getMaintenanceRequests();
+      const categoryRequests = allRequests.filter(
+        (req) => req.category === selectedCategory,
+      );
 
-    const categoryRequests = allRequests.filter(
-      (req) => req.category === selectedCategory,
-    );
+      const summary = {
+        category: selectedCategory,
+        totalRequests: categoryRequests.length,
+        locations: [...new Set(categoryRequests.map((req) => req.location))],
+        priorities: [...new Set(categoryRequests.map((req) => req.priority))],
+        descriptions: categoryRequests.map((req) => req.description),
+        requesters: [
+          ...new Set(categoryRequests.map((req) => req.requestedBy)),
+        ],
+        dates: categoryRequests.map((req) => req.createdAt),
+        summaryDescription: `Summary of ${categoryRequests.length} ${selectedCategory.toLowerCase()} maintenance requests.`,
+      };
 
-    const locations = [...new Set(categoryRequests.map((req) => req.location))];
-    const priorities = [
-      ...new Set(categoryRequests.map((req) => req.priority)),
-    ];
-    const descriptions = categoryRequests.map((req) => req.description);
-    const requesters = [
-      ...new Set(categoryRequests.map((req) => req.requestedBy)),
-    ];
-    const dates = categoryRequests.map((req) => req.createdAt.toISOString());
-
-    // Generate comprehensive summary description
-    const summaryDescription = generateComprehensiveSummary(
-      categoryRequests,
-      selectedCategory,
-    );
-
-    setSummaryData({
-      category: selectedCategory,
-      totalRequests: categoryRequests.length,
-      locations,
-      priorities,
-      descriptions,
-      requesters,
-      dates,
-      summaryDescription,
-    });
-
-    setIsGenerating(false);
-  };
-
-  const generateComprehensiveSummary = (
-    requests: MaintenanceRequest[],
-    category: string,
-  ): string => {
-    const priorityCount = requests.reduce(
-      (acc, req) => {
-        acc[req.priority] = (acc[req.priority] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-    const locationCount = requests.reduce(
-      (acc, req) => {
-        acc[req.location] = (acc[req.location] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-    const highPriorityIssues = requests.filter(
-      (req) => req.priority === "HIGH",
-    );
-    const commonKeywords = extractCommonKeywords(
-      requests.map((req) => req.description),
-    );
-
-    let summary = `COMPREHENSIVE ${category.toUpperCase()} MAINTENANCE SUMMARY\n\n`;
-    summary += `OVERVIEW:\n`;
-    summary += `- Total Requests: ${requests.length}\n`;
-    summary += `- Affected Locations: ${Object.keys(locationCount).length}\n`;
-    summary += `- Priority Distribution: ${Object.entries(priorityCount)
-      .map(([p, c]) => `${c} ${p}`)
-      .join(", ")}\n\n`;
-
-    summary += `PRIORITY ANALYSIS:\n`;
-    if (highPriorityIssues.length > 0) {
-      summary += `- High/Urgent Priority Issues: ${highPriorityIssues.length}\n`;
-      summary += `- Immediate attention required for: ${highPriorityIssues.map((req) => req.location).join(", ")}\n`;
-    } else {
-      summary += `- No high-priority urgent issues identified\n`;
+      setSummaryData(summary);
+    } catch (error) {
+      alert("Failed to generate summary. Please try again.");
+    } finally {
+      setIsGenerating(false);
     }
-    summary += `- Most affected area: ${Object.entries(locationCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A"} (${Math.max(...Object.values(locationCount))} requests)\n\n`;
-
-    summary += `LOCATION BREAKDOWN:\n`;
-    Object.entries(locationCount).forEach(([location, count]) => {
-      const percentage = ((count / requests.length) * 100).toFixed(1);
-      summary += `- ${location}: ${count} requests (${percentage}%)\n`;
-    });
-
-    summary += `\nCOMMON ISSUES IDENTIFIED:\n`;
-    commonKeywords.forEach((keyword, index) => {
-      summary += `${index + 1}. ${keyword}\n`;
-    });
-
-    summary += `\nRECOMMENDED ACTIONS:\n`;
-    if (highPriorityIssues.length > 0) {
-      summary += `- Immediate inspection and repair of high-priority issues\n`;
-    }
-    summary += `- Schedule comprehensive ${category.toLowerCase()} maintenance for most affected areas\n`;
-    summary += `- Implement preventive measures to reduce recurring issues\n`;
-    summary += `- Consider system-wide upgrade if issues are widespread\n\n`;
-
-    summary += `REQUEST DETAILS:\n`;
-    requests.forEach((req, index) => {
-      summary += `${index + 1}. ${req.location} - ${req.priority} - ${req.description.substring(0, 100)}...\n`;
-    });
-
-    return summary;
-  };
-
-  const extractCommonKeywords = (descriptions: string[]): string[] => {
-    const allWords = descriptions
-      .join(" ")
-      .toLowerCase()
-      .replace(/[^\w\s]/g, " ")
-      .split(/\s+/)
-      .filter((word) => word.length > 3);
-
-    const wordCount = allWords.reduce(
-      (acc, word) => {
-        if (
-          ![
-            "that",
-            "this",
-            "with",
-            "from",
-            "they",
-            "have",
-            "been",
-            "will",
-            "would",
-            "could",
-            "should",
-          ].includes(word)
-        ) {
-          acc[word] = (acc[word] || 0) + 1;
-        }
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-    return Object.entries(wordCount)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-      .map(([word]) => word.charAt(0).toUpperCase() + word.slice(1));
-  };
-
-  const createPhysicalPlantRequest = () => {
-    if (!summaryData) return;
-
-    // Store summary data for the physical plant page
-    localStorage.setItem("summaryRequestData", JSON.stringify(summaryData));
-    router.push("/admin/physical-plant-request");
   };
 
   return (
     <div
-      className={`min-h-screen dashboard-theme`}
-      style={{
-        backgroundColor: themeConfig.colors.background,
-        color: themeConfig.colors.text,
-      }}
+      className="min-h-screen"
+      style={{ backgroundColor: themeConfig.colors.background }}
     >
       {/* Header */}
-      <div
-        className="shadow-sm border-b theme-card"
-        style={{
-          backgroundColor: themeConfig.colors.surface,
-          borderColor: themeConfig.colors.border,
-        }}
+      <header
+        className="border-b"
+        style={{ borderColor: themeConfig.colors.border }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <button
                 onClick={() => router.push("/admin/dashboard")}
-                className="mr-4 px-3 py-1 rounded-md text-sm hover:opacity-80 transition-opacity"
+                className="p-2 rounded-xl mr-4 transition-all duration-300 hover:scale-105"
                 style={{
-                  color: themeConfig.colors.textSecondary,
+                  backgroundColor: themeConfig.colors.surface,
+                  color: themeConfig.colors.text,
+                  border: `1px solid ${themeConfig.colors.border}`,
                 }}
               >
-                ← Back to Dashboard
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
               </button>
               <h1
                 className="text-xl font-bold"
-                style={{
-                  color: themeConfig.colors.text,
-                }}
+                style={{ color: themeConfig.colors.text }}
               >
-                Create Summary Request
+                Generate Summary Report
               </h1>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="space-y-6">
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-8 py-8">
+        <div className="space-y-8">
           {/* Category Selection */}
           <div
-            className="rounded-lg shadow p-6 theme-card"
+            className="rounded-xl p-6 shadow-lg"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
+              border: "1px solid",
             }}
           >
             <h2
-              className="text-lg font-semibold mb-4"
-              style={{
-                color: themeConfig.colors.text,
-              }}
+              className="text-lg font-semibold mb-6"
+              style={{ color: themeConfig.colors.text }}
             >
-              Select Category to Summarize
+              Select Category
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              {Object.entries(categoryData).map(([category, count]) => (
+            <div className="grid grid-cols-4 gap-4">
+              {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
-                    selectedCategory === category
-                      ? "border-purple-500 bg-purple-50"
-                      : "border-gray-200 hover:border-gray-300 bg-white"
+                  className={`p-4 rounded-xl transition-all duration-300 hover:scale-105 ${
+                    selectedCategory === category ? "ring-2 ring-blue-500" : ""
                   }`}
+                  style={{
+                    backgroundColor:
+                      selectedCategory === category
+                        ? "#3B82F6"
+                        : themeConfig.colors.background,
+                    color:
+                      selectedCategory === category
+                        ? "#FFFFFF"
+                        : themeConfig.colors.text,
+                    border: `1px solid ${themeConfig.colors.border}`,
+                  }}
                 >
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-600">
-                      {count}
+                    <div className="text-2xl mb-2">
+                      {category === "PLUMBING" && "🔧"}
+                      {category === "ELECTRICAL" && "⚡"}
+                      {category === "CARPENTRY" && "🔨"}
+                      {category === "PERSONNEL" && "👥"}
                     </div>
-                    <div className="text-sm font-medium text-gray-900">
-                      {category}
-                    </div>
-                    <div className="text-xs text-gray-500">requests</div>
+                    <div className="font-medium">{category}</div>
                   </div>
                 </button>
               ))}
             </div>
 
-            {selectedCategory && (
-              <div className="flex justify-center">
-                <button
-                  onClick={generateSummary}
-                  disabled={isGenerating}
-                  className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isGenerating ? "Generating Summary..." : "Generate Summary"}
-                </button>
-              </div>
-            )}
+            <div className="mt-6 text-center">
+              <button
+                onClick={generateSummary}
+                disabled={!selectedCategory || isGenerating}
+                className="px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform active:scale-95 disabled:opacity-50"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
+                  color: "#FFFFFF",
+                  boxShadow:
+                    "0 8px 24px 0 rgba(27, 67, 50, 0.4), 0 4px 12px 0 rgba(27, 67, 50, 0.3)",
+                }}
+              >
+                <span className="flex items-center space-x-3">
+                  {isGenerating ? (
+                    <>
+                      <svg
+                        className="w-5 h-5 animate-spin"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 12v8a8 8 0 008 0a8 8 0 008 0 4 8 0 008 0-4 8 0 008 0-8 0 0 0-8 0z"
+                        />
+                      </svg>
+                      <span>Generating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 17v1a2 2 0 002 2h2a2 2 0 002-2v-1m-6 0h6m2 0h2a2 2 0 002-2v-1m-8 0V7a2 2 0 012-2h2a2 2 0 012 2v8m-6 0h6"
+                        />
+                      </svg>
+                      <span>Generate Summary</span>
+                    </>
+                  )}
+                </span>
+              </button>
+            </div>
           </div>
 
           {/* Summary Results */}
           {summaryData && (
             <div
-              className="rounded-lg shadow p-6 theme-card"
+              className="rounded-xl p-6 shadow-lg"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
+                border: "1px solid",
               }}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2
-                  className="text-lg font-semibold"
-                  style={{
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  Summary Results: {summaryData.category}
-                </h2>
-                <button
-                  onClick={createPhysicalPlantRequest}
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                >
-                  Create Physical Plant Request
-                </button>
-              </div>
+              <h2
+                className="text-lg font-semibold mb-6"
+                style={{ color: themeConfig.colors.text }}
+              >
+                Summary Report
+              </h2>
 
-              {/* Summary Statistics */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="text-sm text-gray-600">Total Requests</div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {summaryData.totalRequests}
+              <div className="space-y-6">
+                <div className="grid grid-cols-4 gap-4">
+                  <div
+                    className="p-4 rounded-xl text-center"
+                    style={{
+                      backgroundColor: themeConfig.colors.background,
+                      border: `1px solid ${themeConfig.colors.border}`,
+                    }}
+                  >
+                    <div
+                      className="text-2xl font-bold"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      {summaryData.totalRequests}
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Total Requests
+                    </div>
                   </div>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="text-sm text-gray-600">Locations</div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {summaryData.locations.length}
-                  </div>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="text-sm text-gray-600">Priority Levels</div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {summaryData.priorities.length}
-                  </div>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="text-sm text-gray-600">Requesters</div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {summaryData.requesters.length}
-                  </div>
-                </div>
-              </div>
 
-              {/* Comprehensive Summary */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Comprehensive Summary
-                </h3>
-                <pre className="whitespace-pre-wrap text-sm text-gray-700 font-mono bg-white p-4 rounded border border-gray-200">
-                  {summaryData.summaryDescription}
-                </pre>
+                  <div
+                    className="p-4 rounded-xl text-center"
+                    style={{
+                      backgroundColor: themeConfig.colors.background,
+                      border: `1px solid ${themeConfig.colors.border}`,
+                    }}
+                  >
+                    <div
+                      className="text-2xl font-bold"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      {summaryData.locations.length}
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Locations
+                    </div>
+                  </div>
+
+                  <div
+                    className="p-4 rounded-xl text-center"
+                    style={{
+                      backgroundColor: themeConfig.colors.background,
+                      border: `1px solid ${themeConfig.colors.border}`,
+                    }}
+                  >
+                    <div
+                      className="text-2xl font-bold"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      {summaryData.priorities.length}
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Priority Levels
+                    </div>
+                  </div>
+
+                  <div
+                    className="p-4 rounded-xl text-center"
+                    style={{
+                      backgroundColor: themeConfig.colors.background,
+                      border: `1px solid ${themeConfig.colors.border}`,
+                    }}
+                  >
+                    <div
+                      className="text-2xl font-bold"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      {summaryData.requesters.length}
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Requesters
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3
+                    className="font-medium mb-3"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    Affected Locations
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {summaryData.locations.map(
+                      (location: string, index: number) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 rounded-full text-sm"
+                          style={{
+                            backgroundColor: themeConfig.colors.background,
+                            color: themeConfig.colors.text,
+                            border: `1px solid ${themeConfig.colors.border}`,
+                          }}
+                        >
+                          {location}
+                        </span>
+                      ),
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <h3
+                    className="font-medium mb-3"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    Priority Distribution
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {summaryData.priorities.map(
+                      (priority: string, index: number) => (
+                        <span
+                          key={index}
+                          className={`px-3 py-1 rounded-full text-sm ${
+                            priority === "HIGH"
+                              ? "bg-red-100 text-red-800"
+                              : priority === "MEDIUM"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-gray-100 text-gray-800"
+                          }`}
+                        >
+                          {priority}
+                        </span>
+                      ),
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <h3
+                    className="font-medium mb-3"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    Summary Description
+                  </h3>
+                  <p
+                    className="p-4 rounded-xl"
+                    style={{
+                      backgroundColor: themeConfig.colors.background,
+                      color: themeConfig.colors.textSecondary,
+                      border: `1px solid ${themeConfig.colors.border}`,
+                    }}
+                  >
+                    {summaryData.summaryDescription}
+                  </p>
+                </div>
               </div>
             </div>
           )}
