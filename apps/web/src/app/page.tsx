@@ -65,13 +65,11 @@ export default function Home() {
             ? "center center"
             : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
-          backgroundAttachment: themeConfig.backgroundImage
-            ? "fixed"
-            : "scroll",
+          backgroundAttachment: themeConfig.backgroundImage ? "scroll" : "auto",
           transition:
             "background-image 1.2s ease-in-out, background 1.2s ease-in-out, background-color 1.2s ease-in-out",
-          minHeight: themeConfig.backgroundImage ? "70vh" : "auto",
-          height: themeConfig.backgroundImage ? "70vh" : "auto",
+          minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
+          height: themeConfig.backgroundImage ? "50vh" : "auto",
         }}
       >
         {/* Desktop-specific background adjustments */}
@@ -81,27 +79,27 @@ export default function Home() {
               header {
                 background-size: cover !important;
                 background-position: center center !important;
-                background-attachment: fixed !important;
-                min-height: 80vh !important;
-                height: 80vh !important;
+                background-attachment: scroll !important;
+                min-height: 45vh !important;
+                height: 45vh !important;
               }
             }
             @media (min-width: 1280px) {
               header {
                 background-size: cover !important;
                 background-position: center center !important;
-                background-attachment: fixed !important;
-                min-height: 85vh !important;
-                height: 85vh !important;
+                background-attachment: scroll !important;
+                min-height: 40vh !important;
+                height: 40vh !important;
               }
             }
             @media (min-width: 1536px) {
               header {
                 background-size: cover !important;
                 background-position: center center !important;
-                background-attachment: fixed !important;
-                min-height: 90vh !important;
-                height: 90vh !important;
+                background-attachment: scroll !important;
+                min-height: 35vh !important;
+                height: 35vh !important;
               }
             }
           `}</style>
