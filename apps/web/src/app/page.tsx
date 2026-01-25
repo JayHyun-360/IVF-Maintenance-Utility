@@ -172,25 +172,21 @@ export default function Home() {
           </div>
 
           {/* Action Cards */}
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-3 gap-6">
             <button
               onClick={() => router.push("/student")}
-              className="rounded-2xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
+              className="p-8 rounded-2xl text-left transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-                border: "1px solid",
+                border: `1px solid ${themeConfig.colors.border}`,
               }}
             >
               <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
-                }}
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                style={{ backgroundColor: "rgba(59, 130, 246, 0.1)" }}
               >
                 <svg
-                  className="w-8 h-8 text-white"
+                  className="w-8 h-8 text-blue-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -204,38 +200,52 @@ export default function Home() {
                 </svg>
               </div>
               <h3
-                className="text-xl font-semibold mb-3"
+                className="text-xl font-bold mb-3"
                 style={{ color: themeConfig.colors.text }}
               >
                 Submit Request
               </h3>
               <p
-                className="text-base"
+                className="text-sm mb-4"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
-                Report maintenance issues with photo support and real-time
-                tracking
+                Report maintenance issues and track resolution progress
               </p>
+              <div
+                className="inline-flex items-center text-sm font-medium"
+                style={{ color: "#3B82F6" }}
+              >
+                Get Started
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
             </button>
 
             <button
               onClick={() => router.push("/admin/dashboard")}
-              className="rounded-2xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
+              className="p-8 rounded-2xl text-left transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-                border: "1px solid",
+                border: `1px solid ${themeConfig.colors.border}`,
               }}
             >
               <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
-                }}
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                style={{ backgroundColor: "rgba(139, 92, 246, 0.1)" }}
               >
                 <svg
-                  className="w-8 h-8 text-white"
+                  className="w-8 h-8 text-purple-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -249,36 +259,24 @@ export default function Home() {
                 </svg>
               </div>
               <h3
-                className="text-xl font-semibold mb-3"
+                className="text-xl font-bold mb-3"
                 style={{ color: themeConfig.colors.text }}
               >
                 Admin Dashboard
               </h3>
               <p
-                className="text-base"
+                className="text-sm mb-4"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
-                Manage requests, view analytics, and monitor system performance
+                Manage requests, view analytics, and coordinate responses
               </p>
-            </button>
-
-            <button
-              className="rounded-2xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-                border: "1px solid",
-              }}
-            >
               <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #10B981 0%, #059669 100%)",
-                }}
+                className="inline-flex items-center text-sm font-medium"
+                style={{ color: "#8B5CF6" }}
               >
+                Enter Dashboard
                 <svg
-                  className="w-8 h-8 text-white"
+                  className="w-4 h-4 ml-1"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -287,41 +285,227 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M9 5l7 7-7 7"
                   />
                 </svg>
               </div>
-              <h3
-                className="text-xl font-semibold mb-3"
+            </button>
+
+            <button
+              onClick={() => router.push("/emergency")}
+              className="p-8 rounded-2xl text-left transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-2"
+              style={{
+                backgroundColor: "rgba(239, 68, 68, 0.05)",
+                borderColor: "#FCA5A5",
+              }}
+            >
+              <div
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                style={{ backgroundColor: "rgba(239, 68, 68, 0.1)" }}
+              >
+                <svg
+                  className="w-8 h-8 text-red-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-red-600">
+                Emergency Report
+              </h3>
+              <p
+                className="text-sm mb-4"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Report critical maintenance emergencies requiring immediate
+                attention
+              </p>
+              <div className="inline-flex items-center text-sm font-medium text-red-600">
+                Emergency
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+
+          {/* Additional Functions */}
+          <div className="grid grid-cols-4 gap-4 mt-6">
+            <button
+              onClick={() => router.push("/student/history")}
+              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
+              style={{
+                backgroundColor: themeConfig.colors.surface,
+                border: `1px solid ${themeConfig.colors.border}`,
+              }}
+            >
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ backgroundColor: "rgba(16, 185, 129, 0.1)" }}
+              >
+                <svg
+                  className="w-6 h-6 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <h4
+                className="font-semibold mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
-                System Status
-              </h3>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span
-                    className="text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Completion Rate
-                  </span>
-                  <span
-                    className="text-sm font-semibold"
-                    style={{ color: "#10B981" }}
-                  >
-                    {completionRate}%
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="h-2 rounded-full transition-all duration-300"
-                    style={{
-                      width: `${completionRate}%`,
-                      backgroundColor: "#10B981",
-                    }}
-                  ></div>
-                </div>
+                Request History
+              </h4>
+              <p
+                className="text-xs"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Track your submitted requests
+              </p>
+            </button>
+
+            <button
+              onClick={() => router.push("/admin/reports")}
+              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
+              style={{
+                backgroundColor: themeConfig.colors.surface,
+                border: `1px solid ${themeConfig.colors.border}`,
+              }}
+            >
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ backgroundColor: "rgba(251, 191, 36, 0.1)" }}
+              >
+                <svg
+                  className="w-6 h-6 text-yellow-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 17v1a2 2 0 002 2h2a2 2 0 002-2v-1m-6 0h6m2 0h2a2 2 0 002-2v-1m-8 0V7a2 2 0 012-2h2a2 2 0 012 2v8m-6 0h6"
+                  />
+                </svg>
               </div>
+              <h4
+                className="font-semibold mb-2"
+                style={{ color: themeConfig.colors.text }}
+              >
+                Reports
+              </h4>
+              <p
+                className="text-xs"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Analytics and insights
+              </p>
+            </button>
+
+            <button
+              onClick={() => router.push("/admin/users")}
+              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
+              style={{
+                backgroundColor: themeConfig.colors.surface,
+                border: `1px solid ${themeConfig.colors.border}`,
+              }}
+            >
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ backgroundColor: "rgba(99, 102, 241, 0.1)" }}
+              >
+                <svg
+                  className="w-6 h-6 text-indigo-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+              </div>
+              <h4
+                className="font-semibold mb-2"
+                style={{ color: themeConfig.colors.text }}
+              >
+                User Management
+              </h4>
+              <p
+                className="text-xs"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Manage system users
+              </p>
+            </button>
+
+            <button
+              onClick={() => router.push("/admin/physical-plant-request")}
+              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
+              style={{
+                backgroundColor: themeConfig.colors.surface,
+                border: `1px solid ${themeConfig.colors.border}`,
+              }}
+            >
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ backgroundColor: "rgba(236, 72, 153, 0.1)" }}
+              >
+                <svg
+                  className="w-6 h-6 text-pink-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
+                </svg>
+              </div>
+              <h4
+                className="font-semibold mb-2"
+                style={{ color: themeConfig.colors.text }}
+              >
+                Plant Request
+              </h4>
+              <p
+                className="text-xs"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Physical plant requests
+              </p>
             </button>
           </div>
         </div>
