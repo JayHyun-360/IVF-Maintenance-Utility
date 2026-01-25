@@ -448,7 +448,10 @@ export default function StudentPage() {
                           <button
                             type="button"
                             onClick={() => removeImage(index)}
-                            className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full text-sm font-medium transition-all duration-300 hover:scale-110 shadow-lg"
+                            className="absolute -top-2 -right-2 w-8 h-8 text-white rounded-full text-sm font-medium transition-all duration-300 hover:scale-110 shadow-lg"
+                            style={{
+                              backgroundColor: themeConfig.colors.error,
+                            }}
                           >
                             ×
                           </button>

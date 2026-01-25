@@ -389,39 +389,6 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <div>
-                <h3
-                  className="text-xl font-bold mb-3"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Submit Request
-                </h3>
-                <p
-                  className="text-sm"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Report maintenance issues and track progress
-                </p>
-                <div
-                  className="inline-flex items-center text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
-                  style={{ color: themeConfig.colors.primary }}
-                >
-                  Get Started
-                  <svg
-                    className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-              </div>
             </button>
 
             <button

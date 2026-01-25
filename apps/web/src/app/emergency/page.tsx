@@ -38,7 +38,13 @@ export default function EmergencyPage() {
       className="min-h-screen"
     >
       {/* Alert Banner */}
-      <div className="bg-red-600 text-white px-8 py-4">
+      <div
+        className="px-8 py-4"
+        style={{
+          backgroundColor: themeConfig.colors.error,
+          color: "white",
+        }}
+      >
         <div className="max-w-6xl mx-auto flex items-center">
           <svg
             className="w-6 h-6 mr-3 animate-pulse"
@@ -75,7 +81,10 @@ export default function EmergencyPage() {
               ←
             </button>
             <div>
-              <h1 className="text-2xl font-bold text-red-600">
+              <h1
+                className="text-2xl font-bold"
+                style={{ color: themeConfig.colors.error }}
+              >
                 Emergency Requests
               </h1>
               <p
@@ -87,7 +96,10 @@ export default function EmergencyPage() {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
+            <div
+              className="w-3 h-3 rounded-full animate-pulse"
+              style={{ backgroundColor: themeConfig.colors.error }}
+            ></div>
             <span
               className="text-sm font-medium"
               style={{ color: themeConfig.colors.text }}
@@ -102,37 +114,78 @@ export default function EmergencyPage() {
         <div className="max-w-6xl mx-auto space-y-8">
           {/* Quick Emergency Actions */}
           <div
-            className="rounded-xl p-6 border-2 border-red-200 bg-red-50"
+            className="rounded-xl p-6 border-2"
             style={{
-              backgroundColor: "rgba(239, 68, 68, 0.05)",
-              borderColor: "#FCA5A5",
+              backgroundColor: `${themeConfig.colors.error}10`,
+              borderColor: `${themeConfig.colors.error}30`,
             }}
           >
-            <h3 className="text-lg font-semibold text-red-800 mb-4">
+            <h3
+              className="text-lg font-semibold mb-4"
+              style={{ color: themeConfig.colors.error }}
+            >
               Quick Emergency Actions
             </h3>
             <div className="grid grid-cols-4 gap-4">
-              <button className="p-4 rounded-xl bg-white border border-red-200 hover:bg-red-100 transition-all duration-300">
+              <button
+                className="p-4 rounded-xl transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  border: `1px solid ${themeConfig.colors.error}30`,
+                }}
+              >
                 <div className="text-2xl mb-2">🚨</div>
-                <div className="text-sm font-medium text-red-800">
+                <div
+                  className="text-sm font-medium"
+                  style={{ color: themeConfig.colors.error }}
+                >
                   Fire Safety
                 </div>
               </button>
-              <button className="p-4 rounded-xl bg-white border border-red-200 hover:bg-red-100 transition-all duration-300">
+              <button
+                className="p-4 rounded-xl transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  border: `1px solid ${themeConfig.colors.error}30`,
+                }}
+              >
                 <div className="text-2xl mb-2">⚡</div>
-                <div className="text-sm font-medium text-red-800">
+                <div
+                  className="text-sm font-medium"
+                  style={{ color: themeConfig.colors.error }}
+                >
                   Power Outage
                 </div>
               </button>
-              <button className="p-4 rounded-xl bg-white border border-red-200 hover:bg-red-100 transition-all duration-300">
+              <button
+                className="p-4 rounded-xl transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  border: `1px solid ${themeConfig.colors.error}30`,
+                }}
+              >
                 <div className="text-2xl mb-2">💧</div>
-                <div className="text-sm font-medium text-red-800">
+                <div
+                  className="text-sm font-medium"
+                  style={{ color: themeConfig.colors.error }}
+                >
                   Water Leak
                 </div>
               </button>
-              <button className="p-4 rounded-xl bg-white border border-red-200 hover:bg-red-100 transition-all duration-300">
+              <button
+                className="p-4 rounded-xl transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  border: `1px solid ${themeConfig.colors.error}30`,
+                }}
+              >
                 <div className="text-2xl mb-2">🔥</div>
-                <div className="text-sm font-medium text-red-800">Gas Leak</div>
+                <div
+                  className="text-sm font-medium"
+                  style={{ color: themeConfig.colors.error }}
+                >
+                  Gas Leak
+                </div>
               </button>
             </div>
           </div>
@@ -221,11 +274,13 @@ export default function EmergencyPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-8 py-3 rounded-xl font-semibold bg-red-600 text-white hover:bg-red-700 transition-all duration-300 disabled:opacity-50"
+                  className="px-8 py-3 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50"
+                  style={{
+                    backgroundColor: themeConfig.colors.error,
+                    color: "white",
+                  }}
                 >
-                  {isSubmitting
-                    ? "Sending Alert..."
-                    : "🚨 Send Emergency Alert"}
+                  {isSubmitting ? "Sending Alert..." : "Send Emergency Alert"}
                 </button>
                 <span
                   className="text-sm"
@@ -247,7 +302,13 @@ export default function EmergencyPage() {
               border: "1px solid",
             }}
           >
-            <div className="px-6 py-4 bg-red-600 text-white">
+            <div
+              className="px-6 py-4"
+              style={{
+                backgroundColor: themeConfig.colors.error,
+                color: "white",
+              }}
+            >
               <h3 className="text-lg font-semibold">
                 Active Emergency Requests
               </h3>
@@ -255,7 +316,10 @@ export default function EmergencyPage() {
 
             {urgentRequests.length === 0 ? (
               <div className="px-6 py-12 text-center">
-                <div className="text-green-600 text-lg font-medium mb-2">
+                <div
+                  className="text-lg font-medium mb-2"
+                  style={{ color: themeConfig.colors.success }}
+                >
                   ✅ No Active Emergencies
                 </div>
                 <p style={{ color: themeConfig.colors.textSecondary }}>
@@ -272,7 +336,13 @@ export default function EmergencyPage() {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
-                          <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                          <span
+                            className="px-3 py-1 rounded-full text-xs font-medium"
+                            style={{
+                              backgroundColor: `${themeConfig.colors.error}20`,
+                              color: themeConfig.colors.error,
+                            }}
+                          >
                             URGENT
                           </span>
                           <span
@@ -302,21 +372,39 @@ export default function EmergencyPage() {
                             👤 {request.requestedBy}
                           </span>
                           <span
-                            className={`px-2 py-1 rounded-full text-xs ${
-                              request.status === "IN_PROGRESS"
-                                ? "bg-blue-100 text-blue-800"
-                                : "bg-yellow-100 text-yellow-800"
-                            }`}
+                            className="px-2 py-1 rounded-full text-xs"
+                            style={{
+                              backgroundColor:
+                                request.status === "IN_PROGRESS"
+                                  ? `${themeConfig.colors.primary}20`
+                                  : `${themeConfig.colors.warning}20`,
+                              color:
+                                request.status === "IN_PROGRESS"
+                                  ? themeConfig.colors.primary
+                                  : themeConfig.colors.warning,
+                            }}
                           >
                             {request.status.replace("_", " ")}
                           </span>
                         </div>
                       </div>
                       <div className="flex space-x-2">
-                        <button className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm hover:bg-blue-700">
+                        <button
+                          className="px-4 py-2 rounded-xl text-sm transition-all duration-200 hover:scale-105"
+                          style={{
+                            backgroundColor: themeConfig.colors.primary,
+                            color: "white",
+                          }}
+                        >
                           Assign Staff
                         </button>
-                        <button className="px-4 py-2 rounded-xl bg-green-600 text-white text-sm hover:bg-green-700">
+                        <button
+                          className="px-4 py-2 rounded-xl text-sm transition-all duration-200 hover:scale-105"
+                          style={{
+                            backgroundColor: themeConfig.colors.success,
+                            color: "white",
+                          }}
+                        >
                           Mark Resolved
                         </button>
                       </div>
