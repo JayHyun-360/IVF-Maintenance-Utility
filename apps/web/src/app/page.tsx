@@ -42,16 +42,16 @@ export default function Home() {
 
   return (
     <div
-      className="min-h-screen transition-all duration-700 ease-in-out"
+      className="min-h-screen"
       style={{
         backgroundColor: themeConfig.colors.background,
         color: themeConfig.colors.text,
-        transition: "background-color 0.7s ease-in-out, color 0.7s ease-in-out",
+        transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
       }}
     >
       {/* Header with Gradient Background */}
       <header
-        className="px-8 py-16 text-center relative transition-all duration-1000 ease-in-out"
+        className="px-8 py-16 text-center relative"
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "light"
@@ -64,7 +64,7 @@ export default function Home() {
           backgroundPosition: themeConfig.backgroundImage ? "center" : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           transition:
-            "background 1s ease-in-out, background-color 1s ease-in-out",
+            "background-image 1.2s ease-in-out, background 1.2s ease-in-out, background-color 1.2s ease-in-out",
         }}
       >
         {/* Decorative Elements */}
@@ -306,12 +306,13 @@ export default function Home() {
           <div className="flex justify-center">
             <button
               onClick={() => router.push("/login")}
-              className="p-12 rounded-2xl text-center transition-all duration-700 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
+              className="p-12 rounded-2xl text-center transition-all duration-800 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
                 boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
-                transition: "all 0.7s ease-in-out, transform 0.3s ease-in-out",
+                transition:
+                  "all 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s ease-in-out",
               }}
             >
               <div

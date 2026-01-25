@@ -51,16 +51,22 @@ export default function ThemeSwitcher() {
   }, []);
 
   const handleThemeChange = (theme: Theme) => {
-    setCurrentTheme(theme);
-    setStoredTheme(theme);
-    applyTheme(theme);
-    setTheme(theme);
-    setIsOpen(false);
+    // Add smooth transition to all elements before changing theme
+    document.body.style.transition = "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
 
-    // Add a small delay to ensure smooth transition
+    // Small delay to ensure transition is applied
     setTimeout(() => {
-      document.body.style.transition = "all 0.7s ease-in-out";
+      setCurrentTheme(theme);
+      setStoredTheme(theme);
+      applyTheme(theme);
+      setTheme(theme);
+      setIsOpen(false);
     }, 50);
+
+    // Remove transition after theme change is complete
+    setTimeout(() => {
+      document.body.style.transition = "";
+    }, 900);
   };
 
   const currentThemeData = themes.find((t) => t.value === currentTheme);
