@@ -110,139 +110,19 @@ export default function MobileStudentPage() {
 
   return (
     <div
-      className="flex h-screen"
+      className="min-h-screen flex flex-col"
       style={{ backgroundColor: themeConfig.colors.background }}
     >
-      {/* Mobile Sidebar - Enhanced Touch Friendly */}
-      <div className="w-14 bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col items-center py-3 space-y-4">
-        {/* Logo - Enhanced */}
-        <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110">
-          <svg
-            className="w-4 h-4 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-            />
-          </svg>
-        </div>
-
-        {/* Navigation Items - Enhanced Touch Targets */}
-        <nav className="flex-1 flex flex-col space-y-3">
-          <button
-            onClick={() => router.push("/student")}
-            className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={() => router.push("/student/requests")}
-            className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl flex items-center justify-center text-white shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={() => router.push("/student/messages")}
-            className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl flex items-center justify-center text-white shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={() => router.push("/student/profile")}
-            className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl flex items-center justify-center text-white shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </button>
-        </nav>
-
-        {/* User Avatar - Enhanced */}
-        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-md transition-all duration-300 hover:scale-110">
-          <svg
-            className="w-4 h-4 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-            />
-          </svg>
-        </div>
-      </div>
-
-      {/* Main Content - Full Height No Scroll */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        {/* Header - Enhanced */}
-        <header
-          className="px-4 py-3 flex items-center justify-between"
-          style={{
-            backgroundColor:
-              "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
-          }}
-        >
-          <h1 className="text-white font-semibold text-base">New Request</h1>
+      {/* Clean Header */}
+      <header className="px-6 py-4">
+        <div className="flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="text-white p-2 rounded-lg transition-all duration-300 hover:bg-white/20 active:scale-95"
+            className="p-2 rounded-xl transition-all duration-300 hover:bg-gray-100"
+            style={{ color: themeConfig.colors.text }}
           >
             <svg
-              className="w-5 h-5"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -251,19 +131,28 @@ export default function MobileStudentPage() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
+                d="M15 19l-7-7 7-7"
               />
             </svg>
           </button>
-        </header>
+          <h1
+            className="text-lg font-semibold"
+            style={{ color: themeConfig.colors.text }}
+          >
+            New Request
+          </h1>
+          <div className="w-10"></div>
+        </div>
+      </header>
 
-        {/* Form Content - Enhanced Touch Friendly */}
-        <div className="flex-1 overflow-y-auto px-4 py-4">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Title */}
+      {/* Main Content - Centered Card Design */}
+      <main className="flex-1 px-6 pb-6 overflow-y-auto">
+        <div className="max-w-md mx-auto">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Title Input */}
             <div>
               <label
-                className="block text-xs font-semibold mb-2"
+                className="block text-sm font-medium mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
                 What needs fixing?
@@ -274,7 +163,7 @@ export default function MobileStudentPage() {
                 value={formData.title}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-3 rounded-2xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 style={{
                   backgroundColor: themeConfig.colors.surface,
                   borderColor: themeConfig.colors.border,
@@ -284,10 +173,10 @@ export default function MobileStudentPage() {
               />
             </div>
 
-            {/* Location */}
+            {/* Location Input */}
             <div>
               <label
-                className="block text-xs font-semibold mb-2"
+                className="block text-sm font-medium mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
                 Where is it?
@@ -298,7 +187,7 @@ export default function MobileStudentPage() {
                 value={formData.location}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-3 rounded-2xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 style={{
                   backgroundColor: themeConfig.colors.surface,
                   borderColor: themeConfig.colors.border,
@@ -311,7 +200,7 @@ export default function MobileStudentPage() {
             {/* Description */}
             <div>
               <label
-                className="block text-xs font-semibold mb-2"
+                className="block text-sm font-medium mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
                 Describe the problem
@@ -321,22 +210,22 @@ export default function MobileStudentPage() {
                 value={formData.description}
                 onChange={handleChange}
                 required
-                rows={3}
-                className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 text-sm resize-none"
+                rows={4}
+                className="w-full px-4 py-3 rounded-2xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                 style={{
                   backgroundColor: themeConfig.colors.surface,
                   borderColor: themeConfig.colors.border,
                   color: themeConfig.colors.text,
                 }}
-                placeholder="What's wrong?"
+                placeholder="What's wrong? Please provide details..."
               />
             </div>
 
             {/* Category and Priority */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label
-                  className="block text-xs font-semibold mb-2"
+                  className="block text-sm font-medium mb-2"
                   style={{ color: themeConfig.colors.text }}
                 >
                   Type
@@ -345,7 +234,7 @@ export default function MobileStudentPage() {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-4 py-3 rounded-2xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   style={{
                     backgroundColor: themeConfig.colors.surface,
                     borderColor: themeConfig.colors.border,
@@ -361,7 +250,7 @@ export default function MobileStudentPage() {
 
               <div>
                 <label
-                  className="block text-xs font-semibold mb-2"
+                  className="block text-sm font-medium mb-2"
                   style={{ color: themeConfig.colors.text }}
                 >
                   Priority
@@ -370,7 +259,7 @@ export default function MobileStudentPage() {
                   name="priority"
                   value={formData.priority}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-4 py-3 rounded-2xl border transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   style={{
                     backgroundColor: themeConfig.colors.surface,
                     borderColor: themeConfig.colors.border,
@@ -384,16 +273,16 @@ export default function MobileStudentPage() {
               </div>
             </div>
 
-            {/* Photos - Enhanced Touch Area */}
+            {/* Photo Upload */}
             <div>
               <label
-                className="block text-xs font-semibold mb-3"
+                className="block text-sm font-medium mb-3"
                 style={{ color: themeConfig.colors.text }}
               >
                 Add photos
               </label>
               <div
-                className="border-2 border-dashed rounded-2xl p-4 text-center transition-all duration-300 hover:border-blue-400"
+                className="border-2 border-dashed rounded-2xl p-6 text-center transition-all duration-300 hover:border-blue-400 cursor-pointer"
                 style={{
                   borderColor: themeConfig.colors.border,
                   backgroundColor: themeConfig.colors.surface,
@@ -409,23 +298,28 @@ export default function MobileStudentPage() {
                 />
                 <label
                   htmlFor="photos"
-                  className="cursor-pointer flex flex-col items-center space-y-2 transition-all duration-300 hover:scale-105"
+                  className="cursor-pointer flex flex-col items-center space-y-3"
                 >
-                  <svg
-                    className="w-8 h-8 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: "rgba(59, 130, 246, 0.1)" }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
+                    <svg
+                      className="w-6 h-6 text-blue-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                  </div>
                   <p
-                    className="text-xs"
+                    className="text-sm"
                     style={{ color: themeConfig.colors.textSecondary }}
                   >
                     Tap to add photos
@@ -433,20 +327,20 @@ export default function MobileStudentPage() {
                 </label>
               </div>
 
-              {/* Image Previews - Enhanced Grid */}
+              {/* Image Previews */}
               {imagePreviews.length > 0 && (
-                <div className="mt-3 grid grid-cols-3 gap-2">
+                <div className="mt-4 grid grid-cols-3 gap-3">
                   {imagePreviews.map((preview, index) => (
                     <div key={index} className="relative group">
                       <img
                         src={preview}
                         alt={`Preview ${index + 1}`}
-                        className="w-full h-16 object-cover rounded-xl transition-all duration-300 group-hover:scale-105"
+                        className="w-full h-20 object-cover rounded-xl transition-all duration-300 group-hover:scale-105"
                       />
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white rounded-full text-xs font-medium transition-all duration-300 hover:scale-110 shadow-lg"
+                        className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs font-medium transition-all duration-300 hover:scale-110 shadow-lg"
                       >
                         ×
                       </button>
@@ -456,11 +350,11 @@ export default function MobileStudentPage() {
               )}
             </div>
 
-            {/* Submit Button - Enhanced */}
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 rounded-2xl font-semibold transition-all duration-300 transform active:scale-95 disabled:opacity-50 text-base"
+              className="w-full py-4 rounded-2xl font-semibold transition-all duration-300 transform active:scale-95 disabled:opacity-50 text-base shadow-lg"
               style={{
                 background: "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
                 color: "#FFFFFF",
@@ -503,7 +397,7 @@ export default function MobileStudentPage() {
             </button>
           </form>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

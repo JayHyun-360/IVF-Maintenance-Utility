@@ -62,17 +62,17 @@ export default function Home() {
           color: themeConfig.colors.text,
         }}
       >
-        <div className="text-center max-w-sm w-full">
+        <div className="max-w-sm w-full">
           {/* Logo/Icon */}
-          <div className="mb-8">
+          <div className="text-center mb-8">
             <div
-              className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4"
+              className="w-20 h-20 mx-auto rounded-3xl flex items-center justify-center mb-6 shadow-xl"
               style={{
                 background: "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
               }}
             >
               <svg
-                className="w-8 h-8 text-white"
+                className="w-10 h-10 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -100,15 +100,15 @@ export default function Home() {
           </div>
 
           {/* Address */}
-          <div className="mb-8">
+          <div className="mb-8 text-center">
             <p
-              className="text-sm font-medium mb-2"
+              className="text-sm font-medium mb-3"
               style={{ color: themeConfig.colors.text }}
             >
               Maintenance Portal
             </p>
             <p
-              className="text-xs leading-relaxed"
+              className="text-sm leading-relaxed"
               style={{ color: themeConfig.colors.textSecondary }}
             >
               Streamlined maintenance request management for IVF facilities.
@@ -117,38 +117,38 @@ export default function Home() {
           </div>
 
           {/* Info */}
-          <div className="mb-8 space-y-3">
-            <div className="flex items-center justify-center space-x-2">
+          <div className="mb-8 space-y-4">
+            <div className="flex items-center space-x-3">
               <div
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: "#1B4332" }}
               ></div>
               <p
-                className="text-xs"
+                className="text-sm"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Fast request submission
               </p>
             </div>
-            <div className="flex items-center justify-center space-x-2">
+            <div className="flex items-center space-x-3">
               <div
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: "#1B4332" }}
               ></div>
               <p
-                className="text-xs"
+                className="text-sm"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Real-time status tracking
               </p>
             </div>
-            <div className="flex items-center justify-center space-x-2">
+            <div className="flex items-center space-x-3">
               <div
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: "#1B4332" }}
               ></div>
               <p
-                className="text-xs"
+                className="text-sm"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Photo attachment support
@@ -159,7 +159,7 @@ export default function Home() {
           {/* Continue Button */}
           <button
             onClick={handleContinue}
-            className="w-full py-4 px-6 rounded-2xl font-semibold transition-all duration-300 transform active:scale-95 hover:scale-105 shadow-lg"
+            className="w-full py-4 rounded-2xl font-semibold transition-all duration-300 transform active:scale-95 hover:scale-105 shadow-xl"
             style={{
               background: "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
               color: "#FFFFFF",
@@ -197,207 +197,23 @@ export default function Home() {
 
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen flex flex-col items-center justify-center"
       style={{
         backgroundColor: themeConfig.colors.background,
         color: themeConfig.colors.text,
       }}
     >
-      {/* Simple Header */}
-      <div
-        className="shadow-sm border-b"
-        style={{
-          backgroundColor: themeConfig.colors.surface,
-          borderColor: themeConfig.colors.border,
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-4 h-4 sm:w-6 sm:h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </div>
-              <div>
-                <h1
-                  className="text-base sm:text-xl font-bold"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  <span className="sm:hidden">IVF Portal</span>
-                  <span className="hidden sm:inline">Maintenance Portal</span>
-                </h1>
-                <p
-                  className="text-xs hidden sm:block"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  IVF Maintenance Utility
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content - Minimalistic */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-          <div
-            className="p-4 sm:p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
-            style={{
-              backgroundColor: themeConfig.colors.surface,
-              borderColor: themeConfig.colors.border,
-            }}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: "rgba(59, 130, 246, 0.15)" }}
-              >
-                <span
-                  className="text-xl sm:text-2xl"
-                  style={{ color: "#3B82F6" }}
-                >
-                  📋
-                </span>
-              </div>
-            </div>
-            <p
-              className="text-3xl sm:text-4xl font-bold mb-1"
-              style={{ color: themeConfig.colors.text }}
-            >
-              {stats.totalRequests}
-            </p>
-            <p
-              className="text-sm sm:text-base font-medium"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              Total Requests
-            </p>
-          </div>
-
-          <div
-            className="p-4 sm:p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
-            style={{
-              backgroundColor: themeConfig.colors.surface,
-              borderColor: themeConfig.colors.border,
-            }}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: "rgba(245, 158, 11, 0.15)" }}
-              >
-                <span
-                  className="text-xl sm:text-2xl"
-                  style={{ color: "#F59E0B" }}
-                >
-                  ⏳
-                </span>
-              </div>
-            </div>
-            <p
-              className="text-3xl sm:text-4xl font-bold mb-1"
-              style={{ color: themeConfig.colors.text }}
-            >
-              {stats.pendingRequests}
-            </p>
-            <p
-              className="text-sm sm:text-base font-medium"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              Pending
-            </p>
-          </div>
-
-          <div
-            className="p-4 sm:p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
-            style={{
-              backgroundColor: themeConfig.colors.surface,
-              borderColor: themeConfig.colors.border,
-            }}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: "rgba(34, 197, 94, 0.15)" }}
-              >
-                <span
-                  className="text-xl sm:text-2xl"
-                  style={{ color: "#22C55E" }}
-                >
-                  ✅
-                </span>
-              </div>
-            </div>
-            <p
-              className="text-3xl sm:text-4xl font-bold mb-1"
-              style={{ color: themeConfig.colors.text }}
-            >
-              {stats.completedRequests}
-            </p>
-            <p
-              className="text-sm sm:text-base font-medium"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              Completed
-            </p>
-          </div>
-
-          <div
-            className="p-4 sm:p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
-            style={{
-              backgroundColor: themeConfig.colors.surface,
-              borderColor: themeConfig.colors.border,
-            }}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: "rgba(168, 85, 247, 0.15)" }}
-              >
-                <span
-                  className="text-xl sm:text-2xl"
-                  style={{ color: "#A855F7" }}
-                >
-                  📊
-                </span>
-              </div>
-            </div>
-            <p
-              className="text-3xl sm:text-4xl font-bold mb-1"
-              style={{ color: themeConfig.colors.text }}
-            >
-              {completionRate}%
-            </p>
-            <p
-              className="text-sm sm:text-base font-medium"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              Completion Rate
-            </p>
-          </div>
-        </div>
-
+      <div className="max-w-sm w-full">
         {/* Main Action Button */}
         <div className="mb-8">
           <button
             onClick={() => router.push("/student")}
-            className="w-full sm:w-auto py-4 sm:py-5 px-8 sm:px-10 rounded-2xl font-semibold transition-all duration-300 transform active:scale-95 hover:scale-105 shadow-xl"
+            className="w-full py-4 rounded-2xl font-semibold transition-all duration-300 transform active:scale-95 hover:scale-105 shadow-xl"
             style={{
               background: "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
               color: "#FFFFFF",
               boxShadow:
-                "0 12px 32px 0 rgba(27, 67, 50, 0.4), 0 6px 16px 0 rgba(27, 67, 50, 0.3)",
+                "0 8px 24px 0 rgba(27, 67, 50, 0.4), 0 4px 12px 0 rgba(27, 67, 50, 0.3)",
             }}
           >
             <span className="flex items-center justify-center space-x-3">
@@ -414,25 +230,23 @@ export default function Home() {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <span className="text-base sm:text-lg">
-                Submit Maintenance Request
-              </span>
+              <span className="text-base">Submit Maintenance Request</span>
             </span>
           </button>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        <div className="space-y-3">
           <button
             onClick={() => router.push("/student")}
-            className="p-5 sm:p-6 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
+            className="w-full p-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
               border: "1px solid",
             }}
           >
-            <div className="flex items-center space-x-4 mb-3">
+            <div className="flex items-center space-x-4">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                 style={{ backgroundColor: "rgba(59, 130, 246, 0.15)" }}
@@ -441,30 +255,32 @@ export default function Home() {
                   🔧
                 </span>
               </div>
-              <h3
-                className="font-semibold text-base"
-                style={{ color: themeConfig.colors.text }}
-              >
-                New Request
-              </h3>
+              <div className="flex-1">
+                <h3
+                  className="font-semibold text-base"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  New Request
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Report maintenance issues quickly
+                </p>
+              </div>
             </div>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              Report maintenance issues quickly
-            </p>
           </button>
 
           <button
-            className="p-5 sm:p-6 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
+            className="w-full p-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
               border: "1px solid",
             }}
           >
-            <div className="flex items-center space-x-4 mb-3">
+            <div className="flex items-center space-x-4">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                 style={{ backgroundColor: "rgba(34, 197, 94, 0.15)" }}
@@ -473,30 +289,32 @@ export default function Home() {
                   📈
                 </span>
               </div>
-              <h3
-                className="font-semibold text-base"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Analytics
-              </h3>
+              <div className="flex-1">
+                <h3
+                  className="font-semibold text-base"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Analytics
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  View detailed statistics
+                </p>
+              </div>
             </div>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              View detailed statistics
-            </p>
           </button>
 
           <button
-            className="p-5 sm:p-6 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
+            className="w-full p-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 text-left group"
             style={{
               backgroundColor: themeConfig.colors.surface,
               borderColor: themeConfig.colors.border,
               border: "1px solid",
             }}
           >
-            <div className="flex items-center space-x-4 mb-3">
+            <div className="flex items-center space-x-4">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                 style={{ backgroundColor: "rgba(168, 85, 247, 0.15)" }}
@@ -505,19 +323,21 @@ export default function Home() {
                   ⚙️
                 </span>
               </div>
-              <h3
-                className="font-semibold text-base"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Management
-              </h3>
+              <div className="flex-1">
+                <h3
+                  className="font-semibold text-base"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Management
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Admin control panel
+                </p>
+              </div>
             </div>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              Admin control panel
-            </p>
           </button>
         </div>
       </div>
