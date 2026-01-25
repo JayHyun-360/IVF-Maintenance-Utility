@@ -74,6 +74,8 @@ export const themes: Record<Theme, ThemeConfig> = {
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
+    backgroundImage:
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=400&fit=crop", // Temporary test image
   },
 };
 
