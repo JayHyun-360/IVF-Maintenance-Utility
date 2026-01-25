@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 interface SummaryData {
   category: string;
@@ -99,6 +100,9 @@ export default function PhysicalPlantRequestPage() {
               >
                 Physical Plant Request
               </h1>
+            </div>
+            <div className="flex items-center">
+              <ThemeSwitcher />
             </div>
           </div>
         </div>

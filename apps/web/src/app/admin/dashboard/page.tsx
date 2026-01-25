@@ -14,6 +14,7 @@ import {
   MaintenanceRequest,
 } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -150,6 +151,7 @@ export default function AdminDashboard() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
+              <ThemeSwitcher />
               <button
                 onClick={() => router.push("/")}
                 className="px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"

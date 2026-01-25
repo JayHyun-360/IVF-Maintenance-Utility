@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { getMaintenanceStats } from "@/lib/data";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export default function Home() {
   const router = useRouter();
@@ -66,6 +67,9 @@ export default function Home() {
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10">
+          <div className="absolute top-4 right-4">
+            <ThemeSwitcher />
+          </div>
           <div
             className="w-24 h-24 mx-auto rounded-3xl flex items-center justify-center mb-8 shadow-2xl transform hover:scale-110 transition-all duration-500"
             style={{
@@ -103,10 +107,10 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="px-8 pb-12">
+      <main className="px-4 sm:px-6 lg:px-8 pb-8 lg:pb-12">
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Stats Grid */}
-          <div className="grid grid-cols-4 gap-6 mb-12 mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8 lg:mb-12 mt-6 lg:mt-8">
             <div
               className="rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
               style={{
@@ -277,7 +281,7 @@ export default function Home() {
           </div>
 
           {/* Enhanced Action Cards */}
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             <button
               onClick={() => router.push("/student")}
               className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group"
@@ -464,7 +468,7 @@ export default function Home() {
           </div>
 
           {/* Additional Functions */}
-          <div className="grid grid-cols-4 gap-4 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mt-4 lg:mt-6">
             <button
               onClick={() => router.push("/student/history")}
               className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
@@ -586,7 +590,7 @@ export default function Home() {
             </button>
 
             <button
-              onClick={() => router.push("/admin/physical-plant-request")}
+              onClick={() => router.push("/settings")}
               className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
               style={{
                 backgroundColor: themeConfig.colors.surface,
@@ -595,10 +599,10 @@ export default function Home() {
             >
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ backgroundColor: "rgba(236, 72, 153, 0.1)" }}
+                style={{ backgroundColor: "rgba(139, 92, 246, 0.1)" }}
               >
                 <svg
-                  className="w-6 h-6 text-pink-500"
+                  className="w-6 h-6 text-purple-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -607,7 +611,13 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
               </div>
@@ -615,13 +625,13 @@ export default function Home() {
                 className="font-semibold mb-2"
                 style={{ color: themeConfig.colors.text }}
               >
-                Plant Request
+                Settings
               </h4>
               <p
                 className="text-xs"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
-                Physical plant requests
+                Customize your experience
               </p>
             </button>
           </div>

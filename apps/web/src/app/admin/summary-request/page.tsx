@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
 
 export default function SummaryRequestPage() {
@@ -91,6 +92,9 @@ export default function SummaryRequestPage() {
               >
                 Generate Summary Report
               </h1>
+            </div>
+            <div className="flex items-center">
+              <ThemeSwitcher />
             </div>
           </div>
         </div>

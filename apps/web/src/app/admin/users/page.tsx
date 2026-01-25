@@ -17,7 +17,7 @@ interface User {
 export default function AdminUsersPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
-  const [users] = useState<User[]>([
+  const [users, setUsers] = useState<User[]>([
     {
       id: "1",
       name: "John Administrator",
@@ -47,6 +47,23 @@ export default function AdminUsersPage() {
     },
   ]);
 
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    role: "STUDENT" as "ADMIN" | "STAFF" | "STUDENT",
+    department: "",
+    status: "ACTIVE" as "ACTIVE" | "INACTIVE",
+  });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterRole, setFilterRole] = useState<string>("ALL");
+  const [filterStatus, setFilterStatus] = useState<string>("ALL");
+
   const getRoleColor = (role: string) => {
     switch (role) {
       case "ADMIN":
@@ -65,6 +82,143 @@ export default function AdminUsersPage() {
       ? "bg-green-100 text-green-800"
       : "bg-red-100 text-red-800";
   };
+
+  const handleAddUser = async () => {
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    try {
+      const newUser: User = {
+        id: Date.now().toString(),
+        ...formData,
+        lastLogin: new Date(),
+      };
+      setUsers([...users, newUser]);
+      setShowAddModal(false);
+      setFormData({
+        name: "",
+        email: "",
+        role: "STUDENT",
+        department: "",
+        status: "ACTIVE",
+      });
+      setFormErrors({});
+    } catch (error) {
+      console.error("Error adding user:", error);
+      // Could add toast notification here
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEditUser = async () => {
+    if (!validateForm()) return;
+
+    if (!selectedUser) return;
+
+    setIsLoading(true);
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    try {
+      setUsers(
+        users.map((user) =>
+          user.id === selectedUser.id ? { ...user, ...formData } : user,
+        ),
+      );
+      setShowEditModal(false);
+      setSelectedUser(null);
+      setFormData({
+        name: "",
+        email: "",
+        role: "STUDENT",
+        department: "",
+        status: "ACTIVE",
+      });
+      setFormErrors({});
+    } catch (error) {
+      console.error("Error updating user:", error);
+      // Could add toast notification here
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    if (!selectedUser) return;
+
+    setIsLoading(true);
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    try {
+      setUsers(users.filter((user) => user.id !== selectedUser.id));
+      setShowDeleteModal(false);
+      setSelectedUser(null);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      // Could add toast notification here
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const openEditModal = (user: User) => {
+    setSelectedUser(user);
+    setFormData({
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      department: user.department,
+      status: user.status,
+    });
+    setShowEditModal(true);
+  };
+
+  const openDeleteModal = (user: User) => {
+    setSelectedUser(user);
+    setShowDeleteModal(true);
+  };
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      errors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = "Email is invalid";
+    }
+
+    if (!formData.department.trim()) {
+      errors.department = "Department is required";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const filteredUsers = users.filter((user) => {
+    const matchesSearch =
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.department.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesRole = filterRole === "ALL" || user.role === filterRole;
+    const matchesStatus =
+      filterStatus === "ALL" || user.status === filterStatus;
+
+    return matchesSearch && matchesRole && matchesStatus;
+  });
 
   return (
     <div
@@ -98,6 +252,7 @@ export default function AdminUsersPage() {
             </div>
           </div>
           <button
+            onClick={() => setShowAddModal(true)}
             className="px-6 py-3 rounded-xl font-semibold"
             style={{
               background: "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
@@ -111,6 +266,61 @@ export default function AdminUsersPage() {
 
       <main className="px-8 py-8">
         <div className="max-w-6xl mx-auto">
+          {/* Search and Filter Controls */}
+          <div
+            className="rounded-2xl p-6 mb-6"
+            style={{
+              backgroundColor: themeConfig.colors.surface,
+              border: `1px solid ${themeConfig.colors.border}`,
+            }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-4">
+              <div className="lg:col-span-2">
+                <input
+                  type="text"
+                  placeholder="Search by name, email, or department..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border"
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderColor: themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                />
+              </div>
+              <select
+                value={filterRole}
+                onChange={(e) => setFilterRole(e.target.value)}
+                className="px-4 py-2 rounded-lg border"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  borderColor: themeConfig.colors.border,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                <option value="ALL">All Roles</option>
+                <option value="ADMIN">Admin</option>
+                <option value="STAFF">Staff</option>
+                <option value="STUDENT">Student</option>
+              </select>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="px-4 py-2 rounded-lg border"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  borderColor: themeConfig.colors.border,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                <option value="ALL">All Status</option>
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+              </select>
+            </div>
+          </div>
+
           <div
             className="rounded-xl overflow-hidden"
             style={{
@@ -119,123 +329,455 @@ export default function AdminUsersPage() {
               border: "1px solid",
             }}
           >
-            <table className="w-full">
-              <thead
-                style={{
-                  backgroundColor: themeConfig.colors.background,
-                  borderBottom: "1px solid",
-                }}
-              >
-                <tr>
-                  <th
-                    className="px-6 py-4 text-left text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    User
-                  </th>
-                  <th
-                    className="px-6 py-4 text-left text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Role
-                  </th>
-                  <th
-                    className="px-6 py-4 text-left text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Department
-                  </th>
-                  <th
-                    className="px-6 py-4 text-left text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Status
-                  </th>
-                  <th
-                    className="px-6 py-4 text-left text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Last Login
-                  </th>
-                  <th
-                    className="px-6 py-4 text-left text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr
-                    key={user.id}
-                    style={{
-                      borderBottom: `1px solid ${themeConfig.colors.border}`,
-                    }}
-                  >
-                    <td className="px-6 py-4">
-                      <div>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[600px]">
+                <thead
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderBottom: "1px solid",
+                  }}
+                >
+                  <tr>
+                    <th
+                      className="px-6 py-4 text-left text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      User
+                    </th>
+                    <th
+                      className="px-6 py-4 text-left text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Role
+                    </th>
+                    <th
+                      className="px-6 py-4 text-left text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Department
+                    </th>
+                    <th
+                      className="px-6 py-4 text-left text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Status
+                    </th>
+                    <th
+                      className="px-6 py-4 text-left text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Last Login
+                    </th>
+                    <th
+                      className="px-6 py-4 text-left text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredUsers.map((user) => (
+                    <tr
+                      key={user.id}
+                      style={{
+                        borderBottom: `1px solid ${themeConfig.colors.border}`,
+                      }}
+                    >
+                      <td className="px-6 py-4">
+                        <div>
+                          <div
+                            className="font-medium"
+                            style={{ color: themeConfig.colors.text }}
+                          >
+                            {user.name}
+                          </div>
+                          <div
+                            className="text-sm mt-1"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            {user.email}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs ${getRoleColor(user.role)}`}
+                        >
+                          {user.role}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
                         <div
-                          className="font-medium"
+                          className="text-sm"
                           style={{ color: themeConfig.colors.text }}
                         >
-                          {user.name}
+                          {user.department}
                         </div>
-                        <div
-                          className="text-sm mt-1"
-                          style={{ color: themeConfig.colors.textSecondary }}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs ${getStatusColor(user.status)}`}
                         >
-                          {user.email}
+                          {user.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div
+                          className="text-sm"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          {user.lastLogin.toLocaleDateString()}
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${getRoleColor(user.role)}`}
-                      >
-                        {user.role}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {user.department}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${getStatusColor(user.status)}`}
-                      >
-                        {user.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {user.lastLogin.toLocaleDateString()}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex space-x-2">
-                        <button className="text-blue-600 hover:text-blue-800 text-sm">
-                          Edit
-                        </button>
-                        <button className="text-red-600 hover:text-red-800 text-sm">
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => openEditModal(user)}
+                            className="text-blue-600 hover:text-blue-800 text-sm"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => openDeleteModal(user)}
+                            className="text-red-600 hover:text-red-800 text-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </main>
+
+      {/* Add User Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div
+            className="rounded-2xl p-6 w-full max-w-md"
+            style={{
+              backgroundColor: themeConfig.colors.surface,
+              border: `1px solid ${themeConfig.colors.border}`,
+            }}
+          >
+            <h2
+              className="text-xl font-bold mb-4"
+              style={{ color: themeConfig.colors.text }}
+            >
+              Add New User
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full px-4 py-2 rounded-lg border"
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderColor: formErrors.name
+                      ? "#EF4444"
+                      : themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                />
+                {formErrors.name && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
+                )}
+              </div>
+              <div>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="w-full px-4 py-2 rounded-lg border"
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderColor: formErrors.email
+                      ? "#EF4444"
+                      : themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                />
+                {formErrors.email && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.email}
+                  </p>
+                )}
+              </div>
+              <select
+                value={formData.role}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value as any })
+                }
+                className="w-full px-4 py-2 rounded-lg border"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  borderColor: themeConfig.colors.border,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                <option value="STUDENT">Student</option>
+                <option value="STAFF">Staff</option>
+                <option value="ADMIN">Admin</option>
+              </select>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Department"
+                  value={formData.department}
+                  onChange={(e) =>
+                    setFormData({ ...formData, department: e.target.value })
+                  }
+                  className="w-full px-4 py-2 rounded-lg border"
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderColor: formErrors.department
+                      ? "#EF4444"
+                      : themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                />
+                {formErrors.department && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.department}
+                  </p>
+                )}
+              </div>
+              <select
+                value={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value as any })
+                }
+                className="w-full px-4 py-2 rounded-lg border"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  borderColor: themeConfig.colors.border,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+              </select>
+            </div>
+            <div className="flex justify-end space-x-3 mt-6">
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="px-4 py-2 rounded-lg"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddUser}
+                disabled={isLoading}
+                className="px-4 py-2 rounded-lg text-white transition-all duration-200 disabled:opacity-50"
+                style={{ backgroundColor: themeConfig.colors.primary }}
+              >
+                {isLoading ? "Adding..." : "Add User"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit User Modal */}
+      {showEditModal && selectedUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div
+            className="rounded-2xl p-6 w-full max-w-md"
+            style={{
+              backgroundColor: themeConfig.colors.surface,
+              border: `1px solid ${themeConfig.colors.border}`,
+            }}
+          >
+            <h2
+              className="text-xl font-bold mb-4"
+              style={{ color: themeConfig.colors.text }}
+            >
+              Edit User
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full px-4 py-2 rounded-lg border"
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderColor: formErrors.name
+                      ? "#EF4444"
+                      : themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                />
+                {formErrors.name && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
+                )}
+              </div>
+              <div>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="w-full px-4 py-2 rounded-lg border"
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderColor: formErrors.email
+                      ? "#EF4444"
+                      : themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                />
+                {formErrors.email && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.email}
+                  </p>
+                )}
+              </div>
+              <select
+                value={formData.role}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value as any })
+                }
+                className="w-full px-4 py-2 rounded-lg border"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  borderColor: themeConfig.colors.border,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                <option value="STUDENT">Student</option>
+                <option value="STAFF">Staff</option>
+                <option value="ADMIN">Admin</option>
+              </select>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Department"
+                  value={formData.department}
+                  onChange={(e) =>
+                    setFormData({ ...formData, department: e.target.value })
+                  }
+                  className="w-full px-4 py-2 rounded-lg border"
+                  style={{
+                    backgroundColor: themeConfig.colors.background,
+                    borderColor: formErrors.department
+                      ? "#EF4444"
+                      : themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                />
+                {formErrors.department && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.department}
+                  </p>
+                )}
+              </div>
+              <select
+                value={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value as any })
+                }
+                className="w-full px-4 py-2 rounded-lg border"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  borderColor: themeConfig.colors.border,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+              </select>
+            </div>
+            <div className="flex justify-end space-x-3 mt-6">
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="px-4 py-2 rounded-lg"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleEditUser}
+                disabled={isLoading}
+                className="px-4 py-2 rounded-lg text-white transition-all duration-200 disabled:opacity-50"
+                style={{ backgroundColor: themeConfig.colors.primary }}
+              >
+                {isLoading ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete User Modal */}
+      {showDeleteModal && selectedUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div
+            className="rounded-2xl p-6 w-full max-w-md"
+            style={{
+              backgroundColor: themeConfig.colors.surface,
+              border: `1px solid ${themeConfig.colors.border}`,
+            }}
+          >
+            <h2
+              className="text-xl font-bold mb-4"
+              style={{ color: themeConfig.colors.text }}
+            >
+              Delete User
+            </h2>
+            <p style={{ color: themeConfig.colors.textSecondary }}>
+              Are you sure you want to delete {selectedUser.name}? This action
+              cannot be undone.
+            </p>
+            <div className="flex justify-end space-x-3 mt-6">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 rounded-lg"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  color: themeConfig.colors.text,
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteUser}
+                disabled={isLoading}
+                className="px-4 py-2 rounded-lg text-white transition-all duration-200 disabled:opacity-50"
+                style={{ backgroundColor: "#EF4444" }}
+              >
+                {isLoading ? "Deleting..." : "Delete User"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

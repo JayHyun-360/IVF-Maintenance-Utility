@@ -9,6 +9,7 @@ import {
   getRequestsByPriority,
 } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export default function AdminReportsPage() {
   const router = useRouter();
@@ -60,22 +61,25 @@ export default function AdminReportsPage() {
               </h1>
             </div>
           </div>
-          <select
-            value={timeRange}
-            onChange={(e) => setTimeRange(e.target.value)}
-            className="px-4 py-2 rounded-xl"
-            style={{
-              backgroundColor: themeConfig.colors.surface,
-              borderColor: themeConfig.colors.border,
-              color: themeConfig.colors.text,
-              border: "1px solid",
-            }}
-          >
-            <option value="7">Last 7 Days</option>
-            <option value="30">Last 30 Days</option>
-            <option value="90">Last 90 Days</option>
-            <option value="365">Last Year</option>
-          </select>
+          <div className="flex items-center space-x-4">
+            <ThemeSwitcher />
+            <select
+              value={timeRange}
+              onChange={(e) => setTimeRange(e.target.value)}
+              className="px-4 py-2 rounded-xl"
+              style={{
+                backgroundColor: themeConfig.colors.surface,
+                borderColor: themeConfig.colors.border,
+                color: themeConfig.colors.text,
+                border: "1px solid",
+              }}
+            >
+              <option value="7">Last 7 Days</option>
+              <option value="30">Last 30 Days</option>
+              <option value="90">Last 90 Days</option>
+              <option value="365">Last Year</option>
+            </select>
+          </div>
         </div>
       </header>
 

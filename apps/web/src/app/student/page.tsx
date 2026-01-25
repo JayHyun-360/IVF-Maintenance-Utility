@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addMaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export default function StudentPage() {
   const router = useRouter();
@@ -168,12 +169,14 @@ export default function StudentPage() {
               Report issues and track resolution progress
             </p>
           </div>
-          <div className="w-12"></div>
+          <div className="w-12">
+            <ThemeSwitcher />
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="px-8 py-8">
+      <main className="px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Enhanced Request Details */}
@@ -215,7 +218,7 @@ export default function StudentPage() {
                 </h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-6 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
                 <div>
                   <label
                     className="block text-sm font-medium mb-2"
@@ -289,7 +292,7 @@ export default function StudentPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label
                     className="block text-sm font-medium mb-2"
@@ -422,7 +425,7 @@ export default function StudentPage() {
                   >
                     Uploaded Photos ({imagePreviews.length})
                   </p>
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
                     {imagePreviews.map((preview, index) => (
                       <div key={index} className="relative group">
                         <img
