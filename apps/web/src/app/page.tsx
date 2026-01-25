@@ -52,7 +52,12 @@ export default function Home() {
       <header
         className="px-8 py-16 text-center relative"
         style={{
-          background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+          background: themeConfig.backgroundImage
+            ? `linear-gradient(rgba(14, 165, 233, 0.3), rgba(6, 182, 212, 0.3)), url("${themeConfig.backgroundImage}")`
+            : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+          backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
+          backgroundPosition: themeConfig.backgroundImage ? "center" : "auto",
+          backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
         }}
       >
         {/* Decorative Elements */}

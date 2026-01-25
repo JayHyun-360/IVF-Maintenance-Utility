@@ -16,6 +16,7 @@ export interface ThemeConfig {
     warning: string;
     error: string;
   };
+  backgroundImage?: string;
 }
 
 export const themes: Record<Theme, ThemeConfig> = {
@@ -52,6 +53,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       warning: "#D97706", // Orange
       error: "#DC2626", // Red
     },
+    backgroundImage: "/images/ocean-light-bg.jpg",
   },
   dark: {
     name: "dark",
