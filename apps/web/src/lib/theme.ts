@@ -36,6 +36,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
+    backgroundImage: "/images/nature-bg.jpg",
   },
   light: {
     name: "light",

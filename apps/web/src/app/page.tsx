@@ -53,7 +53,11 @@ export default function Home() {
         className="px-8 py-16 text-center relative"
         style={{
           background: themeConfig.backgroundImage
-            ? `linear-gradient(rgba(14, 165, 233, 0.3), rgba(6, 182, 212, 0.3)), url("${themeConfig.backgroundImage}")`
+            ? themeConfig.name === "light"
+              ? `linear-gradient(rgba(14, 165, 233, 0.3), rgba(6, 182, 212, 0.3)), url("${themeConfig.backgroundImage}")`
+              : themeConfig.name === "standard"
+                ? `linear-gradient(rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.3)), url("${themeConfig.backgroundImage}")`
+                : `linear-gradient(rgba(59, 130, 246, 0.3), rgba(29, 78, 216, 0.3)), url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
           backgroundPosition: themeConfig.backgroundImage ? "center" : "auto",
