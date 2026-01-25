@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
+import { Z_INDEX } from "@/lib/z-index";
 
 export default function StudentHistoryPage() {
   const router = useRouter();
@@ -50,16 +52,21 @@ export default function StudentHistoryPage() {
               </h1>
             </div>
           </div>
-          <button
-            onClick={() => router.push("/student")}
-            className="px-6 py-3 rounded-xl font-semibold"
-            style={{
-              background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-              color: "#FFFFFF",
-            }}
-          >
-            New Request
-          </button>
+          <div className="flex items-center space-x-4">
+            <div style={{ zIndex: Z_INDEX.DROPDOWN }}>
+              <ThemeSwitcher />
+            </div>
+            <button
+              onClick={() => router.push("/student")}
+              className="px-6 py-3 rounded-xl font-semibold"
+              style={{
+                background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                color: "#FFFFFF",
+              }}
+            >
+              New Request
+            </button>
+          </div>
         </div>
       </header>
 

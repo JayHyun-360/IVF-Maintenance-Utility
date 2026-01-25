@@ -7,6 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import { getMaintenanceStats } from "@/lib/data";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
+import { Z_INDEX } from "@/lib/z-index";
 
 export default function Home() {
   const router = useRouter();
@@ -68,7 +69,10 @@ export default function Home() {
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="absolute top-4 right-4">
+          <div
+            className="absolute top-4 right-4"
+            style={{ zIndex: Z_INDEX.DROPDOWN }}
+          >
             <ThemeSwitcher />
           </div>
           <div

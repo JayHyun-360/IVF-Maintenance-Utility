@@ -7,6 +7,7 @@ import { addMaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
+import { Z_INDEX } from "@/lib/z-index";
 
 export default function StudentPage() {
   const router = useRouter();
@@ -130,47 +131,52 @@ export default function StudentPage() {
           }}
         ></div>
         <div className="max-w-4xl mx-auto flex items-center justify-between relative z-10">
-          <button
-            onClick={() => router.push("/")}
-            className="p-3 rounded-xl mr-4 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
-            style={{
-              background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-              color: themeConfig.colors.text,
-              border: `1px solid ${themeConfig.colors.border}`,
-            }}
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <div className="text-center flex-1">
-            <h1
-              className="text-3xl font-bold mb-2"
+          <div className="flex items-center flex-1">
+            <button
+              onClick={() => router.push("/")}
+              className="p-3 rounded-xl mr-4 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
               style={{
+                backgroundColor: themeConfig.colors.surface,
                 color: themeConfig.colors.text,
-                textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+                border: `1px solid ${themeConfig.colors.border}`,
               }}
             >
-              Submit Maintenance Request
-            </h1>
-            <p
-              className="text-base"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              Report issues and track resolution progress
-            </p>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <div className="text-center flex-1">
+              <h1
+                className="text-3xl font-bold mb-2"
+                style={{
+                  color: themeConfig.colors.text,
+                  textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+                }}
+              >
+                Submit Maintenance Request
+              </h1>
+              <p
+                className="text-base"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Report issues and track resolution progress
+              </p>
+            </div>
           </div>
-          <div className="w-12">
+          <div
+            className="absolute top-4 right-4"
+            style={{ zIndex: Z_INDEX.DROPDOWN }}
+          >
             <ThemeSwitcher />
           </div>
         </div>

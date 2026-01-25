@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
+import { Z_INDEX } from "@/lib/z-index";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -55,7 +56,9 @@ export default function SettingsPage() {
             </button>
             <h1 className="text-2xl font-bold">Settings</h1>
           </div>
-          <ThemeSwitcher />
+          <div style={{ zIndex: Z_INDEX.DROPDOWN }}>
+            <ThemeSwitcher />
+          </div>
         </div>
       </header>
 
