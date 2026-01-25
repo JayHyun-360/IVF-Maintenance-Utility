@@ -8,10 +8,12 @@ import { getMaintenanceStats } from "@/lib/data";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const router = useRouter();
   const { themeConfig } = useTheme();
+  const { data: session } = useSession();
   const [stats, setStats] = useState({
     totalRequests: 0,
     pendingRequests: 0,
@@ -19,7 +21,23 @@ export default function Home() {
     completedRequests: 0,
   });
 
-  // Load real data on component mount
+  const handleStudentClick = () => {
+    if (!session) {
+      router.push("/login");
+    } else {
+      router.push("/student");
+    }
+  };
+
+  const handleAdminClick = () => {
+    if (!session) {
+      router.push("/login");
+    } else if (session.user?.role !== "ADMIN") {
+      router.push("/login");
+    } else {
+      router.push("/admin/dashboard");
+    }
+  };
   useEffect(() => {
     const loadData = () => {
       const realStats = getMaintenanceStats();
@@ -288,7 +306,7 @@ export default function Home() {
           {/* Enhanced Action Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             <button
-              onClick={() => router.push("/student")}
+              onClick={handleStudentClick}
               className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
@@ -351,7 +369,7 @@ export default function Home() {
             </button>
 
             <button
-              onClick={() => router.push("/admin/dashboard")}
+              onClick={handleAdminClick}
               className="p-8 rounded-2xl text-left transition-all duration-500 transform hover:scale-105 hover:shadow-2xl group"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
