@@ -64,19 +64,6 @@ export default function Home() {
           height: themeConfig.backgroundImage ? "50vh" : "auto",
         }}
       >
-        {/* Background Image Layer for Sliding Effect */}
-        {themeConfig.backgroundImage && (
-          <div
-            className="absolute inset-0 opacity-0 theme-transitioning:bg-opacity-100"
-            style={{
-              backgroundImage: `url("${themeConfig.backgroundImage}")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center center",
-              backgroundRepeat: "no-repeat",
-              transition: "opacity 1.5s ease-in-out",
-            }}
-          />
-        )}
         {/* Desktop-specific background adjustments */}
         {themeConfig.backgroundImage && (
           <style jsx>{`

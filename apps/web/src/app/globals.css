@@ -71,57 +71,48 @@ svg {
 
 @keyframes headerFade {
   0% {
-    opacity: 1;
+    filter: brightness(1);
   }
   50% {
-    opacity: 0.3;
+    filter: brightness(0.8);
   }
   100% {
-    opacity: 1;
+    filter: brightness(1);
   }
 }
 
 @keyframes natureHeaderFade {
   0% {
-    opacity: 1;
     filter: brightness(1) saturate(1);
   }
   50% {
-    opacity: 0.2;
     filter: brightness(0.8) saturate(0.8);
   }
   100% {
-    opacity: 1;
     filter: brightness(1) saturate(1);
   }
 }
 
 @keyframes oceanHeaderFade {
   0% {
-    opacity: 1;
     filter: brightness(1) hue-rotate(0deg);
   }
   50% {
-    opacity: 0.2;
-    filter: brightness(0.8) hue-rotate(-10deg);
+    filter: brightness(0.8) hue-rotate(-5deg);
   }
   100% {
-    opacity: 1;
     filter: brightness(1) hue-rotate(0deg);
   }
 }
 
 @keyframes darkHeaderFade {
   0% {
-    opacity: 1;
     filter: brightness(1) contrast(1);
   }
   50% {
-    opacity: 0.2;
     filter: brightness(0.7) contrast(0.8);
   }
   100% {
-    opacity: 1;
     filter: brightness(1) contrast(1);
   }
 }

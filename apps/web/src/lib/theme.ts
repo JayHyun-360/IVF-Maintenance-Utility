@@ -169,21 +169,21 @@ export const applyTheme = (theme: Theme): void => {
       htmlElement.style.backgroundImage &&
       htmlElement.style.backgroundImage !== "none"
     ) {
-      // Add fading effect for background images
+      // Don't manipulate opacity of background images directly
+      // Let CSS transitions handle the smooth changes
       setTimeout(() => {
-        const currentBg = htmlElement.style.backgroundImage;
-        const currentGradient = htmlElement.style.background || "";
-
-        // Create fading animation
-        htmlElement.style.opacity = "0.3";
+        // Apply subtle filter effects instead of opacity changes
+        if (theme === "standard") {
+          htmlElement.style.filter = "brightness(0.9) saturate(0.9)";
+        } else if (theme === "light") {
+          htmlElement.style.filter = "brightness(0.9) hue-rotate(-5deg)";
+        } else if (theme === "dark") {
+          htmlElement.style.filter = "brightness(0.85) contrast(0.9)";
+        }
 
         setTimeout(() => {
-          htmlElement.style.opacity = "1";
+          htmlElement.style.filter = "";
         }, 750);
-
-        setTimeout(() => {
-          htmlElement.style.opacity = "";
-        }, 1500);
       }, index * 75);
     }
   });
@@ -195,16 +195,21 @@ export const applyTheme = (theme: Theme): void => {
   backgroundLayers.forEach((layer, index) => {
     const htmlLayer = layer as HTMLElement;
 
+    // Don't manipulate opacity of background layers directly
+    // Let CSS transitions handle the smooth changes
     setTimeout(() => {
-      htmlLayer.style.opacity = "0.2";
+      // Apply subtle filter effects instead of opacity changes
+      if (theme === "standard") {
+        htmlLayer.style.filter = "brightness(0.8) saturate(0.8)";
+      } else if (theme === "light") {
+        htmlLayer.style.filter = "brightness(0.8) hue-rotate(-5deg)";
+      } else if (theme === "dark") {
+        htmlLayer.style.filter = "brightness(0.7) contrast(0.8)";
+      }
 
       setTimeout(() => {
-        htmlLayer.style.opacity = "1";
+        htmlLayer.style.filter = "";
       }, 750);
-
-      setTimeout(() => {
-        htmlLayer.style.opacity = "";
-      }, 1500);
     }, index * 150);
   });
 
@@ -213,17 +218,20 @@ export const applyTheme = (theme: Theme): void => {
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
 
-    // Add fading animation for header background
+    // Don't manipulate header opacity directly, let CSS handle the transitions
+    // Only apply theme-specific filter effects
     setTimeout(() => {
-      htmlHeader.style.opacity = "0.2";
+      if (theme === "standard") {
+        htmlHeader.style.filter = "brightness(0.8) saturate(0.8)";
+      } else if (theme === "light") {
+        htmlHeader.style.filter = "brightness(0.8) hue-rotate(-10deg)";
+      } else if (theme === "dark") {
+        htmlHeader.style.filter = "brightness(0.7) contrast(0.8)";
+      }
 
       setTimeout(() => {
-        htmlHeader.style.opacity = "1";
+        htmlHeader.style.filter = "";
       }, 750);
-
-      setTimeout(() => {
-        htmlHeader.style.opacity = "";
-      }, 1500);
     }, 200);
   });
 
