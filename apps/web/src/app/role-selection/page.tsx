@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getSession, signOut } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
@@ -8,7 +8,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 
-export default function RoleSelectionPage() {
+function RoleSelectionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { themeConfig } = useTheme();
@@ -260,5 +260,19 @@ export default function RoleSelectionPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RoleSelectionPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-current border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <RoleSelectionContent />
+    </Suspense>
   );
 }
