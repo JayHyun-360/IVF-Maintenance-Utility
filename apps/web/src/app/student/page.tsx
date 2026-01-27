@@ -20,6 +20,7 @@ export default function StudentPage() {
     category: "PLUMBING",
     priority: "MEDIUM",
     location: "",
+    otherCategory: "", // For custom category when "Others" is selected
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [attachedImages, setAttachedImages] = useState<File[]>([]);
@@ -28,6 +29,13 @@ export default function StudentPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Validation for Others category
+    if (formData.category === "OTHERS" && !formData.otherCategory.trim()) {
+      alert("Please specify the category when selecting 'Others'.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       // Convert images to base64 strings for storage
@@ -45,7 +53,10 @@ export default function StudentPage() {
       const newRequest = {
         title: formData.title,
         description: formData.description,
-        category: formData.category,
+        category:
+          formData.category === "OTHERS"
+            ? formData.otherCategory
+            : formData.category,
         priority: formData.priority as "LOW" | "MEDIUM" | "HIGH",
         status: "PENDING" as const,
         location: formData.location,
@@ -61,10 +72,11 @@ export default function StudentPage() {
       // Reset form
       setFormData({
         title: "",
-        category: "",
+        category: "PLUMBING",
         location: "",
         description: "",
         priority: "MEDIUM",
+        otherCategory: "",
       });
       setAttachedImages([]);
       setImagePreviews([]);
@@ -327,9 +339,38 @@ export default function StudentPage() {
                       <option value="ELECTRICAL">⚡ Electrical</option>
                       <option value="CARPENTRY">🔨 Carpentry</option>
                       <option value="PERSONNEL">👥 Personnel</option>
+                      <option value="OTHERS">📝 Others</option>
                     </select>
                   </div>
 
+                  {formData.category === "OTHERS" && (
+                    <div>
+                      <label
+                        className="block text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        Specify Category
+                      </label>
+                      <input
+                        type="text"
+                        name="otherCategory"
+                        value={formData.otherCategory}
+                        onChange={handleChange}
+                        placeholder="Please specify the category..."
+                        required
+                        className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                          border: "1px solid",
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 sm:gap-6">
                   <div>
                     <label
                       className="block text-sm font-medium mb-2"

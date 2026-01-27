@@ -47,7 +47,7 @@ let maintenanceRequests: MaintenanceRequest[] = [
     images: [],
   },
   {
-    id: "3",
+    id: "4",
     title: "Broken Window",
     description:
       "Window in the library is cracked and needs to be replaced for safety reasons.",
@@ -59,23 +59,6 @@ let maintenanceRequests: MaintenanceRequest[] = [
     createdAt: new Date("2026-01-24T08:15:00Z"),
     updatedAt: new Date("2026-01-24T16:45:00Z"),
     images: [
-      "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A8A",
-    ],
-  },
-  {
-    id: "4",
-    title: "HVAC System Not Working",
-    description:
-      "The air conditioning system in the main lecture hall is not functioning properly.",
-    category: "HVAC",
-    priority: "HIGH",
-    status: "COMPLETED",
-    location: "Building A, Lecture Hall 101",
-    requestedBy: "Sarah Professor",
-    createdAt: new Date("2026-01-23T16:45:00Z"),
-    updatedAt: new Date("2026-01-24T09:30:00Z"),
-    images: [
-      "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A8A",
       "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A8A",
     ],
   },
@@ -127,20 +110,6 @@ let maintenanceRequests: MaintenanceRequest[] = [
   // In Progress requests (3 out of ~43 total)
   {
     id: "8",
-    title: "Fire Alarm System Maintenance",
-    description:
-      "Monthly inspection and testing of fire alarm systems required.",
-    category: "FIRE_SAFETY",
-    priority: "HIGH",
-    status: "IN_PROGRESS",
-    location: "All Buildings",
-    requestedBy: "Safety Officer",
-    createdAt: new Date("2026-01-24T08:00:00Z"),
-    updatedAt: new Date("2026-01-24T11:30:00Z"),
-    images: [],
-  },
-  {
-    id: "9",
     title: "Parking Lot Lighting Repair",
     description:
       "Several lights in the main parking lot are not working, creating safety concerns.",
@@ -154,19 +123,6 @@ let maintenanceRequests: MaintenanceRequest[] = [
     images: [
       "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A8A",
     ],
-  },
-  {
-    id: "10",
-    title: "Elevator Maintenance",
-    description: "Routine maintenance and inspection of building elevators.",
-    category: "HVAC",
-    priority: "MEDIUM",
-    status: "IN_PROGRESS",
-    location: "Building A, Elevators",
-    requestedBy: "Building Manager",
-    createdAt: new Date("2026-01-24T09:00:00Z"),
-    updatedAt: new Date("2026-01-24T14:00:00Z"),
-    images: [],
   },
 
   // Pending requests (2 out of ~43 total)
@@ -201,20 +157,6 @@ let maintenanceRequests: MaintenanceRequest[] = [
   // Urgent requests (4 out of ~43 total)
   {
     id: "13",
-    title: "Fire Alarm System Malfunction",
-    description:
-      "Fire alarm system is triggering false alarms and needs immediate attention.",
-    category: "FIRE_SAFETY",
-    priority: "URGENT",
-    status: "PENDING",
-    location: "Building B, All Floors",
-    requestedBy: "Security Team",
-    createdAt: new Date("2026-01-24T13:00:00Z"),
-    updatedAt: new Date("2026-01-24T13:00:00Z"),
-    images: [],
-  },
-  {
-    id: "14",
     title: "Gas Leak Detected",
     description:
       "Strong gas smell detected near the science building - emergency response required.",
@@ -267,9 +209,9 @@ const generateAdditionalRequests = (): MaintenanceRequest[] => {
   const categories = [
     "ELECTRICAL",
     "PLUMBING",
-    "HVAC",
     "CARPENTRY",
-    "FIRE_SAFETY",
+    "PERSONNEL",
+    "OTHERS",
   ];
   const priorities = ["LOW", "MEDIUM", "HIGH", "URGENT"] as const;
   const requesters = ["Student", "Staff", "Faculty", "Admin", "Security"];
