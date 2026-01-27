@@ -132,7 +132,7 @@ export default function Home() {
               <ThemeSwitcher />
             </div>
           </div>
-          <div className="absolute top-6 sm:top-8 right-16 sm:right-20">
+          <div className="absolute top-6 sm:top-8 right-48 sm:right-56">
             <div style={{ zIndex: Z_INDEX.TOOLTIP }}>
               <AccountDropdown />
             </div>
