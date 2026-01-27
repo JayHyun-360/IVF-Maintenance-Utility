@@ -104,10 +104,10 @@ export const applyTheme = (theme: Theme): void => {
   const root = document.documentElement;
   const body = document.body;
 
-  // Add transitioning class for smooth animations
+  // Add transitioning class for consistent animations
   body.classList.add("theme-transitioning");
 
-  // Apply CSS custom properties immediately
+  // Apply CSS custom properties immediately - consistent color morphing
   root.style.setProperty("--color-primary", themeConfig.colors.primary);
   root.style.setProperty("--color-secondary", themeConfig.colors.secondary);
   root.style.setProperty("--color-accent", themeConfig.colors.accent);
@@ -126,7 +126,7 @@ export const applyTheme = (theme: Theme): void => {
   // Apply theme class to body
   body.className = `theme-${theme} theme-transitioning`;
 
-  // Apply theme to dashboard elements with unified transitions
+  // Apply theme to dashboard elements with consistent transitions
   const dashboardElements = document.querySelectorAll(".dashboard-theme");
   dashboardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
@@ -137,7 +137,7 @@ export const applyTheme = (theme: Theme): void => {
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
-  // Apply theme to cards with unified transitions
+  // Apply theme to cards with consistent transitions
   const cardElements = document.querySelectorAll(".theme-card");
   cardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
@@ -148,7 +148,7 @@ export const applyTheme = (theme: Theme): void => {
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
-  // Apply very subtle background image transitions
+  // NO filter effects on background images - consistent color morphing only
   const elementsWithBackgroundImages = document.querySelectorAll(
     '[style*="background-image"]',
   );
@@ -158,69 +158,43 @@ export const applyTheme = (theme: Theme): void => {
       htmlElement.style.backgroundImage &&
       htmlElement.style.backgroundImage !== "none"
     ) {
-      htmlElement.style.transition = "filter 0.8s ease-in-out";
-
-      setTimeout(() => {
-        if (theme === "standard") {
-          htmlElement.style.filter = "brightness(0.99)";
-        } else if (theme === "light") {
-          htmlElement.style.filter = "brightness(0.99) saturate(1.01)";
-        } else if (theme === "dark") {
-          htmlElement.style.filter = "brightness(0.98)";
-        }
-
-        setTimeout(() => {
-          htmlElement.style.filter = "";
-        }, 800);
-      }, 100);
+      // Consistent transition timing - let CSS handle the color morphing naturally
+      htmlElement.style.transition = "background-color 0.8s ease-in-out";
     }
   });
 
-  // Apply subtle header transitions
+  // NO filter effects on headers - consistent color morphing only
   const headerElements = document.querySelectorAll("header");
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
-    htmlHeader.style.transition = "filter 0.8s ease-in-out";
-
-    setTimeout(() => {
-      if (theme === "standard") {
-        htmlHeader.style.filter = "brightness(0.995)";
-      } else if (theme === "light") {
-        htmlHeader.style.filter = "brightness(0.995) saturate(1.005)";
-      } else if (theme === "dark") {
-        htmlHeader.style.filter = "brightness(0.985)";
-      }
-
-      setTimeout(() => {
-        htmlHeader.style.filter = "";
-      }, 800);
-    }, 100);
+    // Consistent transition timing - let CSS handle the color morphing naturally
+    htmlHeader.style.transition = "background-color 0.8s ease-in-out";
   });
 
-  // Remove scale animations from images to prevent flashing
+  // NO effects on images - consistent static behavior
   const images = document.querySelectorAll("img");
   images.forEach((img) => {
     const htmlImg = img as HTMLImageElement;
-    htmlImg.style.transition = "opacity 0.6s ease-in-out";
-    // No scale changes to prevent flashing
+    // Consistent - NO transitions on images to prevent any visual changes
+    htmlImg.style.transition = "none";
   });
 
-  // Remove scale animations from SVGs to prevent flashing
+  // NO effects on SVGs - consistent color changes through CSS
   const svgs = document.querySelectorAll("svg");
   svgs.forEach((svg) => {
     const htmlSvg = svg as SVGElement;
-    htmlSvg.style.transition = "color 0.6s ease-in-out";
-    // No scale changes to prevent flashing
+    // Consistent timing - NO scale or filter transitions
+    htmlSvg.style.transition = "color 0.8s ease-in-out";
   });
 
-  // Apply theme to all interactive elements with unified transitions
+  // Apply theme to all interactive elements with consistent transitions
   const interactiveElements = document.querySelectorAll(
     "button, input, select, textarea, a",
   );
   interactiveElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
     htmlElement.style.transition =
-      "background-color 0.6s ease-in-out, color 0.6s ease-in-out, border-color 0.6s ease-in-out";
+      "background-color 0.8s ease-in-out, color 0.8s ease-in-out, border-color 0.8s ease-in-out";
 
     if (!htmlElement.style.backgroundColor) {
       htmlElement.style.backgroundColor = "transparent";
@@ -230,10 +204,10 @@ export const applyTheme = (theme: Theme): void => {
     }
   });
 
-  // Remove transitioning class after unified animations complete
+  // Remove transitioning class after consistent animations complete
   setTimeout(() => {
     body.classList.remove("theme-transitioning");
-  }, 1000);
+  }, 900); // Consistent timing - slightly longer than 0.8s for smooth completion
 
   // Store the theme
   setStoredTheme(theme);
