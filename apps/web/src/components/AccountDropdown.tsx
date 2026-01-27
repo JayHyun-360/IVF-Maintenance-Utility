@@ -66,17 +66,8 @@ export default function AccountDropdown() {
       const buttonRect = dropdownRef.current?.getBoundingClientRect();
       if (buttonRect) {
         const spaceBelow = window.innerHeight - buttonRect.bottom;
-        const estimatedDropdownHeight = 400; // Increased estimated height
+        const estimatedDropdownHeight = 400;
         const buttonPositionRatio = buttonRect.top / window.innerHeight;
-
-        console.log(
-          "Space below:",
-          spaceBelow,
-          "Estimated height:",
-          estimatedDropdownHeight,
-        );
-        console.log("Button rect:", buttonRect);
-        console.log("Button position ratio:", buttonPositionRatio);
 
         // If button is in bottom 40% of screen or not enough space below, position on top
         if (
@@ -84,10 +75,8 @@ export default function AccountDropdown() {
           buttonPositionRatio > 0.6
         ) {
           setDropdownPosition("top");
-          console.log("Positioning dropdown on top");
         } else {
           setDropdownPosition("bottom");
-          console.log("Positioning dropdown on bottom");
         }
       }
     }
