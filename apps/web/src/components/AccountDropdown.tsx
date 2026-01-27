@@ -66,12 +66,28 @@ export default function AccountDropdown() {
       const buttonRect = dropdownRef.current?.getBoundingClientRect();
       if (buttonRect) {
         const spaceBelow = window.innerHeight - buttonRect.bottom;
-        const estimatedDropdownHeight = 300; // Approximate height of dropdown
+        const estimatedDropdownHeight = 400; // Increased estimated height
+        const buttonPositionRatio = buttonRect.top / window.innerHeight;
 
-        if (spaceBelow < estimatedDropdownHeight) {
+        console.log(
+          "Space below:",
+          spaceBelow,
+          "Estimated height:",
+          estimatedDropdownHeight,
+        );
+        console.log("Button rect:", buttonRect);
+        console.log("Button position ratio:", buttonPositionRatio);
+
+        // If button is in bottom 40% of screen or not enough space below, position on top
+        if (
+          spaceBelow < estimatedDropdownHeight + 20 ||
+          buttonPositionRatio > 0.6
+        ) {
           setDropdownPosition("top");
+          console.log("Positioning dropdown on top");
         } else {
           setDropdownPosition("bottom");
+          console.log("Positioning dropdown on bottom");
         }
       }
     }
@@ -166,7 +182,7 @@ export default function AccountDropdown() {
 
       {isOpen && (
         <div
-          className={`absolute w-56 rounded-xl shadow-lg border max-h-96 overflow-y-auto ${
+          className={`absolute w-56 rounded-xl shadow-lg border max-h-80 overflow-y-auto ${
             dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
           } right-0`}
           style={{
