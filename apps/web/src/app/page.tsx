@@ -72,7 +72,7 @@ export default function Home() {
             : "scroll",
           backgroundClip: "padding-box",
           transition:
-            "background-image 0.8s ease-in-out, background 0.8s ease-in-out, background-color 0.8s ease-in-out",
+            "background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1), background 1.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
           minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
           maxHeight: themeConfig.backgroundImage ? "50vh" : "none",
           height: themeConfig.backgroundImage ? "50vh" : "auto",
@@ -91,7 +91,7 @@ export default function Home() {
                     ? "rgba(0, 0, 0, 0.1)" // Very subtle overlay for Nature theme
                     : "rgba(0, 0, 0, 0.25)",
               zIndex: 1,
-              transition: "background 0.8s ease-in-out",
+              transition: "background 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           />
         )}

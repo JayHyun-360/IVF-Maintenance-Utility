@@ -255,63 +255,76 @@ svg {
   }
 }
 
-/* Consistent theme switching */
+/* Beautiful theme switching */
 .theme-transitioning {
   transition:
-    background-color 0.8s ease-in-out,
-    color 0.8s ease-in-out,
-    border-color 0.8s ease-in-out,
-    box-shadow 0.8s ease-in-out !important;
+    background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Consistent transitions for all UI elements */
+/* Beautiful transitions for all UI elements */
 * {
   transition:
-    background-color 0.8s ease-in-out,
-    color 0.8s ease-in-out,
-    border-color 0.8s ease-in-out,
-    box-shadow 0.8s ease-in-out !important;
+    background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* NO effects on visual elements - consistent static behavior */
+/* Beautiful transitions for visual elements */
 img,
 video,
 canvas {
-  transition: none !important;
+  transition:
+    transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 1s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Consistent color transitions for SVGs only */
-svg {
-  transition: color 0.8s ease-in-out !important;
-}
-
-/* NO filter effects on background images - consistent color morphing only */
+/* Beautiful background image transitions */
 .theme-transitioning header {
-  transition: background-color 0.8s ease-in-out !important;
+  transition:
+    background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .theme-standard.theme-transitioning header {
-  transition: background-color 0.8s ease-in-out !important;
+  transition:
+    background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .theme-light.theme-transitioning header {
-  transition: background-color 0.8s ease-in-out !important;
+  transition:
+    background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .theme-dark.theme-transitioning header {
-  transition: background-color 0.8s ease-in-out !important;
+  transition:
+    background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Consistent color transitions for interactive elements */
+/* Beautiful transitions for SVGs */
+svg {
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Beautiful interactive element transitions */
 button,
 input,
 select,
 textarea,
 a {
   transition:
-    background-color 0.8s ease-in-out,
-    color 0.8s ease-in-out,
-    border-color 0.8s ease-in-out !important;
+    background-color 1s cubic-bezier(0.4, 0, 0.2, 1),
+    color 1s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 1s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* Mobile-specific optimizations */
