@@ -157,7 +157,7 @@ export default function ThemeSwitcher() {
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
-            zIndex: Z_INDEX.DROPDOWN_CONTENT,
+            zIndex: Z_INDEX.TOOLTIP + 1,
           }}
         >
           <div className="p-2">
