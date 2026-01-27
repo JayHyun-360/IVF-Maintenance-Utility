@@ -59,7 +59,7 @@ export default function Home() {
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           backgroundAttachment: themeConfig.backgroundImage ? "scroll" : "auto",
           transition:
-            "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
           height: themeConfig.backgroundImage ? "50vh" : "auto",
         }}
@@ -73,8 +73,7 @@ export default function Home() {
               backgroundSize: "cover",
               backgroundPosition: "center center",
               backgroundRepeat: "no-repeat",
-              transition:
-                "opacity 1.5s ease-in-out, transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              transition: "opacity 1.5s ease-in-out",
             }}
           />
         )}

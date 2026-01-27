@@ -150,11 +150,11 @@ export const applyTheme = (theme: Theme): void => {
     const htmlImg = img as HTMLImageElement;
     // Stagger the animation for each image
     setTimeout(() => {
-      htmlImg.style.transform = "scale(1.05)";
-      htmlImg.style.filter = "brightness(1.1)";
+      htmlImg.style.opacity = "0.7";
+      htmlImg.style.transform = "scale(1.02)";
       setTimeout(() => {
+        htmlImg.style.opacity = "1";
         htmlImg.style.transform = "scale(1)";
-        htmlImg.style.filter = "brightness(1)";
       }, 750);
     }, index * 150);
   });
@@ -169,29 +169,26 @@ export const applyTheme = (theme: Theme): void => {
       htmlElement.style.backgroundImage &&
       htmlElement.style.backgroundImage !== "none"
     ) {
-      // Add sliding effect for background images
+      // Add fading effect for background images
       setTimeout(() => {
         const currentBg = htmlElement.style.backgroundImage;
         const currentGradient = htmlElement.style.background || "";
 
-        // Create sliding animation
-        htmlElement.style.transform = "translateX(-100%)";
-        htmlElement.style.opacity = "0";
+        // Create fading animation
+        htmlElement.style.opacity = "0.3";
 
         setTimeout(() => {
-          htmlElement.style.transform = "translateX(0%)";
           htmlElement.style.opacity = "1";
         }, 750);
 
         setTimeout(() => {
-          htmlElement.style.transform = "";
           htmlElement.style.opacity = "";
         }, 1500);
       }, index * 75);
     }
   });
 
-  // Apply sliding effect to background image layers
+  // Apply fading effect to background image layers
   const backgroundLayers = document.querySelectorAll(
     '.absolute.inset-0[style*="backgroundImage"]',
   );
@@ -199,23 +196,13 @@ export const applyTheme = (theme: Theme): void => {
     const htmlLayer = layer as HTMLElement;
 
     setTimeout(() => {
-      if (theme === "standard") {
-        htmlLayer.style.transform = "translateX(-100%)";
-      } else if (theme === "light") {
-        htmlLayer.style.transform = "translateX(100%)";
-      } else if (theme === "dark") {
-        htmlLayer.style.transform = "translateY(-100%)";
-      }
-
-      htmlLayer.style.opacity = "0";
+      htmlLayer.style.opacity = "0.2";
 
       setTimeout(() => {
-        htmlLayer.style.transform = "translateX(0%) translateY(0%)";
         htmlLayer.style.opacity = "1";
       }, 750);
 
       setTimeout(() => {
-        htmlLayer.style.transform = "";
         htmlLayer.style.opacity = "";
       }, 1500);
     }, index * 150);
@@ -226,28 +213,15 @@ export const applyTheme = (theme: Theme): void => {
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
 
-    // Add sliding animation for header background
+    // Add fading animation for header background
     setTimeout(() => {
-      if (theme === "standard") {
-        htmlHeader.style.transform = "translateX(-100%)";
-        htmlHeader.style.opacity = "0";
-      } else if (theme === "light") {
-        htmlHeader.style.transform = "translateX(100%)";
-        htmlHeader.style.opacity = "0";
-      } else if (theme === "dark") {
-        htmlHeader.style.transform = "translateY(-100%)";
-        htmlHeader.style.opacity = "0";
-      }
+      htmlHeader.style.opacity = "0.2";
 
-      // Slide in animation
       setTimeout(() => {
-        htmlHeader.style.transform = "translateX(0%) translateY(0%)";
         htmlHeader.style.opacity = "1";
       }, 750);
 
-      // Reset to final position
       setTimeout(() => {
-        htmlHeader.style.transform = "";
         htmlHeader.style.opacity = "";
       }, 1500);
     }, 200);
@@ -259,9 +233,11 @@ export const applyTheme = (theme: Theme): void => {
     const htmlSvg = svg as SVGElement;
     // Stagger the animation for each SVG
     setTimeout(() => {
-      htmlSvg.style.transform = "rotate(5deg) scale(1.1)";
+      htmlSvg.style.opacity = "0.6";
+      htmlSvg.style.transform = "scale(1.05)";
       setTimeout(() => {
-        htmlSvg.style.transform = "rotate(0deg) scale(1)";
+        htmlSvg.style.opacity = "1";
+        htmlSvg.style.transform = "scale(1)";
       }, 750);
     }, index * 75);
   });

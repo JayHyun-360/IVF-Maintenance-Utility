@@ -45,114 +45,114 @@ svg {
 
 /* Theme-specific image effects */
 .theme-transitioning img {
-  animation: imagePulse 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: imageFade 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .theme-transitioning svg {
-  animation: svgRotate 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: svgFade 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Theme-specific background image effects */
 .theme-transitioning header {
-  animation: headerSlideIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: headerFade 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .theme-standard.theme-transitioning header {
-  animation: natureHeaderSlide 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: natureHeaderFade 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .theme-light.theme-transitioning header {
-  animation: oceanHeaderSlide 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: oceanHeaderFade 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .theme-dark.theme-transitioning header {
-  animation: darkHeaderSlide 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: darkHeaderFade 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@keyframes headerSlideIn {
+@keyframes headerFade {
   0% {
-    transform: translateX(-100%);
-    opacity: 0;
+    opacity: 1;
   }
   50% {
-    transform: translateX(0%);
-    opacity: 1;
+    opacity: 0.3;
   }
   100% {
-    transform: translateX(0%);
     opacity: 1;
   }
 }
 
-@keyframes natureHeaderSlide {
+@keyframes natureHeaderFade {
   0% {
-    transform: translateX(-100%) translateY(0);
-    opacity: 0;
+    opacity: 1;
+    filter: brightness(1) saturate(1);
   }
   50% {
-    transform: translateX(0%) translateY(-2px);
-    opacity: 1;
+    opacity: 0.2;
+    filter: brightness(0.8) saturate(0.8);
   }
   100% {
-    transform: translateX(0%) translateY(0);
     opacity: 1;
+    filter: brightness(1) saturate(1);
   }
 }
 
-@keyframes oceanHeaderSlide {
+@keyframes oceanHeaderFade {
   0% {
-    transform: translateX(100%) translateY(0);
-    opacity: 0;
+    opacity: 1;
+    filter: brightness(1) hue-rotate(0deg);
   }
   50% {
-    transform: translateX(0%) translateY(-2px);
-    opacity: 1;
+    opacity: 0.2;
+    filter: brightness(0.8) hue-rotate(-10deg);
   }
   100% {
-    transform: translateX(0%) translateY(0);
     opacity: 1;
+    filter: brightness(1) hue-rotate(0deg);
   }
 }
 
-@keyframes darkHeaderSlide {
+@keyframes darkHeaderFade {
   0% {
-    transform: translateY(-100%);
-    opacity: 0;
+    opacity: 1;
+    filter: brightness(1) contrast(1);
   }
   50% {
-    transform: translateY(0%) scale(1.01);
-    opacity: 1;
+    opacity: 0.2;
+    filter: brightness(0.7) contrast(0.8);
   }
   100% {
-    transform: translateY(0%) scale(1);
     opacity: 1;
+    filter: brightness(1) contrast(1);
   }
 }
 
-@keyframes imagePulse {
+@keyframes imageFade {
   0% {
+    opacity: 1;
     transform: scale(1);
-    filter: brightness(1);
   }
   50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes svgFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
     transform: scale(1.05);
-    filter: brightness(1.1);
   }
   100% {
+    opacity: 1;
     transform: scale(1);
-    filter: brightness(1);
-  }
-}
-
-@keyframes svgRotate {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(5deg) scale(1.1);
-  }
-  100% {
-    transform: rotate(0deg) scale(1);
   }
 }
 
