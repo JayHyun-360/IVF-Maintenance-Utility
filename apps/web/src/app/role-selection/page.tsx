@@ -69,7 +69,7 @@ function RoleSelectionContent() {
       }
 
       if (role === "user" && userRole === "ADMIN") {
-        setError("You are already an Admin. Please sign in as Admin.");
+        setError("You are registered as an Admin. Please sign in as Admin.");
         return;
       }
 
@@ -77,7 +77,7 @@ function RoleSelectionContent() {
       if (role === "admin") {
         router.push("/admin-pin-verification");
       } else {
-        // If user, redirect directly to student page
+        // If user, redirect directly to user page
         router.push("/student");
       }
     } catch (error) {

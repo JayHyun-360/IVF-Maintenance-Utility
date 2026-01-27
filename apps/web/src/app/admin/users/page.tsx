@@ -41,10 +41,10 @@ export default function AdminUsersPage() {
     },
     {
       id: "3",
-      name: "Mike Student",
-      email: "mike.student@campus.edu",
+      name: "Mike User",
+      email: "mike.user@campus.edu",
       role: "STUDENT",
-      department: "Student Affairs",
+      department: "User Services",
       status: "ACTIVE",
       lastLogin: new Date("2026-01-23T09:15:00Z"),
     },

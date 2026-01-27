@@ -31,10 +31,10 @@ export default function DashboardPage() {
       session.user?.role === "USER" ||
       session.user?.role === "STUDENT"
     ) {
-      console.log("User/Student role detected, redirecting to student page");
+      console.log("User role detected, redirecting to user page");
       router.push("/student");
     } else {
-      console.log("Unknown role, defaulting to student page");
+      console.log("Unknown role, defaulting to user page");
       router.push("/student");
     }
   }, [session, status, router]);

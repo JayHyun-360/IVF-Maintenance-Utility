@@ -16,7 +16,8 @@ export default function RegisterPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "USER" as "USER" | "ADMIN",
+    role: "STUDENT" as "STUDENT" | "STAFF" | "TEACHER" | "OTHERS",
+    otherRole: "", // For custom role when "Others" is selected
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -31,6 +32,13 @@ export default function RegisterPage() {
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate Others role specification
+    if (formData.role === "OTHERS" && !formData.otherRole.trim()) {
+      setError("Please specify your role when selecting 'Others'");
       setIsLoading(false);
       return;
     }
@@ -57,6 +65,10 @@ export default function RegisterPage() {
         return;
       }
 
+      // Determine final role (all non-admin roles become USER in system)
+      const finalRole =
+        formData.role === "OTHERS" ? formData.otherRole : formData.role;
+
       // Create new user
       const registerResponse = await fetch("/api/auth/register", {
         method: "POST",
@@ -67,7 +79,8 @@ export default function RegisterPage() {
           name: formData.name,
           email: formData.email,
           password: formData.password,
-          role: formData.role,
+          role: "USER", // All non-admin roles are USER in system
+          userRole: finalRole, // Store detailed role for display
         }),
       });
 
@@ -258,7 +271,7 @@ export default function RegisterPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: themeConfig.colors.text }}
             >
-              Account Type
+              Select Your Role
             </label>
             <select
               name="role"
@@ -272,10 +285,38 @@ export default function RegisterPage() {
                 border: "1px solid",
               }}
             >
-              <option value="USER">User (Submit maintenance requests)</option>
-              <option value="ADMIN">Admin (Manage requests)</option>
+              <option value="STUDENT">Student</option>
+              <option value="STAFF">Staff</option>
+              <option value="TEACHER">Teacher</option>
+              <option value="OTHERS">Others</option>
             </select>
           </div>
+
+          {formData.role === "OTHERS" && (
+            <div>
+              <label
+                className="block text-sm font-medium mb-2"
+                style={{ color: themeConfig.colors.text }}
+              >
+                Please Specify Your Role
+              </label>
+              <input
+                type="text"
+                name="otherRole"
+                value={formData.otherRole}
+                onChange={handleChange}
+                required={formData.role === "OTHERS"}
+                className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                style={{
+                  backgroundColor: themeConfig.colors.background,
+                  borderColor: themeConfig.colors.border,
+                  color: themeConfig.colors.text,
+                  border: "1px solid",
+                }}
+                placeholder="e.g., Contractor, Visitor, Parent"
+              />
+            </div>
+          )}
 
           <div>
             <label

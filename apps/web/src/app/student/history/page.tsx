@@ -7,12 +7,12 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
 import { Z_INDEX } from "@/lib/z-index";
 
-export default function StudentHistoryPage() {
+export default function UserHistoryPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const [requests] = useState<MaintenanceRequest[]>(() => {
     const allRequests = getMaintenanceRequests();
-    return allRequests.filter((req) => req.requestedBy.includes("Student"));
+    return allRequests.filter((req) => req.requestedBy.includes("User"));
   });
   const [statusFilter, setStatusFilter] = useState("all");
 

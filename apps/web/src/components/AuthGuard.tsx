@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 interface AuthGuardProps {
   children: React.ReactNode;
-  requiredRole?: "ADMIN" | "USER" | "STUDENT";
+  requiredRole?: "ADMIN" | "USER";
   redirectTo?: string;
 }
 
@@ -35,9 +35,9 @@ export default function AuthGuard({
     if (requiredRole && session.user?.role !== requiredRole) {
       // If user is logged in but doesn't have required role
       if (requiredRole === "ADMIN" && session.user?.role !== "ADMIN") {
-        router.push("/student"); // Redirect non-admin users to student dashboard
-      } else if (requiredRole === "STUDENT" && session.user?.role === "ADMIN") {
-        // Allow admins to access student pages but don't redirect them away
+        router.push("/student"); // Redirect non-admin users to user dashboard
+      } else if (requiredRole === "USER" && session.user?.role === "ADMIN") {
+        // Allow admins to access user pages but don't redirect them away
         // They can choose to go back to homepage if needed
       } else {
         router.push("/login"); // Redirect to login for other cases

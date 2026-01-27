@@ -1,6 +1,6 @@
 "use client";
 
-// Student Maintenance Request Form - Desktop Only Version
+// User Maintenance Request Form - Desktop Only Version
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addMaintenanceRequest } from "@/lib/data";
@@ -11,7 +11,7 @@ import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import Image from "next/image";
 
-export default function StudentPage() {
+export default function UserPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const [formData, setFormData] = useState({
@@ -60,7 +60,7 @@ export default function StudentPage() {
         priority: formData.priority as "LOW" | "MEDIUM" | "HIGH",
         status: "PENDING" as const,
         location: formData.location,
-        requestedBy: "Current Student",
+        requestedBy: "Current User",
         images: imageBase64Array,
       };
 

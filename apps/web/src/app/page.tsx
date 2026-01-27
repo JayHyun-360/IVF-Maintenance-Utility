@@ -454,7 +454,7 @@ export default function Home() {
                 {session
                   ? session.user?.role === "ADMIN"
                     ? "Go to Admin Dashboard"
-                    : "Go to Student Portal"
+                    : "Go to Request Portal"
                   : "Go to login section"}
               </h3>
               <p
