@@ -841,7 +841,10 @@ export default function PhysicalPlantRequestPage() {
                   >
                     1. Nature of Request
                   </h4>
-                  <p className="text-sm" style={{ color: "#4B5563" }}>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
                     Select the type of service needed and urgency level.
                   </p>
                 </div>
@@ -852,7 +855,10 @@ export default function PhysicalPlantRequestPage() {
                   >
                     2. Details of Request
                   </h4>
-                  <p className="text-sm" style={{ color: "#4B5563" }}>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
                     Provide specific location, problem description, and required
                     actions.
                   </p>
@@ -864,7 +870,10 @@ export default function PhysicalPlantRequestPage() {
                   >
                     3. Requestor Information
                   </h4>
-                  <p className="text-sm" style={{ color: "#4B5563" }}>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
                     Fill in your details and department information.
                   </p>
                 </div>
@@ -875,7 +884,10 @@ export default function PhysicalPlantRequestPage() {
                   >
                     4. Print Option
                   </h4>
-                  <p className="text-sm" style={{ color: "#4B5563" }}>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
                     Use the Print Form button to generate a printable version.
                   </p>
                 </div>
