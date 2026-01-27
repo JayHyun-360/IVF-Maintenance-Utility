@@ -333,7 +333,7 @@ export default function AdminDashboard() {
               >
                 Quick Actions
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <button
                   onClick={() => router.push("/admin/summary-request")}
                   className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
@@ -406,6 +406,31 @@ export default function AdminDashboard() {
                     style={{ color: themeConfig.colors.textSecondary }}
                   >
                     Add, edit, or remove user accounts
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => router.push("/admin/physical-plant-request")}
+                  className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.error}10 0%, ${themeConfig.colors.error}05 100%)`,
+                    border: `1px solid ${themeConfig.colors.border}`,
+                  }}
+                >
+                  <div className="flex items-center mb-2">
+                    <span className="text-2xl mr-3">🔧</span>
+                    <span
+                      className="font-medium"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      Generate Physical Repair Request
+                    </span>
+                  </div>
+                  <p
+                    className="text-sm"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Create physical plant/facilities repair forms
                   </p>
                 </button>
               </div>
