@@ -57,7 +57,7 @@ export default function Home() {
     >
       {/* Header with Gradient Background - Mobile Optimized */}
       <header
-        className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-32 sm:py-40 md:py-48 lg:py-56 text-center relative"
+        className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32 text-center relative overflow-hidden"
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "light"
@@ -72,10 +72,12 @@ export default function Home() {
             : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           backgroundAttachment: "scroll",
+          backgroundClip: "padding-box",
           transition:
             "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           minHeight: themeConfig.backgroundImage ? "400px" : "auto",
-          height: "auto",
+          maxHeight: themeConfig.backgroundImage ? "600px" : "none",
+          height: themeConfig.backgroundImage ? "500px" : "auto",
           zIndex: Z_INDEX.STICKY,
         }}
       >
@@ -86,27 +88,36 @@ export default function Home() {
               header {
                 background-size: cover !important;
                 background-position: center bottom !important;
+                background-repeat: no-repeat !important;
                 min-height: 500px !important;
+                max-height: 500px !important;
                 height: 500px !important;
-                padding-top: 100px !important;
+                padding-top: 80px !important;
+                overflow: hidden !important;
               }
             }
             @media (min-width: 1280px) {
               header {
                 background-size: cover !important;
                 background-position: center bottom !important;
+                background-repeat: no-repeat !important;
                 min-height: 550px !important;
+                max-height: 550px !important;
                 height: 550px !important;
-                padding-top: 120px !important;
+                padding-top: 100px !important;
+                overflow: hidden !important;
               }
             }
             @media (min-width: 1536px) {
               header {
                 background-size: cover !important;
                 background-position: center bottom !important;
+                background-repeat: no-repeat !important;
                 min-height: 600px !important;
+                max-height: 600px !important;
                 height: 600px !important;
-                padding-top: 150px !important;
+                padding-top: 120px !important;
+                overflow: hidden !important;
               }
             }
           `}</style>
