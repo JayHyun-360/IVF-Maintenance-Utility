@@ -162,7 +162,7 @@ export default function AccountDropdown() {
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
-            zIndex: Z_INDEX.TOOLTIP, // Use higher z-index to avoid being covered
+            zIndex: Z_INDEX.MAX, // Use highest z-index to ensure it's never covered
           }}
         >
           <div className="p-2">
