@@ -30,7 +30,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       background: "#FFFFFF", // Pure white
       surface: "#F9FAFB", // Very light gray
       text: "#111827", // Dark gray
-      textSecondary: "#6B7280", // Medium gray
+      textSecondary: "#4B5563", // Darker medium gray - improved contrast
       border: "#E5E7EB", // Light gray border
       success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
@@ -49,7 +49,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       background: "#F0F9FF", // Very light blue background
       surface: "#FFFFFF", // Pure white surface
       text: "#0C4A6E", // Deep blue text
-      textSecondary: "#64748B", // Muted text
+      textSecondary: "#475569", // Darker muted text - improved contrast
       border: "#E0F2FE", // Light blue border
       success: "#059669", // Emerald green
       warning: "#D97706", // Orange
@@ -68,7 +68,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       background: "#0F172A", // Slate background
       surface: "#1E293B", // Dark slate surface
       text: "#F1F5F9", // Light slate text
-      textSecondary: "#94A3B8", // Muted slate text
+      textSecondary: "#CBD5E1", // Lighter muted slate text - improved contrast
       border: "#334155", // Slate border
       success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
