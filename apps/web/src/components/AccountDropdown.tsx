@@ -66,7 +66,7 @@ export default function AccountDropdown() {
       const buttonRect = dropdownRef.current?.getBoundingClientRect();
       if (buttonRect) {
         const spaceBelow = window.innerHeight - buttonRect.bottom;
-        const estimatedDropdownHeight = 400;
+        const estimatedDropdownHeight = 280; // Reduced height for smaller dropdown
         const buttonPositionRatio = buttonRect.top / window.innerHeight;
 
         // If button is in bottom 40% of screen or not enough space below, position on top
@@ -171,7 +171,7 @@ export default function AccountDropdown() {
 
       {isOpen && (
         <div
-          className={`absolute w-56 rounded-xl shadow-lg border max-h-80 overflow-y-auto ${
+          className={`absolute w-48 rounded-xl shadow-lg border max-h-64 overflow-y-auto ${
             dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
           } right-0`}
           style={{
