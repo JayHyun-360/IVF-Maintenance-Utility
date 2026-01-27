@@ -67,7 +67,9 @@ export default function Home() {
                 : `linear-gradient(rgba(59, 130, 246, 0.4), rgba(29, 78, 216, 0.4)), url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
-          backgroundPosition: themeConfig.backgroundImage ? "center" : "auto",
+          backgroundPosition: themeConfig.backgroundImage
+            ? "bottom center"
+            : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           backgroundAttachment: "scroll",
           backgroundClip: "padding-box",
@@ -85,7 +87,7 @@ export default function Home() {
             @media (min-width: 1024px) {
               header {
                 background-size: cover !important;
-                background-position: center !important;
+                background-position: bottom center !important;
                 background-repeat: no-repeat !important;
                 min-height: 100vh !important;
                 max-height: 100vh !important;
@@ -97,7 +99,7 @@ export default function Home() {
             @media (min-width: 1280px) {
               header {
                 background-size: cover !important;
-                background-position: center !important;
+                background-position: bottom center !important;
                 background-repeat: no-repeat !important;
                 min-height: 100vh !important;
                 max-height: 100vh !important;
@@ -109,7 +111,7 @@ export default function Home() {
             @media (min-width: 1536px) {
               header {
                 background-size: cover !important;
-                background-position: center !important;
+                background-position: bottom center !important;
                 background-repeat: no-repeat !important;
                 min-height: 100vh !important;
                 max-height: 100vh !important;
