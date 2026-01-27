@@ -76,6 +76,7 @@ export default function Home() {
             "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           minHeight: "auto",
           height: "auto",
+          zIndex: Z_INDEX.BASE,
         }}
       >
         {/* Desktop-specific background adjustments */}
@@ -86,8 +87,8 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
-                min-height: 60vh !important;
-                height: 60vh !important;
+                min-height: 75vh !important;
+                height: 75vh !important;
               }
             }
             @media (min-width: 1280px) {
@@ -95,8 +96,8 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
-                min-height: 55vh !important;
-                height: 55vh !important;
+                min-height: 70vh !important;
+                height: 70vh !important;
               }
             }
             @media (min-width: 1536px) {
@@ -104,8 +105,8 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
-                min-height: 50vh !important;
-                height: 50vh !important;
+                min-height: 65vh !important;
+                height: 65vh !important;
               }
             }
           `}</style>
@@ -126,14 +127,17 @@ export default function Home() {
           ></div>
         </div>
 
-        <div className="max-w-4xl mx-auto relative z-10 px-2 sm:px-4 md:px-6">
+        <div
+          className="max-w-4xl mx-auto relative px-2 sm:px-4 md:px-6"
+          style={{ zIndex: Z_INDEX.STICKY }}
+        >
           <div className="absolute top-2 sm:top-3 md:top-4 lg:top-6 left-1 sm:left-2 md:left-3">
-            <div style={{ zIndex: Z_INDEX.TOOLTIP }}>
+            <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
               <AccountDropdown />
             </div>
           </div>
           <div className="absolute top-2 sm:top-3 md:top-4 lg:top-6 right-1 sm:right-2 md:right-3">
-            <div style={{ zIndex: Z_INDEX.MAX }}>
+            <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
               <ThemeSwitcher />
             </div>
           </div>
