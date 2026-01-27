@@ -159,6 +159,60 @@ export const applyTheme = (theme: Theme): void => {
     }, index * 100);
   });
 
+  // Apply dynamic effects to background images
+  const elementsWithBackgroundImages = document.querySelectorAll(
+    '[style*="background-image"]',
+  );
+  elementsWithBackgroundImages.forEach((element, index) => {
+    const htmlElement = element as HTMLElement;
+    if (
+      htmlElement.style.backgroundImage &&
+      htmlElement.style.backgroundImage !== "none"
+    ) {
+      // Add overlay effect for background images
+      setTimeout(() => {
+        const currentBg = htmlElement.style.backgroundImage;
+        const currentGradient = htmlElement.style.background || "";
+
+        // Create a temporary overlay effect
+        htmlElement.style.background =
+          currentGradient + ", rgba(255, 255, 255, 0.1)";
+        htmlElement.style.backgroundSize = "cover, cover";
+        htmlElement.style.backgroundBlendMode = "overlay";
+
+        setTimeout(() => {
+          htmlElement.style.background = currentGradient;
+          htmlElement.style.backgroundBlendMode = "normal";
+        }, 400);
+      }, index * 50);
+    }
+  });
+
+  // Apply theme-specific background image effects
+  const headerElements = document.querySelectorAll("header");
+  headerElements.forEach((header) => {
+    const htmlHeader = header as HTMLElement;
+
+    // Add theme-specific filter effects to header background
+    setTimeout(() => {
+      if (theme === "standard") {
+        htmlHeader.style.filter = "brightness(1.05) saturate(1.1)";
+        htmlHeader.style.transform = "scale(1.01)";
+      } else if (theme === "light") {
+        htmlHeader.style.filter = "brightness(1.08) hue-rotate(5deg)";
+        htmlHeader.style.transform = "scale(1.01)";
+      } else if (theme === "dark") {
+        htmlHeader.style.filter = "brightness(1.1) contrast(1.05)";
+        htmlHeader.style.transform = "scale(1.01)";
+      }
+
+      setTimeout(() => {
+        htmlHeader.style.filter = "";
+        htmlHeader.style.transform = "";
+      }, 400);
+    }, 200);
+  });
+
   // Apply dynamic effects to SVG icons
   const svgs = document.querySelectorAll("svg");
   svgs.forEach((svg, index) => {

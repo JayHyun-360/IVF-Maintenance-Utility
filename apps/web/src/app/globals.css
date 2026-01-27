@@ -52,17 +52,106 @@ svg {
   animation: svgRotate 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Theme-specific animations */
-.theme-standard.theme-transitioning img {
-  animation: natureImageFloat 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+/* Theme-specific background image effects */
+.theme-transitioning header {
+  animation: headerBackgroundPulse 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.theme-light.theme-transitioning img {
-  animation: oceanImageWave 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+.theme-standard.theme-transitioning header {
+  animation: natureHeaderFloat 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.theme-dark.theme-transitioning img {
-  animation: darkImageGlow 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+.theme-light.theme-transitioning header {
+  animation: oceanHeaderWave 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-dark.theme-transitioning header {
+  animation: darkHeaderGlow 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes headerBackgroundPulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.02);
+    filter: brightness(1.05);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes natureHeaderFloat {
+  0% {
+    transform: translateY(0px) scale(1);
+    filter: brightness(1) saturate(1);
+  }
+  25% {
+    transform: translateY(-2px) scale(1.01);
+    filter: brightness(1.03) saturate(1.05);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.02);
+    filter: brightness(1.05) saturate(1.1);
+  }
+  75% {
+    transform: translateY(-2px) scale(1.01);
+    filter: brightness(1.03) saturate(1.05);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes oceanHeaderWave {
+  0% {
+    transform: translateX(0px) scale(1);
+    filter: brightness(1) hue-rotate(0deg);
+  }
+  25% {
+    transform: translateX(-1px) scale(1.01);
+    filter: brightness(1.03) hue-rotate(3deg);
+  }
+  50% {
+    transform: translateX(1px) scale(1.02);
+    filter: brightness(1.05) hue-rotate(6deg);
+  }
+  75% {
+    transform: translateX(-1px) scale(1.01);
+    filter: brightness(1.03) hue-rotate(3deg);
+  }
+  100% {
+    transform: translateX(0px) scale(1);
+    filter: brightness(1) hue-rotate(0deg);
+  }
+}
+
+@keyframes darkHeaderGlow {
+  0% {
+    transform: scale(1);
+    filter: brightness(1) contrast(1);
+  }
+  25% {
+    transform: scale(1.01);
+    filter: brightness(1.03) contrast(1.02);
+  }
+  50% {
+    transform: scale(1.02);
+    filter: brightness(1.05) contrast(1.05)
+      drop-shadow(0 0 20px rgba(59, 130, 246, 0.2));
+  }
+  75% {
+    transform: scale(1.01);
+    filter: brightness(1.03) contrast(1.02);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1) contrast(1);
+  }
 }
 
 @keyframes imagePulse {
