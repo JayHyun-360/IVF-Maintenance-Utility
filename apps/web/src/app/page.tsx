@@ -129,10 +129,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto relative z-10 px-4 sm:px-6">
           <div className="absolute top-6 sm:top-8 right-2 sm:right-4 flex items-center space-x-2 sm:space-x-4">
             <div style={{ zIndex: Z_INDEX.TOOLTIP }}>
-              <AccountDropdown />
+              <ThemeSwitcher />
             </div>
             <div style={{ zIndex: Z_INDEX.TOOLTIP }}>
-              <ThemeSwitcher />
+              <AccountDropdown />
             </div>
           </div>
           <div
