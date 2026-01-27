@@ -155,8 +155,8 @@ export const applyTheme = (theme: Theme): void => {
       setTimeout(() => {
         htmlImg.style.transform = "scale(1)";
         htmlImg.style.filter = "brightness(1)";
-      }, 400);
-    }, index * 100);
+      }, 750);
+    }, index * 150);
   });
 
   // Apply dynamic effects to background images
@@ -181,13 +181,13 @@ export const applyTheme = (theme: Theme): void => {
         setTimeout(() => {
           htmlElement.style.transform = "translateX(0%)";
           htmlElement.style.opacity = "1";
-        }, 200);
+        }, 750);
 
         setTimeout(() => {
           htmlElement.style.transform = "";
           htmlElement.style.opacity = "";
-        }, 800);
-      }, index * 50);
+        }, 1500);
+      }, index * 75);
     }
   });
 
@@ -212,13 +212,13 @@ export const applyTheme = (theme: Theme): void => {
       setTimeout(() => {
         htmlLayer.style.transform = "translateX(0%) translateY(0%)";
         htmlLayer.style.opacity = "1";
-      }, 100);
+      }, 750);
 
       setTimeout(() => {
         htmlLayer.style.transform = "";
         htmlLayer.style.opacity = "";
-      }, 800);
-    }, index * 100);
+      }, 1500);
+    }, index * 150);
   });
 
   // Apply theme-specific background image effects
@@ -243,13 +243,13 @@ export const applyTheme = (theme: Theme): void => {
       setTimeout(() => {
         htmlHeader.style.transform = "translateX(0%) translateY(0%)";
         htmlHeader.style.opacity = "1";
-      }, 100);
+      }, 750);
 
       // Reset to final position
       setTimeout(() => {
         htmlHeader.style.transform = "";
         htmlHeader.style.opacity = "";
-      }, 800);
+      }, 1500);
     }, 200);
   });
 
@@ -262,8 +262,8 @@ export const applyTheme = (theme: Theme): void => {
       htmlSvg.style.transform = "rotate(5deg) scale(1.1)";
       setTimeout(() => {
         htmlSvg.style.transform = "rotate(0deg) scale(1)";
-      }, 400);
-    }, index * 50);
+      }, 750);
+    }, index * 75);
   });
 
   // Apply theme to all interactive elements
@@ -283,7 +283,7 @@ export const applyTheme = (theme: Theme): void => {
   // Remove transitioning class after animation completes
   setTimeout(() => {
     body.classList.remove("theme-transitioning");
-  }, 800);
+  }, 1500);
 
   // Store the theme
   setStoredTheme(theme);
