@@ -155,7 +155,7 @@ export default function AdminDashboard() {
             <div className="flex items-center space-x-4">
               <ThemeSwitcher />
               <button
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/dashboard")}
                 className="px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"
                 style={{
                   backgroundColor: themeConfig.colors.surface,

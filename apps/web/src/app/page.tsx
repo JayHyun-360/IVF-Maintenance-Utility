@@ -32,6 +32,20 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [session, status]);
 
+  // Check if user is already authenticated and redirect to appropriate dashboard
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (session?.user?.role) {
+      // User is already logged in, redirect to appropriate dashboard
+      if (session.user.role === "ADMIN") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/student");
+      }
+    }
+  }, [session, status, router]);
+
   return (
     <div
       className="min-h-screen"
