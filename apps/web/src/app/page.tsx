@@ -55,7 +55,7 @@ export default function Home() {
         transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
       }}
     >
-      {/* Header with Background Image - Mobile Optimized */}
+      {/* Header with Background Image - Half Screen */}
       <header
         className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32 text-center relative overflow-hidden"
         style={{
@@ -68,14 +68,14 @@ export default function Home() {
             : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           backgroundAttachment: themeConfig.backgroundImage
-            ? "fixed"
+            ? "scroll"
             : "scroll",
           backgroundClip: "padding-box",
           transition:
             "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          minHeight: themeConfig.backgroundImage ? "100vh" : "auto",
-          maxHeight: themeConfig.backgroundImage ? "100vh" : "none",
-          height: themeConfig.backgroundImage ? "100vh" : "auto",
+          minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
+          maxHeight: themeConfig.backgroundImage ? "50vh" : "none",
+          height: themeConfig.backgroundImage ? "50vh" : "auto",
           zIndex: Z_INDEX.STICKY,
         }}
       >
@@ -102,11 +102,11 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-repeat: no-repeat !important;
-                background-attachment: fixed !important;
-                min-height: 100vh !important;
-                max-height: 100vh !important;
-                height: 100vh !important;
-                padding-top: 80px !important;
+                background-attachment: scroll !important;
+                min-height: 50vh !important;
+                max-height: 50vh !important;
+                height: 50vh !important;
+                padding-top: 20px !important;
                 overflow: hidden !important;
               }
             }
@@ -115,11 +115,11 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-repeat: no-repeat !important;
-                background-attachment: fixed !important;
-                min-height: 100vh !important;
-                max-height: 100vh !important;
-                height: 100vh !important;
-                padding-top: 100px !important;
+                background-attachment: scroll !important;
+                min-height: 50vh !important;
+                max-height: 50vh !important;
+                height: 50vh !important;
+                padding-top: 20px !important;
                 overflow: hidden !important;
               }
             }
@@ -128,11 +128,11 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-repeat: no-repeat !important;
-                background-attachment: fixed !important;
-                min-height: 100vh !important;
-                max-height: 100vh !important;
-                height: 100vh !important;
-                padding-top: 120px !important;
+                background-attachment: scroll !important;
+                min-height: 50vh !important;
+                max-height: 50vh !important;
+                height: 50vh !important;
+                padding-top: 20px !important;
                 overflow: hidden !important;
               }
             }
@@ -155,8 +155,12 @@ export default function Home() {
         </div>
 
         <div
-          className="max-w-4xl mx-auto relative px-2 sm:px-4 md:px-6"
-          style={{ zIndex: Z_INDEX.MAX }}
+          className="max-w-4xl mx-auto relative px-2 sm:px-4 md:px-6 flex flex-col justify-center items-center"
+          style={{
+            zIndex: Z_INDEX.MAX,
+            height: "100%",
+            minHeight: "50vh",
+          }}
         >
           <div className="absolute top-2 sm:top-3 md:top-4 lg:top-6 left-1 sm:left-2 md:left-3">
             <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
@@ -168,69 +172,76 @@ export default function Home() {
               <ThemeSwitcher />
             </div>
           </div>
+
+          {/* Centered content container positioned lower */}
           <div
-            className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-16 lg:w-18 lg:w-20 h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 mx-auto rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 shadow-lg sm:shadow-xl md:shadow-2xl transform hover:scale-105 transition-all duration-500"
-            style={{
-              background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
-              boxShadow: `0 6px 20px ${themeConfig.colors.primary}25, 0 0 0 1px ${themeConfig.colors.primary}15`,
-            }}
+            className="flex flex-col items-center justify-center"
+            style={{ marginTop: "8vh" }}
           >
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-8 lg:w-8 lg:h-10 xl:w-10 xl:h-12 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <div
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-16 lg:w-18 lg:w-20 h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 mx-auto rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 shadow-lg sm:shadow-xl md:shadow-2xl transform hover:scale-105 transition-all duration-500"
+              style={{
+                background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
+                boxShadow: `0 6px 20px ${themeConfig.colors.primary}25, 0 0 0 1px ${themeConfig.colors.primary}15`,
+              }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M12 2L9.5 7.5L4 9l5 1.5L12 16l3-5.5L20 9l-5.5-1.5L12 2z"
-              />
-              <circle
-                cx="12"
-                cy="12"
-                r="8"
-                stroke="currentColor"
-                strokeWidth={1.5}
+              <svg
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-8 lg:w-8 lg:h-10 xl:w-10 xl:h-12 text-white"
                 fill="none"
-                opacity="0.3"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1}
-                d="M8 12h8M12 8v8"
-                opacity="0.5"
-              />
-            </svg>
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M12 2L9.5 7.5L4 9l5 1.5L12 16l3-5.5L20 9l-5.5-1.5L12 2z"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="8"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  fill="none"
+                  opacity="0.3"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M8 12h8M12 8v8"
+                  opacity="0.5"
+                />
+              </svg>
+            </div>
+            <h1
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2"
+              style={{
+                color: themeConfig.backgroundImage
+                  ? "#FFFFFF"
+                  : themeConfig.colors.text,
+                textShadow: themeConfig.backgroundImage
+                  ? `0 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px ${themeConfig.colors.primary}40`
+                  : `0 1px 2px ${themeConfig.colors.primary}20`,
+              }}
+            >
+              IVF Maintenance Utility
+            </h1>
+            <p
+              className="text-xs sm:text-sm md:text-base lg:text-lg"
+              style={{
+                color: themeConfig.backgroundImage
+                  ? "rgba(255, 255, 255, 0.9)"
+                  : themeConfig.colors.textSecondary,
+                textShadow: themeConfig.backgroundImage
+                  ? `0 1px 2px rgba(0, 0, 0, 0.5)`
+                  : "none",
+              }}
+            >
+              Streamlined maintenance request management system
+            </p>
           </div>
-          <h1
-            className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2"
-            style={{
-              color: themeConfig.backgroundImage
-                ? "#FFFFFF"
-                : themeConfig.colors.text,
-              textShadow: themeConfig.backgroundImage
-                ? `0 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px ${themeConfig.colors.primary}40`
-                : `0 1px 2px ${themeConfig.colors.primary}20`,
-            }}
-          >
-            IVF Maintenance Utility
-          </h1>
-          <p
-            className="text-xs sm:text-sm md:text-base lg:text-lg"
-            style={{
-              color: themeConfig.backgroundImage
-                ? "rgba(255, 255, 255, 0.9)"
-                : themeConfig.colors.textSecondary,
-              textShadow: themeConfig.backgroundImage
-                ? `0 1px 2px rgba(0, 0, 0, 0.5)`
-                : "none",
-            }}
-          >
-            Streamlined maintenance request management system
-          </p>
         </div>
       </header>
 
@@ -240,8 +251,8 @@ export default function Home() {
         style={{ zIndex: Z_INDEX.BASE, position: "relative" }}
       >
         <div className="max-w-6xl mx-auto">
-          {/* Add spacing gap between header background and white layout */}
-          <div className="h-4 sm:h-6 md:h-8 lg:h-16 xl:h-20"></div>
+          {/* Reduced spacing gap between half-screen header and main content */}
+          <div className="h-2 sm:h-3 md:h-4 lg:h-6 xl:h-8"></div>
           {/* Mobile-Optimized Stats Grid */}
           <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 mb-3 sm:mb-4 md:mb-6 lg:mb-8 mt-2 sm:mt-3 md:mt-4 lg:mt-6">
             <div
