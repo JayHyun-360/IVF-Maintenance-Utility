@@ -67,17 +67,15 @@ export default function Home() {
                 : `linear-gradient(rgba(59, 130, 246, 0.4), rgba(29, 78, 216, 0.4)), url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
-          backgroundPosition: themeConfig.backgroundImage
-            ? "center bottom"
-            : "auto",
+          backgroundPosition: themeConfig.backgroundImage ? "center" : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           backgroundAttachment: "scroll",
           backgroundClip: "padding-box",
           transition:
             "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          minHeight: themeConfig.backgroundImage ? "400px" : "auto",
-          maxHeight: themeConfig.backgroundImage ? "600px" : "none",
-          height: themeConfig.backgroundImage ? "500px" : "auto",
+          minHeight: themeConfig.backgroundImage ? "100vh" : "auto",
+          maxHeight: themeConfig.backgroundImage ? "100vh" : "none",
+          height: themeConfig.backgroundImage ? "100vh" : "auto",
           zIndex: Z_INDEX.STICKY,
         }}
       >
@@ -87,11 +85,11 @@ export default function Home() {
             @media (min-width: 1024px) {
               header {
                 background-size: cover !important;
-                background-position: center bottom !important;
+                background-position: center !important;
                 background-repeat: no-repeat !important;
-                min-height: 500px !important;
-                max-height: 500px !important;
-                height: 500px !important;
+                min-height: 100vh !important;
+                max-height: 100vh !important;
+                height: 100vh !important;
                 padding-top: 80px !important;
                 overflow: hidden !important;
               }
@@ -99,11 +97,11 @@ export default function Home() {
             @media (min-width: 1280px) {
               header {
                 background-size: cover !important;
-                background-position: center bottom !important;
+                background-position: center !important;
                 background-repeat: no-repeat !important;
-                min-height: 550px !important;
-                max-height: 550px !important;
-                height: 550px !important;
+                min-height: 100vh !important;
+                max-height: 100vh !important;
+                height: 100vh !important;
                 padding-top: 100px !important;
                 overflow: hidden !important;
               }
@@ -111,11 +109,11 @@ export default function Home() {
             @media (min-width: 1536px) {
               header {
                 background-size: cover !important;
-                background-position: center bottom !important;
+                background-position: center !important;
                 background-repeat: no-repeat !important;
-                min-height: 600px !important;
-                max-height: 600px !important;
-                height: 600px !important;
+                min-height: 100vh !important;
+                max-height: 100vh !important;
+                height: 100vh !important;
                 padding-top: 120px !important;
                 overflow: hidden !important;
               }
