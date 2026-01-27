@@ -79,7 +79,7 @@ export const themes: Record<Theme, ThemeConfig> = {
   },
 };
 
-// Theme management functions
+// Smart theme management functions
 export const getStoredTheme = (): Theme => {
   if (typeof window !== "undefined") {
     const stored = localStorage.getItem("ivf-theme") as Theme;
@@ -91,6 +91,87 @@ export const getStoredTheme = (): Theme => {
 export const setStoredTheme = (theme: Theme): void => {
   if (typeof window !== "undefined") {
     localStorage.setItem("ivf-theme", theme);
+  }
+};
+
+// Smart theme detection based on system preferences and time
+export const getSmartTheme = (): Theme => {
+  if (typeof window === "undefined") {
+    return "standard";
+  }
+
+  // Check for system dark/light mode preference
+  const prefersDarkScheme = window.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches;
+  const prefersLightScheme = window.matchMedia(
+    "(prefers-color-scheme: light)",
+  ).matches;
+
+  // Get current hour for time-based theming
+  const currentHour = new Date().getHours();
+  const isMorning = currentHour >= 6 && currentHour < 12;
+  const isAfternoon = currentHour >= 12 && currentHour < 18;
+  const isEvening = currentHour >= 18 && currentHour < 22;
+  const isNight = currentHour >= 22 || currentHour < 6;
+
+  // Smart theme logic
+  if (prefersDarkScheme || isNight) {
+    return "dark";
+  } else if (prefersLightScheme || isMorning) {
+    return "light";
+  } else if (isAfternoon) {
+    return "standard"; // Nature theme for afternoon
+  } else {
+    return "standard"; // Default to standard for evening
+  }
+};
+
+// Enhanced theme application with smart features
+export const applySmartTheme = (theme?: Theme): void => {
+  let selectedTheme: Theme;
+
+  if (theme) {
+    // Use explicitly selected theme
+    selectedTheme = theme;
+  } else {
+    // Use smart theme detection
+    selectedTheme = getSmartTheme();
+  }
+
+  applyTheme(selectedTheme);
+  setStoredTheme(selectedTheme);
+};
+
+// Listen for system preference changes
+export const setupSystemPreferenceListener = (): void => {
+  if (typeof window !== "undefined") {
+    // Listen for system dark/light mode changes
+    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const lightModeQuery = window.matchMedia("(prefers-color-scheme: light)");
+
+    darkModeQuery.addEventListener("change", (e) => {
+      if (e.matches) {
+        applySmartTheme("dark");
+      }
+    });
+
+    lightModeQuery.addEventListener("change", (e) => {
+      if (e.matches) {
+        applySmartTheme("light");
+      }
+    });
+
+    // Set up time-based theme updates (check every hour)
+    setInterval(() => {
+      const currentStoredTheme = getStoredTheme();
+      const smartTheme = getSmartTheme();
+
+      // Only auto-switch if user hasn't manually set a preference
+      if (currentStoredTheme === smartTheme) {
+        applySmartTheme();
+      }
+    }, 3600000); // Check every hour
   }
 };
 
@@ -145,7 +226,7 @@ export const applyTheme = (theme: Theme): void => {
   // Apply theme class to body
   body.className = `theme-${theme} theme-transitioning`;
 
-  // Apply theme to dashboard elements with optimized transitions
+  // Apply theme to dashboard elements with enhanced transitions
   const dashboardElements = document.querySelectorAll(".dashboard-theme");
   dashboardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
@@ -155,17 +236,17 @@ export const applyTheme = (theme: Theme): void => {
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
-  // Apply theme to cards with optimized transitions
+  // Apply theme to cards with enhanced transitions
   const cardElements = document.querySelectorAll(".theme-card");
   cardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
-    htmlElement.style.transition = `background-color ${baseDuration}s ${easing}, color ${baseDuration}s ${easing}, border-color ${baseDuration}s ${easing}, box-shadow ${baseDuration}s ${easing}`;
+    htmlElement.style.transition = `background-color ${baseDuration}s ${easing}, color ${baseDuration}s ${easing}, border-color ${baseDuration}s ${easing}, box-shadow ${baseDuration}s ${easing}, transform ${baseDuration * 0.8}s ${easing}`;
     htmlElement.style.backgroundColor = themeConfig.colors.surface;
     htmlElement.style.color = themeConfig.colors.text;
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
-  // Optimized background image transitions with deduplication
+  // Enhanced background image transitions with theme-specific effects
   const headerElements = document.querySelectorAll("header");
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
@@ -173,26 +254,33 @@ export const applyTheme = (theme: Theme): void => {
 
     if (!prefersReducedMotion) {
       setTimeout(() => {
+        // Theme-specific personality effects
         if (theme === "standard") {
-          htmlHeader.style.filter = "brightness(1.02) saturate(1.05)";
+          htmlHeader.style.filter =
+            "brightness(1.02) saturate(1.05) contrast(1.02)";
+          addNatureParticles(header);
         } else if (theme === "light") {
-          htmlHeader.style.filter = "brightness(1.01) saturate(1.02)";
+          htmlHeader.style.filter =
+            "brightness(1.01) saturate(1.02) contrast(1.01)";
+          addOceanShimmer(header);
         } else if (theme === "dark") {
-          htmlHeader.style.filter = "brightness(0.98) contrast(1.02)";
+          htmlHeader.style.filter =
+            "brightness(0.98) contrast(1.02) saturate(1.1)";
+          addStarfieldSparkle(header);
         }
 
         // Align filter reset with transition duration
         setTimeout(() => {
           htmlHeader.style.filter = "brightness(1) saturate(1) contrast(1)";
+          removeThemeEffects(header);
         }, imageDuration * 1000);
       }, 50);
     }
   });
 
-  // Optimized image transitions with capped stagger
+  // Enhanced image transitions with theme-specific effects
   const images = document.querySelectorAll("img");
-  const maxImageDelay = 200; // Cap total delay to 200ms
-  const imageDelay = Math.min(images.length * 20, maxImageDelay);
+  const maxImageDelay = 200;
 
   images.forEach((img, index) => {
     const htmlImg = img as HTMLImageElement;
@@ -201,12 +289,22 @@ export const applyTheme = (theme: Theme): void => {
     if (!prefersReducedMotion) {
       setTimeout(
         () => {
-          htmlImg.style.transform = "scale(1.01)";
-          htmlImg.style.filter = "brightness(1.02)";
+          // Theme-specific image effects
+          if (theme === "standard") {
+            htmlImg.style.transform = "scale(1.01)";
+            htmlImg.style.filter = "brightness(1.02) saturate(1.05)";
+          } else if (theme === "light") {
+            htmlImg.style.transform = "scale(1.005)";
+            htmlImg.style.filter = "brightness(1.01) hue-rotate(5deg)";
+          } else if (theme === "dark") {
+            htmlImg.style.transform = "scale(1.015)";
+            htmlImg.style.filter = "brightness(0.98) contrast(1.05)";
+          }
 
           setTimeout(() => {
             htmlImg.style.transform = "scale(1)";
-            htmlImg.style.filter = "brightness(1)";
+            htmlImg.style.filter =
+              "brightness(1) saturate(1) contrast(1) hue-rotate(0deg)";
           }, baseDuration * 500);
         },
         Math.min(index * 20, maxImageDelay),
@@ -214,22 +312,32 @@ export const applyTheme = (theme: Theme): void => {
     }
   });
 
-  // Optimized SVG transitions with capped stagger
+  // Enhanced SVG transitions with theme-specific rotation
   const svgs = document.querySelectorAll("svg");
-  const maxSvgDelay = 150; // Cap total delay to 150ms
-  const svgDelay = Math.min(svgs.length * 15, maxSvgDelay);
+  const maxSvgDelay = 150;
 
   svgs.forEach((svg, index) => {
     const htmlSvg = svg as SVGElement;
-    htmlSvg.style.transition = `transform ${svgDuration}s ${easing}, color ${svgDuration}s ${easing}`;
+    htmlSvg.style.transition = `transform ${svgDuration}s ${easing}, color ${svgDuration}s ${easing}, filter ${svgDuration}s ${easing}`;
 
     if (!prefersReducedMotion) {
       setTimeout(
         () => {
-          htmlSvg.style.transform = "scale(1.05) rotate(2deg)";
+          // Theme-specific SVG effects
+          if (theme === "standard") {
+            htmlSvg.style.transform = "scale(1.05) rotate(2deg)";
+            htmlSvg.style.filter = "hue-rotate(10deg) saturate(1.1)";
+          } else if (theme === "light") {
+            htmlSvg.style.transform = "scale(1.03) rotate(1deg)";
+            htmlSvg.style.filter = "brightness(1.05) saturate(1.05)";
+          } else if (theme === "dark") {
+            htmlSvg.style.transform = "scale(1.07) rotate(3deg)";
+            htmlSvg.style.filter = "brightness(1.1) saturate(1.2)";
+          }
 
           setTimeout(() => {
             htmlSvg.style.transform = "scale(1) rotate(0deg)";
+            htmlSvg.style.filter = "brightness(1) saturate(1) hue-rotate(0deg)";
           }, svgDuration * 500);
         },
         Math.min(index * 15, maxSvgDelay),
@@ -237,13 +345,13 @@ export const applyTheme = (theme: Theme): void => {
     }
   });
 
-  // Optimized interactive element transitions
+  // Enhanced interactive element transitions with hover effects
   const interactiveElements = document.querySelectorAll(
     "button, input, select, textarea, a",
   );
   interactiveElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
-    htmlElement.style.transition = `background-color ${interactiveDuration}s ${easing}, color ${interactiveDuration}s ${easing}, border-color ${interactiveDuration}s ${easing}, transform 0.3s ${easing}`;
+    htmlElement.style.transition = `background-color ${interactiveDuration}s ${easing}, color ${interactiveDuration}s ${easing}, border-color ${interactiveDuration}s ${easing}, transform 0.3s ${easing}, box-shadow 0.3s ${easing}`;
 
     if (!htmlElement.style.backgroundColor) {
       htmlElement.style.backgroundColor = "transparent";
@@ -251,9 +359,12 @@ export const applyTheme = (theme: Theme): void => {
     if (!htmlElement.style.color) {
       htmlElement.style.color = "inherit";
     }
+
+    // Add theme-specific hover effects
+    addEnhancedHoverEffects(htmlElement, theme);
   });
 
-  // Remove transitioning class after optimized animations complete
+  // Remove transitioning class after enhanced animations complete
   setTimeout(() => {
     body.classList.remove("theme-transitioning");
   }, totalDuration);
@@ -262,9 +373,141 @@ export const applyTheme = (theme: Theme): void => {
   setStoredTheme(theme);
 };
 
-// Initialize theme on app load
+// Enhanced theme personality effects
+const addNatureParticles = (header: Element): void => {
+  // Add subtle leaf particle effect for Nature theme
+  const particles = document.createElement("div");
+  particles.className = "nature-particles";
+  particles.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
+  `;
+
+  for (let i = 0; i < 5; i++) {
+    const particle = document.createElement("div");
+    particle.style.cssText = `
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(16, 185, 129, 0.3);
+      border-radius: 50%;
+      animation: floatLeaf 3s ease-in-out infinite;
+      left: ${Math.random() * 100}%;
+      animation-delay: ${Math.random() * 2}s;
+    `;
+    particles.appendChild(particle);
+  }
+
+  header.appendChild(particles);
+};
+
+const addOceanShimmer = (header: Element): void => {
+  // Add gentle wave shimmer for Ocean theme
+  const shimmer = document.createElement("div");
+  shimmer.className = "ocean-shimmer";
+  shimmer.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.2), transparent);
+    pointer-events: none;
+    z-index: 2;
+    animation: shimmerWave 4s ease-in-out infinite;
+  `;
+
+  header.appendChild(shimmer);
+};
+
+const addStarfieldSparkle = (header: Element): void => {
+  // Add subtle starfield sparkle for Dark theme
+  const starfield = document.createElement("div");
+  starfield.className = "starfield-sparkle";
+  starfield.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
+  `;
+
+  for (let i = 0; i < 8; i++) {
+    const star = document.createElement("div");
+    star.style.cssText = `
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: twinkle 2s ease-in-out infinite;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      animation-delay: ${Math.random() * 2}s;
+    `;
+    starfield.appendChild(star);
+  }
+
+  header.appendChild(starfield);
+};
+
+const removeThemeEffects = (header: Element): void => {
+  // Remove all theme-specific effects
+  const particles = header.querySelector(".nature-particles");
+  const shimmer = header.querySelector(".ocean-shimmer");
+  const starfield = header.querySelector(".starfield-sparkle");
+
+  if (particles) particles.remove();
+  if (shimmer) shimmer.remove();
+  if (starfield) starfield.remove();
+};
+
+const addEnhancedHoverEffects = (element: HTMLElement, theme: Theme): void => {
+  // Add theme-specific hover effects
+  const addHoverListener = () => {
+    element.addEventListener("mouseenter", () => {
+      if (theme === "standard") {
+        element.style.transform = "translateY(-2px)";
+        element.style.boxShadow = `0 8px 25px ${themes[theme].colors.primary}30`;
+      } else if (theme === "light") {
+        element.style.transform = "translateY(-1px)";
+        element.style.boxShadow = `0 6px 20px ${themes[theme].colors.primary}25`;
+      } else if (theme === "dark") {
+        element.style.transform = "translateY(-3px)";
+        element.style.boxShadow = `0 10px 30px ${themes[theme].colors.primary}40`;
+      }
+    });
+
+    element.addEventListener("mouseleave", () => {
+      element.style.transform = "translateY(0)";
+      element.style.boxShadow = "";
+    });
+  };
+
+  addHoverListener();
+};
+
+// Initialize theme on app load with smart features
 export const initializeTheme = (): Theme => {
-  const theme = getStoredTheme();
-  applyTheme(theme);
-  return theme;
+  // Set up system preference listeners
+  setupSystemPreferenceListener();
+
+  // Apply smart theme on initialization
+  const storedTheme = getStoredTheme();
+  const smartTheme = getSmartTheme();
+
+  // Use stored theme if user has manually set it, otherwise use smart detection
+  const initialTheme = storedTheme !== smartTheme ? storedTheme : smartTheme;
+
+  applyTheme(initialTheme);
+  return initialTheme;
 };

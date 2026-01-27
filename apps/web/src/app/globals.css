@@ -255,6 +255,130 @@ svg {
   }
 }
 
+/* Enhanced theme personality animations */
+@keyframes floatLeaf {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-30px) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmerWave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Enhanced hover effects */
+.theme-standard button:hover,
+.theme-standard a:hover,
+.theme-standard input:hover,
+.theme-standard select:hover,
+.theme-standard textarea:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.theme-light button:hover,
+.theme-light a:hover,
+.theme-light input:hover,
+.theme-light select:hover,
+.theme-light textarea:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.25);
+}
+
+.theme-dark button:hover,
+.theme-dark a:hover,
+.theme-dark input:hover,
+.theme-dark select:hover,
+.theme-dark textarea:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+/* Enhanced card hover effects */
+.theme-standard .theme-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(16, 185, 129, 0.2);
+}
+
+.theme-light .theme-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+}
+
+.theme-dark .theme-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+}
+
+/* Enhanced focus states */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  transform: translateY(-1px);
+}
+
+.theme-standard button:focus-visible {
+  outline-color: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.theme-light button:focus-visible {
+  outline-color: #0891b2;
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2);
+}
+
+.theme-dark button:focus-visible {
+  outline-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+/* Enhanced loading states */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Optimized theme switching with accessibility support */
 .theme-transitioning {
   transition:
@@ -347,6 +471,12 @@ a {
     transition: none !important;
     animation: none !important;
   }
+
+  .nature-particles,
+  .ocean-shimmer,
+  .starfield-sparkle {
+    display: none !important;
+  }
 }
 
 /* Mobile-specific optimizations */
@@ -373,10 +503,13 @@ a {
     scroll-behavior: smooth;
   }
 
-  /* Prevent zoom on input focus */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
+  /* Reduce theme effects on mobile for performance */
+  .nature-particles,
+  .ocean-shimmer,
+  .starfield-sparkle {
+    display: none !important;
+  }
+
   input[type="number"],
   input[type="search"],
   input[type="tel"],
