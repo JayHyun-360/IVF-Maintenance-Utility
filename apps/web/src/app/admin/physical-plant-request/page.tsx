@@ -48,7 +48,6 @@ export default function PhysicalPlantRequestPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const printRef = useRef<HTMLDivElement>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState<FormData>({
     requestType: {
@@ -157,23 +156,6 @@ export default function PhysicalPlantRequestPage() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      alert("Physical plant request submitted successfully!");
-      router.push("/admin/dashboard");
-    } catch {
-      alert("Failed to submit request. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div
       className="min-h-screen"
@@ -218,16 +200,6 @@ export default function PhysicalPlantRequestPage() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <button
-                onClick={handlePrint}
-                className="px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"
-                style={{
-                  backgroundColor: themeConfig.colors.primary,
-                  color: "white",
-                }}
-              >
-                🖨️ Print Form
-              </button>
               <ThemeSwitcher />
             </div>
           </div>
@@ -239,7 +211,7 @@ export default function PhysicalPlantRequestPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Form Section */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-6">
               {/* Form Container */}
               <div
                 ref={printRef}
@@ -819,15 +791,15 @@ export default function PhysicalPlantRequestPage() {
               {/* Action Buttons */}
               <div className="flex space-x-4">
                 <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="flex-1 px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 disabled:opacity-50"
+                  type="button"
+                  onClick={handlePrint}
+                  className="flex-1 px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105"
                   style={{
                     backgroundColor: "#1B4332",
                     color: "white",
                   }}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit Request"}
+                  🖨️ Print Form
                 </button>
                 <button
                   type="button"
@@ -842,7 +814,7 @@ export default function PhysicalPlantRequestPage() {
                   Cancel
                 </button>
               </div>
-            </form>
+            </div>
           </div>
 
           {/* Instructions Panel */}
