@@ -711,26 +711,26 @@ export default function AdminDashboard() {
                               onChange={(e) =>
                                 handleStatusUpdate(request.id, e.target.value)
                               }
-                              className="text-sm px-3 py-1.5 rounded-md appearance-none bg-transparent border transition-all duration-200 hover:border-opacity-60 focus:outline-none focus:ring-2 focus:ring-opacity-30 cursor-pointer"
+                              className="text-sm px-3 py-1.5 rounded-md appearance-none bg-transparent border transition-all duration-200 hover:border-opacity-60 focus:outline-none focus:ring-2 focus:ring-opacity-30 cursor-pointer pr-8"
                               style={{
                                 borderColor:
                                   request.status === "COMPLETED"
                                     ? themeConfig.colors.success
                                     : request.status === "IN_PROGRESS"
-                                      ? themeConfig.colors.primary
+                                      ? "#3B82F6"
                                       : themeConfig.colors.warning,
                                 color:
                                   request.status === "COMPLETED"
                                     ? themeConfig.colors.success
                                     : request.status === "IN_PROGRESS"
-                                      ? themeConfig.colors.primary
+                                      ? "#3B82F6"
                                       : themeConfig.colors.warning,
                                 borderWidth: "1px",
                                 backgroundColor: `${
                                   request.status === "COMPLETED"
                                     ? themeConfig.colors.success
                                     : request.status === "IN_PROGRESS"
-                                      ? themeConfig.colors.primary
+                                      ? "#3B82F6"
                                       : themeConfig.colors.warning
                                 }10`,
                               }}
@@ -748,7 +748,7 @@ export default function AdminDashboard() {
                               <option
                                 value="IN_PROGRESS"
                                 style={{
-                                  color: themeConfig.colors.primary,
+                                  color: "#3B82F6",
                                   backgroundColor:
                                     themeConfig.colors.background,
                                 }}
@@ -767,18 +767,18 @@ export default function AdminDashboard() {
                               </option>
                             </select>
                             <div
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                              className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
                               style={{
                                 color:
                                   request.status === "COMPLETED"
                                     ? themeConfig.colors.success
                                     : request.status === "IN_PROGRESS"
-                                      ? themeConfig.colors.primary
+                                      ? "#3B82F6"
                                       : themeConfig.colors.warning,
                               }}
                             >
                               <svg
-                                className="w-4 h-4"
+                                className="w-3.5 h-3.5"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
