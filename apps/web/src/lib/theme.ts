@@ -75,7 +75,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       error: "#EF4444", // Red
     },
     backgroundImage:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop", // Dark mountain landscape with night atmosphere
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=1080&fit=crop&crop=bottom", // Original midnight image cropped to show mountain half
   },
 };
 
