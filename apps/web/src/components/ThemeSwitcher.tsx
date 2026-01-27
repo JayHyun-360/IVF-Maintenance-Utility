@@ -73,7 +73,7 @@ export default function ThemeSwitcher() {
     ripple.style.transition =
       "transform 0.6s cubic-bezier(0.4, 0, 0.0.1), opacity 0.6s ease-out";
     ripple.style.pointerEvents = "none";
-    ripple.style.zIndex = "9999";
+    ripple.style.zIndex = Z_INDEX.MAX.toString();
 
     if (button) {
       const rect = button.getBoundingClientRect();
