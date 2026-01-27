@@ -34,8 +34,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(() => initializeTheme());
 
   const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    applyTheme(newTheme);
+    // Only apply theme if it's different
+    if (theme !== newTheme) {
+      setThemeState(newTheme);
+      applyTheme(newTheme);
+    }
   };
 
   const themeConfig = themes[theme];
@@ -45,7 +48,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     <ThemeContext.Provider
       value={{ theme, themeConfig, setTheme, availableThemes }}
     >
-      {children}
+      <div className={`theme-${theme}`}>{children}</div>
     </ThemeContext.Provider>
   );
 }

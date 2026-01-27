@@ -102,8 +102,12 @@ export const applyTheme = (theme: Theme): void => {
 
   const themeConfig = themes[theme];
   const root = document.documentElement;
+  const body = document.body;
 
-  // Apply CSS custom properties
+  // Add transitioning class for smooth animations
+  body.classList.add("theme-transitioning");
+
+  // Apply CSS custom properties with smooth transitions
   root.style.setProperty("--color-primary", themeConfig.colors.primary);
   root.style.setProperty("--color-secondary", themeConfig.colors.secondary);
   root.style.setProperty("--color-accent", themeConfig.colors.accent);
@@ -120,23 +124,44 @@ export const applyTheme = (theme: Theme): void => {
   root.style.setProperty("--color-error", themeConfig.colors.error);
 
   // Apply theme class to body
-  document.body.className = `theme-${theme}`;
+  body.className = `theme-${theme} theme-transitioning`;
 
   // Apply theme to dashboard elements by updating their styles
   const dashboardElements = document.querySelectorAll(".dashboard-theme");
   dashboardElements.forEach((element) => {
-    (element as HTMLElement).style.backgroundColor =
-      themeConfig.colors.background;
-    (element as HTMLElement).style.color = themeConfig.colors.text;
+    const htmlElement = element as HTMLElement;
+    htmlElement.style.backgroundColor = themeConfig.colors.background;
+    htmlElement.style.color = themeConfig.colors.text;
+    htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
   // Apply theme to cards
   const cardElements = document.querySelectorAll(".theme-card");
   cardElements.forEach((element) => {
-    (element as HTMLElement).style.backgroundColor = themeConfig.colors.surface;
-    (element as HTMLElement).style.color = themeConfig.colors.text;
-    (element as HTMLElement).style.borderColor = themeConfig.colors.border;
+    const htmlElement = element as HTMLElement;
+    htmlElement.style.backgroundColor = themeConfig.colors.surface;
+    htmlElement.style.color = themeConfig.colors.text;
+    htmlElement.style.borderColor = themeConfig.colors.border;
   });
+
+  // Apply theme to all interactive elements
+  const interactiveElements = document.querySelectorAll(
+    "button, input, select, textarea, a",
+  );
+  interactiveElements.forEach((element) => {
+    const htmlElement = element as HTMLElement;
+    if (!htmlElement.style.backgroundColor) {
+      htmlElement.style.backgroundColor = "transparent";
+    }
+    if (!htmlElement.style.color) {
+      htmlElement.style.color = "inherit";
+    }
+  });
+
+  // Remove transitioning class after animation completes
+  setTimeout(() => {
+    body.classList.remove("theme-transitioning");
+  }, 800);
 
   // Store the theme
   setStoredTheme(theme);

@@ -48,6 +48,19 @@ export default function ThemeSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleThemeChange = (theme: Theme) => {
+    // Prevent rapid theme switching
+    if (currentTheme === theme) return;
+
+    // Add visual feedback
+    const button = document.activeElement as HTMLElement;
+    if (button) {
+      button.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        button.style.transform = "scale(1)";
+      }, 150);
+    }
+
+    // Update theme with smooth transition
     setCurrentTheme(theme);
     setStoredTheme(theme);
     applyTheme(theme);
