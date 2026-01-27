@@ -267,7 +267,7 @@ export default function PhysicalPlantRequestPage() {
                         />
                         <span
                           className="font-medium"
-                          style={{ color: "#1B4332" }}
+                          style={{ color: themeConfig.colors.text }}
                         >
                           {label}
                         </span>
@@ -318,7 +318,7 @@ export default function PhysicalPlantRequestPage() {
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Date:
                       </label>
@@ -329,13 +329,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("date", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Time:
                       </label>
@@ -346,7 +350,11 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("time", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                   </div>
@@ -363,11 +371,14 @@ export default function PhysicalPlantRequestPage() {
                   <div className="overflow-x-auto">
                     <table
                       className="w-full border-collapse border"
-                      style={{ borderColor: "#1B4332" }}
+                      style={{ borderColor: themeConfig.colors.border }}
                     >
                       <thead>
                         <tr
-                          style={{ backgroundColor: "#1B4332", color: "white" }}
+                          style={{
+                            backgroundColor: themeConfig.colors.primary,
+                            color: "white",
+                          }}
                         >
                           <th className="border p-2 text-left">Location</th>
                           <th className="border p-2 text-left">
@@ -397,7 +408,12 @@ export default function PhysicalPlantRequestPage() {
                                   )
                                 }
                                 className="w-full p-1 border rounded"
-                                style={{ borderColor: "#1B4332" }}
+                                style={{
+                                  backgroundColor:
+                                    themeConfig.colors.background,
+                                  borderColor: themeConfig.colors.border,
+                                  color: themeConfig.colors.text,
+                                }}
                               />
                             </td>
                             <td className="border p-2">
@@ -411,7 +427,12 @@ export default function PhysicalPlantRequestPage() {
                                   )
                                 }
                                 className="w-full p-1 border rounded"
-                                style={{ borderColor: "#1B4332" }}
+                                style={{
+                                  backgroundColor:
+                                    themeConfig.colors.background,
+                                  borderColor: themeConfig.colors.border,
+                                  color: themeConfig.colors.text,
+                                }}
                                 rows={2}
                               />
                             </td>
@@ -426,7 +447,12 @@ export default function PhysicalPlantRequestPage() {
                                   )
                                 }
                                 className="w-full p-1 border rounded"
-                                style={{ borderColor: "#1B4332" }}
+                                style={{
+                                  backgroundColor:
+                                    themeConfig.colors.background,
+                                  borderColor: themeConfig.colors.border,
+                                  color: themeConfig.colors.text,
+                                }}
                                 rows={2}
                               />
                             </td>
@@ -441,7 +467,12 @@ export default function PhysicalPlantRequestPage() {
                                   )
                                 }
                                 className="w-full p-1 border rounded"
-                                style={{ borderColor: "#1B4332" }}
+                                style={{
+                                  backgroundColor:
+                                    themeConfig.colors.background,
+                                  borderColor: themeConfig.colors.border,
+                                  color: themeConfig.colors.text,
+                                }}
                                 rows={2}
                               />
                             </td>
@@ -485,7 +516,7 @@ export default function PhysicalPlantRequestPage() {
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Requested by: (Requesting Department)
                       </label>
@@ -496,13 +527,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("requestedBy", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Name of Employee
                       </label>
@@ -513,13 +548,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("nameOfEmployee", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Department Head
                       </label>
@@ -530,7 +569,11 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("departmentHead", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                   </div>
@@ -548,7 +591,7 @@ export default function PhysicalPlantRequestPage() {
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Approved by: Administrative Affairs & Services Division
                       </label>
@@ -559,13 +602,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("approvedBy", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         VP - AASD
                       </label>
@@ -576,13 +623,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("vpAASD", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Received by:
                       </label>
@@ -593,13 +644,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("receivedBy", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         GMS Head
                       </label>
@@ -610,13 +665,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("gmsHead", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Date/Time Received
                       </label>
@@ -627,13 +686,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("dateTimeReceived", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Performed by:
                       </label>
@@ -644,13 +707,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("performedBy", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Date/Time Completed
                       </label>
@@ -661,13 +728,17 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("dateTimeCompleted", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                     <div>
                       <label
                         className="block font-semibold mb-1"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Acknowledge by:
                       </label>
@@ -678,7 +749,11 @@ export default function PhysicalPlantRequestPage() {
                           handleInputChange("acknowledgeBy", e.target.value)
                         }
                         className="w-full p-2 border rounded"
-                        style={{ borderColor: "#1B4332" }}
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                        }}
                       />
                     </div>
                   </div>
@@ -688,7 +763,7 @@ export default function PhysicalPlantRequestPage() {
                     <div className="flex items-center justify-between mb-4">
                       <h4
                         className="font-semibold mb-0"
-                        style={{ color: "#1B4332" }}
+                        style={{ color: themeConfig.colors.text }}
                       >
                         Work Evaluation:
                       </h4>
@@ -702,7 +777,7 @@ export default function PhysicalPlantRequestPage() {
                         />
                         <span
                           className="text-sm font-medium"
-                          style={{ color: "#1B4332" }}
+                          style={{ color: themeConfig.colors.text }}
                         >
                           Enable Evaluation
                         </span>
@@ -754,7 +829,7 @@ export default function PhysicalPlantRequestPage() {
                             <div>
                               <span
                                 className="font-medium"
-                                style={{ color: "#1B4332" }}
+                                style={{ color: themeConfig.colors.text }}
                               >
                                 {label}
                               </span>
