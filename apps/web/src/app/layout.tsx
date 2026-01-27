@@ -15,9 +15,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Integrated Visual Feedback & Maintenance Utility",
+  title: "IVF Maintenance Utility",
   description:
     "A comprehensive maintenance utility providing integrated visual feedback for system monitoring, diagnostics, and optimization tasks.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "IVF Maintenance",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: "IVF Maintenance Utility",
+    title: "IVF Maintenance Utility",
+    description: "Streamlined maintenance request management system",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IVF Maintenance Utility",
+    description: "Streamlined maintenance request management system",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover",
+  },
 };
 
 export default function RootLayout({
@@ -27,8 +54,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+        />
+        <meta name="theme-color" content="#1B4332" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="IVF Maintenance" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="IVF Maintenance" />
+        <meta name="msapplication-TileColor" content="#1B4332" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased mobile-safe-padding`}
       >
         <ThemeProvider>
           <Providers>{children}</Providers>

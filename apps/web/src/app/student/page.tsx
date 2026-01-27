@@ -132,12 +132,12 @@ export default function UserPage() {
   return (
     <AuthGuard>
       <div
-        className="min-h-screen"
+        className="min-h-screen mobile-scroll"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
         {/* Mobile-Optimized Header with Gradient */}
         <header
-          className="px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6 border-b relative"
+          className="mobile-safe-padding-top px-2 sm:px-3 md:px-4 lg:px-6 py-3 sm:py-4 md:py-5 border-b relative"
           style={{ borderColor: themeConfig.colors.border }}
         >
           <div
@@ -150,7 +150,7 @@ export default function UserPage() {
             <div className="flex items-center flex-1">
               <button
                 onClick={() => router.push("/")}
-                className="p-2 sm:p-3 rounded-lg sm:rounded-xl mr-2 sm:mr-3 md:mr-4 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
+                className="p-2 sm:p-3 rounded-lg sm:rounded-xl mr-2 sm:mr-3 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
                 style={{
                   backgroundColor: themeConfig.colors.surface,
                   color: themeConfig.colors.text,
@@ -173,7 +173,7 @@ export default function UserPage() {
               </button>
               <div className="text-center flex-1">
                 <h1
-                  className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2"
+                  className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2"
                   style={{
                     color: themeConfig.colors.text,
                     textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
@@ -199,22 +199,22 @@ export default function UserPage() {
         </header>
 
         {/* Mobile-Optimized Main Content */}
-        <main className="px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6 lg:py-8">
+        <main className="px-2 sm:px-3 md:px-4 lg:px-6 py-3 sm:py-4 md:py-5 lg:py-6 mobile-scroll">
           <div className="max-w-4xl mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               {/* Mobile-Optimized Request Details */}
               <div
-                className="rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl transform transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl"
+                className="rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg sm:shadow-xl transform transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                   borderColor: themeConfig.colors.border,
                   border: "1px solid",
-                  boxShadow: `0 8px 20px ${themeConfig.colors.primary}10, 0 0 0 1px ${themeConfig.colors.border}15`,
+                  boxShadow: `0 6px 16px ${themeConfig.colors.primary}10, 0 0 0 1px ${themeConfig.colors.border}15`,
                 }}
               >
-                <div className="flex items-center mb-4 sm:mb-6">
+                <div className="flex items-center mb-3 sm:mb-4">
                   <div
-                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center mr-2 sm:mr-3"
+                    className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center mr-2 sm:mr-3"
                     style={{
                       background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
                     }}
@@ -234,14 +234,14 @@ export default function UserPage() {
                     </svg>
                   </div>
                   <h2
-                    className="text-lg sm:text-xl font-semibold"
+                    className="text-base sm:text-lg font-semibold"
                     style={{ color: themeConfig.colors.text }}
                   >
                     Request Details
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
                   <div>
                     <label
                       className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
@@ -255,12 +255,13 @@ export default function UserPage() {
                       value={formData.title}
                       onChange={handleChange}
                       required
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
                         color: themeConfig.colors.text,
                         border: "1px solid",
+                        fontSize: "16px",
                       }}
                       placeholder="Brief description of the issue"
                     />
@@ -279,19 +280,20 @@ export default function UserPage() {
                       value={formData.location}
                       onChange={handleChange}
                       required
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
                         color: themeConfig.colors.text,
                         border: "1px solid",
+                        fontSize: "16px",
                       }}
                       placeholder="Building, room, or area"
                     />
                   </div>
                 </div>
 
-                <div className="mb-4 sm:mb-6">
+                <div className="mb-3 sm:mb-4">
                   <label
                     className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
                     style={{ color: themeConfig.colors.text }}
@@ -303,19 +305,20 @@ export default function UserPage() {
                     value={formData.description}
                     onChange={handleChange}
                     required
-                    rows={3}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent resize-none"
+                    rows={4}
+                    className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent resize-none"
                     style={{
                       backgroundColor: themeConfig.colors.background,
                       borderColor: themeConfig.colors.border,
                       color: themeConfig.colors.text,
                       border: "1px solid",
+                      fontSize: "16px",
                     }}
                     placeholder="Detailed description of the maintenance issue..."
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                   <div>
                     <label
                       className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
@@ -327,12 +330,13 @@ export default function UserPage() {
                       name="category"
                       value={formData.category}
                       onChange={handleChange}
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
                         color: themeConfig.colors.text,
                         border: "1px solid",
+                        fontSize: "16px",
                       }}
                     >
                       <option value="PLUMBING">🔧 Plumbing</option>
@@ -358,19 +362,20 @@ export default function UserPage() {
                         onChange={handleChange}
                         placeholder="Please specify the category..."
                         required
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                        className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                         style={{
                           backgroundColor: themeConfig.colors.background,
                           borderColor: themeConfig.colors.border,
                           color: themeConfig.colors.text,
                           border: "1px solid",
+                          fontSize: "16px",
                         }}
                       />
                     </div>
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 sm:gap-4 md:gap-6">
+                <div className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4">
                   <div>
                     <label
                       className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
@@ -382,12 +387,13 @@ export default function UserPage() {
                       name="priority"
                       value={formData.priority}
                       onChange={handleChange}
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
                       style={{
                         backgroundColor: themeConfig.colors.background,
                         borderColor: themeConfig.colors.border,
                         color: themeConfig.colors.text,
                         border: "1px solid",
+                        fontSize: "16px",
                       }}
                     >
                       <option value="LOW">🟢 Low</option>
@@ -400,7 +406,7 @@ export default function UserPage() {
 
               {/* Mobile-Optimized Photo Upload */}
               <div
-                className="rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 shadow-md sm:shadow-lg"
+                className="rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-md sm:shadow-lg"
                 style={{
                   backgroundColor: themeConfig.colors.surface,
                   borderColor: themeConfig.colors.border,
@@ -408,14 +414,14 @@ export default function UserPage() {
                 }}
               >
                 <h2
-                  className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6"
+                  className="text-base sm:text-lg font-semibold mb-3 sm:mb-4"
                   style={{ color: themeConfig.colors.text }}
                 >
                   Photo Documentation
                 </h2>
 
                 <div
-                  className="border-2 border-dashed rounded-lg sm:rounded-xl md:rounded-2xl p-6 sm:p-8 md:p-12 text-center transition-all duration-300 hover:border-blue-400 cursor-pointer"
+                  className="border-2 border-dashed rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 text-center transition-all duration-300 hover:border-blue-400 cursor-pointer"
                   style={{
                     borderColor: themeConfig.colors.border,
                     backgroundColor: themeConfig.colors.background,
@@ -431,16 +437,16 @@ export default function UserPage() {
                   />
                   <label
                     htmlFor="photos"
-                    className="cursor-pointer flex flex-col items-center space-y-3 sm:space-y-4"
+                    className="cursor-pointer flex flex-col items-center space-y-2 sm:space-y-3"
                   >
                     <div
-                      className="w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 rounded-full flex items-center justify-center"
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center"
                       style={{
                         backgroundColor: `${themeConfig.colors.primary}10`,
                       }}
                     >
                       <svg
-                        className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10"
+                        className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
                         style={{ color: themeConfig.colors.primary }}
                         fill="none"
                         stroke="currentColor"
@@ -456,13 +462,13 @@ export default function UserPage() {
                     </div>
                     <div>
                       <p
-                        className="text-sm sm:text-base md:text-lg font-medium"
+                        className="text-sm sm:text-base font-medium"
                         style={{ color: themeConfig.colors.text }}
                       >
                         Click to upload photos
                       </p>
                       <p
-                        className="text-xs sm:text-sm mt-1"
+                        className="text-xs mt-1"
                         style={{ color: themeConfig.colors.textSecondary }}
                       >
                         Up to 5MB per image, multiple files supported
@@ -473,9 +479,9 @@ export default function UserPage() {
 
                 {/* Mobile-Optimized Image Previews */}
                 {imagePreviews.length > 0 && (
-                  <div className="mt-4 sm:mt-6">
+                  <div className="mt-3 sm:mt-4">
                     <p
-                      className="text-xs sm:text-sm font-medium mb-3 sm:mb-4"
+                      className="text-xs sm:text-sm font-medium mb-2 sm:mb-3"
                       style={{ color: themeConfig.colors.text }}
                     >
                       Uploaded Photos ({imagePreviews.length})
@@ -488,12 +494,12 @@ export default function UserPage() {
                             alt={`Preview ${index + 1}`}
                             width={200}
                             height={128}
-                            className="w-full h-20 sm:h-24 md:h-32 object-cover rounded-lg sm:rounded-xl transition-all duration-300 group-hover:scale-105"
+                            className="w-full h-16 sm:h-20 md:h-24 object-cover rounded-lg sm:rounded-xl transition-all duration-300 group-hover:scale-105"
                           />
                           <button
                             type="button"
                             onClick={() => removeImage(index)}
-                            className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 text-white rounded-full text-xs sm:text-sm font-medium transition-all duration-300 hover:scale-110 shadow-lg"
+                            className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 text-white rounded-full text-xs font-medium transition-all duration-300 hover:scale-110 shadow-lg"
                             style={{
                               backgroundColor: themeConfig.colors.error,
                             }}
@@ -513,7 +519,7 @@ export default function UserPage() {
                   type="submit"
                   disabled={isSubmitting}
                   loading={isSubmitting}
-                  size="lg"
+                  size="mobile"
                   fullWidth
                   className="text-sm sm:text-base"
                 >

@@ -5,6 +5,11 @@
   --foreground: #171717;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  /* Mobile-specific variables */
+  --mobile-safe-area-top: env(safe-area-inset-top);
+  --mobile-safe-area-bottom: env(safe-area-inset-bottom);
+  --mobile-safe-area-left: env(safe-area-inset-left);
+  --mobile-safe-area-right: env(safe-area-inset-right);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,6 +26,39 @@ body {
   transition:
     background-color 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     color 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Mobile optimizations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: contain;
+}
+
+/* Mobile-first responsive base */
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+/* Safe area support for notched devices */
+@supports (padding: max(0px)) {
+  .mobile-safe-padding {
+    padding-top: max(var(--mobile-safe-area-top), 1rem);
+    padding-bottom: max(var(--mobile-safe-area-bottom), 1rem);
+    padding-left: max(var(--mobile-safe-area-left), 1rem);
+    padding-right: max(var(--mobile-safe-area-right), 1rem);
+  }
+
+  .mobile-safe-padding-top {
+    padding-top: max(var(--mobile-safe-area-top), 1rem);
+  }
+
+  .mobile-safe-padding-bottom {
+    padding-bottom: max(var(--mobile-safe-area-bottom), 1rem);
+  }
 }
 
 /* Theme transition styles */
@@ -224,4 +262,137 @@ svg {
     color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Reduce motion for better performance */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  /* Touch-friendly tap targets */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Better scrolling on iOS */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Haptic feedback simulation */
+@keyframes haptic-tap {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.haptic-feedback {
+  animation: haptic-tap 0.1s ease-in-out;
+}
+
+/* Mobile loading states */
+.mobile-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: mobile-loading-shimmer 1.5s infinite;
+}
+
+@keyframes mobile-loading-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Pull-to-refresh indicator */
+.pull-to-refresh {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: top 0.3s ease;
+  z-index: 9999;
+}
+
+.pull-to-refresh.active {
+  top: 20px;
+}
+
+/* Mobile gesture indicators */
+.swipe-hint {
+  position: relative;
+}
+
+.swipe-hint::after {
+  content: "← Swipe →";
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  opacity: 0.5;
+  animation: swipe-hint-pulse 2s infinite;
+}
+
+@keyframes swipe-hint-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }

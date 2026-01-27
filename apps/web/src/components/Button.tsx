@@ -7,11 +7,14 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "danger" | "ghost";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "mobile";
   disabled?: boolean;
   loading?: boolean;
   className?: string;
   fullWidth?: boolean;
+  hapticFeedback?: boolean;
+  onTouchStart?: () => void;
+  onTouchEnd?: () => void;
 }
 
 export default function Button({
@@ -24,8 +27,27 @@ export default function Button({
   loading = false,
   className = "",
   fullWidth = false,
+  hapticFeedback = true,
+  onTouchStart,
+  onTouchEnd,
 }: ButtonProps) {
   const { themeConfig } = useTheme();
+
+  const triggerHapticFeedback = () => {
+    if (hapticFeedback && "vibrate" in navigator) {
+      navigator.vibrate(10);
+    }
+  };
+
+  const handleTouchStart = () => {
+    triggerHapticFeedback();
+    onTouchStart?.();
+  };
+
+  const handleClick = () => {
+    triggerHapticFeedback();
+    onClick?.();
+  };
 
   const getVariantStyles = () => {
     switch (variant) {
@@ -68,13 +90,15 @@ export default function Button({
   const getSizeStyles = () => {
     switch (size) {
       case "sm":
-        return "px-4 py-2 text-sm";
+        return "px-3 py-2 text-xs sm:text-sm";
       case "md":
-        return "px-6 py-3 text-base";
+        return "px-4 py-3 text-sm sm:text-base";
       case "lg":
-        return "px-8 py-4 text-lg";
+        return "px-6 py-4 text-base sm:text-lg";
+      case "mobile":
+        return "px-4 py-4 text-base min-h-[44px] min-w-[44px]";
       default:
-        return "px-6 py-3 text-base";
+        return "px-4 py-3 text-sm sm:text-base";
     }
   };
 
@@ -83,7 +107,9 @@ export default function Button({
   return (
     <button
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={onTouchEnd}
       disabled={disabled || loading}
       className={`
         ${getSizeStyles()}
@@ -92,6 +118,8 @@ export default function Button({
         hover:scale-105 hover:shadow-xl active:scale-95
         disabled:opacity-50 disabled:cursor-not-allowed
         disabled:hover:scale-100 disabled:hover:shadow-lg
+        ${hapticFeedback ? "haptic-feedback" : ""}
+        touch-manipulation
         ${className}
       `}
       style={styles}
