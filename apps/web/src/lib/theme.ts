@@ -150,12 +150,22 @@ export const applyTheme = (theme: Theme): void => {
     const htmlImg = img as HTMLImageElement;
     // Stagger the animation for each image
     setTimeout(() => {
-      htmlImg.style.opacity = "0.7";
-      htmlImg.style.transform = "scale(1.02)";
+      // Fade out first
+      htmlImg.style.transition =
+        "opacity 0.75s ease-in-out, transform 0.75s ease-in-out";
+      htmlImg.style.opacity = "0";
+      htmlImg.style.transform = "scale(0.95)";
+
       setTimeout(() => {
+        // Fade back in with scale
         htmlImg.style.opacity = "1";
         htmlImg.style.transform = "scale(1)";
       }, 750);
+
+      // Clean up transitions after animation
+      setTimeout(() => {
+        htmlImg.style.transition = "";
+      }, 1500);
     }, index * 150);
   });
 
@@ -241,12 +251,22 @@ export const applyTheme = (theme: Theme): void => {
     const htmlSvg = svg as SVGElement;
     // Stagger the animation for each SVG
     setTimeout(() => {
-      htmlSvg.style.opacity = "0.6";
-      htmlSvg.style.transform = "scale(1.05)";
+      // Fade out first
+      htmlSvg.style.transition =
+        "opacity 0.75s ease-in-out, transform 0.75s ease-in-out";
+      htmlSvg.style.opacity = "0";
+      htmlSvg.style.transform = "scale(0.9)";
+
       setTimeout(() => {
+        // Fade back in with scale
         htmlSvg.style.opacity = "1";
         htmlSvg.style.transform = "scale(1)";
       }, 750);
+
+      // Clean up transitions after animation
+      setTimeout(() => {
+        htmlSvg.style.transition = "";
+      }, 1500);
     }, index * 75);
   });
 
