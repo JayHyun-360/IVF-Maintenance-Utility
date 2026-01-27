@@ -11,6 +11,9 @@ export default function AccountDropdown() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
+    "bottom",
+  );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,7 +50,6 @@ export default function AccountDropdown() {
 
   const handleRemoveAccount = () => {
     // For demo purposes, we'll just logout
-    // In a real app, you'd show a confirmation modal and call an API
     if (
       confirm(
         "Are you sure you want to remove your account? This action cannot be undone.",
@@ -56,6 +58,24 @@ export default function AccountDropdown() {
       handleLogout();
     }
     setIsOpen(false);
+  };
+
+  const toggleDropdown = () => {
+    if (!isOpen) {
+      // Check if dropdown would go off-screen when opening
+      const buttonRect = dropdownRef.current?.getBoundingClientRect();
+      if (buttonRect) {
+        const spaceBelow = window.innerHeight - buttonRect.bottom;
+        const estimatedDropdownHeight = 300; // Approximate height of dropdown
+
+        if (spaceBelow < estimatedDropdownHeight) {
+          setDropdownPosition("top");
+        } else {
+          setDropdownPosition("bottom");
+        }
+      }
+    }
+    setIsOpen(!isOpen);
   };
 
   if (!session) {
@@ -97,7 +117,7 @@ export default function AccountDropdown() {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleDropdown}
         className="flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 hover:scale-105"
         style={{
           backgroundColor: themeConfig.colors.surface,
@@ -146,7 +166,9 @@ export default function AccountDropdown() {
 
       {isOpen && (
         <div
-          className="absolute top-full right-0 mt-2 w-56 rounded-xl shadow-lg border"
+          className={`absolute w-56 rounded-xl shadow-lg border max-h-96 overflow-y-auto ${
+            dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
+          } right-0`}
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
