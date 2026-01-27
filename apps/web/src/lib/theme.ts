@@ -107,7 +107,7 @@ export const applyTheme = (theme: Theme): void => {
   // Add transitioning class for smooth animations
   body.classList.add("theme-transitioning");
 
-  // Apply CSS custom properties with smooth transitions
+  // Apply CSS custom properties immediately
   root.style.setProperty("--color-primary", themeConfig.colors.primary);
   root.style.setProperty("--color-secondary", themeConfig.colors.secondary);
   root.style.setProperty("--color-accent", themeConfig.colors.accent);
@@ -130,6 +130,8 @@ export const applyTheme = (theme: Theme): void => {
   const dashboardElements = document.querySelectorAll(".dashboard-theme");
   dashboardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
+    htmlElement.style.transition =
+      "background-color 0.8s ease-in-out, color 0.8s ease-in-out, border-color 0.8s ease-in-out";
     htmlElement.style.backgroundColor = themeConfig.colors.background;
     htmlElement.style.color = themeConfig.colors.text;
     htmlElement.style.borderColor = themeConfig.colors.border;
@@ -139,37 +141,34 @@ export const applyTheme = (theme: Theme): void => {
   const cardElements = document.querySelectorAll(".theme-card");
   cardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
+    htmlElement.style.transition =
+      "background-color 0.8s ease-in-out, color 0.8s ease-in-out, border-color 0.8s ease-in-out";
     htmlElement.style.backgroundColor = themeConfig.colors.surface;
     htmlElement.style.color = themeConfig.colors.text;
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
-  // Apply dynamic effects to images during theme transition
+  // Apply subtle dynamic effects to images during theme transition
   const images = document.querySelectorAll("img");
   images.forEach((img, index) => {
     const htmlImg = img as HTMLImageElement;
-    // Stagger the animation for each image
+    // Apply smooth transition instead of fade out/in
+    htmlImg.style.transition = "opacity 0.6s ease-in-out";
+
     setTimeout(() => {
-      // Fade out first
-      htmlImg.style.transition =
-        "opacity 0.75s ease-in-out, transform 0.75s ease-in-out";
-      htmlImg.style.opacity = "0";
-      htmlImg.style.transform = "scale(0.95)";
-
+      htmlImg.style.opacity = "0.7";
       setTimeout(() => {
-        // Fade back in with scale
         htmlImg.style.opacity = "1";
-        htmlImg.style.transform = "scale(1)";
-      }, 750);
+      }, 300);
+    }, index * 50); // Reduced stagger time
 
-      // Clean up transitions after animation
-      setTimeout(() => {
-        htmlImg.style.transition = "";
-      }, 1500);
-    }, index * 150);
+    // Clean up transitions after animation
+    setTimeout(() => {
+      htmlImg.style.transition = "";
+    }, 1000);
   });
 
-  // Apply dynamic effects to background images
+  // Apply subtle dynamic effects to background images
   const elementsWithBackgroundImages = document.querySelectorAll(
     '[style*="background-image"]',
   );
@@ -179,98 +178,76 @@ export const applyTheme = (theme: Theme): void => {
       htmlElement.style.backgroundImage &&
       htmlElement.style.backgroundImage !== "none"
     ) {
-      // Don't manipulate opacity of background images directly
-      // Let CSS transitions handle the smooth changes
+      // Apply smooth transition instead of aggressive filters
+      htmlElement.style.transition = "filter 0.6s ease-in-out";
+
       setTimeout(() => {
-        // Apply subtle filter effects instead of opacity changes
+        // Apply much more subtle filter effects
         if (theme === "standard") {
-          htmlElement.style.filter = "brightness(0.9) saturate(0.9)";
+          htmlElement.style.filter = "brightness(0.95)";
         } else if (theme === "light") {
-          htmlElement.style.filter =
-            "brightness(0.85) hue-rotate(180deg) saturate(1.1)"; // Ocean-enhanced filter
+          htmlElement.style.filter = "brightness(0.95) saturate(1.05)";
         } else if (theme === "dark") {
-          htmlElement.style.filter = "brightness(0.85) contrast(0.9)";
+          htmlElement.style.filter = "brightness(0.9)";
         }
 
         setTimeout(() => {
           htmlElement.style.filter = "";
-        }, 750);
-      }, index * 75);
+        }, 600);
+      }, index * 30); // Reduced stagger time
     }
   });
 
-  // Apply fading effect to background image layers
-  const backgroundLayers = document.querySelectorAll(
-    '.absolute.inset-0[style*="backgroundImage"]',
-  );
-  backgroundLayers.forEach((layer, index) => {
-    const htmlLayer = layer as HTMLElement;
+  // Apply fading effect to background image layers - REMOVED to reduce flickering
+  // const backgroundLayers = document.querySelectorAll(
+  //   '.absolute.inset-0[style*="backgroundImage"]',
+  // );
+  // backgroundLayers.forEach((layer, index) => {
+  //   const htmlLayer = layer as HTMLElement;
+  //   // Simplified background layer handling
+  // });
 
-    // Don't manipulate opacity of background layers directly
-    // Let CSS transitions handle the smooth changes
-    setTimeout(() => {
-      // Apply subtle filter effects instead of opacity changes
-      if (theme === "standard") {
-        htmlLayer.style.filter = "brightness(0.8) saturate(0.8)";
-      } else if (theme === "light") {
-        htmlLayer.style.filter =
-          "brightness(0.75) hue-rotate(180deg) saturate(1.2)"; // Enhanced ocean effect
-      } else if (theme === "dark") {
-        htmlLayer.style.filter = "brightness(0.7) contrast(0.8)";
-      }
-
-      setTimeout(() => {
-        htmlLayer.style.filter = "";
-      }, 750);
-    }, index * 150);
-  });
-
-  // Apply theme-specific background image effects
+  // Apply theme-specific background image effects - SIMPLIFIED
   const headerElements = document.querySelectorAll("header");
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
+    // Apply very subtle transition
+    htmlHeader.style.transition = "filter 0.4s ease-in-out";
 
-    // Don't manipulate header opacity directly, let CSS handle the transitions
-    // Only apply theme-specific filter effects
     setTimeout(() => {
+      // Much more subtle filter effects
       if (theme === "standard") {
-        htmlHeader.style.filter = "brightness(0.8) saturate(0.8)";
+        htmlHeader.style.filter = "brightness(0.98)";
       } else if (theme === "light") {
-        htmlHeader.style.filter =
-          "brightness(0.75) hue-rotate(180deg) saturate(1.15)"; // Ocean header effect
+        htmlHeader.style.filter = "brightness(0.98) saturate(1.02)";
       } else if (theme === "dark") {
-        htmlHeader.style.filter = "brightness(0.7) contrast(0.8)";
+        htmlHeader.style.filter = "brightness(0.95)";
       }
 
       setTimeout(() => {
         htmlHeader.style.filter = "";
-      }, 750);
-    }, 200);
+      }, 400);
+    }, 100);
   });
 
-  // Apply dynamic effects to SVG icons
+  // Apply subtle dynamic effects to SVG icons
   const svgs = document.querySelectorAll("svg");
   svgs.forEach((svg, index) => {
     const htmlSvg = svg as SVGElement;
-    // Stagger the animation for each SVG
+    // Apply much simpler transition
+    htmlSvg.style.transition = "opacity 0.4s ease-in-out";
+
     setTimeout(() => {
-      // Fade out first
-      htmlSvg.style.transition =
-        "opacity 0.75s ease-in-out, transform 0.75s ease-in-out";
-      htmlSvg.style.opacity = "0";
-      htmlSvg.style.transform = "scale(0.9)";
-
+      htmlSvg.style.opacity = "0.8";
       setTimeout(() => {
-        // Fade back in with scale
         htmlSvg.style.opacity = "1";
-        htmlSvg.style.transform = "scale(1)";
-      }, 750);
+      }, 200);
+    }, index * 25); // Much reduced stagger time
 
-      // Clean up transitions after animation
-      setTimeout(() => {
-        htmlSvg.style.transition = "";
-      }, 1500);
-    }, index * 75);
+    // Clean up transitions after animation
+    setTimeout(() => {
+      htmlSvg.style.transition = "";
+    }, 800);
   });
 
   // Apply theme to all interactive elements
@@ -290,7 +267,7 @@ export const applyTheme = (theme: Theme): void => {
   // Remove transitioning class after animation completes
   setTimeout(() => {
     body.classList.remove("theme-transitioning");
-  }, 1500);
+  }, 800); // Reduced from 1500ms
 
   // Store the theme
   setStoredTheme(theme);
