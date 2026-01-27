@@ -258,46 +258,46 @@ svg {
 /* Smooth theme switching class */
 .theme-transitioning {
   transition:
-    background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-    color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color 0.8s ease-in-out,
+    color 0.8s ease-in-out,
+    border-color 0.8s ease-in-out,
+    box-shadow 0.8s ease-in-out !important;
 }
 
-/* Enhanced smooth transitions for all UI elements */
+/* Unified smooth transitions for all UI elements */
 * {
   transition:
-    background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-    color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color 0.8s ease-in-out,
+    color 0.8s ease-in-out,
+    border-color 0.8s ease-in-out,
+    box-shadow 0.8s ease-in-out !important;
 }
 
-/* Smooth transitions for visual elements */
+/* Subtle transitions for visual elements - no transform to prevent flashing */
 img,
 video,
 canvas,
 svg {
   transition:
-    transform 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity 0.6s ease-in-out,
+    filter 0.6s ease-in-out !important;
 }
 
-/* Smooth background image transitions */
+/* Subtle background image transitions */
 .theme-transitioning header {
-  transition: filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: filter 0.8s ease-in-out !important;
 }
 
 .theme-standard.theme-transitioning header {
-  transition: filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: filter 0.8s ease-in-out !important;
 }
 
 .theme-light.theme-transitioning header {
-  transition: filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: filter 0.8s ease-in-out !important;
 }
 
 .theme-dark.theme-transitioning header {
-  transition: filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: filter 0.8s ease-in-out !important;
 }
 
 /* Smooth interactive element transitions */
@@ -307,10 +307,9 @@ select,
 textarea,
 a {
   transition:
-    background-color 1s cubic-bezier(0.4, 0, 0.2, 1),
-    color 1s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 1s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color 0.6s ease-in-out,
+    color 0.6s ease-in-out,
+    border-color 0.6s ease-in-out !important;
 }
 
 /* Mobile-specific optimizations */
