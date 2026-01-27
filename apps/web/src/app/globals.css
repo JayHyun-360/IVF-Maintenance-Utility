@@ -255,7 +255,7 @@ svg {
   }
 }
 
-/* Beautiful theme switching */
+/* Optimized theme switching with accessibility support */
 .theme-transitioning {
   transition:
     background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -264,7 +264,7 @@ svg {
     box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Beautiful transitions for all UI elements */
+/* Optimized transitions for all UI elements */
 * {
   transition:
     background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -273,7 +273,7 @@ svg {
     box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Beautiful transitions for visual elements */
+/* Optimized transitions for visual elements */
 img,
 video,
 canvas {
@@ -282,7 +282,7 @@ canvas {
     filter 1s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Beautiful background image transitions */
+/* Optimized background image transitions */
 .theme-transitioning header {
   transition:
     background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -307,14 +307,14 @@ canvas {
     filter 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Beautiful transitions for SVGs */
+/* Optimized transitions for SVGs */
 svg {
   transition:
     transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Beautiful interactive element transitions */
+/* Optimized interactive element transitions */
 button,
 input,
 select,
@@ -325,6 +325,28 @@ a {
     color 1s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 1s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transitioning,
+  *,
+  img,
+  video,
+  canvas,
+  svg,
+  button,
+  input,
+  select,
+  textarea,
+  a,
+  .theme-transitioning header,
+  .theme-standard.theme-transitioning header,
+  .theme-light.theme-transitioning header,
+  .theme-dark.theme-transitioning header {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 /* Mobile-specific optimizations */

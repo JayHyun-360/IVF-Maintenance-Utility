@@ -100,6 +100,25 @@ export const applyTheme = (theme: Theme): void => {
     return;
   }
 
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  // Check for mobile device
+  const isMobile = window.innerWidth <= 640;
+
+  // Determine timing based on preferences and device
+  const baseDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 1.2;
+  const imageDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 1.5;
+  const svgDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 0.8;
+  const interactiveDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 1.0;
+  const totalDuration = prefersReducedMotion ? 200 : isMobile ? 400 : 1600;
+
+  const easing = prefersReducedMotion
+    ? "linear"
+    : "cubic-bezier(0.4, 0, 0.2, 1)";
+
   const themeConfig = themes[theme];
   const root = document.documentElement;
   const body = document.body;
@@ -126,121 +145,105 @@ export const applyTheme = (theme: Theme): void => {
   // Apply theme class to body
   body.className = `theme-${theme} theme-transitioning`;
 
-  // Apply theme to dashboard elements with beautiful transitions
+  // Apply theme to dashboard elements with optimized transitions
   const dashboardElements = document.querySelectorAll(".dashboard-theme");
   dashboardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
-    htmlElement.style.transition =
-      "background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), color 1.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlElement.style.transition = `background-color ${baseDuration}s ${easing}, color ${baseDuration}s ${easing}, border-color ${baseDuration}s ${easing}, box-shadow ${baseDuration}s ${easing}`;
     htmlElement.style.backgroundColor = themeConfig.colors.background;
     htmlElement.style.color = themeConfig.colors.text;
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
-  // Apply theme to cards with beautiful transitions
+  // Apply theme to cards with optimized transitions
   const cardElements = document.querySelectorAll(".theme-card");
   cardElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
-    htmlElement.style.transition =
-      "background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), color 1.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlElement.style.transition = `background-color ${baseDuration}s ${easing}, color ${baseDuration}s ${easing}, border-color ${baseDuration}s ${easing}, box-shadow ${baseDuration}s ${easing}`;
     htmlElement.style.backgroundColor = themeConfig.colors.surface;
     htmlElement.style.color = themeConfig.colors.text;
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
-  // Beautiful background image transitions
-  const elementsWithBackgroundImages = document.querySelectorAll(
-    '[style*="background-image"]',
-  );
-  elementsWithBackgroundImages.forEach((element) => {
-    const htmlElement = element as HTMLElement;
-    if (
-      htmlElement.style.backgroundImage &&
-      htmlElement.style.backgroundImage !== "none"
-    ) {
-      htmlElement.style.transition =
-        "background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1), filter 1.5s cubic-bezier(0.4, 0, 0.2, 1)";
-
-      setTimeout(() => {
-        if (theme === "standard") {
-          htmlElement.style.filter = "brightness(1.05) saturate(1.1)";
-        } else if (theme === "light") {
-          htmlElement.style.filter = "brightness(1.03) saturate(1.05)";
-        } else if (theme === "dark") {
-          htmlElement.style.filter = "brightness(0.95) contrast(1.05)";
-        }
-
-        setTimeout(() => {
-          htmlElement.style.filter = "brightness(1) saturate(1) contrast(1)";
-        }, 750);
-      }, 100);
-    }
-  });
-
-  // Beautiful header transitions
+  // Optimized background image transitions with deduplication
   const headerElements = document.querySelectorAll("header");
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
-    htmlHeader.style.transition =
-      "background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1), filter 1.5s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlHeader.style.transition = `background-image ${imageDuration}s ${easing}, filter ${imageDuration}s ${easing}`;
 
-    setTimeout(() => {
-      if (theme === "standard") {
-        htmlHeader.style.filter = "brightness(1.02) saturate(1.05)";
-      } else if (theme === "light") {
-        htmlHeader.style.filter = "brightness(1.01) saturate(1.02)";
-      } else if (theme === "dark") {
-        htmlHeader.style.filter = "brightness(0.98) contrast(1.02)";
-      }
-
+    if (!prefersReducedMotion) {
       setTimeout(() => {
-        htmlHeader.style.filter = "brightness(1) saturate(1) contrast(1)";
-      }, 750);
-    }, 100);
+        if (theme === "standard") {
+          htmlHeader.style.filter = "brightness(1.02) saturate(1.05)";
+        } else if (theme === "light") {
+          htmlHeader.style.filter = "brightness(1.01) saturate(1.02)";
+        } else if (theme === "dark") {
+          htmlHeader.style.filter = "brightness(0.98) contrast(1.02)";
+        }
+
+        // Align filter reset with transition duration
+        setTimeout(() => {
+          htmlHeader.style.filter = "brightness(1) saturate(1) contrast(1)";
+        }, imageDuration * 1000);
+      }, 50);
+    }
   });
 
-  // Subtle image transitions
+  // Optimized image transitions with capped stagger
   const images = document.querySelectorAll("img");
+  const maxImageDelay = 200; // Cap total delay to 200ms
+  const imageDelay = Math.min(images.length * 20, maxImageDelay);
+
   images.forEach((img, index) => {
     const htmlImg = img as HTMLImageElement;
-    htmlImg.style.transition =
-      "transform 1s cubic-bezier(0.4, 0, 0.2, 1), filter 1s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlImg.style.transition = `transform ${baseDuration}s ${easing}, filter ${baseDuration}s ${easing}`;
 
-    setTimeout(() => {
-      htmlImg.style.transform = "scale(1.01)";
-      htmlImg.style.filter = "brightness(1.02)";
+    if (!prefersReducedMotion) {
+      setTimeout(
+        () => {
+          htmlImg.style.transform = "scale(1.01)";
+          htmlImg.style.filter = "brightness(1.02)";
 
-      setTimeout(() => {
-        htmlImg.style.transform = "scale(1)";
-        htmlImg.style.filter = "brightness(1)";
-      }, 500);
-    }, index * 50);
+          setTimeout(() => {
+            htmlImg.style.transform = "scale(1)";
+            htmlImg.style.filter = "brightness(1)";
+          }, baseDuration * 500);
+        },
+        Math.min(index * 20, maxImageDelay),
+      );
+    }
   });
 
-  // Elegant SVG transitions
+  // Optimized SVG transitions with capped stagger
   const svgs = document.querySelectorAll("svg");
+  const maxSvgDelay = 150; // Cap total delay to 150ms
+  const svgDelay = Math.min(svgs.length * 15, maxSvgDelay);
+
   svgs.forEach((svg, index) => {
     const htmlSvg = svg as SVGElement;
-    htmlSvg.style.transition =
-      "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlSvg.style.transition = `transform ${svgDuration}s ${easing}, color ${svgDuration}s ${easing}`;
 
-    setTimeout(() => {
-      htmlSvg.style.transform = "scale(1.05) rotate(2deg)";
+    if (!prefersReducedMotion) {
+      setTimeout(
+        () => {
+          htmlSvg.style.transform = "scale(1.05) rotate(2deg)";
 
-      setTimeout(() => {
-        htmlSvg.style.transform = "scale(1) rotate(0deg)";
-      }, 400);
-    }, index * 30);
+          setTimeout(() => {
+            htmlSvg.style.transform = "scale(1) rotate(0deg)";
+          }, svgDuration * 500);
+        },
+        Math.min(index * 15, maxSvgDelay),
+      );
+    }
   });
 
-  // Beautiful interactive element transitions
+  // Optimized interactive element transitions
   const interactiveElements = document.querySelectorAll(
     "button, input, select, textarea, a",
   );
   interactiveElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
-    htmlElement.style.transition =
-      "background-color 1s cubic-bezier(0.4, 0, 0.2, 1), color 1s cubic-bezier(0.4, 0, 0.2, 1), border-color 1s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlElement.style.transition = `background-color ${interactiveDuration}s ${easing}, color ${interactiveDuration}s ${easing}, border-color ${interactiveDuration}s ${easing}, transform 0.3s ${easing}`;
 
     if (!htmlElement.style.backgroundColor) {
       htmlElement.style.backgroundColor = "transparent";
@@ -250,10 +253,10 @@ export const applyTheme = (theme: Theme): void => {
     }
   });
 
-  // Remove transitioning class after beautiful animations complete
+  // Remove transitioning class after optimized animations complete
   setTimeout(() => {
     body.classList.remove("theme-transitioning");
-  }, 1600);
+  }, totalDuration);
 
   // Store the theme
   setStoredTheme(theme);
