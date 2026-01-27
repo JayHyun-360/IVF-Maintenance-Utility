@@ -79,53 +79,53 @@ export default function LoginPage() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4"
+      className="min-h-screen flex items-center justify-center px-3 sm:px-4 md:px-6"
       style={{ backgroundColor: themeConfig.colors.background }}
     >
-      {/* Background Decorative Elements */}
+      {/* Mobile-Optimized Background Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div
-          className="absolute top-20 left-20 w-64 h-64 rounded-full opacity-10"
+          className="absolute top-10 sm:top-12 md:top-16 lg:top-20 left-10 sm:left-12 md:left-16 lg:left-20 w-32 sm:w-40 md:w-48 lg:w-64 h-32 sm:h-40 md:h-48 lg:h-64 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
           style={{ backgroundColor: themeConfig.colors.primary }}
         />
         <div
-          className="absolute bottom-20 right-20 w-96 h-96 rounded-full opacity-10"
+          className="absolute bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-20 right-10 sm:right-12 md:right-16 lg:right-20 w-40 sm:w-48 md:w-56 lg:w-72 h-40 sm:h-48 md:h-56 lg:h-72 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
           style={{ backgroundColor: themeConfig.colors.secondary }}
         />
         <div
-          className="absolute top-1/2 left-1/3 w-48 h-48 rounded-full opacity-10"
+          className="absolute top-1/3 sm:top-1/2 left-1/4 sm:left-1/3 w-24 sm:w-32 md:w-40 lg:w-48 h-24 sm:h-32 md:h-40 lg:h-48 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
           style={{ backgroundColor: themeConfig.colors.accent }}
         />
       </div>
 
-      {/* Theme Switcher */}
+      {/* Mobile-Optimized Theme Switcher */}
       <div
-        className="absolute top-8 right-8"
+        className="absolute top-4 sm:top-6 md:top-8 right-4 sm:right-6 md:right-8"
         style={{ zIndex: Z_INDEX.DROPDOWN }}
       >
         <ThemeSwitcher />
       </div>
 
-      {/* Login Form */}
+      {/* Mobile-Optimized Login Form */}
       <div
-        className="w-full max-w-md relative z-10 rounded-2xl p-8"
+        className="w-full max-w-sm sm:max-w-md relative z-10 rounded-xl sm:rounded-2xl p-6 sm:p-8"
         style={{
           background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
           border: `1px solid ${themeConfig.colors.border}`,
-          boxShadow: `0 20px 40px ${themeConfig.colors.primary}20, 0 0 0 1px ${themeConfig.colors.border}20`,
+          boxShadow: `0 15px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}15`,
         }}
       >
-        {/* Logo/Icon */}
-        <div className="text-center mb-8">
+        {/* Mobile-Optimized Logo/Icon */}
+        <div className="text-center mb-6 sm:mb-8">
           <div
-            className="w-20 h-20 mx-auto rounded-3xl flex items-center justify-center mb-6 shadow-2xl transform hover:scale-110 transition-all duration-500"
+            className="w-14 sm:w-16 md:w-18 lg:w-20 h-14 sm:h-16 md:h-18 lg:h-20 mx-auto rounded-2xl sm:rounded-3xl flex items-center justify-center mb-4 sm:mb-6 shadow-xl sm:shadow-2xl transform hover:scale-110 transition-all duration-500"
             style={{
               background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-              boxShadow: `0 10px 30px ${themeConfig.colors.primary}30`,
+              boxShadow: `0 8px 20px ${themeConfig.colors.primary}25`,
             }}
           >
             <svg
-              className="w-10 h-10 text-white"
+              className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -139,20 +139,23 @@ export default function LoginPage() {
             </svg>
           </div>
           <h1
-            className="text-3xl font-bold mb-2"
+            className="text-xl sm:text-2xl md:text-3xl font-bold mb-2"
             style={{ color: themeConfig.colors.text }}
           >
             Welcome Back
           </h1>
-          <p style={{ color: themeConfig.colors.textSecondary }}>
+          <p
+            className="text-xs sm:text-sm"
+            style={{ color: themeConfig.colors.textSecondary }}
+          >
             Sign in to access the maintenance portal
           </p>
         </div>
 
-        {/* Error Message */}
+        {/* Mobile-Optimized Error Message */}
         {error && (
           <div
-            className="mb-6 p-4 rounded-xl text-center"
+            className="mb-4 sm:mb-6 p-3 sm:p-4 rounded-lg sm:rounded-xl text-center"
             style={{
               backgroundColor: `${themeConfig.colors.error}10`,
               border: `1px solid ${themeConfig.colors.error}30`,
@@ -163,11 +166,11 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Mobile-Optimized Login Form */}
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div>
             <label
-              className="block text-sm font-medium mb-2"
+              className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
               style={{ color: themeConfig.colors.text }}
             >
               Email Address
@@ -178,7 +181,7 @@ export default function LoginPage() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
               style={{
                 backgroundColor: themeConfig.colors.background,
                 borderColor: themeConfig.colors.border,
@@ -191,7 +194,7 @@ export default function LoginPage() {
 
           <div>
             <label
-              className="block text-sm font-medium mb-2"
+              className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
               style={{ color: themeConfig.colors.text }}
             >
               Password
@@ -202,7 +205,7 @@ export default function LoginPage() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
               style={{
                 backgroundColor: themeConfig.colors.background,
                 borderColor: themeConfig.colors.border,
@@ -224,17 +227,17 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        {/* Divider */}
-        <div className="relative my-6">
+        {/* Mobile-Optimized Divider */}
+        <div className="relative my-4 sm:my-6">
           <div
             className="absolute inset-0 flex items-center"
             style={{ borderColor: themeConfig.colors.border }}
           >
             <div className="w-full border-t" />
           </div>
-          <div className="relative flex justify-center text-sm">
+          <div className="relative flex justify-center text-xs sm:text-sm">
             <span
-              className="px-4 bg-transparent"
+              className="px-2 sm:px-4 bg-transparent"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 color: themeConfig.colors.textSecondary,
@@ -276,29 +279,29 @@ export default function LoginPage() {
           {isGoogleLoading ? "Connecting..." : "Continue with Google"}
         </Button>
 
-        {/* Create Account Link */}
-        <div className="mt-6 text-center">
+        {/* Mobile-Optimized Create Account Link */}
+        <div className="mt-4 sm:mt-6 text-center">
           <button
             onClick={() => router.push("/register")}
-            className="text-sm transition-colors duration-200 hover:scale-105"
+            className="text-xs sm:text-sm transition-colors duration-200 hover:scale-105"
             style={{ color: themeConfig.colors.primary }}
           >
             Don't have an account? Create one →
           </button>
         </div>
 
-        {/* Demo Accounts Info */}
+        {/* Mobile-Optimized Demo Accounts Info */}
         <div
-          className="mt-6 p-4 rounded-xl"
+          className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg sm:rounded-xl"
           style={{ backgroundColor: themeConfig.colors.background }}
         >
           <h3
-            className="text-sm font-semibold mb-3"
+            className="text-xs sm:text-sm font-semibold mb-2 sm:mb-3"
             style={{ color: themeConfig.colors.text }}
           >
             Demo Accounts:
           </h3>
-          <div className="space-y-2 text-xs">
+          <div className="space-y-1 sm:space-y-2 text-xs">
             <div style={{ color: themeConfig.colors.textSecondary }}>
               <strong>Admin:</strong> admin@test.com / admin12345
             </div>
@@ -307,7 +310,7 @@ export default function LoginPage() {
             </div>
           </div>
           <div
-            className="mt-3 text-xs"
+            className="mt-2 sm:mt-3 text-xs"
             style={{ color: themeConfig.colors.textSecondary }}
           >
             <strong>Note:</strong> Google sign-in requires OAuth configuration.
@@ -315,11 +318,11 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Back to Home */}
-        <div className="mt-6 text-center">
+        {/* Mobile-Optimized Back to Home */}
+        <div className="mt-4 sm:mt-6 text-center">
           <button
             onClick={() => router.push("/")}
-            className="text-sm transition-colors duration-200 hover:scale-105"
+            className="text-xs sm:text-sm transition-colors duration-200 hover:scale-105"
             style={{ color: themeConfig.colors.primary }}
           >
             ← Back to Home

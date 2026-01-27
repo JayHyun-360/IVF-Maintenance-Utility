@@ -55,9 +55,9 @@ export default function Home() {
         transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
       }}
     >
-      {/* Header with Gradient Background */}
+      {/* Header with Gradient Background - Mobile Optimized */}
       <header
-        className="px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 text-center relative overflow-hidden"
+        className="px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 lg:py-12 xl:py-16 text-center relative overflow-hidden"
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "light"
@@ -74,8 +74,8 @@ export default function Home() {
           backgroundAttachment: themeConfig.backgroundImage ? "scroll" : "auto",
           transition:
             "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
-          height: themeConfig.backgroundImage ? "50vh" : "auto",
+          minHeight: themeConfig.backgroundImage ? "40vh" : "auto",
+          height: themeConfig.backgroundImage ? "40vh" : "auto",
         }}
       >
         {/* Desktop-specific background adjustments */}
@@ -110,42 +110,42 @@ export default function Home() {
             }
           `}</style>
         )}
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 opacity-20 overflow-hidden">
+        {/* Mobile-optimized Decorative Elements */}
+        <div className="absolute inset-0 opacity-10 sm:opacity-15 md:opacity-20 overflow-hidden">
           <div
-            className="absolute top-4 sm:top-6 md:top-10 left-4 sm:left-6 md:left-10 w-16 sm:w-20 md:w-32 h-16 sm:h-20 md:h-32 rounded-full hidden sm:block"
+            className="absolute top-2 sm:top-4 md:top-6 lg:top-10 left-2 sm:left-4 md:left-6 lg:left-10 w-8 sm:w-12 md:w-16 lg:w-24 h-8 sm:h-12 md:h-16 lg:h-24 rounded-full"
             style={{ backgroundColor: themeConfig.colors.accent }}
           ></div>
           <div
-            className="absolute bottom-4 sm:bottom-6 md:bottom-10 right-4 sm:right-6 md:right-10 w-20 sm:w-32 md:w-48 h-20 sm:h-32 md:h-48 rounded-full hidden sm:block"
+            className="absolute bottom-2 sm:bottom-4 md:bottom-6 lg:bottom-10 right-2 sm:right-4 md:right-6 lg:right-10 w-10 sm:w-16 md:w-24 lg:w-32 h-10 sm:h-16 md:h-24 lg:h-32 rounded-full"
             style={{ backgroundColor: themeConfig.colors.accent }}
           ></div>
           <div
-            className="absolute top-1/2 left-1/4 w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 rounded-full hidden md:block"
+            className="absolute top-1/3 sm:top-1/2 left-1/5 sm:left-1/4 w-6 sm:w-8 md:w-12 lg:w-16 h-6 sm:h-8 md:h-12 lg:h-16 rounded-full sm:block md:block"
             style={{ backgroundColor: themeConfig.colors.accent }}
           ></div>
         </div>
 
-        <div className="max-w-4xl mx-auto relative z-10 px-4 sm:px-6">
-          <div className="absolute top-6 sm:top-8 left-2 sm:left-4">
+        <div className="max-w-4xl mx-auto relative z-10 px-2 sm:px-4 md:px-6">
+          <div className="absolute top-3 sm:top-4 md:top-6 lg:top-8 left-1 sm:left-2 md:left-4">
             <div style={{ zIndex: Z_INDEX.TOOLTIP }}>
               <AccountDropdown />
             </div>
           </div>
-          <div className="absolute top-6 sm:top-8 right-2 sm:right-4">
+          <div className="absolute top-3 sm:top-4 md:top-6 lg:top-8 right-1 sm:right-2 md:right-4">
             <div style={{ zIndex: Z_INDEX.MAX }}>
               <ThemeSwitcher />
             </div>
           </div>
           <div
-            className="w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 mx-auto rounded-2xl sm:rounded-3xl flex items-center justify-center mb-6 sm:mb-8 shadow-2xl transform hover:scale-110 transition-all duration-500"
+            className="w-12 sm:w-14 md:w-16 lg:w-20 xl:w-24 h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24 mx-auto rounded-xl sm:rounded-2xl lg:rounded-3xl flex items-center justify-center mb-4 sm:mb-6 md:mb-8 shadow-xl sm:shadow-2xl transform hover:scale-110 transition-all duration-500"
             style={{
               background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
-              boxShadow: `0 20px 40px ${themeConfig.colors.primary}30, 0 0 0 1px ${themeConfig.colors.primary}20`,
+              boxShadow: `0 10px 25px ${themeConfig.colors.primary}25, 0 0 0 1px ${themeConfig.colors.primary}15`,
             }}
           >
             <svg
-              className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white"
+              className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -175,7 +175,7 @@ export default function Home() {
             </svg>
           </div>
           <h1
-            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3"
             style={{
               color: themeConfig.backgroundImage
                 ? "#FFFFFF"
@@ -188,7 +188,7 @@ export default function Home() {
             IVF Maintenance Utility
           </h1>
           <p
-            className="text-sm sm:text-base md:text-lg"
+            className="text-xs sm:text-sm md:text-base lg:text-lg"
             style={{
               color: themeConfig.backgroundImage
                 ? "rgba(255, 255, 255, 0.9)"
@@ -206,24 +206,24 @@ export default function Home() {
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8 lg:pb-12">
         <div className="max-w-6xl mx-auto">
-          {/* Enhanced Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8 lg:mb-12 mt-4 sm:mt-6 lg:mt-8">
+          {/* Mobile-Optimized Stats Grid */}
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 mb-4 sm:mb-6 md:mb-8 lg:mb-12 mt-3 sm:mt-4 md:mt-6 lg:mt-8">
             <div
-              className="rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+              className="rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 5px 15px ${themeConfig.colors.primary}10, 0 0 0 1px ${themeConfig.colors.border}15`,
               }}
             >
               <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4"
+                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
                 }}
               >
                 <svg
-                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -237,7 +237,7 @@ export default function Home() {
                 </svg>
               </div>
               <div
-                className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2"
                 style={{
                   color: themeConfig.colors.text,
                   textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
@@ -401,8 +401,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Enhanced Action Card */}
-          <div className="flex justify-center px-4 sm:px-6">
+          {/* Mobile-Optimized Action Card */}
+          <div className="flex justify-center px-3 sm:px-4 md:px-6">
             <button
               onClick={() => {
                 if (session?.user?.role === "ADMIN") {
@@ -416,24 +416,24 @@ export default function Home() {
                   router.push("/login");
                 }
               }}
-              className="p-8 sm:p-10 md:p-12 rounded-2xl text-center transition-all duration-800 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
+              className="p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl sm:rounded-2xl text-center transition-all duration-800 transform hover:scale-105 hover:shadow-xl sm:hover:shadow-2xl group max-w-xs sm:max-w-md w-full"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
                 border: `1px solid ${themeConfig.colors.border}`,
-                boxShadow: `0 10px 30px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}20`,
+                boxShadow: `0 8px 20px ${themeConfig.colors.primary}10, 0 0 0 1px ${themeConfig.colors.border}15`,
                 transition:
                   "all 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s ease-in-out",
               }}
             >
               <div
-                className="w-16 sm:w-18 md:w-20 h-16 sm:h-18 md:h-20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto transform group-hover:scale-110 transition-all duration-300"
+                className="w-12 sm:w-14 md:w-16 lg:w-18 h-12 sm:h-14 md:h-16 lg:h-18 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 mx-auto transform group-hover:scale-110 transition-all duration-300"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.accent} 100%)`,
-                  boxShadow: `0 8px 20px ${themeConfig.colors.primary}25`,
+                  boxShadow: `0 6px 15px ${themeConfig.colors.primary}20`,
                 }}
               >
                 <svg
-                  className="w-8 h-8 sm:w-10 sm:h-10 text-white"
+                  className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -447,7 +447,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3
-                className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-2 sm:mb-3 md:mb-4"
                 style={{
                   color: themeConfig.colors.text,
                   textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
@@ -460,7 +460,7 @@ export default function Home() {
                   : "Go to login section"}
               </h3>
               <p
-                className="text-xs sm:text-sm mb-4 sm:mb-6"
+                className="text-xs sm:text-sm mb-3 sm:mb-4 md:mb-6"
                 style={{
                   color: themeConfig.colors.textSecondary,
                   textShadow: `0 1px 1px ${themeConfig.colors.primary}10`,
@@ -495,22 +495,22 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Additional Functions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mt-4 lg:mt-6">
+          {/* Mobile-Optimized Additional Functions */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 lg:gap-4 mt-3 sm:mt-4 lg:mt-6">
             <button
               onClick={() => router.push("/student/history")}
-              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
+              className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 border: `1px solid ${themeConfig.colors.border}`,
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4"
                 style={{ backgroundColor: `${themeConfig.colors.success}20` }}
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   style={{ color: themeConfig.colors.success }}
                   fill="none"
                   stroke="currentColor"
@@ -533,13 +533,13 @@ export default function Home() {
                 </svg>
               </div>
               <h4
-                className="font-semibold mb-2"
+                className="font-semibold mb-2 text-sm sm:text-base"
                 style={{ color: themeConfig.colors.text }}
               >
                 Request History
               </h4>
               <p
-                className="text-xs"
+                className="text-xs sm:text-xs"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Track your submitted requests
@@ -548,18 +548,18 @@ export default function Home() {
 
             <button
               onClick={() => router.push("/admin/reports")}
-              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
+              className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 border: `1px solid ${themeConfig.colors.border}`,
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4"
                 style={{ backgroundColor: `${themeConfig.colors.warning}20` }}
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   style={{ color: themeConfig.colors.warning }}
                   fill="none"
                   stroke="currentColor"
@@ -574,13 +574,13 @@ export default function Home() {
                 </svg>
               </div>
               <h4
-                className="font-semibold mb-2"
+                className="font-semibold mb-2 text-sm sm:text-base"
                 style={{ color: themeConfig.colors.text }}
               >
                 Reports
               </h4>
               <p
-                className="text-xs"
+                className="text-xs sm:text-xs"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Analytics and insights
@@ -589,18 +589,18 @@ export default function Home() {
 
             <button
               onClick={() => router.push("/settings")}
-              className="p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
+              className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl text-left transition-all duration-300 transform hover:scale-105"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 border: `1px solid ${themeConfig.colors.border}`,
               }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4"
                 style={{ backgroundColor: `${themeConfig.colors.accent}20` }}
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   style={{ color: themeConfig.colors.accent }}
                   fill="none"
                   stroke="currentColor"
@@ -623,13 +623,13 @@ export default function Home() {
                 </svg>
               </div>
               <h4
-                className="font-semibold mb-2"
+                className="font-semibold mb-2 text-sm sm:text-base"
                 style={{ color: themeConfig.colors.text }}
               >
                 Settings
               </h4>
               <p
-                className="text-xs"
+                className="text-xs sm:text-xs"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Customize your experience
