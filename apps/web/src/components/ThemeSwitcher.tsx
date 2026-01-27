@@ -51,13 +51,46 @@ export default function ThemeSwitcher() {
     // Prevent rapid theme switching
     if (currentTheme === theme) return;
 
-    // Add visual feedback
+    // Add visual feedback with enhanced animations
     const button = document.activeElement as HTMLElement;
     if (button) {
-      button.style.transform = "scale(0.95)";
+      button.style.transform = "scale(0.95) rotate(2deg)";
+      button.style.transition = "transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)";
       setTimeout(() => {
-        button.style.transform = "scale(1)";
-      }, 150);
+        button.style.transform = "scale(1) rotate(0deg)";
+      }, 200);
+    }
+
+    // Add ripple effect to theme switcher
+    const ripple = document.createElement("div");
+    ripple.style.position = "absolute";
+    ripple.style.width = "20px";
+    ripple.style.height = "20px";
+    ripple.style.borderRadius = "50%";
+    ripple.style.backgroundColor = themeConfig.colors.primary;
+    ripple.style.opacity = "0.6";
+    ripple.style.transform = "translate(-50%, -50%) scale(0)";
+    ripple.style.transition =
+      "transform 0.6s cubic-bezier(0.4, 0, 0.0.1), opacity 0.6s ease-out";
+    ripple.style.pointerEvents = "none";
+    ripple.style.zIndex = "9999";
+
+    if (button) {
+      const rect = button.getBoundingClientRect();
+      ripple.style.left = `${rect.left + rect.width / 2}px`;
+      ripple.style.top = `${rect.top + rect.height / 2}px`;
+      document.body.appendChild(ripple);
+
+      // Animate ripple
+      setTimeout(() => {
+        ripple.style.transform = "translate(-50%, -50%) scale(4)";
+        ripple.style.opacity = "0";
+      }, 10);
+
+      // Remove ripple
+      setTimeout(() => {
+        document.body.removeChild(ripple);
+      }, 600);
     }
 
     // Update theme with smooth transition

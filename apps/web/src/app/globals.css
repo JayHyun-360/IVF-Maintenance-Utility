@@ -32,12 +32,134 @@ body {
     box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Exclude certain elements from transitions */
+/* Enhanced image transitions for lively feel */
 img,
 video,
 canvas,
 svg {
-  transition: none !important;
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Theme-specific image effects */
+.theme-transitioning img {
+  animation: imagePulse 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-transitioning svg {
+  animation: svgRotate 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme-specific animations */
+.theme-standard.theme-transitioning img {
+  animation: natureImageFloat 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-light.theme-transitioning img {
+  animation: oceanImageWave 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-dark.theme-transitioning img {
+  animation: darkImageGlow 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes imagePulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes svgRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(5deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes natureImageFloat {
+  0% {
+    transform: translateY(0px) scale(1);
+    filter: brightness(1) saturate(1);
+  }
+  25% {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.05) saturate(1.1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.05);
+    filter: brightness(1.1) saturate(1.2);
+  }
+  75% {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.05) saturate(1.1);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes oceanImageWave {
+  0% {
+    transform: translateX(0px) scale(1);
+    filter: brightness(1) hue-rotate(0deg);
+  }
+  25% {
+    transform: translateX(-2px) scale(1.02);
+    filter: brightness(1.05) hue-rotate(5deg);
+  }
+  50% {
+    transform: translateX(2px) scale(1.05);
+    filter: brightness(1.1) hue-rotate(10deg);
+  }
+  75% {
+    transform: translateX(-2px) scale(1.02);
+    filter: brightness(1.05) hue-rotate(5deg);
+  }
+  100% {
+    transform: translateX(0px) scale(1);
+    filter: brightness(1) hue-rotate(0deg);
+  }
+}
+
+@keyframes darkImageGlow {
+  0% {
+    transform: scale(1);
+    filter: brightness(1) contrast(1);
+  }
+  25% {
+    transform: scale(1.02);
+    filter: brightness(1.1) contrast(1.05);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.2) contrast(1.1)
+      drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
+  }
+  75% {
+    transform: scale(1.02);
+    filter: brightness(1.1) contrast(1.05);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1) contrast(1);
+  }
 }
 
 /* Smooth theme switching class */

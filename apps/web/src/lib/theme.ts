@@ -144,6 +144,34 @@ export const applyTheme = (theme: Theme): void => {
     htmlElement.style.borderColor = themeConfig.colors.border;
   });
 
+  // Apply dynamic effects to images during theme transition
+  const images = document.querySelectorAll("img");
+  images.forEach((img, index) => {
+    const htmlImg = img as HTMLImageElement;
+    // Stagger the animation for each image
+    setTimeout(() => {
+      htmlImg.style.transform = "scale(1.05)";
+      htmlImg.style.filter = "brightness(1.1)";
+      setTimeout(() => {
+        htmlImg.style.transform = "scale(1)";
+        htmlImg.style.filter = "brightness(1)";
+      }, 400);
+    }, index * 100);
+  });
+
+  // Apply dynamic effects to SVG icons
+  const svgs = document.querySelectorAll("svg");
+  svgs.forEach((svg, index) => {
+    const htmlSvg = svg as SVGElement;
+    // Stagger the animation for each SVG
+    setTimeout(() => {
+      htmlSvg.style.transform = "rotate(5deg) scale(1.1)";
+      setTimeout(() => {
+        htmlSvg.style.transform = "rotate(0deg) scale(1)";
+      }, 400);
+    }, index * 50);
+  });
+
   // Apply theme to all interactive elements
   const interactiveElements = document.querySelectorAll(
     "button, input, select, textarea, a",
