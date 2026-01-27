@@ -150,7 +150,7 @@ export default function AccountDropdown() {
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
-            zIndex: Z_INDEX.DROPDOWN_CONTENT,
+            zIndex: Z_INDEX.TOOLTIP, // Use higher z-index to avoid being covered
           }}
         >
           <div className="p-2">
