@@ -178,23 +178,23 @@ export const applyTheme = (theme: Theme): void => {
       htmlElement.style.backgroundImage &&
       htmlElement.style.backgroundImage !== "none"
     ) {
-      // Apply smooth transition instead of aggressive filters
-      htmlElement.style.transition = "filter 0.6s ease-in-out";
+      // Apply much smoother transition
+      htmlElement.style.transition = "filter 1.2s ease-in-out";
 
       setTimeout(() => {
         // Apply much more subtle filter effects
         if (theme === "standard") {
-          htmlElement.style.filter = "brightness(0.95)";
+          htmlElement.style.filter = "brightness(0.98)";
         } else if (theme === "light") {
-          htmlElement.style.filter = "brightness(0.95) saturate(1.05)";
+          htmlElement.style.filter = "brightness(0.98) saturate(1.02)";
         } else if (theme === "dark") {
-          htmlElement.style.filter = "brightness(0.9)";
+          htmlElement.style.filter = "brightness(0.96)";
         }
 
         setTimeout(() => {
           htmlElement.style.filter = "";
-        }, 600);
-      }, index * 30); // Reduced stagger time
+        }, 1200);
+      }, index * 50); // Smoother stagger timing
     }
   });
 
@@ -207,27 +207,27 @@ export const applyTheme = (theme: Theme): void => {
   //   // Simplified background layer handling
   // });
 
-  // Apply theme-specific background image effects - SIMPLIFIED
+  // Apply theme-specific background image effects - SMOOTHER
   const headerElements = document.querySelectorAll("header");
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
-    // Apply very subtle transition
-    htmlHeader.style.transition = "filter 0.4s ease-in-out";
+    // Apply much smoother transition
+    htmlHeader.style.transition = "filter 1.0s ease-in-out";
 
     setTimeout(() => {
       // Much more subtle filter effects
       if (theme === "standard") {
-        htmlHeader.style.filter = "brightness(0.98)";
+        htmlHeader.style.filter = "brightness(0.99)";
       } else if (theme === "light") {
-        htmlHeader.style.filter = "brightness(0.98) saturate(1.02)";
+        htmlHeader.style.filter = "brightness(0.99) saturate(1.01)";
       } else if (theme === "dark") {
-        htmlHeader.style.filter = "brightness(0.95)";
+        htmlHeader.style.filter = "brightness(0.97)";
       }
 
       setTimeout(() => {
         htmlHeader.style.filter = "";
-      }, 400);
-    }, 100);
+      }, 1000);
+    }, 150);
   });
 
   // Apply subtle dynamic effects to SVG icons

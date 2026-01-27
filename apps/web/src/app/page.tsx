@@ -61,7 +61,7 @@ export default function Home() {
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "standard"
-              ? `linear-gradient(rgba(16, 185, 129, 0.4), rgba(5, 150, 105, 0.6)), url("${themeConfig.backgroundImage}")`
+              ? `linear-gradient(rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.25)), url("${themeConfig.backgroundImage}")`
               : `url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
@@ -74,7 +74,7 @@ export default function Home() {
             : "scroll",
           backgroundClip: "padding-box",
           transition:
-            "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            "background-image 3.5s ease-in-out, background 3.5s ease-in-out, background-color 3.5s ease-in-out, opacity 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
           maxHeight: themeConfig.backgroundImage ? "50vh" : "none",
           height: themeConfig.backgroundImage ? "50vh" : "auto",
