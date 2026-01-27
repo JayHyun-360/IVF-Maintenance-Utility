@@ -272,7 +272,6 @@ const generateAdditionalRequests = (): MaintenanceRequest[] => {
     "FIRE_SAFETY",
   ];
   const priorities = ["LOW", "MEDIUM", "HIGH", "URGENT"] as const;
-  const statuses = ["PENDING", "IN_PROGRESS", "COMPLETED"] as const;
   const requesters = ["Student", "Staff", "Faculty", "Admin", "Security"];
   const locations = [
     "Building A",

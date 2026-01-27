@@ -6,10 +6,8 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { getMaintenanceStats } from "@/lib/data";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import { useSession } from "next-auth/react";
-import { signIn } from "next-auth/react";
 import AccountDropdown from "@/components/AccountDropdown";
 
 export default function Home() {
@@ -33,12 +31,6 @@ export default function Home() {
     const interval = setInterval(loadData, 30000);
     return () => clearInterval(interval);
   }, [session, status]);
-
-  // Calculate completion rate
-  const completionRate =
-    stats.totalRequests > 0
-      ? Math.round((stats.completedRequests / stats.totalRequests) * 100)
-      : 0;
 
   return (
     <div

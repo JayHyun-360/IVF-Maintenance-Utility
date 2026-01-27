@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import {
   Theme,
   ThemeConfig,
@@ -37,17 +31,12 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<Theme>("standard");
+  const [theme, setThemeState] = useState<Theme>(() => initializeTheme());
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
     applyTheme(newTheme);
   };
-
-  useEffect(() => {
-    const initializedTheme = initializeTheme();
-    setThemeState(initializedTheme);
-  }, []);
 
   const themeConfig = themes[theme];
   const availableThemes = Object.values(themes);

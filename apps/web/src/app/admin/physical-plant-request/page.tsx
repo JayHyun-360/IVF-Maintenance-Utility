@@ -162,7 +162,7 @@ export default function PhysicalPlantRequestPage() {
 
       alert("Physical plant request submitted successfully!");
       router.push("/admin/dashboard");
-    } catch (error) {
+    } catch {
       alert("Failed to submit request. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -912,8 +912,8 @@ export default function PhysicalPlantRequestPage() {
                   💡 Tip
                 </h4>
                 <p className="text-sm" style={{ color: "#4B5563" }}>
-                  You can add multiple request rows by clicking the "+ Add Row"
-                  button in the Details section.
+                  You can add multiple request rows by clicking the &quot;+ Add
+                  Row&quot; button in the Details section.
                 </p>
               </div>
             </div>

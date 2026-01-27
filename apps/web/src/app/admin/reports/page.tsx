@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  getMaintenanceRequests,
   getMaintenanceStats,
   getRequestsByCategory,
   getRequestsByPriority,
@@ -14,16 +13,10 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 export default function AdminReportsPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
-  const [stats, setStats] = useState<any>({});
-  const [categoryData, setCategoryData] = useState<any>({});
-  const [priorityData, setPriorityData] = useState<any>({});
+  const stats = getMaintenanceStats();
+  const categoryData = getRequestsByCategory();
+  const priorityData = getRequestsByPriority();
   const [timeRange, setTimeRange] = useState("30");
-
-  useEffect(() => {
-    setStats(getMaintenanceStats());
-    setCategoryData(getRequestsByCategory());
-    setPriorityData(getRequestsByPriority());
-  }, []);
 
   const completionRate =
     stats.totalRequests > 0

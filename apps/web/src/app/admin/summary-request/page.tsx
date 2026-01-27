@@ -5,13 +5,24 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
+import { getMaintenanceRequests } from "@/lib/data";
+
+interface SummaryData {
+  category: string;
+  totalRequests: number;
+  locations: string[];
+  priorities: ("LOW" | "MEDIUM" | "HIGH" | "URGENT")[];
+  descriptions: string[];
+  requesters: string[];
+  dates: Date[];
+  summaryDescription: string;
+}
 
 export default function SummaryRequestPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [summaryData, setSummaryData] = useState<any>(null);
+  const [summaryData, setSummaryData] = useState<SummaryData | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const categories = ["PLUMBING", "ELECTRICAL", "CARPENTRY", "PERSONNEL"];
@@ -43,7 +54,7 @@ export default function SummaryRequestPage() {
       };
 
       setSummaryData(summary);
-    } catch (error) {
+    } catch {
       alert("Failed to generate summary. Please try again.");
     } finally {
       setIsGenerating(false);

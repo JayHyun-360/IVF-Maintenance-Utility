@@ -21,18 +21,19 @@ export default function AdminDashboard() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const [activeTab, setActiveTab] = useState("overview");
-  const [stats, setStats] = useState({
-    totalRequests: 0,
-    pendingRequests: 0,
-    inProgressRequests: 0,
-    completedRequests: 0,
-  });
+  const [stats, setStats] = useState(() => getMaintenanceStats());
   const [recentRequests, setRecentRequests] = useState<MaintenanceRequest[]>(
-    [],
+    () => getRecentRequests(),
   );
-  const [allRequests, setAllRequests] = useState<MaintenanceRequest[]>([]);
-  const [categoryData, setCategoryData] = useState<Record<string, number>>({});
-  const [priorityData, setPriorityData] = useState<Record<string, number>>({});
+  const [allRequests, setAllRequests] = useState<MaintenanceRequest[]>(() =>
+    getMaintenanceRequests(),
+  );
+  const [categoryData, setCategoryData] = useState<Record<string, number>>(() =>
+    getRequestsByCategory(),
+  );
+  const [priorityData, setPriorityData] = useState<Record<string, number>>(() =>
+    getRequestsByPriority(),
+  );
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -41,14 +42,7 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRequests, setFilteredRequests] = useState<
     MaintenanceRequest[]
-  >([]);
-
-  // Load data on component mount
-  useEffect(() => {
-    loadData();
-    const interval = setInterval(loadData, 30000);
-    return () => clearInterval(interval);
-  }, []);
+  >(() => getMaintenanceRequests());
 
   // Load all data
   const loadData = () => {
@@ -66,10 +60,17 @@ export default function AdminDashboard() {
     setFilteredRequests(realAllRequests);
   };
 
+  // Load data on component mount
+  useEffect(() => {
+    loadData();
+    const interval = setInterval(loadData, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Filter requests based on search
   useEffect(() => {
     const filtered = allRequests.filter(
-      (request) =>
+      (request: MaintenanceRequest) =>
         request.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         request.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         request.location.toLowerCase().includes(searchQuery.toLowerCase()),

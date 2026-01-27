@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";

@@ -41,7 +41,7 @@ export default function LoginPage() {
           router.push("/student");
         }
       }
-    } catch (error) {
+    } catch {
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);

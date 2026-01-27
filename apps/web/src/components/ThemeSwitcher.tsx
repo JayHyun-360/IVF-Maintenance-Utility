@@ -42,32 +42,30 @@ const themes: {
 
 export default function ThemeSwitcher() {
   const { themeConfig, setTheme } = useTheme();
-  const [currentTheme, setCurrentTheme] = useState<Theme>("standard");
+  const [currentTheme, setCurrentTheme] = useState<Theme>(() =>
+    getStoredTheme(),
+  );
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const stored = getStoredTheme();
-    setCurrentTheme(stored);
-  }, []);
-
   const handleThemeChange = (theme: Theme) => {
+    setCurrentTheme(theme);
+    setStoredTheme(theme);
+    applyTheme(theme);
+    setTheme(theme);
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
     // Add smooth transition to all elements before changing theme
     document.body.style.transition = "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
 
-    // Small delay to ensure transition is applied
-    setTimeout(() => {
-      setCurrentTheme(theme);
-      setStoredTheme(theme);
-      applyTheme(theme);
-      setTheme(theme);
-      setIsOpen(false);
-    }, 50);
-
     // Remove transition after theme change is complete
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       document.body.style.transition = "";
     }, 900);
-  };
+
+    return () => clearTimeout(timeout);
+  }, [currentTheme]);
 
   const currentThemeData = themes.find((t) => t.value === currentTheme);
 

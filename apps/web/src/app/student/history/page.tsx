@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -10,16 +10,11 @@ import { Z_INDEX } from "@/lib/z-index";
 export default function StudentHistoryPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
-  const [requests, setRequests] = useState<MaintenanceRequest[]>([]);
-  const [statusFilter, setStatusFilter] = useState("all");
-
-  useEffect(() => {
+  const [requests] = useState<MaintenanceRequest[]>(() => {
     const allRequests = getMaintenanceRequests();
-    const studentRequests = allRequests.filter((req) =>
-      req.requestedBy.includes("Student"),
-    );
-    setRequests(studentRequests);
-  }, []);
+    return allRequests.filter((req) => req.requestedBy.includes("Student"));
+  });
+  const [statusFilter, setStatusFilter] = useState("all");
 
   return (
     <div

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
@@ -8,18 +8,13 @@ import { useTheme } from "@/components/ThemeProvider";
 export default function EmergencyPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
-  const [urgentRequests, setUrgentRequests] = useState<MaintenanceRequest[]>(
-    [],
-  );
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
+  const [urgentRequests] = useState<MaintenanceRequest[]>(() => {
     const allRequests = getMaintenanceRequests();
-    const urgent = allRequests.filter(
+    return allRequests.filter(
       (req) => req.priority === "URGENT" && req.status !== "COMPLETED",
     );
-    setUrgentRequests(urgent);
-  }, []);
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEmergencySubmit = async (e: React.FormEvent) => {
     e.preventDefault();

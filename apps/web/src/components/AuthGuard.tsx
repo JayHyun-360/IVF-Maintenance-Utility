@@ -17,7 +17,12 @@ export default function AuthGuard({
 }: AuthGuardProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [isChecking, setIsChecking] = useState(true);
+  const [isChecking] = useState(() => {
+    if (status === "loading") return true;
+    if (!session) return false;
+    if (requiredRole && session.user?.role !== requiredRole) return false;
+    return false;
+  });
 
   useEffect(() => {
     if (status === "loading") return;
@@ -36,8 +41,6 @@ export default function AuthGuard({
       }
       return;
     }
-
-    setIsChecking(false);
   }, [session, status, router, requiredRole, redirectTo]);
 
   if (status === "loading" || isChecking) {

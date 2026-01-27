@@ -9,6 +9,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
+import Image from "next/image";
 
 export default function StudentPage() {
   const router = useRouter();
@@ -441,9 +442,11 @@ export default function StudentPage() {
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
                       {imagePreviews.map((preview, index) => (
                         <div key={index} className="relative group">
-                          <img
+                          <Image
                             src={preview}
                             alt={`Preview ${index + 1}`}
+                            width={200}
+                            height={128}
                             className="w-full h-32 object-cover rounded-xl transition-all duration-300 group-hover:scale-105"
                           />
                           <button
