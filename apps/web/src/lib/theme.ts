@@ -62,20 +62,20 @@ export const themes: Record<Theme, ThemeConfig> = {
     name: "dark",
     displayName: "Midnight Dark",
     colors: {
-      primary: "#3B82F6", // Blue
-      secondary: "#1D4ED8", // Darker blue
-      accent: "#60A5FA", // Light blue
-      background: "#0F172A", // Slate background
-      surface: "#1E293B", // Dark slate surface
-      text: "#F1F5F9", // Light slate text
-      textSecondary: "#E2E8F0", // Much lighter muted text for better contrast on dark surfaces
-      border: "#475569", // Lighter border for better visibility on dark backgrounds
+      primary: "#6366F1", // Indigo - more vibrant than blue
+      secondary: "#4F46E5", // Darker indigo
+      accent: "#818CF8", // Light indigo accent
+      background: "#0F172A", // Slate background - kept for depth
+      surface: "#1E293B", // Dark slate surface - kept
+      text: "#F1F5F9", // Light slate text - kept
+      textSecondary: "#CBD5E1", // Much lighter muted text for better contrast
+      border: "#334155", // Lighter border for better visibility on dark backgrounds
       success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
     backgroundImage:
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=400&fit=crop", // Temporary test image
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=400&fit=crop", // Midnight scene
   },
 };
 

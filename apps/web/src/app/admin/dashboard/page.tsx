@@ -545,7 +545,7 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             {/* Search Bar */}
             <div
-              className="rounded-xl p-4 shadow-lg"
+              className="rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
@@ -554,10 +554,10 @@ export default function AdminDashboard() {
             >
               <input
                 type="text"
-                placeholder="Search requests..."
+                placeholder="🔍 Search requests..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl"
+                className="w-full px-4 py-3 rounded-xl transition-all duration-200 focus:scale-[1.01] focus:shadow-lg"
                 style={{
                   backgroundColor: themeConfig.colors.background,
                   borderColor: themeConfig.colors.border,
@@ -569,7 +569,7 @@ export default function AdminDashboard() {
 
             {/* Requests Table */}
             <div
-              className="rounded-xl shadow-lg overflow-hidden"
+              className="rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
               style={{
                 backgroundColor: themeConfig.colors.surface,
                 borderColor: themeConfig.colors.border,
@@ -625,12 +625,17 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredRequests.map((request) => (
+                    {filteredRequests.map((request, index) => (
                       <tr
                         key={request.id}
+                        className="transition-all duration-200 hover:scale-[1.01]"
                         style={{
                           borderColor: themeConfig.colors.border,
                           borderBottom: "1px solid",
+                          backgroundColor:
+                            index % 2 === 0
+                              ? "transparent"
+                              : `${themeConfig.colors.background}50`,
                         }}
                       >
                         <td className="px-6 py-4">
@@ -669,14 +674,33 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-6 py-4">
                           <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              request.priority === "HIGH"
-                                ? "bg-red-100 text-red-800"
-                                : request.priority === "MEDIUM"
-                                  ? "bg-yellow-100 text-yellow-800"
-                                  : "bg-gray-100 text-gray-800"
-                            }`}
+                            className="px-3 py-1 rounded-full text-xs font-medium border"
+                            style={{
+                              backgroundColor:
+                                request.priority === "HIGH"
+                                  ? `${themeConfig.colors.error}20`
+                                  : request.priority === "MEDIUM"
+                                    ? `${themeConfig.colors.warning}20`
+                                    : `${themeConfig.colors.textSecondary}20`,
+                              color:
+                                request.priority === "HIGH"
+                                  ? themeConfig.colors.error
+                                  : request.priority === "MEDIUM"
+                                    ? themeConfig.colors.warning
+                                    : themeConfig.colors.textSecondary,
+                              borderColor:
+                                request.priority === "HIGH"
+                                  ? `${themeConfig.colors.error}50`
+                                  : request.priority === "MEDIUM"
+                                    ? `${themeConfig.colors.warning}50`
+                                    : `${themeConfig.colors.textSecondary}50`,
+                            }}
                           >
+                            {request.priority === "HIGH"
+                              ? "🔴 "
+                              : request.priority === "MEDIUM"
+                                ? "🟡 "
+                                : "🟢 "}
                             {request.priority}
                           </span>
                         </td>
@@ -686,7 +710,7 @@ export default function AdminDashboard() {
                             onChange={(e) =>
                               handleStatusUpdate(request.id, e.target.value)
                             }
-                            className="text-sm rounded-lg px-2 py-1"
+                            className="text-sm rounded-lg px-3 py-2 font-medium transition-all duration-200 hover:scale-105"
                             style={{
                               backgroundColor: themeConfig.colors.background,
                               borderColor: themeConfig.colors.border,
@@ -699,6 +723,7 @@ export default function AdminDashboard() {
                               style={{
                                 color: themeConfig.colors.warning,
                                 fontWeight: "bold",
+                                backgroundColor: themeConfig.colors.background,
                               }}
                             >
                               ⬤ Pending
@@ -708,6 +733,7 @@ export default function AdminDashboard() {
                               style={{
                                 color: themeConfig.colors.primary,
                                 fontWeight: "bold",
+                                backgroundColor: themeConfig.colors.background,
                               }}
                             >
                               ⬤ In Progress
@@ -717,6 +743,7 @@ export default function AdminDashboard() {
                               style={{
                                 color: themeConfig.colors.success,
                                 fontWeight: "bold",
+                                backgroundColor: themeConfig.colors.background,
                               }}
                             >
                               ⬤ Completed
@@ -728,16 +755,26 @@ export default function AdminDashboard() {
                             {request.images && request.images.length > 0 && (
                               <button
                                 onClick={() => viewImages(request.images || [])}
-                                className="text-blue-600 hover:text-blue-800 text-sm"
+                                className="text-sm px-3 py-1 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+                                style={{
+                                  color: themeConfig.colors.primary,
+                                  backgroundColor: `${themeConfig.colors.primary}20`,
+                                  border: `1px solid ${themeConfig.colors.primary}50`,
+                                }}
                               >
-                                View Images
+                                📷 View Images
                               </button>
                             )}
                             <button
                               onClick={() => handleDeleteRequest(request)}
-                              className="text-red-600 hover:text-red-800 text-sm"
+                              className="text-sm px-3 py-1 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+                              style={{
+                                color: themeConfig.colors.error,
+                                backgroundColor: `${themeConfig.colors.error}20`,
+                                border: `1px solid ${themeConfig.colors.error}50`,
+                              }}
                             >
-                              Delete
+                              🗑️ Delete
                             </button>
                           </div>
                         </td>
