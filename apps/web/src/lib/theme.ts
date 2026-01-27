@@ -43,20 +43,20 @@ export const themes: Record<Theme, ThemeConfig> = {
     name: "light",
     displayName: "Ocean Light",
     colors: {
-      primary: "#0EA5E9", // Sky blue
-      secondary: "#06B6D4", // Cyan
-      accent: "#0891B2", // Darker cyan
-      background: "#F0F9FF", // Very light blue background
-      surface: "#FFFFFF", // Pure white surface
-      text: "#0C4A6E", // Deep blue text
-      textSecondary: "#475569", // Darker muted text - improved contrast
-      border: "#E0F2FE", // Light blue border
+      primary: "#0891B2", // Deep ocean cyan - more distinct from green
+      secondary: "#0E7490", // Darker ocean blue
+      accent: "#06B6D4", // Bright cyan accent
+      background: "#F0FDF4", // Very light aqua background - distinct from pure white
+      surface: "#ECFEFF", // Light cyan surface - noticeable ocean tint
+      text: "#134E4A", // Deep teal text - very distinct from green
+      textSecondary: "#0F766E", // Darker teal secondary text
+      border: "#5EEAD4", // Mint cyan border - distinctive ocean feel
       success: "#059669", // Emerald green
-      warning: "#D97706", // Orange
+      warning: "#EA580C", // Dark orange - better contrast
       error: "#DC2626", // Red
     },
     backgroundImage:
-      "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&h=400&fit=crop", // Temporary test image
+      "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&h=400&fit=crop", // Ocean scene
   },
   dark: {
     name: "dark",
@@ -186,7 +186,8 @@ export const applyTheme = (theme: Theme): void => {
         if (theme === "standard") {
           htmlElement.style.filter = "brightness(0.9) saturate(0.9)";
         } else if (theme === "light") {
-          htmlElement.style.filter = "brightness(0.9) hue-rotate(-5deg)";
+          htmlElement.style.filter =
+            "brightness(0.85) hue-rotate(180deg) saturate(1.1)"; // Ocean-enhanced filter
         } else if (theme === "dark") {
           htmlElement.style.filter = "brightness(0.85) contrast(0.9)";
         }
@@ -212,7 +213,8 @@ export const applyTheme = (theme: Theme): void => {
       if (theme === "standard") {
         htmlLayer.style.filter = "brightness(0.8) saturate(0.8)";
       } else if (theme === "light") {
-        htmlLayer.style.filter = "brightness(0.8) hue-rotate(-5deg)";
+        htmlLayer.style.filter =
+          "brightness(0.75) hue-rotate(180deg) saturate(1.2)"; // Enhanced ocean effect
       } else if (theme === "dark") {
         htmlLayer.style.filter = "brightness(0.7) contrast(0.8)";
       }
@@ -234,7 +236,8 @@ export const applyTheme = (theme: Theme): void => {
       if (theme === "standard") {
         htmlHeader.style.filter = "brightness(0.8) saturate(0.8)";
       } else if (theme === "light") {
-        htmlHeader.style.filter = "brightness(0.8) hue-rotate(-10deg)";
+        htmlHeader.style.filter =
+          "brightness(0.75) hue-rotate(180deg) saturate(1.15)"; // Ocean header effect
       } else if (theme === "dark") {
         htmlHeader.style.filter = "brightness(0.7) contrast(0.8)";
       }
