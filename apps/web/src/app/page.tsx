@@ -206,6 +206,8 @@ export default function Home() {
       {/* Main Content */}
       <main className="px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8 lg:pb-10 mobile-scroll">
         <div className="max-w-6xl mx-auto">
+          {/* Add spacing gap between header background and white layout */}
+          <div className="h-4 sm:h-6 md:h-8 lg:h-16 xl:h-20"></div>
           {/* Mobile-Optimized Stats Grid */}
           <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 mb-3 sm:mb-4 md:mb-6 lg:mb-8 mt-2 sm:mt-3 md:mt-4 lg:mt-6">
             <div
