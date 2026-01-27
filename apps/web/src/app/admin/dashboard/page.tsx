@@ -628,14 +628,14 @@ export default function AdminDashboard() {
                     {filteredRequests.map((request, index) => (
                       <tr
                         key={request.id}
-                        className="transition-all duration-200 hover:scale-[1.01]"
+                        className="transition-all duration-150"
                         style={{
                           borderColor: themeConfig.colors.border,
                           borderBottom: "1px solid",
                           backgroundColor:
                             index % 2 === 0
                               ? "transparent"
-                              : `${themeConfig.colors.background}50`,
+                              : `${themeConfig.colors.background}30`,
                         }}
                       >
                         <td className="px-6 py-4">
@@ -674,107 +674,176 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-6 py-4">
                           <span
-                            className="px-3 py-1 rounded-full text-xs font-medium border"
+                            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium transition-all duration-200"
                             style={{
                               backgroundColor:
                                 request.priority === "HIGH"
-                                  ? `${themeConfig.colors.error}20`
+                                  ? "rgba(239, 68, 68, 0.1)"
                                   : request.priority === "MEDIUM"
-                                    ? `${themeConfig.colors.warning}20`
-                                    : `${themeConfig.colors.textSecondary}20`,
+                                    ? "rgba(245, 158, 11, 0.1)"
+                                    : "rgba(107, 114, 128, 0.1)",
                               color:
                                 request.priority === "HIGH"
-                                  ? themeConfig.colors.error
+                                  ? "#DC2626"
                                   : request.priority === "MEDIUM"
-                                    ? themeConfig.colors.warning
-                                    : themeConfig.colors.textSecondary,
-                              borderColor:
-                                request.priority === "HIGH"
-                                  ? `${themeConfig.colors.error}50`
-                                  : request.priority === "MEDIUM"
-                                    ? `${themeConfig.colors.warning}50`
-                                    : `${themeConfig.colors.textSecondary}50`,
+                                    ? "#D97706"
+                                    : "#6B7280",
                             }}
                           >
-                            {request.priority === "HIGH"
-                              ? "🔴 "
-                              : request.priority === "MEDIUM"
-                                ? "🟡 "
-                                : "🟢 "}
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mr-1.5"
+                              style={{
+                                backgroundColor:
+                                  request.priority === "HIGH"
+                                    ? "#DC2626"
+                                    : request.priority === "MEDIUM"
+                                      ? "#D97706"
+                                      : "#6B7280",
+                              }}
+                            />
                             {request.priority}
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <select
-                            value={request.status}
-                            onChange={(e) =>
-                              handleStatusUpdate(request.id, e.target.value)
-                            }
-                            className="text-sm rounded-lg px-3 py-2 font-medium transition-all duration-200 hover:scale-105"
-                            style={{
-                              backgroundColor: themeConfig.colors.background,
-                              borderColor: themeConfig.colors.border,
-                              color: themeConfig.colors.text,
-                              border: "1px solid",
-                            }}
-                          >
-                            <option
-                              value="PENDING"
+                          <div className="relative">
+                            <select
+                              value={request.status}
+                              onChange={(e) =>
+                                handleStatusUpdate(request.id, e.target.value)
+                              }
+                              className="text-sm px-3 py-1.5 rounded-md appearance-none bg-transparent border transition-all duration-200 hover:border-opacity-60 focus:outline-none focus:ring-2 focus:ring-opacity-30 cursor-pointer"
                               style={{
-                                color: themeConfig.colors.warning,
-                                fontWeight: "bold",
-                                backgroundColor: themeConfig.colors.background,
+                                borderColor:
+                                  request.status === "COMPLETED"
+                                    ? themeConfig.colors.success
+                                    : request.status === "IN_PROGRESS"
+                                      ? themeConfig.colors.primary
+                                      : themeConfig.colors.warning,
+                                color:
+                                  request.status === "COMPLETED"
+                                    ? themeConfig.colors.success
+                                    : request.status === "IN_PROGRESS"
+                                      ? themeConfig.colors.primary
+                                      : themeConfig.colors.warning,
+                                borderWidth: "1px",
+                                backgroundColor: `${
+                                  request.status === "COMPLETED"
+                                    ? themeConfig.colors.success
+                                    : request.status === "IN_PROGRESS"
+                                      ? themeConfig.colors.primary
+                                      : themeConfig.colors.warning
+                                }10`,
                               }}
                             >
-                              ⬤ Pending
-                            </option>
-                            <option
-                              value="IN_PROGRESS"
+                              <option
+                                value="PENDING"
+                                style={{
+                                  color: themeConfig.colors.warning,
+                                  backgroundColor:
+                                    themeConfig.colors.background,
+                                }}
+                              >
+                                Pending
+                              </option>
+                              <option
+                                value="IN_PROGRESS"
+                                style={{
+                                  color: themeConfig.colors.primary,
+                                  backgroundColor:
+                                    themeConfig.colors.background,
+                                }}
+                              >
+                                In Progress
+                              </option>
+                              <option
+                                value="COMPLETED"
+                                style={{
+                                  color: themeConfig.colors.success,
+                                  backgroundColor:
+                                    themeConfig.colors.background,
+                                }}
+                              >
+                                Completed
+                              </option>
+                            </select>
+                            <div
+                              className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
                               style={{
-                                color: themeConfig.colors.primary,
-                                fontWeight: "bold",
-                                backgroundColor: themeConfig.colors.background,
+                                color:
+                                  request.status === "COMPLETED"
+                                    ? themeConfig.colors.success
+                                    : request.status === "IN_PROGRESS"
+                                      ? themeConfig.colors.primary
+                                      : themeConfig.colors.warning,
                               }}
                             >
-                              ⬤ In Progress
-                            </option>
-                            <option
-                              value="COMPLETED"
-                              style={{
-                                color: themeConfig.colors.success,
-                                fontWeight: "bold",
-                                backgroundColor: themeConfig.colors.background,
-                              }}
-                            >
-                              ⬤ Completed
-                            </option>
-                          </select>
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M19 9l-7 7-7-7"
+                                />
+                              </svg>
+                            </div>
+                          </div>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="flex space-x-2">
+                          <div className="flex items-center space-x-1">
                             {request.images && request.images.length > 0 && (
                               <button
                                 onClick={() => viewImages(request.images || [])}
-                                className="text-sm px-3 py-1 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+                                className="text-xs px-2.5 py-1.5 rounded-md font-medium transition-all duration-200 hover:scale-105 flex items-center space-x-1"
                                 style={{
                                   color: themeConfig.colors.primary,
-                                  backgroundColor: `${themeConfig.colors.primary}20`,
-                                  border: `1px solid ${themeConfig.colors.primary}50`,
+                                  backgroundColor: `${themeConfig.colors.primary}08`,
+                                  border: `1px solid ${themeConfig.colors.primary}20`,
                                 }}
                               >
-                                📷 View Images
+                                <svg
+                                  className="w-3.5 h-3.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                  />
+                                </svg>
+                                <span>Images</span>
                               </button>
                             )}
                             <button
                               onClick={() => handleDeleteRequest(request)}
-                              className="text-sm px-3 py-1 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+                              className="text-xs px-2.5 py-1.5 rounded-md font-medium transition-all duration-200 hover:scale-105 flex items-center space-x-1"
                               style={{
                                 color: themeConfig.colors.error,
-                                backgroundColor: `${themeConfig.colors.error}20`,
-                                border: `1px solid ${themeConfig.colors.error}50`,
+                                backgroundColor: `${themeConfig.colors.error}08`,
+                                border: `1px solid ${themeConfig.colors.error}20`,
                               }}
                             >
-                              🗑️ Delete
+                              <svg
+                                className="w-3.5 h-3.5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6"
+                                />
+                              </svg>
+                              <span>Delete</span>
                             </button>
                           </div>
                         </td>
