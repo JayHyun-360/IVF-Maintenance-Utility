@@ -41,6 +41,7 @@ interface FormData {
   dateTimeCompleted: string;
   acknowledgeBy: string;
   workEvaluation: "outstanding" | "very_satisfactory" | "satisfactory" | "poor";
+  workEvaluationEnabled: boolean;
 }
 
 export default function PhysicalPlantRequestPage() {
@@ -79,6 +80,7 @@ export default function PhysicalPlantRequestPage() {
     dateTimeCompleted: "",
     acknowledgeBy: "",
     workEvaluation: "satisfactory",
+    workEvaluationEnabled: true,
   });
 
   const handleRequestTypeChange = (type: keyof typeof formData.requestType) => {
@@ -128,6 +130,13 @@ export default function PhysicalPlantRequestPage() {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
+    }));
+  };
+
+  const handleToggleWorkEvaluation = () => {
+    setFormData((prev) => ({
+      ...prev,
+      workEvaluationEnabled: !prev.workEvaluationEnabled,
     }));
   };
 
@@ -699,67 +708,105 @@ export default function PhysicalPlantRequestPage() {
 
                   {/* Work Evaluation */}
                   <div className="mt-6">
-                    <h4
-                      className="font-semibold mb-2"
-                      style={{ color: "#1B4332" }}
-                    >
-                      Work Evaluation:
-                    </h4>
-                    <div className="grid grid-cols-2 gap-4">
-                      {[
-                        {
-                          value: "outstanding",
-                          label: "Outstanding",
-                          desc: "All work completed exceeds expectations",
-                        },
-                        {
-                          value: "very_satisfactory",
-                          label: "Very Satisfactory",
-                          desc: "All work completed meets expectations",
-                        },
-                        {
-                          value: "satisfactory",
-                          label: "Satisfactory",
-                          desc: "Work completed with minor issues",
-                        },
-                        {
-                          value: "poor",
-                          label: "Poor",
-                          desc: "Work completed with major issues",
-                        },
-                      ].map(({ value, label, desc }) => (
-                        <label
-                          key={value}
-                          className="flex items-start space-x-2"
+                    <div className="flex items-center justify-between mb-4">
+                      <h4
+                        className="font-semibold mb-0"
+                        style={{ color: "#1B4332" }}
+                      >
+                        Work Evaluation:
+                      </h4>
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={formData.workEvaluationEnabled}
+                          onChange={handleToggleWorkEvaluation}
+                          className="w-4 h-4"
+                          style={{ accentColor: "#1B4332" }}
+                        />
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: "#1B4332" }}
                         >
-                          <input
-                            type="radio"
-                            name="workEvaluation"
-                            value={value}
-                            checked={formData.workEvaluation === value}
-                            onChange={(e) =>
-                              handleInputChange(
-                                "workEvaluation",
-                                e.target.value,
-                              )
-                            }
-                            className="w-4 h-4 mt-1"
-                            style={{ accentColor: "#1B4332" }}
-                          />
-                          <div>
-                            <span
-                              className="font-medium"
-                              style={{ color: "#1B4332" }}
-                            >
-                              {label}
-                            </span>
-                            <p className="text-sm" style={{ color: "#374151" }}>
-                              {desc}
-                            </p>
-                          </div>
-                        </label>
-                      ))}
+                          Enable Evaluation
+                        </span>
+                      </label>
                     </div>
+
+                    {formData.workEvaluationEnabled && (
+                      <div className="grid grid-cols-2 gap-4">
+                        {[
+                          {
+                            value: "outstanding",
+                            label: "Outstanding",
+                            desc: "All work completed exceeds expectations",
+                          },
+                          {
+                            value: "very_satisfactory",
+                            label: "Very Satisfactory",
+                            desc: "All work completed meets expectations",
+                          },
+                          {
+                            value: "satisfactory",
+                            label: "Satisfactory",
+                            desc: "Work completed with minor issues",
+                          },
+                          {
+                            value: "poor",
+                            label: "Poor",
+                            desc: "Work completed with major issues",
+                          },
+                        ].map(({ value, label, desc }) => (
+                          <label
+                            key={value}
+                            className="flex items-start space-x-2"
+                          >
+                            <input
+                              type="radio"
+                              name="workEvaluation"
+                              value={value}
+                              checked={formData.workEvaluation === value}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  "workEvaluation",
+                                  e.target.value,
+                                )
+                              }
+                              className="w-4 h-4 mt-1"
+                              style={{ accentColor: "#1B4332" }}
+                            />
+                            <div>
+                              <span
+                                className="font-medium"
+                                style={{ color: "#1B4332" }}
+                              >
+                                {label}
+                              </span>
+                              <p
+                                className="text-sm"
+                                style={{ color: "#374151" }}
+                              >
+                                {desc}
+                              </p>
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    )}
+
+                    {!formData.workEvaluationEnabled && (
+                      <div
+                        className="p-4 rounded-lg text-center"
+                        style={{
+                          backgroundColor: "#F3F4F6",
+                          border: "1px solid #E5E7EB",
+                        }}
+                      >
+                        <p className="text-sm" style={{ color: "#6B7280" }}>
+                          Work evaluation is currently disabled. Toggle the
+                          switch above to enable evaluation options.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
