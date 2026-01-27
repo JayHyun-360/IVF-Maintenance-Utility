@@ -68,7 +68,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       background: "#0F172A", // Slate background
       surface: "#1E293B", // Dark slate surface
       text: "#F1F5F9", // Light slate text
-      textSecondary: "E2E8F0", // Much lighter muted text for better contrast on dark surfaces
+      textSecondary: "#E2E8F0", // Much lighter muted text for better contrast on dark surfaces
       border: "#475569", // Lighter border for better visibility on dark backgrounds
       success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber

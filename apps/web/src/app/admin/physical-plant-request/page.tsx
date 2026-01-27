@@ -215,20 +215,23 @@ export default function PhysicalPlantRequestPage() {
               {/* Form Container */}
               <div
                 ref={printRef}
-                className="rounded-xl shadow-lg p-8 bg-white"
-                style={{ border: "2px solid #1B4332" }}
+                className="rounded-xl shadow-lg p-8"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  border: `2px solid ${themeConfig.colors.primary}`,
+                }}
               >
                 {/* Header */}
                 <div className="text-center mb-8">
                   <h1
                     className="text-2xl font-bold mb-2"
-                    style={{ color: "#1B4332" }}
+                    style={{ color: themeConfig.colors.primary }}
                   >
                     PHYSICAL PLANT / FACILITIES REQUEST
                   </h1>
                   <p
                     className="text-lg font-semibold"
-                    style={{ color: "#1B4332" }}
+                    style={{ color: themeConfig.colors.primary }}
                   >
                     DE LA SALLE JOHN BOSCO COLLEGE
                   </p>
@@ -238,7 +241,7 @@ export default function PhysicalPlantRequestPage() {
                 <div className="mb-8">
                   <h3
                     className="font-bold mb-4 text-lg"
-                    style={{ color: "#1B4332" }}
+                    style={{ color: themeConfig.colors.primary }}
                   >
                     Nature of Request:
                   </h3>
@@ -263,7 +266,7 @@ export default function PhysicalPlantRequestPage() {
                             )
                           }
                           className="w-4 h-4"
-                          style={{ accentColor: "#1B4332" }}
+                          style={{ accentColor: themeConfig.colors.primary }}
                         />
                         <span
                           className="font-medium"
@@ -279,7 +282,7 @@ export default function PhysicalPlantRequestPage() {
                   <div className="mb-4">
                     <h4
                       className="font-semibold mb-2"
-                      style={{ color: "#1B4332" }}
+                      style={{ color: themeConfig.colors.primary }}
                     >
                       Urgency:
                     </h4>
@@ -305,9 +308,11 @@ export default function PhysicalPlantRequestPage() {
                               handleInputChange("urgency", e.target.value)
                             }
                             className="w-4 h-4"
-                            style={{ accentColor: "#1B4332" }}
+                            style={{ accentColor: themeConfig.colors.primary }}
                           />
-                          <span style={{ color: "#1B4332" }}>{label}</span>
+                          <span style={{ color: themeConfig.colors.text }}>
+                            {label}
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -364,7 +369,7 @@ export default function PhysicalPlantRequestPage() {
                 <div className="mb-8">
                   <h3
                     className="font-bold mb-4 text-lg"
-                    style={{ color: "#1B4332" }}
+                    style={{ color: themeConfig.colors.primary }}
                   >
                     Details of Request:
                   </h3>
@@ -496,7 +501,7 @@ export default function PhysicalPlantRequestPage() {
                     onClick={addRequestRow}
                     className="mt-4 px-4 py-2 rounded transition-all duration-300 hover:scale-105"
                     style={{
-                      backgroundColor: "#1B4332",
+                      backgroundColor: themeConfig.colors.primary,
                       color: "white",
                     }}
                   >
@@ -508,7 +513,7 @@ export default function PhysicalPlantRequestPage() {
                 <div className="mb-8">
                   <h3
                     className="font-bold mb-4 text-lg"
-                    style={{ color: "#1B4332" }}
+                    style={{ color: themeConfig.colors.primary }}
                   >
                     Requestor Information:
                   </h3>
@@ -583,7 +588,7 @@ export default function PhysicalPlantRequestPage() {
                 <div className="mb-8">
                   <h3
                     className="font-bold mb-4 text-lg"
-                    style={{ color: "#1B4332" }}
+                    style={{ color: themeConfig.colors.primary }}
                   >
                     Approval and Work Evaluation:
                   </h3>
@@ -773,7 +778,7 @@ export default function PhysicalPlantRequestPage() {
                           checked={formData.workEvaluationEnabled}
                           onChange={handleToggleWorkEvaluation}
                           className="w-4 h-4"
-                          style={{ accentColor: "#1B4332" }}
+                          style={{ accentColor: themeConfig.colors.primary }}
                         />
                         <span
                           className="text-sm font-medium"
@@ -824,7 +829,9 @@ export default function PhysicalPlantRequestPage() {
                                 )
                               }
                               className="w-4 h-4 mt-1"
-                              style={{ accentColor: "#1B4332" }}
+                              style={{
+                                accentColor: themeConfig.colors.primary,
+                              }}
                             />
                             <div>
                               <span
@@ -835,7 +842,9 @@ export default function PhysicalPlantRequestPage() {
                               </span>
                               <p
                                 className="text-sm"
-                                style={{ color: "#374151" }}
+                                style={{
+                                  color: themeConfig.colors.textSecondary,
+                                }}
                               >
                                 {desc}
                               </p>
@@ -849,11 +858,14 @@ export default function PhysicalPlantRequestPage() {
                       <div
                         className="p-4 rounded-lg text-center"
                         style={{
-                          backgroundColor: "#F3F4F6",
-                          border: "1px solid #E5E7EB",
+                          backgroundColor: themeConfig.colors.background,
+                          border: `1px solid ${themeConfig.colors.border}`,
                         }}
                       >
-                        <p className="text-sm" style={{ color: "#6B7280" }}>
+                        <p
+                          className="text-sm"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
                           Work evaluation is currently disabled. Toggle the
                           switch above to enable evaluation options.
                         </p>
@@ -870,7 +882,7 @@ export default function PhysicalPlantRequestPage() {
                   onClick={handlePrint}
                   className="flex-1 px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105"
                   style={{
-                    backgroundColor: "#1B4332",
+                    backgroundColor: themeConfig.colors.primary,
                     color: "white",
                   }}
                 >
@@ -970,12 +982,18 @@ export default function PhysicalPlantRequestPage() {
 
               <div
                 className="mt-6 p-4 rounded-xl"
-                style={{ backgroundColor: "#1B433210" }}
+                style={{ backgroundColor: `${themeConfig.colors.primary}10` }}
               >
-                <h4 className="font-medium mb-2" style={{ color: "#1B4332" }}>
+                <h4
+                  className="font-medium mb-2"
+                  style={{ color: themeConfig.colors.primary }}
+                >
                   💡 Tip
                 </h4>
-                <p className="text-sm" style={{ color: "#4B5563" }}>
+                <p
+                  className="text-sm"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
                   You can add multiple request rows by clicking the &quot;+ Add
                   Row&quot; button in the Details section.
                 </p>
