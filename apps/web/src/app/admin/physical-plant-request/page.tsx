@@ -279,14 +279,24 @@ export default function PhysicalPlantRequestPage() {
                           className="w-4 h-4"
                           style={{ accentColor: "#1B4332" }}
                         />
-                        <span className="font-medium">{label}</span>
+                        <span
+                          className="font-medium"
+                          style={{ color: "#1B4332" }}
+                        >
+                          {label}
+                        </span>
                       </label>
                     ))}
                   </div>
 
                   {/* Urgency Level */}
                   <div className="mb-4">
-                    <h4 className="font-semibold mb-2">Urgency:</h4>
+                    <h4
+                      className="font-semibold mb-2"
+                      style={{ color: "#1B4332" }}
+                    >
+                      Urgency:
+                    </h4>
                     <div className="space-y-2">
                       {[
                         {
@@ -311,7 +321,7 @@ export default function PhysicalPlantRequestPage() {
                             className="w-4 h-4"
                             style={{ accentColor: "#1B4332" }}
                           />
-                          <span>{label}</span>
+                          <span style={{ color: "#1B4332" }}>{label}</span>
                         </label>
                       ))}
                     </div>
@@ -320,7 +330,12 @@ export default function PhysicalPlantRequestPage() {
                   {/* Date and Time */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block font-semibold mb-1">Date:</label>
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
+                        Date:
+                      </label>
                       <input
                         type="date"
                         value={formData.date}
@@ -332,7 +347,12 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">Time:</label>
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
+                        Time:
+                      </label>
                       <input
                         type="time"
                         value={formData.time}
@@ -477,7 +497,10 @@ export default function PhysicalPlantRequestPage() {
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Requested by: (Requesting Department)
                       </label>
                       <input
@@ -491,7 +514,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Name of Employee
                       </label>
                       <input
@@ -505,7 +531,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Department Head
                       </label>
                       <input
@@ -531,7 +560,10 @@ export default function PhysicalPlantRequestPage() {
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Approved by: Administrative Affairs & Services Division
                       </label>
                       <input
@@ -545,7 +577,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         VP - AASD
                       </label>
                       <input
@@ -559,7 +594,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Received by:
                       </label>
                       <input
@@ -573,7 +611,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         GMS Head
                       </label>
                       <input
@@ -587,7 +628,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Date/Time Received
                       </label>
                       <input
@@ -601,7 +645,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Performed by:
                       </label>
                       <input
@@ -615,7 +662,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Date/Time Completed
                       </label>
                       <input
@@ -629,7 +679,10 @@ export default function PhysicalPlantRequestPage() {
                       />
                     </div>
                     <div>
-                      <label className="block font-semibold mb-1">
+                      <label
+                        className="block font-semibold mb-1"
+                        style={{ color: "#1B4332" }}
+                      >
                         Acknowledge by:
                       </label>
                       <input
@@ -646,7 +699,12 @@ export default function PhysicalPlantRequestPage() {
 
                   {/* Work Evaluation */}
                   <div className="mt-6">
-                    <h4 className="font-semibold mb-2">Work Evaluation:</h4>
+                    <h4
+                      className="font-semibold mb-2"
+                      style={{ color: "#1B4332" }}
+                    >
+                      Work Evaluation:
+                    </h4>
                     <div className="grid grid-cols-2 gap-4">
                       {[
                         {
@@ -689,8 +747,15 @@ export default function PhysicalPlantRequestPage() {
                             style={{ accentColor: "#1B4332" }}
                           />
                           <div>
-                            <span className="font-medium">{label}</span>
-                            <p className="text-sm text-gray-600">{desc}</p>
+                            <span
+                              className="font-medium"
+                              style={{ color: "#1B4332" }}
+                            >
+                              {label}
+                            </span>
+                            <p className="text-sm" style={{ color: "#374151" }}>
+                              {desc}
+                            </p>
                           </div>
                         </label>
                       ))}
@@ -752,10 +817,7 @@ export default function PhysicalPlantRequestPage() {
                   >
                     1. Nature of Request
                   </h4>
-                  <p
-                    className="text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
+                  <p className="text-sm" style={{ color: "#4B5563" }}>
                     Select the type of service needed and urgency level.
                   </p>
                 </div>
@@ -766,10 +828,7 @@ export default function PhysicalPlantRequestPage() {
                   >
                     2. Details of Request
                   </h4>
-                  <p
-                    className="text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
+                  <p className="text-sm" style={{ color: "#4B5563" }}>
                     Provide specific location, problem description, and required
                     actions.
                   </p>
@@ -781,10 +840,7 @@ export default function PhysicalPlantRequestPage() {
                   >
                     3. Requestor Information
                   </h4>
-                  <p
-                    className="text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
+                  <p className="text-sm" style={{ color: "#4B5563" }}>
                     Fill in your details and department information.
                   </p>
                 </div>
@@ -795,10 +851,7 @@ export default function PhysicalPlantRequestPage() {
                   >
                     4. Print Option
                   </h4>
-                  <p
-                    className="text-sm"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
+                  <p className="text-sm" style={{ color: "#4B5563" }}>
                     Use the Print Form button to generate a printable version.
                   </p>
                 </div>
@@ -811,10 +864,7 @@ export default function PhysicalPlantRequestPage() {
                 <h4 className="font-medium mb-2" style={{ color: "#1B4332" }}>
                   💡 Tip
                 </h4>
-                <p
-                  className="text-sm"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
+                <p className="text-sm" style={{ color: "#4B5563" }}>
                   You can add multiple request rows by clicking the "+ Add Row"
                   button in the Details section.
                 </p>
