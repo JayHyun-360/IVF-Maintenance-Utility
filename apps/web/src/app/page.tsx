@@ -87,8 +87,8 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
-                min-height: 85vh !important;
-                height: 85vh !important;
+                min-height: 50vh !important;
+                height: 50vh !important;
               }
             }
             @media (min-width: 1280px) {
@@ -96,8 +96,8 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
-                min-height: 80vh !important;
-                height: 80vh !important;
+                min-height: 45vh !important;
+                height: 45vh !important;
               }
             }
             @media (min-width: 1536px) {
@@ -105,8 +105,8 @@ export default function Home() {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
-                min-height: 75vh !important;
-                height: 75vh !important;
+                min-height: 40vh !important;
+                height: 40vh !important;
               }
             }
           `}</style>

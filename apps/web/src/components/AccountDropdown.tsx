@@ -176,7 +176,7 @@ export default function AccountDropdown() {
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
-            zIndex: Z_INDEX.MAX + 1, // Ensure dropdown content is above everything
+            zIndex: 9999, // Ensure dropdown content is above everything
           }}
         >
           <div className="p-2">
