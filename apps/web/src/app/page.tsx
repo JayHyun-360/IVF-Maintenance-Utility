@@ -59,11 +59,25 @@ export default function Home() {
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
           backgroundAttachment: themeConfig.backgroundImage ? "scroll" : "auto",
           transition:
-            "background-image 1.2s ease-in-out, background 1.2s ease-in-out, background-color 1.2s ease-in-out",
+            "background-image 1.2s ease-in-out, background 1.2s ease-in-out, background-color 1.2s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
           minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
           height: themeConfig.backgroundImage ? "50vh" : "auto",
         }}
       >
+        {/* Background Image Layer for Sliding Effect */}
+        {themeConfig.backgroundImage && (
+          <div
+            className="absolute inset-0 opacity-0 theme-transitioning:bg-opacity-100"
+            style={{
+              backgroundImage: `url("${themeConfig.backgroundImage}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center center",
+              backgroundRepeat: "no-repeat",
+              transition:
+                "opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
+          />
+        )}
         {/* Desktop-specific background adjustments */}
         {themeConfig.backgroundImage && (
           <style jsx>{`

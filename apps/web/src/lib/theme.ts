@@ -169,23 +169,56 @@ export const applyTheme = (theme: Theme): void => {
       htmlElement.style.backgroundImage &&
       htmlElement.style.backgroundImage !== "none"
     ) {
-      // Add overlay effect for background images
+      // Add sliding effect for background images
       setTimeout(() => {
         const currentBg = htmlElement.style.backgroundImage;
         const currentGradient = htmlElement.style.background || "";
 
-        // Create a temporary overlay effect
-        htmlElement.style.background =
-          currentGradient + ", rgba(255, 255, 255, 0.1)";
-        htmlElement.style.backgroundSize = "cover, cover";
-        htmlElement.style.backgroundBlendMode = "overlay";
+        // Create sliding animation
+        htmlElement.style.transform = "translateX(-100%)";
+        htmlElement.style.opacity = "0";
 
         setTimeout(() => {
-          htmlElement.style.background = currentGradient;
-          htmlElement.style.backgroundBlendMode = "normal";
-        }, 400);
+          htmlElement.style.transform = "translateX(0%)";
+          htmlElement.style.opacity = "1";
+        }, 200);
+
+        setTimeout(() => {
+          htmlElement.style.transform = "";
+          htmlElement.style.opacity = "";
+        }, 800);
       }, index * 50);
     }
+  });
+
+  // Apply sliding effect to background image layers
+  const backgroundLayers = document.querySelectorAll(
+    '.absolute.inset-0[style*="backgroundImage"]',
+  );
+  backgroundLayers.forEach((layer, index) => {
+    const htmlLayer = layer as HTMLElement;
+
+    setTimeout(() => {
+      if (theme === "standard") {
+        htmlLayer.style.transform = "translateX(-100%)";
+      } else if (theme === "light") {
+        htmlLayer.style.transform = "translateX(100%)";
+      } else if (theme === "dark") {
+        htmlLayer.style.transform = "translateY(-100%)";
+      }
+
+      htmlLayer.style.opacity = "0";
+
+      setTimeout(() => {
+        htmlLayer.style.transform = "translateX(0%) translateY(0%)";
+        htmlLayer.style.opacity = "1";
+      }, 100);
+
+      setTimeout(() => {
+        htmlLayer.style.transform = "";
+        htmlLayer.style.opacity = "";
+      }, 800);
+    }, index * 100);
   });
 
   // Apply theme-specific background image effects
@@ -193,23 +226,30 @@ export const applyTheme = (theme: Theme): void => {
   headerElements.forEach((header) => {
     const htmlHeader = header as HTMLElement;
 
-    // Add theme-specific filter effects to header background
+    // Add sliding animation for header background
     setTimeout(() => {
       if (theme === "standard") {
-        htmlHeader.style.filter = "brightness(1.05) saturate(1.1)";
-        htmlHeader.style.transform = "scale(1.01)";
+        htmlHeader.style.transform = "translateX(-100%)";
+        htmlHeader.style.opacity = "0";
       } else if (theme === "light") {
-        htmlHeader.style.filter = "brightness(1.08) hue-rotate(5deg)";
-        htmlHeader.style.transform = "scale(1.01)";
+        htmlHeader.style.transform = "translateX(100%)";
+        htmlHeader.style.opacity = "0";
       } else if (theme === "dark") {
-        htmlHeader.style.filter = "brightness(1.1) contrast(1.05)";
-        htmlHeader.style.transform = "scale(1.01)";
+        htmlHeader.style.transform = "translateY(-100%)";
+        htmlHeader.style.opacity = "0";
       }
 
+      // Slide in animation
       setTimeout(() => {
-        htmlHeader.style.filter = "";
+        htmlHeader.style.transform = "translateX(0%) translateY(0%)";
+        htmlHeader.style.opacity = "1";
+      }, 100);
+
+      // Reset to final position
+      setTimeout(() => {
         htmlHeader.style.transform = "";
-      }, 400);
+        htmlHeader.style.opacity = "";
+      }, 800);
     }, 200);
   });
 
