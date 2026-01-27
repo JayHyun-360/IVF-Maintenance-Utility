@@ -37,7 +37,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       error: "#EF4444", // Red
     },
     backgroundImage:
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=400&fit=crop", // Temporary test image
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop", // Mountain landscape with better aspect ratio
   },
   light: {
     name: "light",
@@ -56,7 +56,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       error: "#DC2626", // Red
     },
     backgroundImage:
-      "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&h=400&fit=crop", // Ocean scene
+      "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&h=1080&fit=crop", // Ocean scene with better aspect ratio
   },
   dark: {
     name: "dark",
@@ -75,7 +75,7 @@ export const themes: Record<Theme, ThemeConfig> = {
       error: "#EF4444", // Red
     },
     backgroundImage:
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=400&fit=crop", // Midnight scene
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=1080&fit=crop", // Midnight scene with better aspect ratio
   },
 };
 

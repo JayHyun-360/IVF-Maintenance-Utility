@@ -55,23 +55,21 @@ export default function Home() {
         transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
       }}
     >
-      {/* Header with Gradient Background - Mobile Optimized */}
+      {/* Header with Background Image - Mobile Optimized */}
       <header
         className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32 text-center relative overflow-hidden"
         style={{
           background: themeConfig.backgroundImage
-            ? themeConfig.name === "light"
-              ? `linear-gradient(rgba(14, 165, 233, 0.4), rgba(6, 182, 212, 0.4)), url("${themeConfig.backgroundImage}")`
-              : themeConfig.name === "standard"
-                ? `linear-gradient(rgba(16, 185, 129, 0.4), rgba(5, 150, 105, 0.4)), url("${themeConfig.backgroundImage}")`
-                : `linear-gradient(rgba(59, 130, 246, 0.4), rgba(29, 78, 216, 0.4)), url("${themeConfig.backgroundImage}")`
+            ? `url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
           backgroundPosition: themeConfig.backgroundImage
-            ? "bottom center"
+            ? "center center"
             : "auto",
           backgroundRepeat: themeConfig.backgroundImage ? "no-repeat" : "auto",
-          backgroundAttachment: "scroll",
+          backgroundAttachment: themeConfig.backgroundImage
+            ? "fixed"
+            : "scroll",
           backgroundClip: "padding-box",
           transition:
             "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
@@ -81,14 +79,30 @@ export default function Home() {
           zIndex: Z_INDEX.STICKY,
         }}
       >
+        {/* Subtle overlay for text readability */}
+        {themeConfig.backgroundImage && (
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                themeConfig.name === "light"
+                  ? "rgba(0, 0, 0, 0.2)"
+                  : themeConfig.name === "standard"
+                    ? "rgba(0, 0, 0, 0.15)"
+                    : "rgba(0, 0, 0, 0.3)",
+              zIndex: 1,
+            }}
+          />
+        )}
         {/* Desktop-specific background adjustments */}
         {themeConfig.backgroundImage && (
           <style jsx>{`
             @media (min-width: 1024px) {
               header {
                 background-size: cover !important;
-                background-position: bottom center !important;
+                background-position: center center !important;
                 background-repeat: no-repeat !important;
+                background-attachment: fixed !important;
                 min-height: 100vh !important;
                 max-height: 100vh !important;
                 height: 100vh !important;
@@ -99,8 +113,9 @@ export default function Home() {
             @media (min-width: 1280px) {
               header {
                 background-size: cover !important;
-                background-position: bottom center !important;
+                background-position: center center !important;
                 background-repeat: no-repeat !important;
+                background-attachment: fixed !important;
                 min-height: 100vh !important;
                 max-height: 100vh !important;
                 height: 100vh !important;
@@ -111,8 +126,9 @@ export default function Home() {
             @media (min-width: 1536px) {
               header {
                 background-size: cover !important;
-                background-position: bottom center !important;
+                background-position: center center !important;
                 background-repeat: no-repeat !important;
+                background-attachment: fixed !important;
                 min-height: 100vh !important;
                 max-height: 100vh !important;
                 height: 100vh !important;
@@ -140,7 +156,7 @@ export default function Home() {
 
         <div
           className="max-w-4xl mx-auto relative px-2 sm:px-4 md:px-6"
-          style={{ zIndex: Z_INDEX.STICKY }}
+          style={{ zIndex: Z_INDEX.MAX }}
         >
           <div className="absolute top-2 sm:top-3 md:top-4 lg:top-6 left-1 sm:left-2 md:left-3">
             <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
