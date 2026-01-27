@@ -107,184 +107,154 @@ export const applyTheme = (theme: Theme): void => {
   // Add transitioning class for smooth animations
   body.classList.add("theme-transitioning");
 
-  // Create subtle overlay instead of full fade-out
-  const overlay = document.createElement("div");
-  overlay.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0);
-    z-index: 9999;
-    pointer-events: none;
-    transition: background 0.3s ease-in-out;
-  `;
-  document.body.appendChild(overlay);
+  // Apply CSS custom properties immediately with smooth transitions
+  root.style.setProperty("--color-primary", themeConfig.colors.primary);
+  root.style.setProperty("--color-secondary", themeConfig.colors.secondary);
+  root.style.setProperty("--color-accent", themeConfig.colors.accent);
+  root.style.setProperty("--color-background", themeConfig.colors.background);
+  root.style.setProperty("--color-surface", themeConfig.colors.surface);
+  root.style.setProperty("--color-text", themeConfig.colors.text);
+  root.style.setProperty(
+    "--color-text-secondary",
+    themeConfig.colors.textSecondary,
+  );
+  root.style.setProperty("--color-border", themeConfig.colors.border);
+  root.style.setProperty("--color-success", themeConfig.colors.success);
+  root.style.setProperty("--color-warning", themeConfig.colors.warning);
+  root.style.setProperty("--color-error", themeConfig.colors.error);
 
-  // Fade in subtle overlay
-  setTimeout(() => {
-    overlay.style.background = "rgba(0, 0, 0, 0.1)";
-  }, 10);
+  // Apply theme class to body
+  body.className = `theme-${theme} theme-transitioning`;
 
-  // Apply theme changes during subtle overlay
-  setTimeout(() => {
-    // Apply CSS custom properties immediately
-    root.style.setProperty("--color-primary", themeConfig.colors.primary);
-    root.style.setProperty("--color-secondary", themeConfig.colors.secondary);
-    root.style.setProperty("--color-accent", themeConfig.colors.accent);
-    root.style.setProperty("--color-background", themeConfig.colors.background);
-    root.style.setProperty("--color-surface", themeConfig.colors.surface);
-    root.style.setProperty("--color-text", themeConfig.colors.text);
-    root.style.setProperty(
-      "--color-text-secondary",
-      themeConfig.colors.textSecondary,
-    );
-    root.style.setProperty("--color-border", themeConfig.colors.border);
-    root.style.setProperty("--color-success", themeConfig.colors.success);
-    root.style.setProperty("--color-warning", themeConfig.colors.warning);
-    root.style.setProperty("--color-error", themeConfig.colors.error);
+  // Apply theme to dashboard elements with smooth transitions
+  const dashboardElements = document.querySelectorAll(".dashboard-theme");
+  dashboardElements.forEach((element) => {
+    const htmlElement = element as HTMLElement;
+    htmlElement.style.transition =
+      "background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), color 1.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlElement.style.backgroundColor = themeConfig.colors.background;
+    htmlElement.style.color = themeConfig.colors.text;
+    htmlElement.style.borderColor = themeConfig.colors.border;
+  });
 
-    // Apply theme class to body
-    body.className = `theme-${theme} theme-transitioning`;
+  // Apply theme to cards with smooth transitions
+  const cardElements = document.querySelectorAll(".theme-card");
+  cardElements.forEach((element) => {
+    const htmlElement = element as HTMLElement;
+    htmlElement.style.transition =
+      "background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), color 1.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
+    htmlElement.style.backgroundColor = themeConfig.colors.surface;
+    htmlElement.style.color = themeConfig.colors.text;
+    htmlElement.style.borderColor = themeConfig.colors.border;
+  });
 
-    // Apply theme to dashboard elements by updating their styles
-    const dashboardElements = document.querySelectorAll(".dashboard-theme");
-    dashboardElements.forEach((element) => {
-      const htmlElement = element as HTMLElement;
-      htmlElement.style.transition =
-        "background-color 0.6s ease-in-out, color 0.6s ease-in-out, border-color 0.6s ease-in-out";
-      htmlElement.style.backgroundColor = themeConfig.colors.background;
-      htmlElement.style.color = themeConfig.colors.text;
-      htmlElement.style.borderColor = themeConfig.colors.border;
-    });
-
-    // Apply theme to cards
-    const cardElements = document.querySelectorAll(".theme-card");
-    cardElements.forEach((element) => {
-      const htmlElement = element as HTMLElement;
-      htmlElement.style.transition =
-        "background-color 0.6s ease-in-out, color 0.6s ease-in-out, border-color 0.6s ease-in-out";
-      htmlElement.style.backgroundColor = themeConfig.colors.surface;
-      htmlElement.style.color = themeConfig.colors.text;
-      htmlElement.style.borderColor = themeConfig.colors.border;
-    });
-
-    // Apply subtle dynamic effects to images during theme transition
-    const images = document.querySelectorAll("img");
-    images.forEach((img, index) => {
-      const htmlImg = img as HTMLImageElement;
-      htmlImg.style.transition = "opacity 0.4s ease-in-out";
-
-      setTimeout(() => {
-        htmlImg.style.opacity = "0.8";
-        setTimeout(() => {
-          htmlImg.style.opacity = "1";
-        }, 200);
-      }, index * 30);
-
-      // Clean up transitions after animation
-      setTimeout(() => {
-        htmlImg.style.transition = "";
-      }, 800);
-    });
-
-    // Apply subtle dynamic effects to background images
-    const elementsWithBackgroundImages = document.querySelectorAll(
-      '[style*="background-image"]',
-    );
-    elementsWithBackgroundImages.forEach((element, index) => {
-      const htmlElement = element as HTMLElement;
-      if (
-        htmlElement.style.backgroundImage &&
-        htmlElement.style.backgroundImage !== "none"
-      ) {
-        htmlElement.style.transition = "filter 0.8s ease-in-out";
-
-        setTimeout(() => {
-          if (theme === "standard") {
-            htmlElement.style.filter = "brightness(0.98)";
-          } else if (theme === "light") {
-            htmlElement.style.filter = "brightness(0.98) saturate(1.02)";
-          } else if (theme === "dark") {
-            htmlElement.style.filter = "brightness(0.96)";
-          }
-
-          setTimeout(() => {
-            htmlElement.style.filter = "";
-          }, 800);
-        }, index * 40);
-      }
-    });
-
-    // Apply theme-specific background image effects
-    const headerElements = document.querySelectorAll("header");
-    headerElements.forEach((header) => {
-      const htmlHeader = header as HTMLElement;
-      htmlHeader.style.transition = "filter 0.6s ease-in-out";
+  // Apply subtle smooth effects to background images
+  const elementsWithBackgroundImages = document.querySelectorAll(
+    '[style*="background-image"]',
+  );
+  elementsWithBackgroundImages.forEach((element, index) => {
+    const htmlElement = element as HTMLElement;
+    if (
+      htmlElement.style.backgroundImage &&
+      htmlElement.style.backgroundImage !== "none"
+    ) {
+      htmlElement.style.transition = "filter 1.5s cubic-bezier(0.4, 0, 0.2, 1)";
 
       setTimeout(() => {
         if (theme === "standard") {
-          htmlHeader.style.filter = "brightness(0.99)";
+          htmlElement.style.filter = "brightness(0.98)";
         } else if (theme === "light") {
-          htmlHeader.style.filter = "brightness(0.99) saturate(1.01)";
+          htmlElement.style.filter = "brightness(0.98) saturate(1.02)";
         } else if (theme === "dark") {
-          htmlHeader.style.filter = "brightness(0.97)";
+          htmlElement.style.filter = "brightness(0.96)";
         }
 
         setTimeout(() => {
-          htmlHeader.style.filter = "";
-        }, 600);
-      }, 100);
-    });
+          htmlElement.style.filter = "";
+        }, 1500);
+      }, index * 100);
+    }
+  });
 
-    // Apply subtle dynamic effects to SVG icons
-    const svgs = document.querySelectorAll("svg");
-    svgs.forEach((svg, index) => {
-      const htmlSvg = svg as SVGElement;
-      htmlSvg.style.transition = "opacity 0.3s ease-in-out";
+  // Apply smooth header transitions
+  const headerElements = document.querySelectorAll("header");
+  headerElements.forEach((header) => {
+    const htmlHeader = header as HTMLElement;
+    htmlHeader.style.transition = "filter 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
 
-      setTimeout(() => {
-        htmlSvg.style.opacity = "0.9";
-        setTimeout(() => {
-          htmlSvg.style.opacity = "1";
-        }, 150);
-      }, index * 20);
-
-      // Clean up transitions after animation
-      setTimeout(() => {
-        htmlSvg.style.transition = "";
-      }, 600);
-    });
-
-    // Apply theme to all interactive elements
-    const interactiveElements = document.querySelectorAll(
-      "button, input, select, textarea, a",
-    );
-    interactiveElements.forEach((element) => {
-      const htmlElement = element as HTMLElement;
-      if (!htmlElement.style.backgroundColor) {
-        htmlElement.style.backgroundColor = "transparent";
-      }
-      if (!htmlElement.style.color) {
-        htmlElement.style.color = "inherit";
-      }
-    });
-
-    // Fade out overlay
     setTimeout(() => {
-      overlay.style.background = "rgba(0, 0, 0, 0)";
+      if (theme === "standard") {
+        htmlHeader.style.filter = "brightness(0.99)";
+      } else if (theme === "light") {
+        htmlHeader.style.filter = "brightness(0.99) saturate(1.01)";
+      } else if (theme === "dark") {
+        htmlHeader.style.filter = "brightness(0.97)";
+      }
+
+      setTimeout(() => {
+        htmlHeader.style.filter = "";
+      }, 1200);
     }, 200);
+  });
 
-    // Remove overlay and transitioning class
+  // Apply smooth transitions to images
+  const images = document.querySelectorAll("img");
+  images.forEach((img, index) => {
+    const htmlImg = img as HTMLImageElement;
+    htmlImg.style.transition =
+      "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), filter 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
+
     setTimeout(() => {
-      document.body.removeChild(overlay);
-      body.classList.remove("theme-transitioning");
-    }, 500);
+      htmlImg.style.transform = "scale(1.02)";
+      htmlImg.style.filter = "brightness(1.05)";
 
-    // Store the theme
-    setStoredTheme(theme);
-  }, 300); // Wait for overlay to be visible
+      setTimeout(() => {
+        htmlImg.style.transform = "scale(1)";
+        htmlImg.style.filter = "brightness(1)";
+      }, 600);
+    }, index * 80);
+  });
+
+  // Apply smooth transitions to SVG icons
+  const svgs = document.querySelectorAll("svg");
+  svgs.forEach((svg, index) => {
+    const htmlSvg = svg as SVGElement;
+    htmlSvg.style.transition =
+      "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
+
+    setTimeout(() => {
+      htmlSvg.style.transform = "scale(1.1)";
+
+      setTimeout(() => {
+        htmlSvg.style.transform = "scale(1)";
+      }, 400);
+    }, index * 50);
+  });
+
+  // Apply theme to all interactive elements
+  const interactiveElements = document.querySelectorAll(
+    "button, input, select, textarea, a",
+  );
+  interactiveElements.forEach((element) => {
+    const htmlElement = element as HTMLElement;
+    htmlElement.style.transition =
+      "background-color 1s cubic-bezier(0.4, 0, 0.2, 1), color 1s cubic-bezier(0.4, 0, 0.2, 1), border-color 1s cubic-bezier(0.4, 0, 0.2, 1)";
+
+    if (!htmlElement.style.backgroundColor) {
+      htmlElement.style.backgroundColor = "transparent";
+    }
+    if (!htmlElement.style.color) {
+      htmlElement.style.color = "inherit";
+    }
+  });
+
+  // Remove transitioning class after smooth animations complete
+  setTimeout(() => {
+    body.classList.remove("theme-transitioning");
+  }, 2000);
+
+  // Store the theme
+  setStoredTheme(theme);
 };
 
 // Initialize theme on app load
