@@ -33,6 +33,7 @@ export default function Home() {
   }, [session, status]);
 
   // Check if user is already authenticated and redirect to appropriate dashboard
+  // Only redirect if explicitly coming from login or if user wants to go to dashboard
   useEffect(() => {
     if (status === "loading") return;
 
@@ -40,25 +41,9 @@ export default function Home() {
     console.log("Home page - Session data:", session);
     console.log("Home page - User role:", session?.user?.role);
 
-    if (session?.user?.role) {
-      // User is already logged in, redirect to appropriate dashboard
-      console.log("Redirecting based on role:", session.user.role);
-      if (session.user.role === "ADMIN") {
-        console.log("Redirecting to admin dashboard");
-        router.push("/admin/dashboard");
-      } else if (
-        session.user.role === "USER" ||
-        session.user.role === "STUDENT"
-      ) {
-        console.log("Redirecting to student page");
-        router.push("/student");
-      } else {
-        console.log("Unknown role, defaulting to student page");
-        router.push("/student");
-      }
-    } else {
-      console.log("No session or role found, staying on home page");
-    }
+    // Remove automatic redirect - allow users to stay on homepage
+    // Users can navigate to their dashboards using the UI buttons
+    console.log("Allowing user to stay on homepage");
   }, [session, status, router]);
 
   return (
@@ -417,7 +402,18 @@ export default function Home() {
           {/* Enhanced Action Card */}
           <div className="flex justify-center px-4 sm:px-6">
             <button
-              onClick={() => router.push("/login")}
+              onClick={() => {
+                if (session?.user?.role === "ADMIN") {
+                  router.push("/admin/dashboard");
+                } else if (
+                  session?.user?.role === "USER" ||
+                  session?.user?.role === "STUDENT"
+                ) {
+                  router.push("/student");
+                } else {
+                  router.push("/login");
+                }
+              }}
               className="p-8 sm:p-10 md:p-12 rounded-2xl text-center transition-all duration-800 transform hover:scale-105 hover:shadow-2xl group max-w-md w-full"
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
@@ -455,7 +451,11 @@ export default function Home() {
                   textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
                 }}
               >
-                Go to login section
+                {session
+                  ? session.user?.role === "ADMIN"
+                    ? "Go to Admin Dashboard"
+                    : "Go to Student Portal"
+                  : "Go to login section"}
               </h3>
               <p
                 className="text-xs sm:text-sm mb-4 sm:mb-6"
@@ -464,7 +464,9 @@ export default function Home() {
                   textShadow: `0 1px 1px ${themeConfig.colors.primary}10`,
                 }}
               >
-                Access your account to submit requests or manage the system
+                {session
+                  ? "Access your dashboard to manage requests or submit new ones"
+                  : "Access your account to submit requests or manage the system"}
               </p>
               <div
                 className="inline-flex items-center text-xs sm:text-sm font-medium transform group-hover:translate-x-1 transition-all duration-300"
@@ -473,7 +475,7 @@ export default function Home() {
                   textShadow: `0 1px 1px ${themeConfig.colors.primary}20`,
                 }}
               >
-                Login Now
+                {session ? "Go to Dashboard" : "Login Now"}
                 <svg
                   className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-all duration-300"
                   fill="none"
