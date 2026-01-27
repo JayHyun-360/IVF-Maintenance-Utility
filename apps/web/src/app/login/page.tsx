@@ -23,9 +23,23 @@ export default function LoginPage() {
     setIsGoogleLoading(true);
     setError("");
     try {
-      await signIn("google", { callbackUrl: "/role-selection" });
+      // Check if Google OAuth is properly configured
+      if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
+        setError(
+          "Google OAuth is not configured. Please use email/password login.",
+        );
+        return;
+      }
+
+      await signIn("google", {
+        callbackUrl: "/role-selection",
+        redirect: true,
+      });
     } catch (error) {
-      setError("Google sign-in failed. Please try again.");
+      console.error("Google sign-in error:", error);
+      setError(
+        "Google sign-in failed. Please try again or use email/password.",
+      );
     } finally {
       setIsGoogleLoading(false);
     }
@@ -46,7 +60,7 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        // Redirect to role selection page
+        // Successfully authenticated, redirect to role selection
         router.push("/role-selection");
       }
     } catch {
@@ -237,9 +251,9 @@ export default function LoginPage() {
           loading={isGoogleLoading}
           disabled={isGoogleLoading}
           fullWidth
-          size="lg"
+          size="md"
           variant="secondary"
-          className="flex items-center justify-center gap-3"
+          className="flex items-center justify-center gap-3 py-3"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path
@@ -275,7 +289,7 @@ export default function LoginPage() {
 
         {/* Demo Accounts Info */}
         <div
-          className="mt-8 p-4 rounded-xl"
+          className="mt-6 p-4 rounded-xl"
           style={{ backgroundColor: themeConfig.colors.background }}
         >
           <h3
@@ -291,6 +305,13 @@ export default function LoginPage() {
             <div style={{ color: themeConfig.colors.textSecondary }}>
               <strong>User:</strong> user@test.com / user12345
             </div>
+          </div>
+          <div
+            className="mt-3 text-xs"
+            style={{ color: themeConfig.colors.textSecondary }}
+          >
+            <strong>Note:</strong> Google sign-in requires OAuth configuration.
+            Use demo accounts for testing.
           </div>
         </div>
 

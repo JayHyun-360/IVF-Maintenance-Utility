@@ -1,5 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+
+// Shared user data - in production, this would come from a database
+const users = [
+  {
+    email: "admin@test.com",
+    role: "ADMIN",
+  },
+  {
+    email: "user@test.com",
+    role: "USER",
+  },
+];
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,20 +20,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    // For demo purposes, check against hardcoded users
-    // In production, you would query your database
-    const users = [
-      {
-        email: "admin@test.com",
-        role: "ADMIN",
-      },
-      {
-        email: "user@test.com",
-        role: "USER",
-      },
-    ];
-
-    const user = users.find((u) => u.email === email);
+    const user = users.find(
+      (u) => u.email.toLowerCase() === email.toLowerCase(),
+    );
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
