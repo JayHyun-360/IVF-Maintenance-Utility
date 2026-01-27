@@ -14,6 +14,11 @@ export default function AccountDropdown() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Only run on client-side
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      return;
+    }
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&

@@ -95,6 +95,11 @@ export const setStoredTheme = (theme: Theme): void => {
 };
 
 export const applyTheme = (theme: Theme): void => {
+  // Only run on client-side
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return;
+  }
+
   const themeConfig = themes[theme];
   const root = document.documentElement;
 

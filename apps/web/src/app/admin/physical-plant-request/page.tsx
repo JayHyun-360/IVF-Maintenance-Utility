@@ -141,6 +141,11 @@ export default function PhysicalPlantRequestPage() {
   };
 
   const handlePrint = () => {
+    // Only run on client-side
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      return;
+    }
+
     if (printRef.current) {
       const printContent = printRef.current.innerHTML;
       const originalContent = document.body.innerHTML;

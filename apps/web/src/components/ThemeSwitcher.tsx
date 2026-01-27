@@ -56,12 +56,19 @@ export default function ThemeSwitcher() {
   };
 
   useEffect(() => {
+    // Only run on client-side
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      return;
+    }
+
     // Add smooth transition to all elements before changing theme
     document.body.style.transition = "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
 
     // Remove transition after theme change is complete
     const timeout = setTimeout(() => {
-      document.body.style.transition = "";
+      if (typeof document !== "undefined") {
+        document.body.style.transition = "";
+      }
     }, 900);
 
     return () => clearTimeout(timeout);
