@@ -60,9 +60,7 @@ export default function Home() {
         className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32 text-center relative overflow-hidden"
         style={{
           background: themeConfig.backgroundImage
-            ? themeConfig.name === "standard"
-              ? `linear-gradient(rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.25)), url("${themeConfig.backgroundImage}")`
-              : `url("${themeConfig.backgroundImage}")`
+            ? `url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
           backgroundPosition: themeConfig.backgroundImage
@@ -74,25 +72,26 @@ export default function Home() {
             : "scroll",
           backgroundClip: "padding-box",
           transition:
-            "background-image 3.5s ease-in-out, background 3.5s ease-in-out, background-color 3.5s ease-in-out, opacity 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            "background-image 1s ease-in-out, background 1s ease-in-out, background-color 1s ease-in-out",
           minHeight: themeConfig.backgroundImage ? "50vh" : "auto",
           maxHeight: themeConfig.backgroundImage ? "50vh" : "none",
           height: themeConfig.backgroundImage ? "50vh" : "auto",
           zIndex: Z_INDEX.STICKY,
         }}
       >
-        {/* Subtle overlay for text readability */}
+        {/* Subtle overlay for text readability - consistent across all themes */}
         {themeConfig.backgroundImage && (
           <div
             className="absolute inset-0"
             style={{
               background:
                 themeConfig.name === "light"
-                  ? "rgba(0, 0, 0, 0.2)"
+                  ? "rgba(0, 0, 0, 0.15)"
                   : themeConfig.name === "standard"
-                    ? "transparent" // No overlay for Nature theme since we have green gradient
-                    : "rgba(0, 0, 0, 0.3)",
+                    ? "rgba(0, 0, 0, 0.1)" // Very subtle overlay for Nature theme
+                    : "rgba(0, 0, 0, 0.25)",
               zIndex: 1,
+              transition: "background 1s ease-in-out",
             }}
           />
         )}
