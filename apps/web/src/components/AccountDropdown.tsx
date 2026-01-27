@@ -62,23 +62,8 @@ export default function AccountDropdown() {
 
   const toggleDropdown = () => {
     if (!isOpen) {
-      // Check if dropdown would go off-screen when opening
-      const buttonRect = dropdownRef.current?.getBoundingClientRect();
-      if (buttonRect) {
-        const spaceBelow = window.innerHeight - buttonRect.bottom;
-        const estimatedDropdownHeight = 280; // Reduced height for smaller dropdown
-        const buttonPositionRatio = buttonRect.top / window.innerHeight;
-
-        // If button is in bottom 40% of screen or not enough space below, position on top
-        if (
-          spaceBelow < estimatedDropdownHeight + 20 ||
-          buttonPositionRatio > 0.6
-        ) {
-          setDropdownPosition("top");
-        } else {
-          setDropdownPosition("bottom");
-        }
-      }
+      // Always position dropdown above the button to prevent viewport clipping
+      setDropdownPosition("top");
     }
     setIsOpen(!isOpen);
   };
