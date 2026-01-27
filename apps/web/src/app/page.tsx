@@ -60,7 +60,9 @@ export default function Home() {
         className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32 text-center relative overflow-hidden"
         style={{
           background: themeConfig.backgroundImage
-            ? `url("${themeConfig.backgroundImage}")`
+            ? themeConfig.name === "standard"
+              ? `linear-gradient(rgba(16, 185, 129, 0.4), rgba(5, 150, 105, 0.6)), url("${themeConfig.backgroundImage}")`
+              : `url("${themeConfig.backgroundImage}")`
             : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           backgroundSize: themeConfig.backgroundImage ? "cover" : "auto",
           backgroundPosition: themeConfig.backgroundImage
@@ -88,7 +90,7 @@ export default function Home() {
                 themeConfig.name === "light"
                   ? "rgba(0, 0, 0, 0.2)"
                   : themeConfig.name === "standard"
-                    ? "rgba(0, 0, 0, 0.15)"
+                    ? "transparent" // No overlay for Nature theme since we have green gradient
                     : "rgba(0, 0, 0, 0.3)",
               zIndex: 1,
             }}
