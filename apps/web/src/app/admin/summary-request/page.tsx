@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { Z_INDEX } from "@/lib/z-index";
 import { getMaintenanceRequests } from "@/lib/data";
 import AuthGuard from "@/components/AuthGuard";
 
@@ -107,7 +108,9 @@ export default function SummaryRequestPage() {
                 </h1>
               </div>
               <div className="flex items-center">
-                <ThemeSwitcher />
+                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                  <ThemeSwitcher />
+                </div>
               </div>
             </div>
           </div>

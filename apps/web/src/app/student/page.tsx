@@ -137,7 +137,7 @@ export default function UserPage() {
       >
         {/* Mobile-Optimized Header with Gradient */}
         <header
-          className="mobile-safe-padding-top px-2 sm:px-3 md:px-4 lg:px-6 py-3 sm:py-4 md:py-5 border-b relative"
+          className="mobile-safe-padding-top px-2 sm:px-3 md:px-4 lg:px-6 py-3 sm:py-4 md:py-5 border-b relative overflow-visible"
           style={{ borderColor: themeConfig.colors.border }}
         >
           <div
@@ -191,7 +191,7 @@ export default function UserPage() {
             </div>
             <div
               className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4"
-              style={{ zIndex: Z_INDEX.DROPDOWN }}
+              style={{ zIndex: Z_INDEX.MAX }}
             >
               <ThemeSwitcher />
             </div>

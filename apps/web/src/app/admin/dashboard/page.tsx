@@ -155,7 +155,9 @@ export default function AdminDashboard() {
                 </h1>
               </div>
               <div className="flex items-center space-x-4">
-                <ThemeSwitcher />
+                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                  <ThemeSwitcher />
+                </div>
                 <button
                   onClick={() => router.push("/")}
                   className="px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"

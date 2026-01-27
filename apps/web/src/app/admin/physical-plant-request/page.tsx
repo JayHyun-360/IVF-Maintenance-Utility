@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 
 interface FormData {
@@ -202,7 +203,9 @@ export default function PhysicalPlantRequestPage() {
                 </h1>
               </div>
               <div className="flex items-center space-x-4">
-                <ThemeSwitcher />
+                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                  <ThemeSwitcher />
+                </div>
               </div>
             </div>
           </div>
