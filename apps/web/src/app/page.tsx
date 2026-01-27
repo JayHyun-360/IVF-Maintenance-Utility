@@ -57,7 +57,7 @@ export default function Home() {
     >
       {/* Header with Gradient Background - Mobile Optimized */}
       <header
-        className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 lg:py-10 xl:py-12 text-center relative overflow-hidden"
+        className="mobile-safe-padding-top px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 lg:py-10 xl:py-12 text-center relative"
         style={{
           background: themeConfig.backgroundImage
             ? themeConfig.name === "light"
@@ -76,7 +76,7 @@ export default function Home() {
             "background-image 2s ease-in-out, background 2s ease-in-out, background-color 2s ease-in-out, opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           minHeight: "auto",
           height: "auto",
-          zIndex: Z_INDEX.BASE,
+          zIndex: Z_INDEX.STICKY,
         }}
       >
         {/* Desktop-specific background adjustments */}
@@ -208,7 +208,10 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8 lg:pb-10 mobile-scroll">
+      <main
+        className="px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8 lg:pb-10 mobile-scroll"
+        style={{ zIndex: Z_INDEX.BASE, position: "relative" }}
+      >
         <div className="max-w-6xl mx-auto">
           {/* Add spacing gap between header background and white layout */}
           <div className="h-4 sm:h-6 md:h-8 lg:h-16 xl:h-20"></div>
