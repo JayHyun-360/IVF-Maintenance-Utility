@@ -13,15 +13,28 @@ export default function DashboardPage() {
   useEffect(() => {
     if (status === "loading") return;
 
+    console.log("Dashboard page - Session status:", status);
+    console.log("Dashboard page - Session data:", session);
+    console.log("Dashboard page - User role:", session?.user?.role);
+
     if (!session) {
+      console.log("No session found, redirecting to login");
       router.push("/login");
       return;
     }
 
     // Redirect based on user role
     if (session.user?.role === "ADMIN") {
+      console.log("Admin role detected, redirecting to admin dashboard");
       router.push("/admin/dashboard");
+    } else if (
+      session.user?.role === "USER" ||
+      session.user?.role === "STUDENT"
+    ) {
+      console.log("User/Student role detected, redirecting to student page");
+      router.push("/student");
     } else {
+      console.log("Unknown role, defaulting to student page");
       router.push("/student");
     }
   }, [session, status, router]);

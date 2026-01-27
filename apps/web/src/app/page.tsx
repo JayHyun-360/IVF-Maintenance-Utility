@@ -36,13 +36,28 @@ export default function Home() {
   useEffect(() => {
     if (status === "loading") return;
 
+    console.log("Home page - Session status:", status);
+    console.log("Home page - Session data:", session);
+    console.log("Home page - User role:", session?.user?.role);
+
     if (session?.user?.role) {
       // User is already logged in, redirect to appropriate dashboard
+      console.log("Redirecting based on role:", session.user.role);
       if (session.user.role === "ADMIN") {
+        console.log("Redirecting to admin dashboard");
         router.push("/admin/dashboard");
+      } else if (
+        session.user.role === "USER" ||
+        session.user.role === "STUDENT"
+      ) {
+        console.log("Redirecting to student page");
+        router.push("/student");
       } else {
+        console.log("Unknown role, defaulting to student page");
         router.push("/student");
       }
+    } else {
+      console.log("No session or role found, staying on home page");
     }
   }, [session, status, router]);
 

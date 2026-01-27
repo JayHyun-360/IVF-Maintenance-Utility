@@ -80,6 +80,36 @@
       "namedRegex": "^/admin/users(?:/)?$"
     },
     {
+      "page": "/admin-pin-verification",
+      "regex": "^/admin\\-pin\\-verification(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin\\-pin\\-verification(?:/)?$"
+    },
+    {
+      "page": "/api/auth/check-role",
+      "regex": "^/api/auth/check\\-role(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/check\\-role(?:/)?$"
+    },
+    {
+      "page": "/api/auth/check-user-exists",
+      "regex": "^/api/auth/check\\-user\\-exists(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/check\\-user\\-exists(?:/)?$"
+    },
+    {
+      "page": "/api/auth/register",
+      "regex": "^/api/auth/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/register(?:/)?$"
+    },
+    {
+      "page": "/dashboard",
+      "regex": "^/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard(?:/)?$"
+    },
+    {
       "page": "/emergency",
       "regex": "^/emergency(?:/)?$",
       "routeKeys": {},
@@ -96,6 +126,18 @@
       "regex": "^/login(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/register",
+      "regex": "^/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/register(?:/)?$"
+    },
+    {
+      "page": "/role-selection",
+      "regex": "^/role\\-selection(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/role\\-selection(?:/)?$"
     },
     {
       "page": "/settings",
