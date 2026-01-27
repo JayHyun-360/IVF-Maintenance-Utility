@@ -62,8 +62,22 @@ export default function AccountDropdown() {
 
   const toggleDropdown = () => {
     if (!isOpen) {
-      // Always position dropdown above the button to prevent viewport clipping
-      setDropdownPosition("top");
+      // Check if there's enough space below the button
+      const buttonRect = dropdownRef.current?.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const dropdownHeight = 300; // Estimated dropdown height with safety margin
+      const safetyMargin = 20; // 20px safety margin from viewport edges
+
+      if (
+        buttonRect &&
+        buttonRect.bottom + dropdownHeight + safetyMargin > viewportHeight
+      ) {
+        // Not enough space below, position above
+        setDropdownPosition("top");
+      } else {
+        // Enough space below, position below
+        setDropdownPosition("bottom");
+      }
     }
     setIsOpen(!isOpen);
   };
@@ -156,7 +170,7 @@ export default function AccountDropdown() {
 
       {isOpen && (
         <div
-          className={`absolute w-48 rounded-xl shadow-lg border max-h-64 overflow-y-auto ${
+          className={`absolute w-56 rounded-xl shadow-lg border max-h-64 overflow-y-auto ${
             dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
           } right-0`}
           style={{
@@ -194,7 +208,7 @@ export default function AccountDropdown() {
                   d="M12 1v6m0 6v6m11-7h-6m-6 0H1"
                 />
               </svg>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium">Account Settings</div>
                 <div
                   className="text-xs"
@@ -226,7 +240,7 @@ export default function AccountDropdown() {
                     d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                   />
                 </svg>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium">Admin Dashboard</div>
                   <div
                     className="text-xs"
@@ -263,7 +277,7 @@ export default function AccountDropdown() {
                   d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4"
                 />
               </svg>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium">Switch Account</div>
                 <div
                   className="text-xs"
@@ -294,7 +308,7 @@ export default function AccountDropdown() {
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6"
                 />
               </svg>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium">Remove Account</div>
                 <div
                   className="text-xs"
@@ -330,7 +344,7 @@ export default function AccountDropdown() {
                   d="M17 16l4-4m0 0l-4 4m4-4H3m4 4v-4m0 0v4"
                 />
               </svg>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium">Log Out</div>
                 <div
                   className="text-xs"
