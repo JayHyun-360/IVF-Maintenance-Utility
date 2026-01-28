@@ -14,6 +14,9 @@ export default function AccountDropdown() {
   const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
     "bottom",
   );
+  const [dropdownAlignment, setDropdownAlignment] = useState<"left" | "right">(
+    "right",
+  );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,18 +68,32 @@ export default function AccountDropdown() {
       // Check if there's enough space below the button
       const buttonRect = dropdownRef.current?.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
       const dropdownHeight = 300; // Estimated dropdown height with safety margin
+      const dropdownWidth = 224; // w-56 = 14rem = 224px
       const safetyMargin = 20; // 20px safety margin from viewport edges
 
-      if (
-        buttonRect &&
-        buttonRect.bottom + dropdownHeight + safetyMargin > viewportHeight
-      ) {
-        // Not enough space below, position above
-        setDropdownPosition("top");
-      } else {
-        // Enough space below, position below
-        setDropdownPosition("bottom");
+      if (buttonRect) {
+        // Check vertical position
+        if (
+          buttonRect.bottom + dropdownHeight + safetyMargin >
+          viewportHeight
+        ) {
+          // Not enough space below, position above
+          setDropdownPosition("top");
+        } else {
+          // Enough space below, position below
+          setDropdownPosition("bottom");
+        }
+
+        // Check horizontal position
+        if (buttonRect.left - dropdownWidth < safetyMargin) {
+          // Not enough space on the left, align to left
+          setDropdownAlignment("left");
+        } else {
+          // Enough space on the left, align to right (default behavior)
+          setDropdownAlignment("right");
+        }
       }
     }
     setIsOpen(!isOpen);
@@ -172,7 +189,7 @@ export default function AccountDropdown() {
         <div
           className={`absolute w-56 rounded-xl shadow-lg border max-h-64 overflow-y-auto ${
             dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
-          } right-0`}
+          } ${dropdownAlignment === "left" ? "left-0" : "right-0"}`}
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
