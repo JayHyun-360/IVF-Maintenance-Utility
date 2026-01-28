@@ -61,14 +61,93 @@ export default function Home() {
             "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
         }}
       >
-        {/* Professional Header - Clean & Minimal */}
+        {/* Header with Background Image - Desktop Only */}
         <header
           className="mobile-safe-padding-top px-4 py-8 text-center relative"
           style={{
-            background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+            background:
+              !isMobile && themeConfig.backgroundImage
+                ? `url("${themeConfig.backgroundImage}")`
+                : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+            backgroundSize:
+              !isMobile && themeConfig.backgroundImage ? "cover" : "auto",
+            backgroundPosition:
+              !isMobile && themeConfig.backgroundImage
+                ? "center center"
+                : "auto",
+            backgroundRepeat:
+              !isMobile && themeConfig.backgroundImage ? "no-repeat" : "auto",
+            backgroundAttachment:
+              !isMobile && themeConfig.backgroundImage ? "scroll" : "scroll",
             transition: "background-color 0.8s ease-in-out",
+            minHeight:
+              !isMobile && themeConfig.backgroundImage ? "50vh" : "auto",
+            maxHeight:
+              !isMobile && themeConfig.backgroundImage ? "50vh" : "none",
+            height: !isMobile && themeConfig.backgroundImage ? "50vh" : "auto",
           }}
         >
+          {/* Subtle overlay for text readability - Desktop Only */}
+          {!isMobile && themeConfig.backgroundImage && (
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  themeConfig.name === "light"
+                    ? "rgba(0, 0, 0, 0.15)"
+                    : themeConfig.name === "standard"
+                      ? "rgba(0, 0, 0, 0.1)" // Very subtle overlay for Nature theme
+                      : "rgba(0, 0, 0, 0.25)",
+                zIndex: 1,
+                transition: "background 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+            />
+          )}
+
+          {/* Desktop-specific background adjustments */}
+          {!isMobile && themeConfig.backgroundImage && (
+            <style jsx>{`
+              @media (min-width: 1024px) {
+                header {
+                  background-size: cover !important;
+                  background-position: center center !important;
+                  background-repeat: no-repeat !important;
+                  background-attachment: scroll !important;
+                  min-height: 50vh !important;
+                  max-height: 50vh !important;
+                  height: 50vh !important;
+                  padding-top: 20px !important;
+                  overflow: hidden !important;
+                }
+              }
+              @media (min-width: 1280px) {
+                header {
+                  background-size: cover !important;
+                  background-position: center center !important;
+                  background-repeat: no-repeat !important;
+                  background-attachment: scroll !important;
+                  min-height: 50vh !important;
+                  max-height: 50vh !important;
+                  height: 50vh !important;
+                  padding-top: 20px !important;
+                  overflow: hidden !important;
+                }
+              }
+              @media (min-width: 1536px) {
+                header {
+                  background-size: cover !important;
+                  background-position: center center !important;
+                  background-repeat: no-repeat !important;
+                  background-attachment: scroll !important;
+                  min-height: 50vh !important;
+                  max-height: 50vh !important;
+                  height: 50vh !important;
+                  padding-top: 20px !important;
+                  overflow: hidden !important;
+                }
+              }
+            `}</style>
+          )}
           <div className="flex items-center justify-between mb-6">
             <div>
               <AccountDropdown />
@@ -79,7 +158,10 @@ export default function Home() {
           </div>
 
           {/* Professional Logo & Title */}
-          <div className="flex flex-col items-center">
+          <div
+            className="flex flex-col items-center"
+            style={{ zIndex: Z_INDEX.MAX, position: "relative" }}
+          >
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg"
               style={{
@@ -104,8 +186,14 @@ export default function Home() {
             <h1
               className="text-2xl font-bold mb-2"
               style={{
-                color: "#FFFFFF",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
+                color:
+                  !isMobile && themeConfig.backgroundImage
+                    ? "#FFFFFF"
+                    : "#FFFFFF",
+                textShadow:
+                  !isMobile && themeConfig.backgroundImage
+                    ? "0 2px 4px rgba(0, 0, 0, 0.5)"
+                    : "0 2px 4px rgba(0, 0, 0, 0.3)",
               }}
             >
               IVF Maintenance
@@ -113,7 +201,10 @@ export default function Home() {
             <p
               className="text-sm opacity-90"
               style={{
-                color: "rgba(255, 255, 255, 0.9)",
+                color:
+                  !isMobile && themeConfig.backgroundImage
+                    ? "rgba(255, 255, 255, 0.9)"
+                    : "rgba(255, 255, 255, 0.9)",
               }}
             >
               Professional Maintenance Management
