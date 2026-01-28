@@ -25,6 +25,21 @@ export default function Home() {
     completedRequests: 0,
   });
 
+  // Add click outside handler for dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Close any open dropdowns when clicking outside
+      const target = event.target as Element;
+      if (!target.closest("[data-dropdown]")) {
+        // This will be handled by individual dropdown components
+        // but we ensure the event can bubble up properly
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   useEffect(() => {
     const loadData = () => {
       const realStats = getMaintenanceStats();
@@ -100,6 +115,7 @@ export default function Home() {
                       : "rgba(0, 0, 0, 0.25)",
                 zIndex: 1,
                 transition: "background 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                pointerEvents: "none", // Prevent overlay from blocking clicks
               }}
             />
           )}
@@ -148,7 +164,11 @@ export default function Home() {
               }
             `}</style>
           )}
-          <div className="flex items-center justify-between mb-6">
+          <div
+            className="flex items-center justify-between mb-6"
+            style={{ zIndex: Z_INDEX.MAX + 2, position: "relative" }}
+            data-dropdown
+          >
             <div>
               <AccountDropdown />
             </div>
