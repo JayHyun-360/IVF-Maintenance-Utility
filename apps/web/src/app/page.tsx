@@ -217,7 +217,7 @@ export default function Home() {
                     : "0 2px 4px rgba(0, 0, 0, 0.3)",
               }}
             >
-              IVF Maintenance
+              IVF Maintenance Utility
             </h1>
             <p
               className="text-sm opacity-90"
@@ -228,7 +228,7 @@ export default function Home() {
                     : "rgba(255, 255, 255, 0.9)",
               }}
             >
-              Professional Maintenance Management
+              Streamlined Facility Management Solutions
             </p>
           </div>
         </header>
