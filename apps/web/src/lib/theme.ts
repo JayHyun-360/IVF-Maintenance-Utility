@@ -508,6 +508,11 @@ const addEnhancedHoverEffects = (element: HTMLElement, theme: Theme): void => {
 
 // Preload background images for smoother transitions
 const preloadBackgroundImages = (): void => {
+  // Only run on client-side
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return;
+  }
+
   Object.values(themes).forEach((theme) => {
     if (theme.backgroundImage) {
       const img = new Image();
