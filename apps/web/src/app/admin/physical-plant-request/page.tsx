@@ -43,7 +43,6 @@ interface FormData {
   dateTimeCompleted: string;
   acknowledgeBy: string;
   workEvaluation: "outstanding" | "very_satisfactory" | "satisfactory" | "poor";
-  workEvaluationEnabled: boolean;
 }
 
 export default function PhysicalPlantRequestPage() {
@@ -81,7 +80,6 @@ export default function PhysicalPlantRequestPage() {
     dateTimeCompleted: "",
     acknowledgeBy: "",
     workEvaluation: "satisfactory",
-    workEvaluationEnabled: true,
   });
 
   const handleRequestTypeChange = (type: keyof typeof formData.requestType) => {
@@ -131,13 +129,6 @@ export default function PhysicalPlantRequestPage() {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-    }));
-  };
-
-  const handleToggleWorkEvaluation = () => {
-    setFormData((prev) => ({
-      ...prev,
-      workEvaluationEnabled: !prev.workEvaluationEnabled,
     }));
   };
 
@@ -785,112 +776,61 @@ export default function PhysicalPlantRequestPage() {
 
                     {/* Work Evaluation */}
                     <div className="mt-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4
-                          className="font-semibold mb-0"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Work Evaluation:
-                        </h4>
-                        <label className="flex items-center space-x-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={formData.workEvaluationEnabled}
-                            onChange={handleToggleWorkEvaluation}
-                            className="w-4 h-4"
-                            style={{ accentColor: themeConfig.colors.primary }}
-                          />
-                          <span
-                            className="text-sm font-medium"
-                            style={{ color: themeConfig.colors.text }}
+                      <h4
+                        className="font-semibold mb-4"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        Work Evaluation:
+                      </h4>
+                      <div className="grid grid-cols-2 gap-4">
+                        {[
+                          {
+                            label: "Outstanding",
+                            desc: "All work completed exceeds expectations",
+                          },
+                          {
+                            label: "Very Satisfactory",
+                            desc: "All work completed meets expectations",
+                          },
+                          {
+                            label: "Satisfactory",
+                            desc: "Work completed with minor issues",
+                          },
+                          {
+                            label: "Poor",
+                            desc: "Work completed with major issues",
+                          },
+                        ].map(({ label, desc }, index) => (
+                          <div
+                            key={index}
+                            className="flex items-start space-x-2"
                           >
-                            Enable Evaluation
-                          </span>
-                        </label>
-                      </div>
-
-                      {formData.workEvaluationEnabled && (
-                        <div className="grid grid-cols-2 gap-4">
-                          {[
-                            {
-                              value: "outstanding",
-                              label: "Outstanding",
-                              desc: "All work completed exceeds expectations",
-                            },
-                            {
-                              value: "very_satisfactory",
-                              label: "Very Satisfactory",
-                              desc: "All work completed meets expectations",
-                            },
-                            {
-                              value: "satisfactory",
-                              label: "Satisfactory",
-                              desc: "Work completed with minor issues",
-                            },
-                            {
-                              value: "poor",
-                              label: "Poor",
-                              desc: "Work completed with major issues",
-                            },
-                          ].map(({ value, label, desc }) => (
-                            <label
-                              key={value}
-                              className="flex items-start space-x-2"
-                            >
-                              <input
-                                type="radio"
-                                name="workEvaluation"
-                                value={value}
-                                checked={formData.workEvaluation === value}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    "workEvaluation",
-                                    e.target.value,
-                                  )
-                                }
-                                className="w-4 h-4 mt-1"
+                            <div
+                              className="w-4 h-4 mt-1 rounded-full border-2"
+                              style={{
+                                borderColor: themeConfig.colors.border,
+                                backgroundColor: themeConfig.colors.background,
+                              }}
+                            />
+                            <div>
+                              <span
+                                className="font-medium"
+                                style={{ color: themeConfig.colors.text }}
+                              >
+                                {label}
+                              </span>
+                              <p
+                                className="text-sm"
                                 style={{
-                                  accentColor: themeConfig.colors.primary,
+                                  color: themeConfig.colors.textSecondary,
                                 }}
-                              />
-                              <div>
-                                <span
-                                  className="font-medium"
-                                  style={{ color: themeConfig.colors.text }}
-                                >
-                                  {label}
-                                </span>
-                                <p
-                                  className="text-sm"
-                                  style={{
-                                    color: themeConfig.colors.textSecondary,
-                                  }}
-                                >
-                                  {desc}
-                                </p>
-                              </div>
-                            </label>
-                          ))}
-                        </div>
-                      )}
-
-                      {!formData.workEvaluationEnabled && (
-                        <div
-                          className="p-4 rounded-lg text-center"
-                          style={{
-                            backgroundColor: themeConfig.colors.background,
-                            border: `1px solid ${themeConfig.colors.border}`,
-                          }}
-                        >
-                          <p
-                            className="text-sm"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Work evaluation is currently disabled. Toggle the
-                            switch above to enable evaluation options.
-                          </p>
-                        </div>
-                      )}
+                              >
+                                {desc}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
