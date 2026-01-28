@@ -82,7 +82,7 @@ export default function Home() {
           style={{
             background:
               !isMobile && themeConfig.backgroundImage
-                ? `url("${themeConfig.backgroundImage}")`
+                ? `var(--background-image, url("${themeConfig.backgroundImage}"))`
                 : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
             backgroundSize:
               !isMobile && themeConfig.backgroundImage ? "cover" : "auto",
@@ -94,7 +94,8 @@ export default function Home() {
               !isMobile && themeConfig.backgroundImage ? "no-repeat" : "auto",
             backgroundAttachment:
               !isMobile && themeConfig.backgroundImage ? "scroll" : "scroll",
-            transition: "background-color 0.8s ease-in-out",
+            transition:
+              "background 1.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.8s ease-in-out, color 0.8s ease-in-out",
             minHeight:
               !isMobile && themeConfig.backgroundImage ? "50vh" : "auto",
             maxHeight:
@@ -114,7 +115,7 @@ export default function Home() {
                       ? "rgba(0, 0, 0, 0.1)" // Very subtle overlay for Nature theme
                       : "rgba(0, 0, 0, 0.25)",
                 zIndex: 1,
-                transition: "background 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                transition: "background 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
                 pointerEvents: "none", // Prevent overlay from blocking clicks
               }}
             />

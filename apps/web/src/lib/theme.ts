@@ -223,6 +223,16 @@ export const applyTheme = (theme: Theme): void => {
   root.style.setProperty("--color-warning", themeConfig.colors.warning);
   root.style.setProperty("--color-error", themeConfig.colors.error);
 
+  // Set background image as CSS custom property for smooth transitions
+  if (themeConfig.backgroundImage) {
+    root.style.setProperty(
+      "--background-image",
+      `url("${themeConfig.backgroundImage}")`,
+    );
+  } else {
+    root.style.setProperty("--background-image", "none");
+  }
+
   // Apply theme class to body
   body.className = `theme-${theme} theme-transitioning`;
 
@@ -496,8 +506,21 @@ const addEnhancedHoverEffects = (element: HTMLElement, theme: Theme): void => {
   addHoverListener();
 };
 
+// Preload background images for smoother transitions
+const preloadBackgroundImages = (): void => {
+  Object.values(themes).forEach((theme) => {
+    if (theme.backgroundImage) {
+      const img = new Image();
+      img.src = theme.backgroundImage;
+    }
+  });
+};
+
 // Initialize theme on app load with smart features
 export const initializeTheme = (): Theme => {
+  // Preload background images for smoother transitions
+  preloadBackgroundImages();
+
   // Set up system preference listeners
   setupSystemPreferenceListener();
 
