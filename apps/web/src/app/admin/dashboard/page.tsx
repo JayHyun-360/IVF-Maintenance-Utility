@@ -48,6 +48,9 @@ export default function AdminDashboard() {
   const [filteredRequests, setFilteredRequests] = useState<
     MaintenanceRequest[]
   >(() => getMaintenanceRequests());
+  const [showTextModal, setShowTextModal] = useState(false);
+  const [selectedRequest, setSelectedRequest] =
+    useState<MaintenanceRequest | null>(null);
 
   // Load all data
   const loadData = () => {
@@ -114,6 +117,12 @@ export default function AdminDashboard() {
   const viewImages = (images: string[]) => {
     setSelectedImages(images);
     setShowImageModal(true);
+  };
+
+  // View full request details
+  const viewRequestDetails = (request: MaintenanceRequest) => {
+    setSelectedRequest(request);
+    setShowTextModal(true);
   };
 
   return (
@@ -818,7 +827,29 @@ export default function AdminDashboard() {
                                     color: themeConfig.colors.textSecondary,
                                   }}
                                 >
-                                  {request.description.substring(0, 50)}...
+                                  {request.description.length > 50 ? (
+                                    <div className="flex items-center space-x-2">
+                                      <span>
+                                        {request.description.substring(0, 50)}
+                                        ...
+                                      </span>
+                                      <button
+                                        onClick={() =>
+                                          viewRequestDetails(request)
+                                        }
+                                        className="text-xs px-2 py-1 rounded-md font-medium transition-all duration-200 hover:scale-105"
+                                        style={{
+                                          color: themeConfig.colors.primary,
+                                          backgroundColor: `${themeConfig.colors.primary}08`,
+                                          border: `1px solid ${themeConfig.colors.primary}20`,
+                                        }}
+                                      >
+                                        View
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    request.description
+                                  )}
                                 </div>
                               </div>
                             </td>
@@ -1444,6 +1475,160 @@ export default function AdminDashboard() {
                       className="w-full h-64 object-cover rounded-lg"
                     />
                   ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Text View Modal */}
+          {showTextModal && selectedRequest && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+              style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
+            >
+              <div
+                className="rounded-xl p-6 max-w-2xl max-h-[80vh] overflow-auto"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  zIndex: Z_INDEX.MODAL,
+                }}
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <h2
+                    className="text-lg font-semibold"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    Request Details
+                  </h2>
+                  <button
+                    onClick={() => setShowTextModal(false)}
+                    className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <h3
+                      className="text-sm font-medium mb-2"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Title
+                    </h3>
+                    <p
+                      className="text-base"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      {selectedRequest.title}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3
+                      className="text-sm font-medium mb-2"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Description
+                    </h3>
+                    <p
+                      className="text-base whitespace-pre-wrap"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      {selectedRequest.description}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h3
+                        className="text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
+                        Location
+                      </h3>
+                      <p
+                        className="text-base"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        {selectedRequest.location}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3
+                        className="text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
+                        Category
+                      </h3>
+                      <p
+                        className="text-base"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        {selectedRequest.category}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h3
+                        className="text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
+                        Priority
+                      </h3>
+                      <span
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
+                        style={{
+                          backgroundColor:
+                            selectedRequest.priority === "HIGH"
+                              ? "rgba(239, 68, 68, 0.1)"
+                              : selectedRequest.priority === "MEDIUM"
+                                ? "rgba(245, 158, 11, 0.1)"
+                                : "rgba(107, 114, 128, 0.1)",
+                          color:
+                            selectedRequest.priority === "HIGH"
+                              ? "#DC2626"
+                              : selectedRequest.priority === "MEDIUM"
+                                ? "#D97706"
+                                : "#6B7280",
+                        }}
+                      >
+                        {selectedRequest.priority}
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3
+                        className="text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
+                        Status
+                      </h3>
+                      <span
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
+                        style={{
+                          backgroundColor:
+                            selectedRequest.status === "COMPLETED"
+                              ? `${themeConfig.colors.success}20`
+                              : selectedRequest.status === "IN_PROGRESS"
+                                ? `${themeConfig.colors.primary}20`
+                                : `${themeConfig.colors.warning}20`,
+                          color:
+                            selectedRequest.status === "COMPLETED"
+                              ? themeConfig.colors.success
+                              : selectedRequest.status === "IN_PROGRESS"
+                                ? themeConfig.colors.primary
+                                : themeConfig.colors.warning,
+                        }}
+                      >
+                        {selectedRequest.status.replace("_", " ")}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
