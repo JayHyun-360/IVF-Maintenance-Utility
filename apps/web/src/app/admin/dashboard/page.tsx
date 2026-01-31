@@ -176,18 +176,22 @@ export default function AdminDashboard() {
             className="border-b"
             style={{ borderColor: themeConfig.colors.border }}
           >
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="flex items-center justify-between h-16">
-                <div className="flex items-center space-x-4">
+            <div
+              className={`${isMobile ? "max-w-4xl" : "max-w-7xl"} mx-auto ${isMobile ? "px-4" : "px-8"}`}
+            >
+              <div
+                className={`flex items-center justify-between ${isMobile ? "h-14" : "h-16"}`}
+              >
+                <div className="flex items-center space-x-3">
                   <div
-                    className="w-8 h-8 rounded-2xl flex items-center justify-center shadow-lg"
+                    className={`${isMobile ? "w-6 h-6" : "w-8 h-8"} rounded-xl flex items-center justify-center shadow-lg`}
                     style={{
                       background:
                         "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
                     }}
                   >
                     <svg
-                      className="w-4 h-4 text-white"
+                      className={`${isMobile ? "w-3 h-3" : "w-4 h-4"} text-white`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -201,26 +205,26 @@ export default function AdminDashboard() {
                     </svg>
                   </div>
                   <h1
-                    className="text-xl font-bold"
+                    className={`${isMobile ? "text-lg" : "text-xl"} font-bold`}
                     style={{ color: themeConfig.colors.text }}
                   >
                     Admin Dashboard
                   </h1>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-3">
                   <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
                     <ThemeSwitcher />
                   </div>
                   <button
                     onClick={() => router.push("/")}
-                    className="px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+                    className={`${isMobile ? "px-3 py-1.5 text-sm" : "px-4 py-2"} rounded-xl transition-all duration-300 hover:scale-105`}
                     style={{
                       backgroundColor: themeConfig.colors.surface,
                       color: themeConfig.colors.text,
                       border: `1px solid ${themeConfig.colors.border}`,
                     }}
                   >
-                    Back to Home
+                    {isMobile ? "Home" : "Back to Home"}
                   </button>
                 </div>
               </div>
@@ -232,34 +236,78 @@ export default function AdminDashboard() {
             className="border-b"
             style={{ borderColor: themeConfig.colors.border }}
           >
-            <div className="max-w-7xl mx-auto px-8">
-              <nav className="flex space-x-8">
-                {["overview", "requests", "analytics", "summary"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => {
-                      if (tab === "summary") {
-                        router.push("/admin/summary-request");
-                      } else {
-                        setActiveTab(tab);
-                      }
-                    }}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                      activeTab === tab
-                        ? "border-blue-500 text-blue-600"
-                        : "border-transparent"
-                    }`}
-                    style={{
-                      color:
-                        activeTab === tab
-                          ? "#3B82F6"
-                          : themeConfig.colors.textSecondary,
-                    }}
-                  >
-                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                  </button>
-                ))}
-              </nav>
+            <div
+              className={`${isMobile ? "max-w-4xl" : "max-w-7xl"} mx-auto ${isMobile ? "px-4" : "px-8"}`}
+            >
+              {!isMobile ? (
+                <nav className="flex space-x-8">
+                  {["overview", "requests", "analytics", "summary"].map(
+                    (tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => {
+                          if (tab === "summary") {
+                            router.push("/admin/summary-request");
+                          } else {
+                            setActiveTab(tab);
+                          }
+                        }}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                          activeTab === tab
+                            ? "border-blue-500 text-blue-600"
+                            : "border-transparent"
+                        }`}
+                        style={{
+                          color:
+                            activeTab === tab
+                              ? "#3B82F6"
+                              : themeConfig.colors.textSecondary,
+                        }}
+                      >
+                        {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                      </button>
+                    ),
+                  )}
+                </nav>
+              ) : (
+                <div className="flex overflow-x-auto scrollbar-hide -mx-4 px-4">
+                  <div className="flex space-x-1 py-3 min-w-max">
+                    {["overview", "requests", "analytics", "summary"].map(
+                      (tab) => (
+                        <button
+                          key={tab}
+                          onClick={() => {
+                            if (tab === "summary") {
+                              router.push("/admin/summary-request");
+                            } else {
+                              setActiveTab(tab);
+                            }
+                          }}
+                          className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 whitespace-nowrap ${
+                            activeTab === tab ? "" : ""
+                          }`}
+                          style={{
+                            backgroundColor:
+                              activeTab === tab
+                                ? themeConfig.colors.primary
+                                : "transparent",
+                            color:
+                              activeTab === tab
+                                ? "white"
+                                : themeConfig.colors.textSecondary,
+                            border:
+                              activeTab === tab
+                                ? "none"
+                                : `1px solid ${themeConfig.colors.border}`,
+                          }}
+                        >
+                          {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                        </button>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -379,72 +427,97 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 ) : (
-                  <MobileCardGrid columns={2}>
-                    <MobileCard variant="compact">
-                      <div className="text-center">
-                        <div
-                          className="text-2xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {stats.totalRequests}
+                  <div className="space-y-4">
+                    {/* Main Stats Row */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <MobileCard variant="compact" status="default">
+                        <div className="text-center">
+                          <div
+                            className="text-2xl font-bold mb-1"
+                            style={{ color: themeConfig.colors.text }}
+                          >
+                            {stats.totalRequests}
+                          </div>
+                          <div
+                            className="text-xs font-medium"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            Total Requests
+                          </div>
                         </div>
-                        <div
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Total
+                      </MobileCard>
+                      <MobileCard variant="compact" status="warning">
+                        <div className="text-center">
+                          <div
+                            className="text-2xl font-bold mb-1"
+                            style={{ color: themeConfig.colors.text }}
+                          >
+                            {stats.pendingRequests}
+                          </div>
+                          <div
+                            className="text-xs font-medium"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            Pending
+                          </div>
                         </div>
-                      </div>
-                    </MobileCard>
-                    <MobileCard variant="compact" status="warning">
-                      <div className="text-center">
-                        <div
-                          className="text-2xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {stats.pendingRequests}
+                      </MobileCard>
+                    </div>
+
+                    {/* Secondary Stats Row */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <MobileCard variant="compact" status="default">
+                        <div className="text-center">
+                          <div
+                            className="text-2xl font-bold mb-1"
+                            style={{ color: themeConfig.colors.text }}
+                          >
+                            {stats.inProgressRequests}
+                          </div>
+                          <div
+                            className="text-xs font-medium"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            In Progress
+                          </div>
                         </div>
-                        <div
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Pending
+                      </MobileCard>
+                      <MobileCard variant="compact" status="success">
+                        <div className="text-center">
+                          <div
+                            className="text-2xl font-bold mb-1"
+                            style={{ color: themeConfig.colors.text }}
+                          >
+                            {stats.completedRequests}
+                          </div>
+                          <div
+                            className="text-xs font-medium"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            Completed
+                          </div>
                         </div>
-                      </div>
-                    </MobileCard>
-                    <MobileCard variant="compact" status="default">
-                      <div className="text-center">
-                        <div
-                          className="text-2xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {stats.inProgressRequests}
-                        </div>
-                        <div
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          In Progress
-                        </div>
-                      </div>
-                    </MobileCard>
+                      </MobileCard>
+                    </div>
+
+                    {/* Completion Rate Card */}
                     <MobileCard variant="compact" status="success">
                       <div className="text-center">
                         <div
-                          className="text-2xl font-bold mb-1"
+                          className="text-3xl font-bold mb-1"
                           style={{ color: themeConfig.colors.text }}
                         >
-                          {stats.completedRequests}
+                          {completionRate}%
                         </div>
                         <div
-                          className="text-xs"
+                          className="text-xs font-medium"
                           style={{ color: themeConfig.colors.textSecondary }}
                         >
-                          Completed
+                          Completion Rate
                         </div>
                       </div>
                     </MobileCard>
-                  </MobileCardGrid>
+                  </div>
                 )}
 
                 {/* Quick Actions */}
@@ -567,85 +640,107 @@ export default function AdminDashboard() {
                       </button>
                     </div>
                   ) : (
-                    <MobileCardGrid columns={2}>
-                      <MobileCard
-                        onClick={() => router.push("/admin/summary-request")}
-                      >
-                        <div className="text-center">
-                          <div className="text-2xl mb-2">📋</div>
-                          <div
-                            className="text-sm font-medium mb-1"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Generate Summary
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 gap-3">
+                        <MobileCard
+                          onClick={() => router.push("/admin/summary-request")}
+                          variant="compact"
+                          status="default"
+                        >
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">📋</div>
+                            <div
+                              className="text-sm font-medium mb-1"
+                              style={{ color: themeConfig.colors.text }}
+                            >
+                              Generate Summary
+                            </div>
+                            <div
+                              className="text-xs"
+                              style={{
+                                color: themeConfig.colors.textSecondary,
+                              }}
+                            >
+                              Create reports
+                            </div>
                           </div>
-                          <div
-                            className="text-xs"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Create reports
-                          </div>
-                        </div>
-                      </MobileCard>
+                        </MobileCard>
 
-                      <MobileCard onClick={() => router.push("/admin/reports")}>
-                        <div className="text-center">
-                          <div className="text-2xl mb-2">📊</div>
-                          <div
-                            className="text-sm font-medium mb-1"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            View Reports
+                        <MobileCard
+                          onClick={() => router.push("/admin/reports")}
+                          variant="compact"
+                          status="default"
+                        >
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">📊</div>
+                            <div
+                              className="text-sm font-medium mb-1"
+                              style={{ color: themeConfig.colors.text }}
+                            >
+                              View Reports
+                            </div>
+                            <div
+                              className="text-xs"
+                              style={{
+                                color: themeConfig.colors.textSecondary,
+                              }}
+                            >
+                              Analytics
+                            </div>
                           </div>
-                          <div
-                            className="text-xs"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Analytics
-                          </div>
-                        </div>
-                      </MobileCard>
+                        </MobileCard>
 
-                      <MobileCard onClick={() => router.push("/admin/users")}>
-                        <div className="text-center">
-                          <div className="text-2xl mb-2">👥</div>
-                          <div
-                            className="text-sm font-medium mb-1"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Manage Users
+                        <MobileCard
+                          onClick={() => router.push("/admin/users")}
+                          variant="compact"
+                          status="default"
+                        >
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">👥</div>
+                            <div
+                              className="text-sm font-medium mb-1"
+                              style={{ color: themeConfig.colors.text }}
+                            >
+                              Manage Users
+                            </div>
+                            <div
+                              className="text-xs"
+                              style={{
+                                color: themeConfig.colors.textSecondary,
+                              }}
+                            >
+                              User accounts
+                            </div>
                           </div>
-                          <div
-                            className="text-xs"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            User accounts
-                          </div>
-                        </div>
-                      </MobileCard>
+                        </MobileCard>
 
-                      <MobileCard
-                        onClick={() =>
-                          router.push("/admin/physical-plant-request")
-                        }
-                      >
-                        <div className="text-center">
-                          <div className="text-2xl mb-2">🔧</div>
-                          <div
-                            className="text-sm font-medium mb-1"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Physical Repair
+                        <MobileCard
+                          onClick={() =>
+                            router.push("/admin/physical-plant-request")
+                          }
+                          variant="compact"
+                          status="default"
+                        >
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">🔧</div>
+                            <div
+                              className="text-sm font-medium mb-1"
+                              style={{ color: themeConfig.colors.text }}
+                            >
+                              Physical Repair
+                            </div>
+                            <div
+                              className="text-xs"
+                              style={{
+                                color: themeConfig.colors.textSecondary,
+                              }}
+                            >
+                              Repair forms
+                            </div>
                           </div>
-                          <div
-                            className="text-xs"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Repair forms
-                          </div>
-                        </div>
-                      </MobileCard>
-                    </MobileCardGrid>
+                        </MobileCard>
+                      </div>
+                    </div>
                   )}
                 </div>
 
@@ -659,96 +754,108 @@ export default function AdminDashboard() {
                   }}
                 >
                   <div
-                    className="p-6 border-b"
+                    className={`${isMobile ? "p-4" : "p-6"} border-b`}
                     style={{ borderColor: themeConfig.colors.border }}
                   >
                     <h2
-                      className="text-lg font-semibold"
+                      className={`${isMobile ? "text-base" : "text-lg"} font-semibold`}
                       style={{ color: themeConfig.colors.text }}
                     >
                       Recent Requests
                     </h2>
                   </div>
-                  <div className="p-6">
-                    <div className="space-y-4">
-                      {recentRequests.slice(0, 5).map((request) => (
-                        <div
-                          key={request.id}
-                          className="flex items-center justify-between p-4 rounded-xl"
-                          style={{
-                            backgroundColor: themeConfig.colors.background,
-                            borderColor: themeConfig.colors.border,
-                            border: "1px solid",
-                          }}
-                        >
-                          <div className="flex-1">
-                            <h3
-                              className="font-medium"
-                              style={{ color: themeConfig.colors.text }}
+                  <div className={`${isMobile ? "p-4" : "p-6"}`}>
+                    <div className="space-y-3">
+                      {recentRequests
+                        .slice(0, isMobile ? 3 : 5)
+                        .map((request) => (
+                          <div
+                            key={request.id}
+                            className={`${isMobile ? "p-3" : "p-4"} rounded-xl`}
+                            style={{
+                              backgroundColor: themeConfig.colors.background,
+                              borderColor: themeConfig.colors.border,
+                              border: "1px solid",
+                            }}
+                          >
+                            <div
+                              className={`${isMobile ? "space-y-2" : "flex items-center justify-between"}`}
                             >
-                              {request.title}
-                            </h3>
-                            <p
-                              className="text-sm mt-1"
-                              style={{
-                                color: themeConfig.colors.textSecondary,
-                              }}
-                            >
-                              {request.location} • {request.category}
-                            </p>
+                              <div className={`${isMobile ? "" : "flex-1"}`}>
+                                <h3
+                                  className={`${isMobile ? "text-sm" : "font-medium"} truncate`}
+                                  style={{ color: themeConfig.colors.text }}
+                                >
+                                  {request.title}
+                                </h3>
+                                <p
+                                  className={`${isMobile ? "text-xs" : "text-sm"} mt-1`}
+                                  style={{
+                                    color: themeConfig.colors.textSecondary,
+                                  }}
+                                >
+                                  {request.location} • {request.category}
+                                </p>
+                              </div>
+                              <div
+                                className={`${isMobile ? "flex items-center justify-between pt-2" : "flex items-center space-x-2"}`}
+                              >
+                                <span
+                                  className={`${isMobile ? "text-xs px-2 py-1" : "px-3 py-1"} rounded-full font-medium`}
+                                  style={{
+                                    background:
+                                      request.status === "COMPLETED"
+                                        ? `linear-gradient(135deg, ${themeConfig.colors.success}20 0%, ${themeConfig.colors.success}10 100%)`
+                                        : request.status === "IN_PROGRESS"
+                                          ? `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.primary}10 100%)`
+                                          : `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`,
+                                    color:
+                                      request.status === "COMPLETED"
+                                        ? themeConfig.colors.success
+                                        : request.status === "IN_PROGRESS"
+                                          ? themeConfig.colors.primary
+                                          : themeConfig.colors.warning,
+                                    border: `1px solid ${
+                                      request.status === "COMPLETED"
+                                        ? themeConfig.colors.success
+                                        : request.status === "IN_PROGRESS"
+                                          ? themeConfig.colors.primary
+                                          : themeConfig.colors.warning
+                                    }30`,
+                                    fontSize: isMobile ? "10px" : "12px",
+                                  }}
+                                >
+                                  {request.status === "COMPLETED"
+                                    ? "🟢 "
+                                    : request.status === "IN_PROGRESS"
+                                      ? "🔵 "
+                                      : "🟡 "}
+                                  {request.status.replace("_", " ")}
+                                </span>
+                                <span
+                                  className={`${isMobile ? "text-xs px-2 py-1" : "px-3 py-1"} rounded-full font-medium`}
+                                  style={{
+                                    backgroundColor:
+                                      request.priority === "HIGH"
+                                        ? `${themeConfig.colors.error}20`
+                                        : request.priority === "MEDIUM"
+                                          ? `${themeConfig.colors.warning}20`
+                                          : `${themeConfig.colors.textSecondary}20`,
+                                    color:
+                                      request.priority === "HIGH"
+                                        ? themeConfig.colors.error
+                                        : request.priority === "MEDIUM"
+                                          ? themeConfig.colors.warning
+                                          : themeConfig.colors.textSecondary,
+                                    fontSize: isMobile ? "10px" : "12px",
+                                  }}
+                                >
+                                  {request.priority}
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                          <div className="flex items-center space-x-4">
-                            <span
-                              className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                request.status === "COMPLETED"
-                                  ? ""
-                                  : request.status === "IN_PROGRESS"
-                                    ? ""
-                                    : ""
-                              }`}
-                              style={{
-                                background:
-                                  request.status === "COMPLETED"
-                                    ? `linear-gradient(135deg, ${themeConfig.colors.success}20 0%, ${themeConfig.colors.success}10 100%)`
-                                    : request.status === "IN_PROGRESS"
-                                      ? `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.primary}10 100%)`
-                                      : `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`,
-                                color:
-                                  request.status === "COMPLETED"
-                                    ? themeConfig.colors.success
-                                    : request.status === "IN_PROGRESS"
-                                      ? themeConfig.colors.primary
-                                      : themeConfig.colors.warning,
-                                border: `1px solid ${
-                                  request.status === "COMPLETED"
-                                    ? themeConfig.colors.success
-                                    : request.status === "IN_PROGRESS"
-                                      ? themeConfig.colors.primary
-                                      : themeConfig.colors.warning
-                                }30`,
-                              }}
-                            >
-                              {request.status === "COMPLETED"
-                                ? "🟢 "
-                                : request.status === "IN_PROGRESS"
-                                  ? "🔵 "
-                                  : "🟡 "}
-                              {request.status.replace("_", " ")}
-                            </span>
-                            <span
-                              className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                request.priority === "HIGH"
-                                  ? "bg-red-100 text-red-800"
-                                  : request.priority === "MEDIUM"
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : "bg-gray-100 text-gray-800"
-                              }`}
-                            >
-                              {request.priority}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 </div>
