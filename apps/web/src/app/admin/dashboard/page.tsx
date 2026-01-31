@@ -180,18 +180,18 @@ export default function AdminDashboard() {
               className={`${isMobile ? "max-w-4xl" : "max-w-7xl"} mx-auto ${isMobile ? "px-4" : "px-8"}`}
             >
               <div
-                className={`flex items-center justify-between ${isMobile ? "h-14" : "h-16"}`}
+                className={`flex items-center justify-between ${isMobile ? "h-16" : "h-16"}`}
               >
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-4">
                   <div
-                    className={`${isMobile ? "w-6 h-6" : "w-8 h-8"} rounded-xl flex items-center justify-center shadow-lg`}
+                    className={`${isMobile ? "w-8 h-8" : "w-8 h-8"} rounded-xl flex items-center justify-center shadow-lg`}
                     style={{
                       background:
                         "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
                     }}
                   >
                     <svg
-                      className={`${isMobile ? "w-3 h-3" : "w-4 h-4"} text-white`}
+                      className={`${isMobile ? "w-4 h-4" : "w-4 h-4"} text-white`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -205,19 +205,19 @@ export default function AdminDashboard() {
                     </svg>
                   </div>
                   <h1
-                    className={`${isMobile ? "text-lg" : "text-xl"} font-bold`}
+                    className={`${isMobile ? "text-xl" : "text-xl"} font-bold`}
                     style={{ color: themeConfig.colors.text }}
                   >
                     Admin Dashboard
                   </h1>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-4">
                   <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
                     <ThemeSwitcher />
                   </div>
                   <button
                     onClick={() => router.push("/")}
-                    className={`${isMobile ? "px-3 py-1.5 text-sm" : "px-4 py-2"} rounded-xl transition-all duration-300 hover:scale-105`}
+                    className={`${isMobile ? "px-4 py-2 text-sm" : "px-4 py-2"} rounded-xl transition-all duration-300 hover:scale-105`}
                     style={{
                       backgroundColor: themeConfig.colors.surface,
                       color: themeConfig.colors.text,
@@ -270,8 +270,10 @@ export default function AdminDashboard() {
                   )}
                 </nav>
               ) : (
-                <div className="flex overflow-x-auto scrollbar-hide -mx-4 px-4">
-                  <div className="flex space-x-1 py-3 min-w-max">
+                <div className={`${isMobile ? "py-4" : ""}`}>
+                  <nav
+                    className={`${isMobile ? "flex flex-col space-y-2" : ""}`}
+                  >
                     {["overview", "requests", "analytics", "summary"].map(
                       (tab) => (
                         <button
@@ -283,29 +285,41 @@ export default function AdminDashboard() {
                               setActiveTab(tab);
                             }
                           }}
-                          className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 whitespace-nowrap ${
-                            activeTab === tab ? "" : ""
-                          }`}
+                          className={`${isMobile ? "w-full text-left px-4 py-3 rounded-lg border transition-colors" : ""}`}
                           style={{
                             backgroundColor:
                               activeTab === tab
-                                ? themeConfig.colors.primary
-                                : "transparent",
+                                ? isMobile
+                                  ? `${themeConfig.colors.primary}10`
+                                  : "transparent"
+                                : isMobile
+                                  ? "transparent"
+                                  : "transparent",
                             color:
                               activeTab === tab
-                                ? "white"
+                                ? themeConfig.colors.primary
                                 : themeConfig.colors.textSecondary,
-                            border:
-                              activeTab === tab
-                                ? "none"
-                                : `1px solid ${themeConfig.colors.border}`,
+                            borderColor: isMobile
+                              ? themeConfig.colors.border
+                              : "transparent",
+                            borderWidth: isMobile ? "1px" : "0",
                           }}
                         >
-                          {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                          <span className={`${isMobile ? "font-medium" : ""}`}>
+                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                          </span>
+                          {isMobile && activeTab === tab && (
+                            <span
+                              className="float-right text-xs"
+                              style={{ color: themeConfig.colors.primary }}
+                            >
+                              ✓
+                            </span>
+                          )}
                         </button>
                       ),
                     )}
-                  </div>
+                  </nav>
                 </div>
               )}
             </div>
@@ -427,10 +441,22 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    {/* Main Stats Row */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <MobileCard variant="compact" status="default">
+                  <div className="space-y-6">
+                    <div
+                      className="rounded-xl shadow-lg p-6"
+                      style={{
+                        backgroundColor: themeConfig.colors.surface,
+                        borderColor: themeConfig.colors.border,
+                        border: "1px solid",
+                      }}
+                    >
+                      <h2
+                        className="text-lg font-semibold mb-4"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        Overview Statistics
+                      </h2>
+                      <div className="grid grid-cols-2 gap-4">
                         <div className="text-center">
                           <div
                             className="text-2xl font-bold mb-1"
@@ -439,14 +465,12 @@ export default function AdminDashboard() {
                             {stats.totalRequests}
                           </div>
                           <div
-                            className="text-xs font-medium"
+                            className="text-sm"
                             style={{ color: themeConfig.colors.textSecondary }}
                           >
                             Total Requests
                           </div>
                         </div>
-                      </MobileCard>
-                      <MobileCard variant="compact" status="warning">
                         <div className="text-center">
                           <div
                             className="text-2xl font-bold mb-1"
@@ -455,18 +479,12 @@ export default function AdminDashboard() {
                             {stats.pendingRequests}
                           </div>
                           <div
-                            className="text-xs font-medium"
+                            className="text-sm"
                             style={{ color: themeConfig.colors.textSecondary }}
                           >
                             Pending
                           </div>
                         </div>
-                      </MobileCard>
-                    </div>
-
-                    {/* Secondary Stats Row */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <MobileCard variant="compact" status="default">
                         <div className="text-center">
                           <div
                             className="text-2xl font-bold mb-1"
@@ -475,14 +493,12 @@ export default function AdminDashboard() {
                             {stats.inProgressRequests}
                           </div>
                           <div
-                            className="text-xs font-medium"
+                            className="text-sm"
                             style={{ color: themeConfig.colors.textSecondary }}
                           >
                             In Progress
                           </div>
                         </div>
-                      </MobileCard>
-                      <MobileCard variant="compact" status="success">
                         <div className="text-center">
                           <div
                             className="text-2xl font-bold mb-1"
@@ -491,32 +507,33 @@ export default function AdminDashboard() {
                             {stats.completedRequests}
                           </div>
                           <div
-                            className="text-xs font-medium"
+                            className="text-sm"
                             style={{ color: themeConfig.colors.textSecondary }}
                           >
                             Completed
                           </div>
                         </div>
-                      </MobileCard>
-                    </div>
-
-                    {/* Completion Rate Card */}
-                    <MobileCard variant="compact" status="success">
-                      <div className="text-center">
-                        <div
-                          className="text-3xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {completionRate}%
-                        </div>
-                        <div
-                          className="text-xs font-medium"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Completion Rate
+                      </div>
+                      <div
+                        className="mt-4 pt-4 border-t"
+                        style={{ borderColor: themeConfig.colors.border }}
+                      >
+                        <div className="text-center">
+                          <div
+                            className="text-3xl font-bold mb-1"
+                            style={{ color: themeConfig.colors.text }}
+                          >
+                            {completionRate}%
+                          </div>
+                          <div
+                            className="text-sm"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            Completion Rate
+                          </div>
                         </div>
                       </div>
-                    </MobileCard>
+                    </div>
                   </div>
                 )}
 
@@ -640,106 +657,124 @@ export default function AdminDashboard() {
                       </button>
                     </div>
                   ) : (
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-2 gap-3">
-                        <MobileCard
-                          onClick={() => router.push("/admin/summary-request")}
-                          variant="compact"
-                          status="default"
-                        >
-                          <div className="text-center">
-                            <div className="text-2xl mb-2">📋</div>
+                    <div className="space-y-3">
+                      <button
+                        onClick={() => router.push("/admin/summary-request")}
+                        className="w-full p-4 rounded-xl border transition-colors text-left"
+                        style={{
+                          backgroundColor: themeConfig.colors.surface,
+                          borderColor: themeConfig.colors.border,
+                        }}
+                      >
+                        <div className="flex items-center">
+                          <span className="text-xl mr-3">📋</span>
+                          <div>
                             <div
-                              className="text-sm font-medium mb-1"
+                              className="font-medium"
                               style={{ color: themeConfig.colors.text }}
                             >
                               Generate Summary
                             </div>
                             <div
-                              className="text-xs"
+                              className="text-sm"
                               style={{
                                 color: themeConfig.colors.textSecondary,
                               }}
                             >
-                              Create reports
+                              Create summary reports from maintenance requests
                             </div>
                           </div>
-                        </MobileCard>
+                        </div>
+                      </button>
 
-                        <MobileCard
-                          onClick={() => router.push("/admin/reports")}
-                          variant="compact"
-                          status="default"
-                        >
-                          <div className="text-center">
-                            <div className="text-2xl mb-2">📊</div>
+                      <button
+                        onClick={() => router.push("/admin/reports")}
+                        className="w-full p-4 rounded-xl border transition-colors text-left"
+                        style={{
+                          backgroundColor: themeConfig.colors.surface,
+                          borderColor: themeConfig.colors.border,
+                        }}
+                      >
+                        <div className="flex items-center">
+                          <span className="text-xl mr-3">📊</span>
+                          <div>
                             <div
-                              className="text-sm font-medium mb-1"
+                              className="font-medium"
                               style={{ color: themeConfig.colors.text }}
                             >
                               View Reports
                             </div>
                             <div
-                              className="text-xs"
+                              className="text-sm"
                               style={{
                                 color: themeConfig.colors.textSecondary,
                               }}
                             >
-                              Analytics
+                              Access detailed analytics and reports
                             </div>
                           </div>
-                        </MobileCard>
+                        </div>
+                      </button>
 
-                        <MobileCard
-                          onClick={() => router.push("/admin/users")}
-                          variant="compact"
-                          status="default"
-                        >
-                          <div className="text-center">
-                            <div className="text-2xl mb-2">👥</div>
+                      <button
+                        onClick={() => router.push("/admin/users")}
+                        className="w-full p-4 rounded-xl border transition-colors text-left"
+                        style={{
+                          backgroundColor: themeConfig.colors.surface,
+                          borderColor: themeConfig.colors.border,
+                        }}
+                      >
+                        <div className="flex items-center">
+                          <span className="text-xl mr-3">👥</span>
+                          <div>
                             <div
-                              className="text-sm font-medium mb-1"
+                              className="font-medium"
                               style={{ color: themeConfig.colors.text }}
                             >
                               Manage Users
                             </div>
                             <div
-                              className="text-xs"
+                              className="text-sm"
                               style={{
                                 color: themeConfig.colors.textSecondary,
                               }}
                             >
-                              User accounts
+                              Add, edit, or remove user accounts
                             </div>
                           </div>
-                        </MobileCard>
+                        </div>
+                      </button>
 
-                        <MobileCard
-                          onClick={() =>
-                            router.push("/admin/physical-plant-request")
-                          }
-                          variant="compact"
-                          status="default"
-                        >
-                          <div className="text-center">
-                            <div className="text-2xl mb-2">🔧</div>
+                      <button
+                        onClick={() =>
+                          router.push("/admin/physical-plant-request")
+                        }
+                        className="w-full p-4 rounded-xl border transition-colors text-left"
+                        style={{
+                          backgroundColor: themeConfig.colors.surface,
+                          borderColor: themeConfig.colors.border,
+                        }}
+                      >
+                        <div className="flex items-center">
+                          <span className="text-xl mr-3">🔧</span>
+                          <div>
                             <div
-                              className="text-sm font-medium mb-1"
+                              className="font-medium"
                               style={{ color: themeConfig.colors.text }}
                             >
                               Physical Repair
                             </div>
                             <div
-                              className="text-xs"
+                              className="text-sm"
                               style={{
                                 color: themeConfig.colors.textSecondary,
                               }}
                             >
-                              Repair forms
+                              Create physical plant repair forms
                             </div>
                           </div>
-                        </MobileCard>
-                      </div>
+                        </div>
+                      </button>
                     </div>
                   )}
                 </div>
@@ -767,23 +802,20 @@ export default function AdminDashboard() {
                   <div className={`${isMobile ? "p-4" : "p-6"}`}>
                     <div className="space-y-3">
                       {recentRequests
-                        .slice(0, isMobile ? 3 : 5)
+                        .slice(0, isMobile ? 5 : 5)
                         .map((request) => (
                           <div
                             key={request.id}
-                            className={`${isMobile ? "p-3" : "p-4"} rounded-xl`}
+                            className={`${isMobile ? "p-3" : "p-4"} rounded-xl border`}
                             style={{
                               backgroundColor: themeConfig.colors.background,
                               borderColor: themeConfig.colors.border,
-                              border: "1px solid",
                             }}
                           >
-                            <div
-                              className={`${isMobile ? "space-y-2" : "flex items-center justify-between"}`}
-                            >
-                              <div className={`${isMobile ? "" : "flex-1"}`}>
+                            <div className="flex items-center justify-between">
+                              <div className="flex-1">
                                 <h3
-                                  className={`${isMobile ? "text-sm" : "font-medium"} truncate`}
+                                  className={`${isMobile ? "text-sm font-medium" : "font-medium"} truncate`}
                                   style={{ color: themeConfig.colors.text }}
                                 >
                                   {request.title}
@@ -797,39 +829,25 @@ export default function AdminDashboard() {
                                   {request.location} • {request.category}
                                 </p>
                               </div>
-                              <div
-                                className={`${isMobile ? "flex items-center justify-between pt-2" : "flex items-center space-x-2"}`}
-                              >
+                              <div className="flex items-center space-x-2 ml-4">
                                 <span
                                   className={`${isMobile ? "text-xs px-2 py-1" : "px-3 py-1"} rounded-full font-medium`}
                                   style={{
-                                    background:
+                                    backgroundColor:
                                       request.status === "COMPLETED"
-                                        ? `linear-gradient(135deg, ${themeConfig.colors.success}20 0%, ${themeConfig.colors.success}10 100%)`
+                                        ? `${themeConfig.colors.success}20`
                                         : request.status === "IN_PROGRESS"
-                                          ? `linear-gradient(135deg, ${themeConfig.colors.primary}20 0%, ${themeConfig.colors.primary}10 100%)`
-                                          : `linear-gradient(135deg, ${themeConfig.colors.warning}20 0%, ${themeConfig.colors.warning}10 100%)`,
+                                          ? `${themeConfig.colors.primary}20`
+                                          : `${themeConfig.colors.warning}20`,
                                     color:
                                       request.status === "COMPLETED"
                                         ? themeConfig.colors.success
                                         : request.status === "IN_PROGRESS"
                                           ? themeConfig.colors.primary
                                           : themeConfig.colors.warning,
-                                    border: `1px solid ${
-                                      request.status === "COMPLETED"
-                                        ? themeConfig.colors.success
-                                        : request.status === "IN_PROGRESS"
-                                          ? themeConfig.colors.primary
-                                          : themeConfig.colors.warning
-                                    }30`,
                                     fontSize: isMobile ? "10px" : "12px",
                                   }}
                                 >
-                                  {request.status === "COMPLETED"
-                                    ? "🟢 "
-                                    : request.status === "IN_PROGRESS"
-                                      ? "🔵 "
-                                      : "🟡 "}
                                   {request.status.replace("_", " ")}
                                 </span>
                                 <span
