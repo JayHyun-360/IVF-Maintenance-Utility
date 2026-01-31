@@ -61,7 +61,18 @@ body {
   }
 }
 
-/* Theme transition styles - only apply to theme-aware elements */
+/* Theme initialization state - prevent black screen */
+.theme-initializing {
+  /* Ensure content is visible during theme initialization */
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+
+.theme-initializing * {
+  /* Prevent transitions during initialization */
+  transition: none !important;
+  animation: none !important;
+}
 .theme-transitioning {
   transition:
     background-color 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),

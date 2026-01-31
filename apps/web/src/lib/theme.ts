@@ -175,7 +175,10 @@ export const setupSystemPreferenceListener = (): void => {
   }
 };
 
-export const applyTheme = (theme: Theme): void => {
+export const applyTheme = (
+  theme: Theme,
+  skipAnimations: boolean = false,
+): void => {
   // Only run on client-side
   if (typeof window === "undefined" || typeof document === "undefined") {
     return;
@@ -189,12 +192,15 @@ export const applyTheme = (theme: Theme): void => {
   // Check for mobile device
   const isMobile = window.innerWidth <= 640;
 
+  // Skip animations if requested or on initial load
+  const shouldSkipAnimations = skipAnimations || prefersReducedMotion;
+
   // Determine timing based on preferences and device
-  const baseDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 1.2;
-  const imageDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 1.5;
-  const svgDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 0.8;
-  const interactiveDuration = prefersReducedMotion ? 0.1 : isMobile ? 0.2 : 1.0;
-  const totalDuration = prefersReducedMotion ? 200 : isMobile ? 400 : 1600;
+  const baseDuration = shouldSkipAnimations ? 0 : isMobile ? 0.2 : 1.2;
+  const imageDuration = shouldSkipAnimations ? 0 : isMobile ? 0.2 : 1.5;
+  const svgDuration = shouldSkipAnimations ? 0 : isMobile ? 0.2 : 0.8;
+  const interactiveDuration = shouldSkipAnimations ? 0 : isMobile ? 0.2 : 1.0;
+  const totalDuration = shouldSkipAnimations ? 0 : isMobile ? 400 : 1600;
 
   const easing = prefersReducedMotion
     ? "linear"
@@ -536,6 +542,13 @@ export const initializeTheme = (): Theme => {
   // Use stored theme if user has manually set it, otherwise use smart detection
   const initialTheme = storedTheme !== smartTheme ? storedTheme : smartTheme;
 
-  applyTheme(initialTheme);
+  // Defer theme application to avoid blocking initial render
+  if (typeof window !== "undefined") {
+    // Apply theme after a short delay to allow page to render first
+    setTimeout(() => {
+      applyTheme(initialTheme, true); // Skip animations on initial load
+    }, 100);
+  }
+
   return initialTheme;
 };
