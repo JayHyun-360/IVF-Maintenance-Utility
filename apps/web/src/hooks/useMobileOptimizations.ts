@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export interface MobileOptimizations {
   isMobile: boolean;
@@ -8,7 +8,7 @@ export interface MobileOptimizations {
   isDesktop: boolean;
   screenWidth: number;
   screenHeight: number;
-  orientation: 'portrait' | 'landscape';
+  orientation: "portrait" | "landscape";
   supportsTouch: boolean;
   supportsHaptic: boolean;
   safeAreaInsets: {
@@ -26,7 +26,7 @@ export function useMobileOptimizations(): MobileOptimizations {
     isDesktop: true,
     screenWidth: 1024,
     screenHeight: 768,
-    orientation: 'landscape',
+    orientation: "landscape",
     supportsTouch: false,
     supportsHaptic: false,
     safeAreaInsets: {
@@ -38,51 +38,70 @@ export function useMobileOptimizations(): MobileOptimizations {
   });
 
   useEffect(() => {
-    const updateOptimizations = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const isMobile = width < 768;
-      const isTablet = width >= 768 && width < 1024;
-      const isDesktop = width >= 1024;
-      
-      // Get safe area insets
-      const computedStyle = getComputedStyle(document.documentElement);
-      const safeAreaInsets = {
-        top: parseInt(computedStyle.getPropertyValue('--mobile-safe-area-top') || '0'),
-        right: parseInt(computedStyle.getPropertyValue('--mobile-safe-area-right') || '0'),
-        bottom: parseInt(computedStyle.getPropertyValue('--mobile-safe-area-bottom') || '0'),
-        left: parseInt(computedStyle.getPropertyValue('--mobile-safe-area-left') || '0'),
+    // Defer the heavy DOM operations to prevent blocking
+    const timer = setTimeout(() => {
+      const updateOptimizations = () => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const isMobile = width < 768;
+        const isTablet = width >= 768 && width < 1024;
+        const isDesktop = width >= 1024;
+
+        // Get safe area insets
+        const computedStyle = getComputedStyle(document.documentElement);
+        const safeAreaInsets = {
+          top: parseInt(
+            computedStyle.getPropertyValue("--mobile-safe-area-top") || "0",
+          ),
+          right: parseInt(
+            computedStyle.getPropertyValue("--mobile-safe-area-right") || "0",
+          ),
+          bottom: parseInt(
+            computedStyle.getPropertyValue("--mobile-safe-area-bottom") || "0",
+          ),
+          left: parseInt(
+            computedStyle.getPropertyValue("--mobile-safe-area-left") || "0",
+          ),
+        };
+
+        setOptimizations({
+          isMobile,
+          isTablet,
+          isDesktop,
+          screenWidth: width,
+          screenHeight: height,
+          orientation: width > height ? "landscape" : "portrait",
+          supportsTouch:
+            "ontouchstart" in window || navigator.maxTouchPoints > 0,
+          supportsHaptic: "vibrate" in navigator,
+          safeAreaInsets,
+        });
       };
 
-      setOptimizations({
-        isMobile,
-        isTablet,
-        isDesktop,
-        screenWidth: width,
-        screenHeight: height,
-        orientation: width > height ? 'landscape' : 'portrait',
-        supportsTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
-        supportsHaptic: 'vibrate' in navigator,
-        safeAreaInsets,
-      });
-    };
+      updateOptimizations();
 
-    updateOptimizations();
-    
-    const resizeObserver = new ResizeObserver(updateOptimizations);
-    resizeObserver.observe(document.body);
-    
-    const handleOrientationChange = () => {
-      setTimeout(updateOptimizations, 100); // Delay for orientation change completion
-    };
-    
-    window.addEventListener('orientationchange', handleOrientationChange);
-    window.addEventListener('resize', updateOptimizations);
+      const resizeObserver = new ResizeObserver(updateOptimizations);
+      resizeObserver.observe(document.body);
+
+      const handleOrientationChange = () => {
+        setTimeout(updateOptimizations, 100); // Delay for orientation change completion
+      };
+
+      window.addEventListener("orientationchange", handleOrientationChange);
+      window.addEventListener("resize", updateOptimizations);
+
+      return () => {
+        resizeObserver.disconnect();
+        window.removeEventListener(
+          "orientationchange",
+          handleOrientationChange,
+        );
+        window.removeEventListener("resize", updateOptimizations);
+      };
+    }, 100); // Small delay to allow page to render first
 
     return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('orientationchange', handleOrientationChange);
-      window.removeEventListener('resize', updateOptimizations);
+      // Cleanup timer if component unmounts quickly
     };
   }, []);
 
@@ -97,7 +116,7 @@ export function useHapticFeedback() {
       try {
         navigator.vibrate(pattern);
       } catch (error) {
-        console.warn('Haptic feedback not supported:', error);
+        console.warn("Haptic feedback not supported:", error);
       }
     }
   };
@@ -130,7 +149,7 @@ export function useTouchGestures(
     onLongPress?: () => void;
     threshold?: number;
     longPressDelay?: number;
-  } = {}
+  } = {},
 ) {
   const { supportsTouch } = useMobileOptimizations();
   const {
@@ -169,12 +188,12 @@ export function useTouchGestures(
 
     const handleTouchEnd = (e: TouchEvent) => {
       clearTimeout(longPressTimer);
-      
+
       const touch = e.changedTouches[0];
       const endX = touch.clientX;
       const endY = touch.clientY;
       const endTime = Date.now();
-      
+
       const deltaX = endX - startX;
       const deltaY = endY - startY;
       const deltaTime = endTime - startTime;
@@ -205,16 +224,27 @@ export function useTouchGestures(
       }
     };
 
-    element.addEventListener('touchstart', handleTouchStart, { passive: true });
-    element.addEventListener('touchmove', handleTouchMove, { passive: true });
-    element.addEventListener('touchend', handleTouchEnd, { passive: true });
+    element.addEventListener("touchstart", handleTouchStart, { passive: true });
+    element.addEventListener("touchmove", handleTouchMove, { passive: true });
+    element.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
-      element.removeEventListener('touchstart', handleTouchStart);
-      element.removeEventListener('touchmove', handleTouchMove);
-      element.removeEventListener('touchend', handleTouchEnd);
+      element.removeEventListener("touchstart", handleTouchStart);
+      element.removeEventListener("touchmove", handleTouchMove);
+      element.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [element, supportsTouch, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown, onTap, onLongPress, threshold, longPressDelay]);
+  }, [
+    element,
+    supportsTouch,
+    onSwipeLeft,
+    onSwipeRight,
+    onSwipeUp,
+    onSwipeDown,
+    onTap,
+    onLongPress,
+    threshold,
+    longPressDelay,
+  ]);
 }
 
 export function usePullToRefresh(
@@ -223,7 +253,7 @@ export function usePullToRefresh(
     threshold?: number;
     maxPullDistance?: number;
     debounceMs?: number;
-  } = {}
+  } = {},
 ) {
   const { isMobile } = useMobileOptimizations();
   const { threshold = 80, maxPullDistance = 120, debounceMs = 300 } = options;
@@ -250,7 +280,7 @@ export function usePullToRefresh(
 
       currentY = e.touches[0].clientY;
       const distance = Math.min(currentY - startY, maxPullDistance);
-      
+
       if (distance > 0) {
         e.preventDefault();
         setPullDistance(distance);
@@ -276,16 +306,25 @@ export function usePullToRefresh(
       setIsPulling(false);
     };
 
-    document.addEventListener('touchstart', handleTouchStart, { passive: true });
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd, { passive: true });
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [isMobile, onRefresh, threshold, maxPullDistance, pullDistance, isRefreshing]);
+  }, [
+    isMobile,
+    onRefresh,
+    threshold,
+    maxPullDistance,
+    pullDistance,
+    isRefreshing,
+  ]);
 
   return {
     isPulling,

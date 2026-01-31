@@ -48,8 +48,24 @@ export default function AuthGuard({
 
   if (status === "loading" || isChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: "#ffffff" }}
+      >
+        <div className="text-center">
+          <div
+            className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4"
+            style={{ borderColor: "#1B4332" }}
+          ></div>
+          <p
+            style={{
+              color: "#64748B",
+              fontFamily: "Inter, system-ui, sans-serif",
+            }}
+          >
+            Verifying access...
+          </p>
+        </div>
       </div>
     );
   }

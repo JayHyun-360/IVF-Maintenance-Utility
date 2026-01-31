@@ -26,19 +26,28 @@ export default function AdminDashboard() {
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
   const [activeTab, setActiveTab] = useState("overview");
-  const [stats, setStats] = useState(() => getMaintenanceStats());
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Initialize with empty/lightweight state first
+  const [stats, setStats] = useState({
+    totalRequests: 0,
+    pendingRequests: 0,
+    inProgressRequests: 0,
+    completedRequests: 0,
+  });
   const [recentRequests, setRecentRequests] = useState<MaintenanceRequest[]>(
-    () => getRecentRequests(),
+    [],
   );
-  const [allRequests, setAllRequests] = useState<MaintenanceRequest[]>(() =>
-    getMaintenanceRequests(),
-  );
-  const [categoryData, setCategoryData] = useState<Record<string, number>>(() =>
-    getRequestsByCategory(),
-  );
-  const [priorityData, setPriorityData] = useState<Record<string, number>>(() =>
-    getRequestsByPriority(),
-  );
+  const [allRequests, setAllRequests] = useState<MaintenanceRequest[]>([]);
+  const [categoryData, setCategoryData] = useState<Record<string, number>>({});
+  const [priorityData, setPriorityData] = useState<Record<string, number>>({
+    LOW: 0,
+    MEDIUM: 0,
+    HIGH: 0,
+    URGENT: 0,
+  });
+
+  // Other state
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -47,32 +56,44 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRequests, setFilteredRequests] = useState<
     MaintenanceRequest[]
-  >(() => getMaintenanceRequests());
+  >([]);
   const [showTextModal, setShowTextModal] = useState(false);
   const [selectedRequest, setSelectedRequest] =
     useState<MaintenanceRequest | null>(null);
 
-  // Load all data
+  // Load all data - defer to prevent blocking
   const loadData = () => {
-    const realStats = getMaintenanceStats();
-    const realRecentRequests = getRecentRequests();
-    const realAllRequests = getMaintenanceRequests();
-    const realCategoryData = getRequestsByCategory();
-    const realPriorityData = getRequestsByPriority();
+    try {
+      const realStats = getMaintenanceStats();
+      const realRecentRequests = getRecentRequests();
+      const realAllRequests = getMaintenanceRequests();
+      const realCategoryData = getRequestsByCategory();
+      const realPriorityData = getRequestsByPriority();
 
-    setStats(realStats);
-    setRecentRequests(realRecentRequests);
-    setAllRequests(realAllRequests);
-    setCategoryData(realCategoryData);
-    setPriorityData(realPriorityData);
-    setFilteredRequests(realAllRequests);
+      setStats(realStats);
+      setRecentRequests(realRecentRequests);
+      setAllRequests(realAllRequests);
+      setCategoryData(realCategoryData);
+      setPriorityData(realPriorityData);
+      setFilteredRequests(realAllRequests);
+    } catch (error) {
+      console.error("Error loading dashboard data:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Load data on component mount
+  // Load data on component mount - defer to prevent blocking
   useEffect(() => {
-    loadData();
+    const timer = setTimeout(() => {
+      loadData();
+    }, 150); // Small delay to allow page to render first
+
     const interval = setInterval(loadData, 30000);
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, []);
 
   // Filter requests based on search
@@ -132,6 +153,24 @@ export default function AdminDashboard() {
           className="min-h-screen mobile-scroll"
           style={{ backgroundColor: themeConfig.colors.background }}
         >
+          {/* Loading State */}
+          {isLoading && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center"
+              style={{ backgroundColor: themeConfig.colors.background }}
+            >
+              <div className="text-center">
+                <div
+                  className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4"
+                  style={{ borderColor: themeConfig.colors.primary }}
+                ></div>
+                <p style={{ color: themeConfig.colors.textSecondary }}>
+                  Loading Dashboard...
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Header */}
           <header
             className="border-b"
