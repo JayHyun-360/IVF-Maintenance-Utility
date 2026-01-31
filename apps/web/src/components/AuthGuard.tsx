@@ -17,12 +17,24 @@ export default function AuthGuard({
 }: AuthGuardProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [hasTimedOut, setHasTimedOut] = useState(false);
   const [isChecking] = useState(() => {
     if (status === "loading") return true;
     if (!session) return false;
     if (requiredRole && session.user?.role !== requiredRole) return false;
     return false;
   });
+
+  // Add timeout to prevent infinite loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (status === "loading") {
+        setHasTimedOut(true);
+      }
+    }, 5000); // 5 second timeout
+
+    return () => clearTimeout(timer);
+  }, [status]);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -47,6 +59,59 @@ export default function AuthGuard({
   }, [session, status, router, requiredRole, redirectTo]);
 
   if (status === "loading" || isChecking) {
+    // Show timeout state if authentication takes too long
+    if (hasTimedOut) {
+      return (
+        <div
+          className="min-h-screen flex items-center justify-center"
+          style={{ backgroundColor: "#ffffff" }}
+        >
+          <div className="text-center">
+            <div
+              className="rounded-full h-12 w-12 mx-auto mb-4 flex items-center justify-center"
+              style={{ backgroundColor: "#FEF3C7" }}
+            >
+              <svg
+                className="w-6 h-6 text-yellow-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                />
+              </svg>
+            </div>
+            <p
+              style={{
+                color: "#64748B",
+                fontFamily: "Inter, system-ui, sans-serif",
+                marginBottom: "16px",
+              }}
+            >
+              Authentication is taking longer than expected
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{
+                backgroundColor: "#1B4332",
+                color: "white",
+                padding: "8px 16px",
+                borderRadius: "6px",
+                fontSize: "14px",
+                cursor: "pointer",
+              }}
+            >
+              Refresh Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div
         className="min-h-screen flex items-center justify-center"

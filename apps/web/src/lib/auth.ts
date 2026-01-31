@@ -28,7 +28,9 @@ const findUserByEmail = (email: string) => {
 };
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
+  secret:
+    process.env.NEXTAUTH_SECRET ||
+    "ivf-maintenance-secret-key-2024-secure-production-auth",
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
