@@ -312,7 +312,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* Navigation Tabs */}
+        {/* Navigation Tabs - Desktop Only */}
         <div
           className="border-b"
           style={{ borderColor: themeConfig.colors.border }}
@@ -320,7 +320,7 @@ export default function AdminDashboard() {
           <div
             className={`${isMobile ? "max-w-4xl" : "max-w-7xl"} mx-auto ${isMobile ? "px-4" : "px-8"}`}
           >
-            {!isMobile ? (
+            {!isMobile && (
               <nav className="flex space-x-8">
                 {["overview", "requests", "analytics", "summary"].map((tab) => (
                   <button
@@ -348,56 +348,6 @@ export default function AdminDashboard() {
                   </button>
                 ))}
               </nav>
-            ) : (
-              <div className={`${isMobile ? "py-4" : ""}`}>
-                <nav className={`${isMobile ? "flex flex-col space-y-2" : ""}`}>
-                  {["overview", "requests", "analytics", "summary"].map(
-                    (tab) => (
-                      <button
-                        key={tab}
-                        onClick={() => {
-                          if (tab === "summary") {
-                            router.push("/admin/summary-request");
-                          } else {
-                            setActiveTab(tab);
-                          }
-                        }}
-                        className={`${isMobile ? "w-full text-left px-4 py-3 rounded-lg border transition-colors" : ""}`}
-                        style={{
-                          backgroundColor:
-                            activeTab === tab
-                              ? isMobile
-                                ? `${themeConfig.colors.primary}10`
-                                : "transparent"
-                              : isMobile
-                                ? "transparent"
-                                : "transparent",
-                          color:
-                            activeTab === tab
-                              ? themeConfig.colors.primary
-                              : themeConfig.colors.textSecondary,
-                          borderColor: isMobile
-                            ? themeConfig.colors.border
-                            : "transparent",
-                          borderWidth: isMobile ? "1px" : "0",
-                        }}
-                      >
-                        <span className={`${isMobile ? "font-medium" : ""}`}>
-                          {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                        </span>
-                        {isMobile && activeTab === tab && (
-                          <span
-                            className="float-right text-xs"
-                            style={{ color: themeConfig.colors.primary }}
-                          >
-                            ✓
-                          </span>
-                        )}
-                      </button>
-                    ),
-                  )}
-                </nav>
-              </div>
             )}
           </div>
         </div>
