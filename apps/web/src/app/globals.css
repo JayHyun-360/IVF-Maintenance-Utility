@@ -470,15 +470,9 @@ canvas {
   }
 }
 
-/* Mobile-specific optimizations */
-@media (max-width: 640px) {
-  /* Reduce motion for better performance */
-  * {
-    animation-duration: 0.2s !important;
-    transition-duration: 0.2s !important;
-  }
-
-  /* Touch-friendly tap targets */
+/* Web-first mobile optimizations */
+@media (max-width: 768px) {
+  /* Ensure proper touch targets without app-like styling */
   button,
   a,
   input,
@@ -488,26 +482,64 @@ canvas {
     min-width: 44px;
   }
 
-  /* Better scrolling on iOS */
-  .mobile-scroll {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
+  /* Web-style responsive typography */
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  h3 {
+    font-size: 1.125rem;
   }
 
-  /* Reduce theme effects on mobile for performance */
-  .nature-particles,
-  .ocean-shimmer,
-  .starfield-sparkle {
-    display: none !important;
+  /* Improve readability on mobile */
+  body {
+    font-size: 14px;
+    line-height: 1.5;
   }
 
-  input[type="number"],
+  /* Web-style mobile spacing */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Subtle mobile hover states */
+  button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Web-style active states */
+  button:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Mobile-specific web styles */
+@media (max-width: 640px) {
+  /* Compact but readable spacing */
+  .mobile-compact {
+    padding: 0.75rem;
+  }
+
+  /* Web-style mobile cards */
+  .mobile-card {
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Improve mobile form inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
   input[type="search"],
   input[type="tel"],
-  input[type="url"],
   textarea,
   select {
-    font-size: 16px !important;
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 0.75rem;
   }
 }
 
