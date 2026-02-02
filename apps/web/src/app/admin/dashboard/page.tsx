@@ -18,6 +18,12 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
+import WebHeader from "@/components/WebHeader";
+import {
+  WebListGroup,
+  WebListGroupItem,
+  WebStatsList,
+} from "@/components/WebListGroup";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -147,210 +153,35 @@ export default function AdminDashboard() {
   return (
     <AuthGuard requiredRole="ADMIN">
       <div
-        className="min-h-screen mobile-scroll"
+        className="min-h-screen"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
-        {/* Loading State */}
-        {isLoading && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center"
-            style={{ backgroundColor: themeConfig.colors.background }}
-          >
-            <div className="text-center">
-              <div
-                className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4"
-                style={{ borderColor: themeConfig.colors.primary }}
-              ></div>
-              <p style={{ color: themeConfig.colors.textSecondary }}>
-                Loading Dashboard...
-              </p>
-            </div>
-          </div>
-        )}
-
         {/* Header */}
-        <header
-          className="border-b"
-          style={{ borderColor: themeConfig.colors.border }}
-        >
-          <div
-            className={`${isMobile ? "max-w-4xl" : "max-w-7xl"} mx-auto ${isMobile ? "px-4" : "px-8"}`}
-          >
-            <div
-              className={`flex items-center justify-between ${isMobile ? "h-16" : "h-16"}`}
-            >
-              <div className="flex items-center space-x-4">
-                <div
-                  className={`${isMobile ? "w-8 h-8" : "w-8 h-8"} rounded-xl flex items-center justify-center shadow-lg`}
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)",
-                  }}
-                >
-                  <svg
-                    className={`${isMobile ? "w-4 h-4" : "w-4 h-4"} text-white`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg>
-                </div>
-                <h1
-                  className={`${isMobile ? "text-xl" : "text-xl"} font-bold`}
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Admin Dashboard
-                </h1>
+        <WebHeader
+          title="Admin Dashboard"
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Admin Dashboard" },
+          ]}
+          actions={
+            <div className="flex items-center space-x-2">
+              <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                <ThemeSwitcher />
               </div>
-              <div className="flex items-center space-x-4">
-                {/* Mobile Navigation Toggle */}
-                {isMobile && (
-                  <button
-                    onClick={() => {
-                      const nav = document.getElementById("mobile-nav-menu");
-                      nav?.classList.toggle("hidden");
-                    }}
-                    className="p-2 rounded-lg transition-colors hover:bg-opacity-10"
-                    style={{
-                      backgroundColor: `${themeConfig.colors.surface}20`,
-                      border: `1px solid ${themeConfig.colors.border}`,
-                    }}
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      style={{ color: themeConfig.colors.text }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
-                  </button>
-                )}
-                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
-                  <ThemeSwitcher />
-                </div>
-                <button
-                  onClick={() => router.push("/")}
-                  className={`${isMobile ? "px-4 py-2 text-sm" : "px-4 py-2"} rounded-xl transition-all duration-300 hover:scale-105`}
-                  style={{
-                    backgroundColor: themeConfig.colors.surface,
-                    color: themeConfig.colors.text,
-                    border: `1px solid ${themeConfig.colors.border}`,
-                  }}
-                >
-                  {isMobile ? "Home" : "Back to Home"}
-                </button>
-              </div>
+              <button
+                onClick={() => router.push("/")}
+                className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
+                style={{
+                  borderColor: "#E5E7EB",
+                  color: themeConfig.colors.text,
+                  fontFamily: "Inter, system-ui, sans-serif",
+                }}
+              >
+                Back to Home
+              </button>
             </div>
-          </div>
-        </header>
-
-        {/* Mobile Navigation Menu */}
-        {isMobile && (
-          <div
-            id="mobile-nav-menu"
-            className="hidden border-b"
-            style={{ borderColor: themeConfig.colors.border }}
-          >
-            <div className="max-w-4xl mx-auto px-4 py-3">
-              <nav className="flex flex-col space-y-2">
-                {["overview", "requests", "analytics", "summary"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => {
-                      if (tab === "summary") {
-                        router.push("/admin/summary-request");
-                      } else {
-                        setActiveTab(tab);
-                      }
-                      // Hide menu after selection
-                      document
-                        .getElementById("mobile-nav-menu")
-                        ?.classList.add("hidden");
-                    }}
-                    className="w-full text-left px-4 py-3 rounded-lg border transition-colors"
-                    style={{
-                      backgroundColor:
-                        activeTab === tab
-                          ? `${themeConfig.colors.primary}10`
-                          : "transparent",
-                      color:
-                        activeTab === tab
-                          ? themeConfig.colors.primary
-                          : themeConfig.colors.textSecondary,
-                      borderColor: themeConfig.colors.border,
-                      borderWidth: "1px",
-                    }}
-                  >
-                    <span className="font-medium">
-                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                    </span>
-                    {activeTab === tab && (
-                      <span
-                        className="float-right text-xs"
-                        style={{ color: themeConfig.colors.primary }}
-                      >
-                        ✓
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </nav>
-            </div>
-          </div>
-        )}
-
-        {/* Navigation Tabs - Desktop Only */}
-        <div
-          className="border-b"
-          style={{ borderColor: themeConfig.colors.border }}
-        >
-          <div
-            className={`${isMobile ? "max-w-4xl" : "max-w-7xl"} mx-auto ${isMobile ? "px-4" : "px-8"}`}
-          >
-            {!isMobile && (
-              <nav className="flex space-x-8">
-                {["overview", "requests", "analytics", "summary"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => {
-                      if (tab === "summary") {
-                        router.push("/admin/summary-request");
-                      } else {
-                        setActiveTab(tab);
-                      }
-                    }}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                      activeTab === tab
-                        ? "border-blue-500 text-blue-600"
-                        : "border-transparent"
-                    }`}
-                    style={{
-                      color:
-                        activeTab === tab
-                          ? "#3B82F6"
-                          : themeConfig.colors.textSecondary,
-                    }}
-                  >
-                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                  </button>
-                ))}
-              </nav>
-            )}
-          </div>
-        </div>
+          }
+        />
 
         {/* Main Content */}
         <div
@@ -359,569 +190,99 @@ export default function AdminDashboard() {
           {activeTab === "overview" && (
             <div className="space-y-8">
               {/* Stats Cards */}
-              {!isMobile ? (
-                <div className="grid grid-cols-5 gap-6">
-                  <div
-                    className="rounded-xl p-6 shadow-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
-                    style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor: themeConfig.colors.border,
-                      border: "1px solid",
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.totalRequests}
-                    </div>
-                    <div
-                      className="text-sm"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Total Requests
-                    </div>
-                  </div>
-                  <div
-                    className="rounded-xl p-6 shadow-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
-                    style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor: themeConfig.colors.border,
-                      border: "1px solid",
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.pendingRequests}
-                    </div>
-                    <div
-                      className="text-sm"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Pending
-                    </div>
-                  </div>
-                  <div
-                    className="rounded-xl p-6 shadow-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
-                    style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor: themeConfig.colors.border,
-                      border: "1px solid",
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.inProgressRequests}
-                    </div>
-                    <div
-                      className="text-sm"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      In Progress
-                    </div>
-                  </div>
-                  <div
-                    className="rounded-xl p-6 shadow-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
-                    style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor: themeConfig.colors.border,
-                      border: "1px solid",
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.completedRequests}
-                    </div>
-                    <div
-                      className="text-sm"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Completed
-                    </div>
-                  </div>
-                  <div
-                    className="rounded-xl p-6 shadow-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
-                    style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor: themeConfig.colors.border,
-                      border: "1px solid",
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {completionRate}%
-                    </div>
-                    <div
-                      className="text-sm"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Completion Rate
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <div
-                    className="rounded-xl shadow-lg p-4"
-                    style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor: themeConfig.colors.border,
-                      border: "1px solid",
-                    }}
-                  >
-                    <h2
-                      className="text-base font-semibold mb-3"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      Overview Statistics
-                    </h2>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div
-                        className="text-center p-3 rounded-lg"
-                        style={{
-                          backgroundColor: themeConfig.colors.background,
-                        }}
-                      >
-                        <div
-                          className="text-xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {stats.totalRequests}
-                        </div>
-                        <div
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Total Requests
-                        </div>
-                      </div>
-                      <div
-                        className="text-center p-3 rounded-lg"
-                        style={{
-                          backgroundColor: themeConfig.colors.background,
-                        }}
-                      >
-                        <div
-                          className="text-xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {stats.pendingRequests}
-                        </div>
-                        <div
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Pending
-                        </div>
-                      </div>
-                      <div
-                        className="text-center p-3 rounded-lg"
-                        style={{
-                          backgroundColor: themeConfig.colors.background,
-                        }}
-                      >
-                        <div
-                          className="text-xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {stats.inProgressRequests}
-                        </div>
-                        <div
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          In Progress
-                        </div>
-                      </div>
-                      <div
-                        className="text-center p-3 rounded-lg"
-                        style={{
-                          backgroundColor: themeConfig.colors.background,
-                        }}
-                      >
-                        <div
-                          className="text-xl font-bold mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          {stats.completedRequests}
-                        </div>
-                        <div
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Completed
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="mt-3 pt-3 border-t text-center"
-                      style={{ borderColor: themeConfig.colors.border }}
-                    >
-                      <div
-                        className="text-2xl font-bold mb-1"
-                        style={{ color: themeConfig.colors.primary }}
-                      >
-                        {completionRate}%
-                      </div>
-                      <div
-                        className="text-xs"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Completion Rate
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <WebStatsList
+                stats={[
+                  { label: "Total Requests", value: stats.totalRequests },
+                  { label: "Pending", value: stats.pendingRequests },
+                  { label: "In Progress", value: stats.inProgressRequests },
+                  { label: "Completed", value: stats.completedRequests },
+                  { label: "Completion Rate", value: `${completionRate}%` },
+                ]}
+                columns={isMobile ? 2 : 5}
+                compact={isMobile}
+              />
 
               {/* Quick Actions */}
-              <div
-                className="rounded-xl shadow-lg p-6"
-                style={{
-                  backgroundColor: themeConfig.colors.surface,
-                  borderColor: themeConfig.colors.border,
-                  border: "1px solid",
-                }}
-              >
-                <h2
-                  className={`${isMobile ? "text-base" : "text-lg"} font-semibold mb-${isMobile ? "3" : "4"}`}
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Quick Actions
-                </h2>
-                {!isMobile ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    <button
-                      onClick={() => router.push("/admin/summary-request")}
-                      className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
-                      style={{
-                        background: `linear-gradient(135deg, ${themeConfig.colors.primary}10 0%, ${themeConfig.colors.secondary}05 100%)`,
-                        border: `1px solid ${themeConfig.colors.border}`,
-                      }}
-                    >
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">📋</span>
-                        <span
-                          className="font-medium"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Generate Summary
-                        </span>
-                      </div>
-                      <p
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Create summary reports from maintenance requests
-                      </p>
-                    </button>
-
-                    <button
-                      onClick={() => router.push("/admin/reports")}
-                      className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
-                      style={{
-                        background: `linear-gradient(135deg, ${themeConfig.colors.warning}10 0%, ${themeConfig.colors.warning}05 100%)`,
-                        border: `1px solid ${themeConfig.colors.border}`,
-                      }}
-                    >
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">📊</span>
-                        <span
-                          className="font-medium"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          View Reports
-                        </span>
-                      </div>
-                      <p
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Access detailed analytics and reports
-                      </p>
-                    </button>
-
-                    <button
-                      onClick={() => router.push("/admin/users")}
-                      className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
-                      style={{
-                        background: `linear-gradient(135deg, ${themeConfig.colors.success}10 0%, ${themeConfig.colors.success}05 100%)`,
-                        border: `1px solid ${themeConfig.colors.border}`,
-                      }}
-                    >
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">👥</span>
-                        <span
-                          className="font-medium"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Manage Users
-                        </span>
-                      </div>
-                      <p
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Add, edit, or remove user accounts
-                      </p>
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        router.push("/admin/physical-plant-request")
-                      }
-                      className="p-4 rounded-xl transition-all duration-300 hover:scale-105 text-left"
-                      style={{
-                        background: `linear-gradient(135deg, ${themeConfig.colors.error}10 0%, ${themeConfig.colors.error}05 100%)`,
-                        border: `1px solid ${themeConfig.colors.border}`,
-                      }}
-                    >
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">🔧</span>
-                        <span
-                          className="font-medium"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Physical Repair
-                        </span>
-                      </div>
-                      <p
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Create physical plant repair forms
-                      </p>
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    <button
-                      onClick={() => router.push("/admin/summary-request")}
-                      className="w-full p-3 rounded-xl border transition-all duration-200 text-left hover:shadow-md active:scale-[0.98]"
-                      style={{
-                        backgroundColor: themeConfig.colors.surface,
-                        borderColor: themeConfig.colors.border,
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <span className="text-lg mr-3">📋</span>
-                        <div className="flex-1">
-                          <div
-                            className="font-medium text-sm"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Generate Summary
-                          </div>
-                          <div
-                            className="text-xs mt-1"
-                            style={{
-                              color: themeConfig.colors.textSecondary,
-                            }}
-                          >
-                            Create summary reports from maintenance requests
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-
-                    <button
-                      onClick={() => router.push("/admin/reports")}
-                      className="w-full p-3 rounded-xl border transition-all duration-200 text-left hover:shadow-md active:scale-[0.98]"
-                      style={{
-                        backgroundColor: themeConfig.colors.surface,
-                        borderColor: themeConfig.colors.border,
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <span className="text-lg mr-3">📊</span>
-                        <div className="flex-1">
-                          <div
-                            className="font-medium text-sm"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            View Reports
-                          </div>
-                          <div
-                            className="text-xs mt-1"
-                            style={{
-                              color: themeConfig.colors.textSecondary,
-                            }}
-                          >
-                            Access detailed analytics and reports
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-
-                    <button
-                      onClick={() => router.push("/admin/users")}
-                      className="w-full p-3 rounded-xl border transition-all duration-200 text-left hover:shadow-md active:scale-[0.98]"
-                      style={{
-                        backgroundColor: themeConfig.colors.surface,
-                        borderColor: themeConfig.colors.border,
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <span className="text-lg mr-3">👥</span>
-                        <div className="flex-1">
-                          <div
-                            className="font-medium text-sm"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Manage Users
-                          </div>
-                          <div
-                            className="text-xs mt-1"
-                            style={{
-                              color: themeConfig.colors.textSecondary,
-                            }}
-                          >
-                            Add, edit, or remove user accounts
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        router.push("/admin/physical-plant-request")
-                      }
-                      className="w-full p-3 rounded-xl border transition-all duration-200 text-left hover:shadow-md active:scale-[0.98]"
-                      style={{
-                        backgroundColor: themeConfig.colors.surface,
-                        borderColor: themeConfig.colors.border,
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <span className="text-lg mr-3">🔧</span>
-                        <div className="flex-1">
-                          <div
-                            className="font-medium text-sm"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Physical Repair
-                          </div>
-                          <div
-                            className="text-xs mt-1"
-                            style={{
-                              color: themeConfig.colors.textSecondary,
-                            }}
-                          >
-                            Create physical plant repair forms
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-                )}
-              </div>
+              <WebListGroup title="Quick Actions">
+                <WebListGroupItem
+                  title="Generate Summary"
+                  subtitle="Create summary reports from maintenance requests"
+                  leftIcon={<span>📋</span>}
+                  onClick={() => router.push("/admin/summary-request")}
+                />
+                <WebListGroupItem
+                  title="View Reports"
+                  subtitle="Access detailed analytics and reports"
+                  leftIcon={<span>📊</span>}
+                  onClick={() => router.push("/admin/reports")}
+                />
+                <WebListGroupItem
+                  title="Manage Users"
+                  subtitle="Add, edit, or remove user accounts"
+                  leftIcon={<span>�</span>}
+                  onClick={() => router.push("/admin/users")}
+                />
+                <WebListGroupItem
+                  title="Physical Repair"
+                  subtitle="Create physical plant repair forms"
+                  leftIcon={<span>�</span>}
+                  onClick={() => router.push("/admin/physical-plant-request")}
+                />
+              </WebListGroup>
 
               {/* Recent Requests */}
-              <div
-                className="rounded-xl shadow-lg"
-                style={{
-                  backgroundColor: themeConfig.colors.surface,
-                  borderColor: themeConfig.colors.border,
-                  border: "1px solid",
-                }}
-              >
-                <div
-                  className={`${isMobile ? "p-4" : "p-6"} border-b`}
-                  style={{ borderColor: themeConfig.colors.border }}
-                >
-                  <h2
-                    className={`${isMobile ? "text-base" : "text-lg"} font-semibold`}
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    Recent Requests
-                  </h2>
-                </div>
-                <div className={`${isMobile ? "p-4" : "p-6"}`}>
-                  <div className="space-y-3">
-                    {recentRequests
-                      .slice(0, isMobile ? 5 : 5)
-                      .map((request) => (
-                        <div
-                          key={request.id}
-                          className={`${isMobile ? "p-3" : "p-4"} rounded-xl border`}
+              <WebListGroup title="Recent Requests">
+                {recentRequests.slice(0, isMobile ? 5 : 5).map((request) => (
+                  <WebListGroupItem
+                    key={request.id}
+                    title={request.title}
+                    subtitle={`${request.location} • ${request.category}`}
+                    rightElement={
+                      <div className="flex items-center space-x-2">
+                        <span
+                          className="px-2 py-1 rounded-full text-xs font-medium"
                           style={{
-                            backgroundColor: themeConfig.colors.background,
-                            borderColor: themeConfig.colors.border,
+                            backgroundColor:
+                              request.status === "COMPLETED"
+                                ? `${themeConfig.colors.success}20`
+                                : request.status === "IN_PROGRESS"
+                                  ? `${themeConfig.colors.primary}20`
+                                  : `${themeConfig.colors.warning}20`,
+                            color:
+                              request.status === "COMPLETED"
+                                ? themeConfig.colors.success
+                                : request.status === "IN_PROGRESS"
+                                  ? themeConfig.colors.primary
+                                  : themeConfig.colors.warning,
                           }}
                         >
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                              <h3
-                                className={`${isMobile ? "text-sm font-medium" : "font-medium"} truncate`}
-                                style={{ color: themeConfig.colors.text }}
-                              >
-                                {request.title}
-                              </h3>
-                              <p
-                                className={`${isMobile ? "text-xs" : "text-sm"} mt-1`}
-                                style={{
-                                  color: themeConfig.colors.textSecondary,
-                                }}
-                              >
-                                {request.location} • {request.category}
-                              </p>
-                            </div>
-                            <div className="flex items-center space-x-2 ml-4">
-                              <span
-                                className={`${isMobile ? "text-xs px-2 py-1" : "px-3 py-1"} rounded-full font-medium`}
-                                style={{
-                                  backgroundColor:
-                                    request.status === "COMPLETED"
-                                      ? `${themeConfig.colors.success}20`
-                                      : request.status === "IN_PROGRESS"
-                                        ? `${themeConfig.colors.primary}20`
-                                        : `${themeConfig.colors.warning}20`,
-                                  color:
-                                    request.status === "COMPLETED"
-                                      ? themeConfig.colors.success
-                                      : request.status === "IN_PROGRESS"
-                                        ? themeConfig.colors.primary
-                                        : themeConfig.colors.warning,
-                                  fontSize: isMobile ? "10px" : "12px",
-                                }}
-                              >
-                                {request.status.replace("_", " ")}
-                              </span>
-                              <span
-                                className={`${isMobile ? "text-xs px-2 py-1" : "px-3 py-1"} rounded-full font-medium`}
-                                style={{
-                                  backgroundColor:
-                                    request.priority === "HIGH"
-                                      ? `${themeConfig.colors.error}20`
-                                      : request.priority === "MEDIUM"
-                                        ? `${themeConfig.colors.warning}20`
-                                        : `${themeConfig.colors.textSecondary}20`,
-                                  color:
-                                    request.priority === "HIGH"
-                                      ? themeConfig.colors.error
-                                      : request.priority === "MEDIUM"
-                                        ? themeConfig.colors.warning
-                                        : themeConfig.colors.textSecondary,
-                                  fontSize: isMobile ? "10px" : "12px",
-                                }}
-                              >
-                                {request.priority}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              </div>
+                          {request.status.replace("_", " ")}
+                        </span>
+                        <span
+                          className="px-2 py-1 rounded-full text-xs font-medium"
+                          style={{
+                            backgroundColor:
+                              request.priority === "HIGH"
+                                ? `${themeConfig.colors.error}20`
+                                : request.priority === "MEDIUM"
+                                  ? `${themeConfig.colors.warning}20`
+                                  : `${themeConfig.colors.textSecondary}20`,
+                            color:
+                              request.priority === "HIGH"
+                                ? themeConfig.colors.error
+                                : request.priority === "MEDIUM"
+                                  ? themeConfig.colors.warning
+                                  : themeConfig.colors.textSecondary,
+                          }}
+                        >
+                          {request.priority}
+                        </span>
+                      </div>
+                    }
+                    onClick={() => viewRequestDetails(request)}
+                  />
+                ))}
+              </WebListGroup>
             </div>
           )}
 

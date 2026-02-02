@@ -11,8 +11,8 @@ import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import Image from "next/image";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
-import { MobileNavigationWrapper } from "@/components/MobileNavigation";
-import MobileCard, { MobileCardGrid } from "@/components/MobileCard";
+import WebHeader from "@/components/WebHeader";
+import { WebForm, WebFormField, WebFormSection } from "@/components/WebForm";
 
 export default function UserPage() {
   const router = useRouter();
@@ -135,467 +135,213 @@ export default function UserPage() {
 
   return (
     <AuthGuard>
-      <MobileNavigationWrapper>
-        <div
-          className="min-h-screen mobile-scroll"
-          style={{ backgroundColor: themeConfig.colors.background }}
-        >
-          {/* Mobile-Optimized Header with Gradient */}
-          <header
-            className="mobile-safe-padding-top px-2 sm:px-3 md:px-4 lg:px-6 py-3 sm:py-4 md:py-5 border-b relative overflow-visible"
-            style={{ borderColor: themeConfig.colors.border }}
-          >
+      <div
+        className="min-h-screen"
+        style={{ backgroundColor: themeConfig.colors.background }}
+      >
+        {/* Header */}
+        <WebHeader
+          title="Submit Maintenance Request"
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Submit Request" },
+          ]}
+          actions={
+            <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+              <ThemeSwitcher />
+            </div>
+          }
+        />
+
+        {/* Main Content */}
+        <div className={`${isMobile ? "px-4 py-4" : "px-6 py-6"}`}>
+          <div className={`${isMobile ? "max-w-4xl" : "max-w-4xl"} mx-auto`}>
+            <WebForm
+              title="Request Details"
+              subtitle="Report issues and track resolution progress"
+              onSubmit={handleSubmit}
+              loading={isSubmitting}
+              submitText="Submit Request"
+            >
+              <WebFormSection title="Basic Information">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <WebFormField
+                    name="title"
+                    label="Title"
+                    placeholder="Brief description of the issue"
+                    required
+                  />
+                  <WebFormField
+                    name="location"
+                    label="Location"
+                    placeholder="Building, room, or area"
+                    required
+                  />
+                </div>
+                <WebFormField
+                  name="description"
+                  label="Description"
+                  type="textarea"
+                  placeholder="Detailed description of the maintenance issue..."
+                  required
+                />
+              </WebFormSection>
+
+              <WebFormSection title="Classification">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <WebFormField
+                    name="category"
+                    label="Category"
+                    type="select"
+                    options={[
+                      { label: "🔧 Plumbing", value: "PLUMBING" },
+                      { label: "⚡ Electrical", value: "ELECTRICAL" },
+                      { label: "🔨 Carpentry", value: "CARPENTRY" },
+                      { label: "👥 Personnel", value: "PERSONNEL" },
+                      { label: "📝 Others", value: "OTHERS" },
+                    ]}
+                  />
+                  <WebFormField
+                    name="priority"
+                    label="Priority"
+                    type="select"
+                    options={[
+                      { label: "🟢 Low", value: "LOW" },
+                      { label: "🟡 Medium", value: "MEDIUM" },
+                      { label: "🔴 High", value: "HIGH" },
+                    ]}
+                  />
+                </div>
+                {formData.category === "OTHERS" && (
+                  <WebFormField
+                    name="otherCategory"
+                    label="Specify Category"
+                    placeholder="Please specify the category..."
+                    required
+                  />
+                )}
+              </WebFormSection>
+            </WebForm>
+
+            {/* Photo Upload Section */}
             <div
-              className="absolute inset-0 opacity-8 sm:opacity-10 overflow-hidden"
-              style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-              }}
-            ></div>
-            <div className="max-w-4xl mx-auto flex items-center justify-between relative z-10">
-              <div className="flex items-center flex-1">
-                <button
-                  onClick={() => router.push("/")}
-                  className="p-2 sm:p-3 rounded-lg sm:rounded-xl mr-2 sm:mr-3 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
-                  style={{
-                    backgroundColor: themeConfig.colors.surface,
-                    color: themeConfig.colors.text,
-                    border: `1px solid ${themeConfig.colors.border}`,
-                  }}
+              className="mt-6 bg-white rounded-lg border p-4"
+              style={{ borderColor: "#E5E7EB" }}
+            >
+              <h3
+                className="text-base font-semibold mb-4"
+                style={{
+                  color: themeConfig.colors.text,
+                  fontFamily: "Inter, system-ui, sans-serif",
+                }}
+              >
+                Photo Documentation
+              </h3>
+
+              <div
+                className="border-2 border-dashed rounded-lg p-6 text-center transition-all duration-300 hover:border-blue-400 cursor-pointer"
+                style={{
+                  borderColor: "#E5E7EB",
+                  backgroundColor: "#F9FAFB",
+                }}
+              >
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  id="photos"
+                />
+                <label
+                  htmlFor="photos"
+                  className="cursor-pointer flex flex-col items-center space-y-3"
                 >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{
+                      backgroundColor: `${themeConfig.colors.primary}10`,
+                    }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-                <div className="text-center flex-1">
-                  <h1
-                    className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2"
+                    <svg
+                      className="w-6 h-6"
+                      style={{ color: themeConfig.colors.primary }}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p
+                      className="text-sm font-medium"
+                      style={{
+                        color: themeConfig.colors.text,
+                        fontFamily: "Inter, system-ui, sans-serif",
+                      }}
+                    >
+                      Click to upload photos
+                    </p>
+                    <p
+                      className="text-xs mt-1"
+                      style={{
+                        color: themeConfig.colors.textSecondary,
+                        fontFamily: "Inter, system-ui, sans-serif",
+                      }}
+                    >
+                      Up to 5MB per image, multiple files supported
+                    </p>
+                  </div>
+                </label>
+              </div>
+
+              {/* Image Previews */}
+              {imagePreviews.length > 0 && (
+                <div className="mt-4">
+                  <p
+                    className="text-sm font-medium mb-3"
                     style={{
                       color: themeConfig.colors.text,
-                      textShadow: `0 1px 2px ${themeConfig.colors.primary}20`,
+                      fontFamily: "Inter, system-ui, sans-serif",
                     }}
                   >
-                    Submit Maintenance Request
-                  </h1>
-                  <p
-                    className="text-xs sm:text-sm md:text-base"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Report issues and track resolution progress
+                    Uploaded Photos ({imagePreviews.length})
                   </p>
-                </div>
-              </div>
-              <div
-                className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4"
-                style={{ zIndex: Z_INDEX.MAX }}
-              >
-                <ThemeSwitcher />
-              </div>
-            </div>
-          </header>
-
-          {/* Mobile-Optimized Main Content */}
-          <main className="px-2 sm:px-3 md:px-4 lg:px-6 py-3 sm:py-4 md:py-5 lg:py-6 mobile-scroll">
-            <div className="max-w-4xl mx-auto">
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                {/* Mobile-Optimized Request Details */}
-                <div
-                  className="rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg sm:shadow-xl transform transition-all duration-300 hover:shadow-xl sm:hover:shadow-2xl"
-                  style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                    borderColor: themeConfig.colors.border,
-                    border: "1px solid",
-                    boxShadow: `0 6px 16px ${themeConfig.colors.primary}10, 0 0 0 1px ${themeConfig.colors.border}15`,
-                  }}
-                >
-                  <div className="flex items-center mb-3 sm:mb-4">
-                    <div
-                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center mr-2 sm:mr-3"
-                      style={{
-                        background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                      }}
-                    >
-                      <svg
-                        className="w-3 h-3 sm:w-4 sm:h-4 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {imagePreviews.map((preview, index) => (
+                      <div key={index} className="relative group">
+                        <Image
+                          src={preview}
+                          alt={`Preview ${index + 1}`}
+                          width={200}
+                          height={128}
+                          className="w-full h-20 object-cover rounded-lg transition-all duration-300 group-hover:scale-105"
                         />
-                      </svg>
-                    </div>
-                    <h2
-                      className="text-base sm:text-lg font-semibold"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      Request Details
-                    </h2>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
-                    {!isMobile ? (
-                      <>
-                        <div>
-                          <label
-                            className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Title *
-                          </label>
-                          <input
-                            type="text"
-                            name="title"
-                            value={formData.title}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
-                            style={{
-                              backgroundColor: themeConfig.colors.background,
-                              borderColor: themeConfig.colors.border,
-                              color: themeConfig.colors.text,
-                              border: "1px solid",
-                              fontSize: "16px",
-                            }}
-                            placeholder="Brief description of the issue"
-                          />
-                        </div>
-
-                        <div>
-                          <label
-                            className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Location *
-                          </label>
-                          <input
-                            type="text"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
-                            style={{
-                              backgroundColor: themeConfig.colors.background,
-                              borderColor: themeConfig.colors.border,
-                              color: themeConfig.colors.text,
-                              border: "1px solid",
-                              fontSize: "16px",
-                            }}
-                            placeholder="Building, room, or area"
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <MobileCardGrid columns={1}>
-                        <MobileCard variant="compact">
-                          <div>
-                            <label
-                              className="block text-xs font-medium mb-2"
-                              style={{ color: themeConfig.colors.text }}
-                            >
-                              Title *
-                            </label>
-                            <input
-                              type="text"
-                              name="title"
-                              value={formData.title}
-                              onChange={handleChange}
-                              required
-                              className="w-full px-3 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
-                              style={{
-                                backgroundColor: themeConfig.colors.background,
-                                borderColor: themeConfig.colors.border,
-                                color: themeConfig.colors.text,
-                                border: "1px solid",
-                                fontSize: "16px",
-                              }}
-                              placeholder="Brief description of the issue"
-                            />
-                          </div>
-                        </MobileCard>
-
-                        <MobileCard variant="compact">
-                          <div>
-                            <label
-                              className="block text-xs font-medium mb-2"
-                              style={{ color: themeConfig.colors.text }}
-                            >
-                              Location *
-                            </label>
-                            <input
-                              type="text"
-                              name="location"
-                              value={formData.location}
-                              onChange={handleChange}
-                              required
-                              className="w-full px-3 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
-                              style={{
-                                backgroundColor: themeConfig.colors.background,
-                                borderColor: themeConfig.colors.border,
-                                color: themeConfig.colors.text,
-                                border: "1px solid",
-                                fontSize: "16px",
-                              }}
-                              placeholder="Building, room, or area"
-                            />
-                          </div>
-                        </MobileCard>
-                      </MobileCardGrid>
-                    )}
-
-                    <div className="mb-3 sm:mb-4">
-                      <label
-                        className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        Description *
-                      </label>
-                      <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        required
-                        rows={4}
-                        className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent resize-none"
-                        style={{
-                          backgroundColor: themeConfig.colors.background,
-                          borderColor: themeConfig.colors.border,
-                          color: themeConfig.colors.text,
-                          border: "1px solid",
-                          fontSize: "16px",
-                        }}
-                        placeholder="Detailed description of the maintenance issue..."
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-                      <div>
-                        <label
-                          className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Category
-                        </label>
-                        <select
-                          name="category"
-                          value={formData.category}
-                          onChange={handleChange}
-                          className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="absolute -top-2 -right-2 w-5 h-5 text-white rounded-full text-xs font-medium transition-all duration-300 hover:scale-110 shadow-lg"
                           style={{
-                            backgroundColor: themeConfig.colors.background,
-                            borderColor: themeConfig.colors.border,
-                            color: themeConfig.colors.text,
-                            border: "1px solid",
-                            fontSize: "16px",
+                            backgroundColor: themeConfig.colors.error,
                           }}
                         >
-                          <option value="PLUMBING">🔧 Plumbing</option>
-                          <option value="ELECTRICAL">⚡ Electrical</option>
-                          <option value="CARPENTRY">🔨 Carpentry</option>
-                          <option value="PERSONNEL">👥 Personnel</option>
-                          <option value="OTHERS">📝 Others</option>
-                        </select>
+                          ×
+                        </button>
                       </div>
-
-                      {formData.category === "OTHERS" && (
-                        <div>
-                          <label
-                            className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Specify Category
-                          </label>
-                          <input
-                            type="text"
-                            name="otherCategory"
-                            value={formData.otherCategory}
-                            onChange={handleChange}
-                            placeholder="Please specify the category..."
-                            required
-                            className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
-                            style={{
-                              backgroundColor: themeConfig.colors.background,
-                              borderColor: themeConfig.colors.border,
-                              color: themeConfig.colors.text,
-                              border: "1px solid",
-                              fontSize: "16px",
-                            }}
-                          />
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4">
-                      <div>
-                        <label
-                          className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Priority
-                        </label>
-                        <select
-                          name="priority"
-                          value={formData.priority}
-                          onChange={handleChange}
-                          className="w-full px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
-                          style={{
-                            backgroundColor: themeConfig.colors.background,
-                            borderColor: themeConfig.colors.border,
-                            color: themeConfig.colors.text,
-                            border: "1px solid",
-                            fontSize: "16px",
-                          }}
-                        >
-                          <option value="LOW">🟢 Low</option>
-                          <option value="MEDIUM">🟡 Medium</option>
-                          <option value="HIGH">🔴 High</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Mobile-Optimized Photo Upload */}
-                  <div
-                    className="rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-md sm:shadow-lg"
-                    style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor: themeConfig.colors.border,
-                      border: "1px solid",
-                    }}
-                  >
-                    <h2
-                      className="text-base sm:text-lg font-semibold mb-3 sm:mb-4"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      Photo Documentation
-                    </h2>
-
-                    <div
-                      className="border-2 border-dashed rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 text-center transition-all duration-300 hover:border-blue-400 cursor-pointer"
-                      style={{
-                        borderColor: themeConfig.colors.border,
-                        backgroundColor: themeConfig.colors.background,
-                      }}
-                    >
-                      <input
-                        type="file"
-                        multiple
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                        id="photos"
-                      />
-                      <label
-                        htmlFor="photos"
-                        className="cursor-pointer flex flex-col items-center space-y-2 sm:space-y-3"
-                      >
-                        <div
-                          className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center"
-                          style={{
-                            backgroundColor: `${themeConfig.colors.primary}10`,
-                          }}
-                        >
-                          <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
-                            style={{ color: themeConfig.colors.primary }}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 4v16m8-8H4"
-                            />
-                          </svg>
-                        </div>
-                        <div>
-                          <p
-                            className="text-sm sm:text-base font-medium"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Click to upload photos
-                          </p>
-                          <p
-                            className="text-xs mt-1"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Up to 5MB per image, multiple files supported
-                          </p>
-                        </div>
-                      </label>
-                    </div>
-
-                    {/* Mobile-Optimized Image Previews */}
-                    {imagePreviews.length > 0 && (
-                      <div className="mt-3 sm:mt-4">
-                        <p
-                          className="text-xs sm:text-sm font-medium mb-2 sm:mb-3"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Uploaded Photos ({imagePreviews.length})
-                        </p>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
-                          {imagePreviews.map((preview, index) => (
-                            <div key={index} className="relative group">
-                              <Image
-                                src={preview}
-                                alt={`Preview ${index + 1}`}
-                                width={200}
-                                height={128}
-                                className="w-full h-16 sm:h-20 md:h-24 object-cover rounded-lg sm:rounded-xl transition-all duration-300 group-hover:scale-105"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => removeImage(index)}
-                                className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 text-white rounded-full text-xs font-medium transition-all duration-300 hover:scale-110 shadow-lg"
-                                style={{
-                                  backgroundColor: themeConfig.colors.error,
-                                }}
-                              >
-                                ×
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    ))}
                   </div>
                 </div>
-
-                {/* Mobile-Optimized Enhanced Submit Button */}
-                <div className="flex justify-center">
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    loading={isSubmitting}
-                    size="mobile"
-                    fullWidth
-                    className="text-sm sm:text-base"
-                  >
-                    {isSubmitting ? "Submitting..." : "Submit Request"}
-                  </Button>
-                </div>
-              </form>
+              )}
             </div>
-          </main>
+          </div>
         </div>
-      </MobileNavigationWrapper>
+      </div>
     </AuthGuard>
   );
 }
