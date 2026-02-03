@@ -1,6 +1,6 @@
 "use client";
 
-// Summary Request - Desktop Only Version
+// Summary Request - Mobile/Desktop Conditional Version
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
@@ -8,6 +8,9 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { Z_INDEX } from "@/lib/z-index";
 import { getMaintenanceRequests } from "@/lib/data";
 import AuthGuard from "@/components/AuthGuard";
+import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
+import WebHeader from "@/components/WebHeader";
+import { WebForm, WebFormField, WebFormSection } from "@/components/WebForm";
 
 interface SummaryData {
   category: string;
@@ -23,6 +26,7 @@ interface SummaryData {
 export default function SummaryRequestPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
+  const { isMobile } = useMobileOptimizations();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [summaryData, setSummaryData] = useState<SummaryData | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -69,56 +73,146 @@ export default function SummaryRequestPage() {
         className="min-h-screen"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
-        {/* Header */}
-        <header
-          className="border-b"
-          style={{ borderColor: themeConfig.colors.border }}
-        >
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center">
-                <button
-                  onClick={() => router.push("/admin/dashboard")}
-                  className="p-2 rounded-xl mr-4 transition-all duration-300 hover:scale-105"
-                  style={{
-                    backgroundColor: themeConfig.colors.surface,
-                    color: themeConfig.colors.text,
-                    border: `1px solid ${themeConfig.colors.border}`,
-                  }}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-                <h1
-                  className="text-xl font-bold"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Generate Summary Report
-                </h1>
+        {/* Header - Conditional based on device */}
+        {isMobile ? (
+          <WebHeader
+            title="Generate Summary Report"
+            breadcrumbs={[
+              { label: "Admin Dashboard", href: "/admin/dashboard" },
+              { label: "Summary Report" },
+            ]}
+            actions={
+              <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                <ThemeSwitcher />
               </div>
-              <div className="flex items-center">
-                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
-                  <ThemeSwitcher />
+            }
+          />
+        ) : (
+          /* Original Desktop Header */
+          <header
+            className="border-b"
+            style={{ borderColor: themeConfig.colors.border }}
+          >
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="flex items-center justify-between h-16">
+                <div className="flex items-center">
+                  <button
+                    onClick={() => router.push("/admin/dashboard")}
+                    className="p-2 rounded-xl mr-4 transition-all duration-300 hover:scale-105"
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      color: themeConfig.colors.text,
+                      border: `1px solid ${themeConfig.colors.border}`,
+                    }}
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    className="text-xl font-bold"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    Generate Summary Report
+                  </h1>
+                </div>
+                <div className="flex items-center">
+                  <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                    <ThemeSwitcher />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
+        )}
 
-        {/* Main Content */}
-        <div className="max-w-4xl mx-auto px-8 py-8">
-          <div className="space-y-8">
+        {/* Main Content - Conditional based on device */}
+        {isMobile ? (
+          <div className="px-4 py-4">
+            <div className="max-w-4xl mx-auto space-y-6">
+              <WebForm
+                title="Generate Summary Report"
+                subtitle="Select a category to generate a comprehensive summary report"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  generateSummary();
+                }}
+                loading={isGenerating}
+                submitText="Generate Summary"
+              >
+                <WebFormSection title="Category Selection">
+                  <WebFormField
+                    name="category"
+                    label="Select Category"
+                    type="select"
+                    options={[
+                      { label: 'Select a category...', value: '' },
+                      { label: '🔧 Plumbing', value: 'PLUMBING' },
+                      { label: '⚡ Electrical', value: 'ELECTRICAL' },
+                      { label: '🔨 Carpentry', value: 'CARPENTRY' },
+                      { label: '👥 Personnel', value: 'PERSONNEL' }
+                    ]}
+                    value={selectedCategory}
+                    onChange={(e: any) => setSelectedCategory(e.target.value)}
+                    required
+                  />
+                </WebFormSection>
+              </WebForm>
+
+              {/* Summary Results */}
+              {summaryData && (
+                <div className="bg-white rounded-lg border p-4" style={{ borderColor: '#E5E7EB' }}>
+                  <h3 className="text-lg font-semibold mb-4" style={{ color: themeConfig.colors.text }}>
+                    Summary Report - {summaryData.category}
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm font-medium" style={{ color: themeConfig.colors.textSecondary }}>
+                        Total Requests:
+                      </span>
+                      <span className="text-sm font-bold" style={{ color: themeConfig.colors.primary }}>
+                        {summaryData.totalRequests}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium" style={{ color: themeConfig.colors.textSecondary }}>
+                        Locations:
+                      </span>
+                      <div className="mt-1">
+                        {summaryData.locations.map((location, index) => (
+                          <span key={index} className="inline-block px-2 py-1 bg-gray-100 rounded text-xs mr-2 mb-2">
+                            {location}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium" style={{ color: themeConfig.colors.textSecondary }}>
+                        Summary:
+                      </span>
+                      <p className="mt-1 text-sm" style={{ color: themeConfig.colors.text }}>
+                        {summaryData.summaryDescription}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          /* Original Desktop Layout */
+          <div className="max-w-4xl mx-auto px-8 py-8">
+            <div className="space-y-8">
             {/* Category Selection */}
             <div
               className="rounded-xl p-6 shadow-lg"
@@ -403,7 +497,7 @@ export default function SummaryRequestPage() {
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
     </AuthGuard>
   );
