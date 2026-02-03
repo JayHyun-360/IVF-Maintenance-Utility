@@ -20,5 +20,7 @@
   "/role-selection/page": "app/role-selection/page.js",
   "/settings/page": "app/settings/page.js",
   "/student/history/page": "app/student/history/page.js",
-  "/student/page": "app/student/page.js"
+  "/student/page": "app/student/page.js",
+  "/test-auth/page": "app/test-auth/page.js",
+  "/test-env/page": "app/test-env/page.js"
 }

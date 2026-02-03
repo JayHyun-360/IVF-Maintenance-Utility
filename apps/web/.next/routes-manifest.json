@@ -156,6 +156,18 @@
       "regex": "^/student/history(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/student/history(?:/)?$"
+    },
+    {
+      "page": "/test-auth",
+      "regex": "^/test\\-auth(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/test\\-auth(?:/)?$"
+    },
+    {
+      "page": "/test-env",
+      "regex": "^/test\\-env(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/test\\-env(?:/)?$"
     }
   ],
   "dataRoutes": [],
