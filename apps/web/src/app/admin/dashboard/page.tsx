@@ -1324,13 +1324,13 @@ export default function AdminDashboard() {
                   <WebListGroup title="Analytics Overview">
                     <div className="space-y-4">
                       <div className="text-center">
-                        <h3 
+                        <h3
                           className="text-lg font-semibold mb-2"
                           style={{ color: themeConfig.colors.text }}
                         >
                           🎯 Analytics Dashboard
                         </h3>
-                        <p 
+                        <p
                           className="text-sm"
                           style={{ color: themeConfig.colors.textSecondary }}
                         >
@@ -1342,47 +1342,75 @@ export default function AdminDashboard() {
 
                   <WebListGroup title="Requests by Category">
                     <div className="space-y-3">
-                      {Object.entries(categoryData).map(([category, count], index) => (
-                        <div key={category} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <span className="text-sm font-medium" style={{ color: themeConfig.colors.text }}>
-                            {category}
-                          </span>
-                          <span 
-                            className="px-2 py-1 rounded-full text-xs font-medium"
-                            style={{
-                              backgroundColor: index === 0 ? `${themeConfig.colors.primary}20` : 
-                                               index === 1 ? `${themeConfig.colors.secondary}20` : 
-                                               index === 2 ? `${themeConfig.colors.warning}20` : 
-                                               `${themeConfig.colors.success}20`,
-                              color: index === 0 ? themeConfig.colors.primary : 
-                                     index === 1 ? themeConfig.colors.secondary : 
-                                     index === 2 ? themeConfig.colors.warning : 
-                                     themeConfig.colors.success,
-                            }}
+                      {Object.entries(categoryData).map(
+                        ([category, count], index) => (
+                          <div
+                            key={category}
+                            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                           >
-                            {count}
-                          </span>
-                        </div>
-                      ))}
+                            <span
+                              className="text-sm font-medium"
+                              style={{ color: themeConfig.colors.text }}
+                            >
+                              {category}
+                            </span>
+                            <span
+                              className="px-2 py-1 rounded-full text-xs font-medium"
+                              style={{
+                                backgroundColor:
+                                  index === 0
+                                    ? `${themeConfig.colors.primary}20`
+                                    : index === 1
+                                      ? `${themeConfig.colors.secondary}20`
+                                      : index === 2
+                                        ? `${themeConfig.colors.warning}20`
+                                        : `${themeConfig.colors.success}20`,
+                                color:
+                                  index === 0
+                                    ? themeConfig.colors.primary
+                                    : index === 1
+                                      ? themeConfig.colors.secondary
+                                      : index === 2
+                                        ? themeConfig.colors.warning
+                                        : themeConfig.colors.success,
+                              }}
+                            >
+                              {count}
+                            </span>
+                          </div>
+                        ),
+                      )}
                     </div>
                   </WebListGroup>
 
                   <WebListGroup title="Requests by Priority">
                     <div className="space-y-3">
                       {Object.entries(priorityData).map(([priority, count]) => (
-                        <div key={priority} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <span className="text-sm font-medium" style={{ color: themeConfig.colors.text }}>
+                        <div
+                          key={priority}
+                          className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                        >
+                          <span
+                            className="text-sm font-medium"
+                            style={{ color: themeConfig.colors.text }}
+                          >
                             {priority}
                           </span>
-                          <span 
+                          <span
                             className="px-2 py-1 rounded-full text-xs font-medium"
                             style={{
-                              backgroundColor: priority === "HIGH" ? `${themeConfig.colors.error}20` : 
-                                               priority === "MEDIUM" ? `${themeConfig.colors.warning}20` : 
-                                               `${themeConfig.colors.textSecondary}20`,
-                              color: priority === "HIGH" ? themeConfig.colors.error : 
-                                     priority === "MEDIUM" ? themeConfig.colors.warning : 
-                                     themeConfig.colors.textSecondary,
+                              backgroundColor:
+                                priority === "HIGH"
+                                  ? `${themeConfig.colors.error}20`
+                                  : priority === "MEDIUM"
+                                    ? `${themeConfig.colors.warning}20`
+                                    : `${themeConfig.colors.textSecondary}20`,
+                              color:
+                                priority === "HIGH"
+                                  ? themeConfig.colors.error
+                                  : priority === "MEDIUM"
+                                    ? themeConfig.colors.warning
+                                    : themeConfig.colors.textSecondary,
                             }}
                           >
                             {count}
@@ -1554,65 +1582,67 @@ export default function AdminDashboard() {
                       </h2>
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                      {Object.entries(categoryData).map(([category, count], index) => (
-                        <div
-                          key={category}
-                          className="text-center p-4 rounded-xl transform hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
-                          style={{
-                            background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
-                            border: `1px solid ${themeConfig.colors.border}`,
-                          }}
-                        >
+                      {Object.entries(categoryData).map(
+                        ([category, count], index) => (
                           <div
-                            className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-3 transform hover:rotate-12 transition-all duration-300"
+                            key={category}
+                            className="text-center p-4 rounded-xl transform hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
                             style={{
-                              background:
-                                index === 0
-                                  ? `${themeConfig.colors.primary}10`
-                                  : index === 1
-                                    ? `${themeConfig.colors.secondary}10`
-                                    : index === 2
-                                      ? `${themeConfig.colors.warning}10`
-                                      : `${themeConfig.colors.success}10`,
-                              color:
-                                index === 0
-                                  ? themeConfig.colors.primary
-                                  : index === 1
-                                    ? themeConfig.colors.secondary
-                                    : index === 2
-                                      ? themeConfig.colors.warning
-                                      : themeConfig.colors.success,
+                              background: `linear-gradient(135deg, ${themeConfig.colors.background} 0%, ${themeConfig.colors.surface} 100%)`,
+                              border: `1px solid ${themeConfig.colors.border}`,
                             }}
                           >
-                            <span className="text-sm font-bold">
-                              {category.charAt(0)}
-                            </span>
+                            <div
+                              className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-3 transform hover:rotate-12 transition-all duration-300"
+                              style={{
+                                background:
+                                  index === 0
+                                    ? `${themeConfig.colors.primary}10`
+                                    : index === 1
+                                      ? `${themeConfig.colors.secondary}10`
+                                      : index === 2
+                                        ? `${themeConfig.colors.warning}10`
+                                        : `${themeConfig.colors.success}10`,
+                                color:
+                                  index === 0
+                                    ? themeConfig.colors.primary
+                                    : index === 1
+                                      ? themeConfig.colors.secondary
+                                      : index === 2
+                                        ? themeConfig.colors.warning
+                                        : themeConfig.colors.success,
+                              }}
+                            >
+                              <span className="text-sm font-bold">
+                                {category.charAt(0)}
+                              </span>
+                            </div>
+                            <div
+                              className="px-3 py-1 rounded-full text-sm font-medium transform hover:scale-110 transition-all duration-300"
+                              style={{
+                                background:
+                                  index === 0
+                                    ? `${themeConfig.colors.primary}10`
+                                    : index === 1
+                                      ? `${themeConfig.colors.secondary}10`
+                                      : index === 2
+                                        ? `${themeConfig.colors.warning}10`
+                                        : `${themeConfig.colors.success}10`,
+                                color:
+                                  index === 0
+                                    ? themeConfig.colors.primary
+                                    : index === 1
+                                      ? themeConfig.colors.secondary
+                                      : index === 2
+                                        ? themeConfig.colors.warning
+                                        : themeConfig.colors.success,
+                              }}
+                            >
+                              {count}
+                            </div>
                           </div>
-                          <div
-                            className="px-3 py-1 rounded-full text-sm font-medium transform hover:scale-110 transition-all duration-300"
-                            style={{
-                              background:
-                                index === 0
-                                  ? `${themeConfig.colors.primary}10`
-                                  : index === 1
-                                    ? `${themeConfig.colors.secondary}10`
-                                    : index === 2
-                                      ? `${themeConfig.colors.warning}10`
-                                      : `${themeConfig.colors.success}10`,
-                              color:
-                                index === 0
-                                  ? themeConfig.colors.primary
-                                  : index === 1
-                                    ? themeConfig.colors.secondary
-                                    : index === 2
-                                      ? themeConfig.colors.warning
-                                      : themeConfig.colors.success,
-                            }}
-                          >
-                            {count}
-                          </div>
-                        </div>
-                      ))}
+                        ),
+                      )}
                     </div>
                   </div>
 
@@ -1704,162 +1734,8 @@ export default function AdminDashboard() {
                       ))}
                     </div>
                   </div>
-
-                  {/* Text View Modal */}
-                  {showTextModal && selectedRequest && (
-                    <div
-                      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-                      style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
-                    >
-                      <div
-                        className="rounded-xl p-6 max-w-2xl max-h-[80vh] overflow-auto"
-                        style={{
-                          backgroundColor: themeConfig.colors.surface,
-                          border: `1px solid ${themeConfig.colors.border}`,
-                          zIndex: Z_INDEX.MODAL,
-                        }}
-                      >
-                        <div className="flex justify-between items-center mb-4">
-                          <h2
-                            className="text-lg font-semibold"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            Request Details
-                          </h2>
-                          <button
-                            onClick={() => setShowTextModal(false)}
-                            className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
-                          >
-                            ×
-                          </button>
-                        </div>
-
-                        <div className="space-y-4">
-                          <div>
-                            <h3
-                              className="text-sm font-medium mb-2"
-                              style={{ color: themeConfig.colors.textSecondary }}
-                            >
-                              Title
-                            </h3>
-                            <p
-                              className="text-base"
-                              style={{ color: themeConfig.colors.text }}
-                            >
-                              {selectedRequest.title}
-                            </p>
-                          </div>
-
-                          <div>
-                            <h3
-                              className="text-sm font-medium mb-2"
-                              style={{ color: themeConfig.colors.textSecondary }}
-                            >
-                              Description
-                            </h3>
-                            <p
-                              className="text-base whitespace-pre-wrap"
-                              style={{ color: themeConfig.colors.text }}
-                            >
-                              {selectedRequest.description}
-                            </p>
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <h3
-                                className="text-sm font-medium mb-2"
-                                style={{ color: themeConfig.colors.textSecondary }}
-                              >
-                                Location
-                              </h3>
-                              <p
-                                className="text-base"
-                                style={{ color: themeConfig.colors.text }}
-                              >
-                                {selectedRequest.location}
-                              </p>
-                            </div>
-
-                            <div>
-                              <h3
-                                className="text-sm font-medium mb-2"
-                                style={{ color: themeConfig.colors.textSecondary }}
-                              >
-                                Category
-                              </h3>
-                              <p
-                                className="text-base"
-                                style={{ color: themeConfig.colors.text }}
-                              >
-                                {selectedRequest.category}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <h3
-                                className="text-sm font-medium mb-2"
-                                style={{ color: themeConfig.colors.textSecondary }}
-                              >
-                                Priority
-                              </h3>
-                              <span
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
-                                style={{
-                                  backgroundColor:
-                                    selectedRequest.priority === "HIGH"
-                                      ? "rgba(239, 68, 68, 0.1)"
-                                      : selectedRequest.priority === "MEDIUM"
-                                        ? "rgba(245, 158, 11, 0.1)"
-                                        : "rgba(107, 114, 128, 0.1)",
-                                  color:
-                                    selectedRequest.priority === "HIGH"
-                                      ? "#DC2626"
-                                      : selectedRequest.priority === "MEDIUM"
-                                        ? "#D97706"
-                                        : "#6B7280",
-                                }}
-                              >
-                                {selectedRequest.priority}
-                              </span>
-                            </div>
-
-                            <div>
-                              <h3
-                                className="text-sm font-medium mb-2"
-                                style={{ color: themeConfig.colors.textSecondary }}
-                              >
-                                Status
-                              </h3>
-                              <span
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
-                                style={{
-                                  backgroundColor:
-                                    selectedRequest.status === "COMPLETED"
-                                      ? `${themeConfig.colors.success}20`
-                                      : selectedRequest.status === "IN_PROGRESS"
-                                        ? `${themeConfig.colors.primary}20`
-                                        : `${themeConfig.colors.warning}20`,
-                                  color:
-                                    selectedRequest.status === "COMPLETED"
-                                      ? themeConfig.colors.success
-                                      : selectedRequest.status === "IN_PROGRESS"
-                                        ? themeConfig.colors.primary
-                                        : themeConfig.colors.warning,
-                                }}
-                              >
-                                {selectedRequest.status.replace("_", " ")}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+                </>
+              )}
             </div>
           )}
         </div>
