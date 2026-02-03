@@ -6,6 +6,9 @@ import { useTheme } from "@/components/ThemeProvider";
 import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
+import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
+import WebHeader from "@/components/WebHeader";
+import { WebListGroup, WebListGroupItem } from "@/components/WebListGroup";
 
 interface User {
   id: string;
@@ -20,6 +23,7 @@ interface User {
 export default function AdminUsersPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
+  const { isMobile } = useMobileOptimizations();
   const [users, setUsers] = useState<User[]>([
     {
       id: "1",
@@ -247,240 +251,369 @@ export default function AdminUsersPage() {
         className="min-h-screen"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
-        <header
-          className="px-8 py-6 border-b"
-          style={{ borderColor: themeConfig.colors.border }}
-        >
-          <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <div className="flex items-center">
-              <button
-                onClick={() => router.push("/admin/dashboard")}
-                className="p-3 rounded-xl mr-4"
+        {/* Header - Conditional based on device */}
+        {isMobile ? (
+          <WebHeader
+            title="User Management"
+            breadcrumbs={[
+              { label: "Admin Dashboard", href: "/admin/dashboard" },
+              { label: "User Management" },
+            ]}
+            actions={
+              <Button onClick={() => setShowAddModal(true)} size="sm">
+                Add User
+              </Button>
+            }
+          />
+        ) : (
+          /* Original Desktop Header */
+          <header
+            className="px-8 py-6 border-b"
+            style={{ borderColor: themeConfig.colors.border }}
+          >
+            <div className="max-w-6xl mx-auto flex items-center justify-between">
+              <div className="flex items-center">
+                <button
+                  onClick={() => router.push("/admin/dashboard")}
+                  className="p-3 rounded-xl mr-4"
+                  style={{
+                    backgroundColor: themeConfig.colors.surface,
+                    color: themeConfig.colors.text,
+                    border: `1px solid ${themeConfig.colors.border}`,
+                  }}
+                >
+                  ←
+                </button>
+                <div>
+                  <h1
+                    className="text-2xl font-bold"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    User Management
+                  </h1>
+                </div>
+              </div>
+              <Button onClick={() => setShowAddModal(true)}>Add User</Button>
+            </div>
+          </header>
+        )}
+
+        {/* Main Content - Conditional based on device */}
+        {isMobile ? (
+          <div className="px-4 py-4">
+            <div className="max-w-4xl mx-auto space-y-4">
+              {/* Mobile Search and Filter */}
+              <div
+                className="bg-white rounded-lg border p-3"
+                style={{ borderColor: "#E5E7EB" }}
+              >
+                <input
+                  type="text"
+                  placeholder="Search users..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg text-sm mb-3"
+                  style={{
+                    backgroundColor: "#F9FAFB",
+                    borderColor: "#E5E7EB",
+                    color: themeConfig.colors.text,
+                    border: "1px solid",
+                  }}
+                />
+                <div className="grid grid-cols-2 gap-2">
+                  <select
+                    value={filterRole}
+                    onChange={(e) => setFilterRole(e.target.value)}
+                    className="px-3 py-2 rounded-lg border text-sm"
+                    style={{
+                      backgroundColor: "#F9FAFB",
+                      borderColor: "#E5E7EB",
+                      color: themeConfig.colors.text,
+                    }}
+                  >
+                    <option value="ALL">All Roles</option>
+                    <option value="ADMIN">Admin</option>
+                    <option value="STAFF">Staff</option>
+                    <option value="STUDENT">Student</option>
+                  </select>
+                  <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                    className="px-3 py-2 rounded-lg border text-sm"
+                    style={{
+                      backgroundColor: "#F9FAFB",
+                      borderColor: "#E5E7EB",
+                      color: themeConfig.colors.text,
+                    }}
+                  >
+                    <option value="ALL">All Status</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Mobile User List */}
+              <WebListGroup title="Users">
+                {filteredUsers.map((user) => (
+                  <WebListGroupItem
+                    key={user.id}
+                    title={user.name}
+                    subtitle={`${user.email} • ${user.department}`}
+                    rightElement={
+                      <div className="flex flex-col items-end space-y-1">
+                        <span
+                          className="px-2 py-1 rounded-full text-xs font-medium"
+                          style={{
+                            backgroundColor:
+                              user.role === "ADMIN"
+                                ? `${themeConfig.colors.primary}20`
+                                : user.role === "STAFF"
+                                  ? `${themeConfig.colors.secondary}20`
+                                  : `${themeConfig.colors.success}20`,
+                            color:
+                              user.role === "ADMIN"
+                                ? themeConfig.colors.primary
+                                : user.role === "STAFF"
+                                  ? themeConfig.colors.secondary
+                                  : themeConfig.colors.success,
+                          }}
+                        >
+                          {user.role}
+                        </span>
+                        <span
+                          className="px-2 py-1 rounded-full text-xs font-medium"
+                          style={{
+                            backgroundColor:
+                              user.status === "ACTIVE"
+                                ? `${themeConfig.colors.success}20`
+                                : `${themeConfig.colors.error}20`,
+                            color:
+                              user.status === "ACTIVE"
+                                ? themeConfig.colors.success
+                                : themeConfig.colors.error,
+                          }}
+                        >
+                          {user.status}
+                        </span>
+                      </div>
+                    }
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setShowEditModal(true);
+                    }}
+                  />
+                ))}
+              </WebListGroup>
+            </div>
+          </div>
+        ) : (
+          /* Original Desktop Layout */
+          <main className="px-8 py-8">
+            <div className="max-w-6xl mx-auto">
+              {/* Search and Filter Controls */}
+              <div
+                className="rounded-2xl p-6 mb-6"
                 style={{
                   backgroundColor: themeConfig.colors.surface,
-                  color: themeConfig.colors.text,
                   border: `1px solid ${themeConfig.colors.border}`,
                 }}
               >
-                ←
-              </button>
-              <div>
-                <h1
-                  className="text-2xl font-bold"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  User Management
-                </h1>
-              </div>
-            </div>
-            <Button onClick={() => setShowAddModal(true)}>Add User</Button>
-          </div>
-        </header>
-
-        <main className="px-8 py-8">
-          <div className="max-w-6xl mx-auto">
-            {/* Search and Filter Controls */}
-            <div
-              className="rounded-2xl p-6 mb-6"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                border: `1px solid ${themeConfig.colors.border}`,
-              }}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-4">
-                <div className="lg:col-span-2">
-                  <input
-                    type="text"
-                    placeholder="Search by name, email, or department..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border"
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-4">
+                  <div className="lg:col-span-2">
+                    <input
+                      type="text"
+                      placeholder="Search by name, email, or department..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full px-4 py-2 rounded-lg border"
+                      style={{
+                        backgroundColor: themeConfig.colors.background,
+                        borderColor: themeConfig.colors.border,
+                        color: themeConfig.colors.text,
+                      }}
+                    />
+                  </div>
+                  <select
+                    value={filterRole}
+                    onChange={(e) => setFilterRole(e.target.value)}
+                    className="px-4 py-2 rounded-lg border"
                     style={{
                       backgroundColor: themeConfig.colors.background,
                       borderColor: themeConfig.colors.border,
                       color: themeConfig.colors.text,
                     }}
-                  />
-                </div>
-                <select
-                  value={filterRole}
-                  onChange={(e) => setFilterRole(e.target.value)}
-                  className="px-4 py-2 rounded-lg border"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  <option value="ALL">All Roles</option>
-                  <option value="ADMIN">Admin</option>
-                  <option value="STAFF">Staff</option>
-                  <option value="STUDENT">Student</option>
-                </select>
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  className="px-4 py-2 rounded-lg border"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  <option value="ALL">All Status</option>
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
-            </div>
-
-            <div
-              className="rounded-xl overflow-hidden"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                borderColor: themeConfig.colors.border,
-                border: "1px solid",
-              }}
-            >
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[600px]">
-                  <thead
+                  >
+                    <option value="ALL">All Roles</option>
+                    <option value="ADMIN">Admin</option>
+                    <option value="STAFF">Staff</option>
+                    <option value="STUDENT">Student</option>
+                  </select>
+                  <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                    className="px-4 py-2 rounded-lg border"
                     style={{
                       backgroundColor: themeConfig.colors.background,
-                      borderBottom: "1px solid",
+                      borderColor: themeConfig.colors.border,
+                      color: themeConfig.colors.text,
                     }}
                   >
-                    <tr>
-                      <th
-                        className="px-6 py-4 text-left text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        User
-                      </th>
-                      <th
-                        className="px-6 py-4 text-left text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Role
-                      </th>
-                      <th
-                        className="px-6 py-4 text-left text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Department
-                      </th>
-                      <th
-                        className="px-6 py-4 text-left text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Status
-                      </th>
-                      <th
-                        className="px-6 py-4 text-left text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Last Login
-                      </th>
-                      <th
-                        className="px-6 py-4 text-left text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredUsers.map((user) => (
-                      <tr
-                        key={user.id}
-                        style={{
-                          borderBottom: `1px solid ${themeConfig.colors.border}`,
-                        }}
-                      >
-                        <td className="px-6 py-4">
-                          <div>
+                    <option value="ALL">All Status</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                  </select>
+                </div>
+              </div>
+
+              <div
+                className="rounded-xl overflow-hidden"
+                style={{
+                  backgroundColor: themeConfig.colors.surface,
+                  borderColor: themeConfig.colors.border,
+                  border: "1px solid",
+                }}
+              >
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[600px]">
+                    <thead
+                      style={{
+                        backgroundColor: themeConfig.colors.background,
+                        borderBottom: "1px solid",
+                      }}
+                    >
+                      <tr>
+                        <th
+                          className="px-6 py-4 text-left text-sm"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          User
+                        </th>
+                        <th
+                          className="px-6 py-4 text-left text-sm"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Role
+                        </th>
+                        <th
+                          className="px-6 py-4 text-left text-sm"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Department
+                        </th>
+                        <th
+                          className="px-6 py-4 text-left text-sm"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Status
+                        </th>
+                        <th
+                          className="px-6 py-4 text-left text-sm"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Last Login
+                        </th>
+                        <th
+                          className="px-6 py-4 text-left text-sm"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredUsers.map((user) => (
+                        <tr
+                          key={user.id}
+                          style={{
+                            borderBottom: `1px solid ${themeConfig.colors.border}`,
+                          }}
+                        >
+                          <td className="px-6 py-4">
+                            <div>
+                              <div
+                                className="font-medium"
+                                style={{ color: themeConfig.colors.text }}
+                              >
+                                {user.name}
+                              </div>
+                              <div
+                                className="text-sm mt-1"
+                                style={{
+                                  color: themeConfig.colors.textSecondary,
+                                }}
+                              >
+                                {user.email}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span
+                              className="px-2 py-1 rounded-full text-xs"
+                              style={getRoleColor(user.role, themeConfig)}
+                            >
+                              {user.role}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
                             <div
-                              className="font-medium"
+                              className="text-sm"
                               style={{ color: themeConfig.colors.text }}
                             >
-                              {user.name}
+                              {user.department}
                             </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span
+                              className="px-2 py-1 rounded-full text-xs"
+                              style={getStatusColor(user.status, themeConfig)}
+                            >
+                              {user.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
                             <div
-                              className="text-sm mt-1"
-                              style={{
-                                color: themeConfig.colors.textSecondary,
-                              }}
+                              className="text-sm"
+                              style={{ color: themeConfig.colors.text }}
                             >
-                              {user.email}
+                              {user.lastLogin.toLocaleDateString()}
                             </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span
-                            className="px-2 py-1 rounded-full text-xs"
-                            style={getRoleColor(user.role, themeConfig)}
-                          >
-                            {user.role}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div
-                            className="text-sm"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            {user.department}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span
-                            className="px-2 py-1 rounded-full text-xs"
-                            style={getStatusColor(user.status, themeConfig)}
-                          >
-                            {user.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div
-                            className="text-sm"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            {user.lastLogin.toLocaleDateString()}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex space-x-2">
-                            <button
-                              onClick={() => openEditModal(user)}
-                              className="text-sm px-3 py-1 rounded-xl transition-all duration-200 hover:scale-105"
-                              style={{
-                                backgroundColor: `${themeConfig.colors.primary}20`,
-                                color: themeConfig.colors.primary,
-                                border: `1px solid ${themeConfig.colors.primary}30`,
-                              }}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => openDeleteModal(user)}
-                              className="text-sm px-3 py-1 rounded-xl transition-all duration-200 hover:scale-105"
-                              style={{
-                                backgroundColor: `${themeConfig.colors.error}20`,
-                                color: themeConfig.colors.error,
-                                border: `1px solid ${themeConfig.colors.error}30`,
-                              }}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => openEditModal(user)}
+                                className="text-sm px-3 py-1 rounded-xl transition-all duration-200 hover:scale-105"
+                                style={{
+                                  backgroundColor: `${themeConfig.colors.primary}20`,
+                                  color: themeConfig.colors.primary,
+                                  border: `1px solid ${themeConfig.colors.primary}30`,
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => openDeleteModal(user)}
+                                className="text-sm px-3 py-1 rounded-xl transition-all duration-200 hover:scale-105"
+                                style={{
+                                  backgroundColor: `${themeConfig.colors.error}20`,
+                                  color: themeConfig.colors.error,
+                                  border: `1px solid ${themeConfig.colors.error}30`,
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
-        </main>
+          </main>
+        )}
 
         {/* Add User Modal */}
         {showAddModal && (
