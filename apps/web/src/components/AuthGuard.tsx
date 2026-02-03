@@ -18,33 +18,46 @@ export default function AuthGuard({
   const { data: session, status } = useSession();
   const router = useRouter();
   const [hasTimedOut, setHasTimedOut] = useState(false);
-  const [isChecking] = useState(() => {
-    if (status === "loading") return true;
-    if (!session) return false;
-    if (requiredRole && session.user?.role !== requiredRole) return false;
-    return false;
-  });
+  const [debugInfo, setDebugInfo] = useState("");
 
   // Add timeout to prevent infinite loading
   useEffect(() => {
     const timer = setTimeout(() => {
       if (status === "loading") {
         setHasTimedOut(true);
+        setDebugInfo(
+          `Status: ${status}, Session: ${!!session}, Required Role: ${requiredRole}`,
+        );
       }
     }, 5000); // 5 second timeout
 
     return () => clearTimeout(timer);
-  }, [status]);
+  }, [status, session, requiredRole]);
 
   useEffect(() => {
+    // Debug logging
+    console.log("AuthGuard Debug:", {
+      status,
+      hasSession: !!session,
+      userRole: session?.user?.role,
+      requiredRole,
+      redirectTo,
+    });
+
     if (status === "loading") return;
 
     if (!session) {
+      console.log("No session found, redirecting to:", redirectTo);
       router.push(redirectTo);
       return;
     }
 
     if (requiredRole && session.user?.role !== requiredRole) {
+      console.log("Role mismatch:", {
+        userRole: session.user?.role,
+        requiredRole,
+      });
+
       // If user is logged in but doesn't have required role
       if (requiredRole === "ADMIN" && session.user?.role !== "ADMIN") {
         router.push("/student"); // Redirect non-admin users to user dashboard
@@ -58,7 +71,7 @@ export default function AuthGuard({
     }
   }, [session, status, router, requiredRole, redirectTo]);
 
-  if (status === "loading" || isChecking) {
+  if (status === "loading") {
     // Show timeout state if authentication takes too long
     if (hasTimedOut) {
       return (
@@ -66,7 +79,7 @@ export default function AuthGuard({
           className="min-h-screen flex items-center justify-center"
           style={{ backgroundColor: "#ffffff" }}
         >
-          <div className="text-center">
+          <div className="text-center max-w-md mx-auto p-6">
             <div
               className="rounded-full h-12 w-12 mx-auto mb-4 flex items-center justify-center"
               style={{ backgroundColor: "#FEF3C7" }}
@@ -94,19 +107,47 @@ export default function AuthGuard({
             >
               Authentication is taking longer than expected
             </p>
-            <button
-              onClick={() => window.location.reload()}
-              style={{
-                backgroundColor: "#1B4332",
-                color: "white",
-                padding: "8px 16px",
-                borderRadius: "6px",
-                fontSize: "14px",
-                cursor: "pointer",
-              }}
-            >
-              Refresh Page
-            </button>
+            {debugInfo && (
+              <p
+                style={{
+                  color: "#94a3b8",
+                  fontFamily: "monospace",
+                  fontSize: "12px",
+                  marginBottom: "16px",
+                }}
+              >
+                {debugInfo}
+              </p>
+            )}
+            <div className="space-y-2">
+              <button
+                onClick={() => window.location.reload()}
+                style={{
+                  backgroundColor: "#1B4332",
+                  color: "white",
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                  marginRight: "8px",
+                }}
+              >
+                Refresh Page
+              </button>
+              <button
+                onClick={() => router.push("/login")}
+                style={{
+                  backgroundColor: "#64748B",
+                  color: "white",
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                }}
+              >
+                Go to Login
+              </button>
+            </div>
           </div>
         </div>
       );
@@ -129,6 +170,16 @@ export default function AuthGuard({
             }}
           >
             Verifying access...
+          </p>
+          <p
+            style={{
+              color: "#94a3b8",
+              fontFamily: "Inter, system-ui, sans-serif",
+              fontSize: "12px",
+              marginTop: "8px",
+            }}
+          >
+            Status: {status}
           </p>
         </div>
       </div>
