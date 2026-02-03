@@ -24,6 +24,7 @@ import {
   WebListGroupItem,
   WebStatsList,
 } from "@/components/WebListGroup";
+import MobileCard, { MobileCardGrid } from "@/components/MobileCard";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -156,32 +157,72 @@ export default function AdminDashboard() {
         className="min-h-screen"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
-        {/* Header */}
-        <WebHeader
-          title="Admin Dashboard"
-          breadcrumbs={[
-            { label: "Home", href: "/" },
-            { label: "Admin Dashboard" },
-          ]}
-          actions={
-            <div className="flex items-center space-x-2">
-              <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
-                <ThemeSwitcher />
+        {/* Header - Conditional based on device */}
+        {isMobile ? (
+          <WebHeader
+            title="Admin Dashboard"
+            breadcrumbs={[
+              { label: "Home", href: "/" },
+              { label: "Admin Dashboard" },
+            ]}
+            actions={
+              <div className="flex items-center space-x-2">
+                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                  <ThemeSwitcher />
+                </div>
+                <button
+                  onClick={() => router.push("/")}
+                  className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
+                  style={{
+                    borderColor: "#E5E7EB",
+                    color: themeConfig.colors.text,
+                    fontFamily: "Inter, system-ui, sans-serif",
+                  }}
+                >
+                  Back to Home
+                </button>
               </div>
-              <button
-                onClick={() => router.push("/")}
-                className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
-                style={{
-                  borderColor: "#E5E7EB",
-                  color: themeConfig.colors.text,
-                  fontFamily: "Inter, system-ui, sans-serif",
-                }}
-              >
-                Back to Home
-              </button>
+            }
+          />
+        ) : (
+          /* Original Desktop Header */
+          <header
+            className="px-8 py-6 border-b"
+            style={{ borderColor: themeConfig.colors.border }}
+          >
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+              <div>
+                <h1
+                  className="text-3xl font-bold"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Admin Dashboard
+                </h1>
+                <p
+                  className="mt-2"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Manage maintenance requests and monitor system performance
+                </p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                  <ThemeSwitcher />
+                </div>
+                <button
+                  onClick={() => router.push("/")}
+                  className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
+                  style={{
+                    borderColor: themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                >
+                  Back to Home
+                </button>
+              </div>
             </div>
-          }
-        />
+          </header>
+        )}
 
         {/* Main Content */}
         <div
@@ -189,100 +230,584 @@ export default function AdminDashboard() {
         >
           {activeTab === "overview" && (
             <div className="space-y-8">
-              {/* Stats Cards */}
-              <WebStatsList
-                stats={[
-                  { label: "Total Requests", value: stats.totalRequests },
-                  { label: "Pending", value: stats.pendingRequests },
-                  { label: "In Progress", value: stats.inProgressRequests },
-                  { label: "Completed", value: stats.completedRequests },
-                  { label: "Completion Rate", value: `${completionRate}%` },
-                ]}
-                columns={isMobile ? 2 : 5}
-                compact={isMobile}
-              />
-
-              {/* Quick Actions */}
-              <WebListGroup title="Quick Actions">
-                <WebListGroupItem
-                  title="Generate Summary"
-                  subtitle="Create summary reports from maintenance requests"
-                  leftIcon={<span>📋</span>}
-                  onClick={() => router.push("/admin/summary-request")}
+              {/* Stats Cards - Conditional based on device */}
+              {isMobile ? (
+                <WebStatsList
+                  stats={[
+                    { label: "Total Requests", value: stats.totalRequests },
+                    { label: "Pending", value: stats.pendingRequests },
+                    { label: "In Progress", value: stats.inProgressRequests },
+                    { label: "Completed", value: stats.completedRequests },
+                    { label: "Completion Rate", value: `${completionRate}%` },
+                  ]}
+                  columns={2}
+                  compact={true}
                 />
-                <WebListGroupItem
-                  title="View Reports"
-                  subtitle="Access detailed analytics and reports"
-                  leftIcon={<span>📊</span>}
-                  onClick={() => router.push("/admin/reports")}
-                />
-                <WebListGroupItem
-                  title="Manage Users"
-                  subtitle="Add, edit, or remove user accounts"
-                  leftIcon={<span>�</span>}
-                  onClick={() => router.push("/admin/users")}
-                />
-                <WebListGroupItem
-                  title="Physical Repair"
-                  subtitle="Create physical plant repair forms"
-                  leftIcon={<span>�</span>}
-                  onClick={() => router.push("/admin/physical-plant-request")}
-                />
-              </WebListGroup>
-
-              {/* Recent Requests */}
-              <WebListGroup title="Recent Requests">
-                {recentRequests.slice(0, isMobile ? 5 : 5).map((request) => (
-                  <WebListGroupItem
-                    key={request.id}
-                    title={request.title}
-                    subtitle={`${request.location} • ${request.category}`}
-                    rightElement={
-                      <div className="flex items-center space-x-2">
-                        <span
-                          className="px-2 py-1 rounded-full text-xs font-medium"
-                          style={{
-                            backgroundColor:
-                              request.status === "COMPLETED"
-                                ? `${themeConfig.colors.success}20`
-                                : request.status === "IN_PROGRESS"
-                                  ? `${themeConfig.colors.primary}20`
-                                  : `${themeConfig.colors.warning}20`,
-                            color:
-                              request.status === "COMPLETED"
-                                ? themeConfig.colors.success
-                                : request.status === "IN_PROGRESS"
-                                  ? themeConfig.colors.primary
-                                  : themeConfig.colors.warning,
-                          }}
+              ) : (
+                /* Original Desktop Stats Cards */
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105"
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
                         >
-                          {request.status.replace("_", " ")}
-                        </span>
-                        <span
-                          className="px-2 py-1 rounded-full text-xs font-medium"
-                          style={{
-                            backgroundColor:
-                              request.priority === "HIGH"
-                                ? `${themeConfig.colors.error}20`
-                                : request.priority === "MEDIUM"
-                                  ? `${themeConfig.colors.warning}20`
-                                  : `${themeConfig.colors.textSecondary}20`,
-                            color:
-                              request.priority === "HIGH"
-                                ? themeConfig.colors.error
-                                : request.priority === "MEDIUM"
-                                  ? themeConfig.colors.warning
-                                  : themeConfig.colors.textSecondary,
-                          }}
+                          Total Requests
+                        </p>
+                        <p
+                          className="text-2xl font-bold mt-2"
+                          style={{ color: themeConfig.colors.text }}
                         >
-                          {request.priority}
-                        </span>
+                          {stats.totalRequests}
+                        </p>
                       </div>
-                    }
-                    onClick={() => viewRequestDetails(request)}
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.primary}10`,
+                        }}
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          style={{ color: themeConfig.colors.primary }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105"
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Pending
+                        </p>
+                        <p
+                          className="text-2xl font-bold mt-2"
+                          style={{ color: themeConfig.colors.warning }}
+                        >
+                          {stats.pendingRequests}
+                        </p>
+                      </div>
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.warning}10`,
+                        }}
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          style={{ color: themeConfig.colors.warning }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105"
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          In Progress
+                        </p>
+                        <p
+                          className="text-2xl font-bold mt-2"
+                          style={{ color: themeConfig.colors.primary }}
+                        >
+                          {stats.inProgressRequests}
+                        </p>
+                      </div>
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.primary}10`,
+                        }}
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          style={{ color: themeConfig.colors.primary }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105"
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Completed
+                        </p>
+                        <p
+                          className="text-2xl font-bold mt-2"
+                          style={{ color: themeConfig.colors.success }}
+                        >
+                          {stats.completedRequests}
+                        </p>
+                      </div>
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.success}10`,
+                        }}
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          style={{ color: themeConfig.colors.success }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105"
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Completion Rate
+                        </p>
+                        <p
+                          className="text-2xl font-bold mt-2"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          {completionRate}%
+                        </p>
+                      </div>
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.success}10`,
+                        }}
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          style={{ color: themeConfig.colors.success }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Quick Actions - Conditional based on device */}
+              {isMobile ? (
+                <WebListGroup title="Quick Actions">
+                  <WebListGroupItem
+                    title="Generate Summary"
+                    subtitle="Create summary reports from maintenance requests"
+                    leftIcon={<span>📋</span>}
+                    onClick={() => router.push("/admin/summary-request")}
                   />
-                ))}
-              </WebListGroup>
+                  <WebListGroupItem
+                    title="View Reports"
+                    subtitle="Access detailed analytics and reports"
+                    leftIcon={<span>📊</span>}
+                    onClick={() => router.push("/admin/reports")}
+                  />
+                  <WebListGroupItem
+                    title="Manage Users"
+                    subtitle="Add, edit, or remove user accounts"
+                    leftIcon={<span>👥</span>}
+                    onClick={() => router.push("/admin/users")}
+                  />
+                  <WebListGroupItem
+                    title="Physical Repair"
+                    subtitle="Create physical plant repair forms"
+                    leftIcon={<span>🔧</span>}
+                    onClick={() => router.push("/admin/physical-plant-request")}
+                  />
+                </WebListGroup>
+              ) : (
+                /* Original Desktop Quick Actions */
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
+                    onClick={() => router.push("/admin/summary-request")}
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.primary}10`,
+                        }}
+                      >
+                        <span className="text-2xl">📋</span>
+                      </div>
+                      <div>
+                        <h3
+                          className="font-semibold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          Generate Summary
+                        </h3>
+                        <p
+                          className="text-sm mt-1"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Create summary reports from maintenance requests
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
+                    onClick={() => router.push("/admin/reports")}
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.primary}10`,
+                        }}
+                      >
+                        <span className="text-2xl">📊</span>
+                      </div>
+                      <div>
+                        <h3
+                          className="font-semibold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          View Reports
+                        </h3>
+                        <p
+                          className="text-sm mt-1"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Access detailed analytics and reports
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
+                    onClick={() => router.push("/admin/users")}
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.primary}10`,
+                        }}
+                      >
+                        <span className="text-2xl">👥</span>
+                      </div>
+                      <div>
+                        <h3
+                          className="font-semibold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          Manage Users
+                        </h3>
+                        <p
+                          className="text-sm mt-1"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Add, edit, or remove user accounts
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
+                    onClick={() => router.push("/admin/physical-plant-request")}
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor: themeConfig.colors.border,
+                      border: "1px solid",
+                    }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.primary}10`,
+                        }}
+                      >
+                        <span className="text-2xl">🔧</span>
+                      </div>
+                      <div>
+                        <h3
+                          className="font-semibold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          Physical Repair
+                        </h3>
+                        <p
+                          className="text-sm mt-1"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Create physical plant repair forms
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Recent Requests - Conditional based on device */}
+              {isMobile ? (
+                <WebListGroup title="Recent Requests">
+                  {recentRequests.slice(0, 5).map((request) => (
+                    <WebListGroupItem
+                      key={request.id}
+                      title={request.title}
+                      subtitle={`${request.location} • ${request.category}`}
+                      rightElement={
+                        <div className="flex items-center space-x-2">
+                          <span
+                            className="px-2 py-1 rounded-full text-xs font-medium"
+                            style={{
+                              backgroundColor:
+                                request.status === "COMPLETED"
+                                  ? `${themeConfig.colors.success}20`
+                                  : request.status === "IN_PROGRESS"
+                                    ? `${themeConfig.colors.primary}20`
+                                    : `${themeConfig.colors.warning}20`,
+                              color:
+                                request.status === "COMPLETED"
+                                  ? themeConfig.colors.success
+                                  : request.status === "IN_PROGRESS"
+                                    ? themeConfig.colors.primary
+                                    : themeConfig.colors.warning,
+                            }}
+                          >
+                            {request.status.replace("_", " ")}
+                          </span>
+                          <span
+                            className="px-2 py-1 rounded-full text-xs font-medium"
+                            style={{
+                              backgroundColor:
+                                request.priority === "HIGH"
+                                  ? `${themeConfig.colors.error}20`
+                                  : request.priority === "MEDIUM"
+                                    ? `${themeConfig.colors.warning}20`
+                                    : `${themeConfig.colors.textSecondary}20`,
+                              color:
+                                request.priority === "HIGH"
+                                  ? themeConfig.colors.error
+                                  : request.priority === "MEDIUM"
+                                    ? themeConfig.colors.warning
+                                    : themeConfig.colors.textSecondary,
+                            }}
+                          >
+                            {request.priority}
+                          </span>
+                        </div>
+                      }
+                      onClick={() => viewRequestDetails(request)}
+                    />
+                  ))}
+                </WebListGroup>
+              ) : (
+                /* Original Desktop Recent Requests */
+                <div
+                  className="rounded-xl shadow-lg"
+                  style={{
+                    backgroundColor: themeConfig.colors.surface,
+                    borderColor: themeConfig.colors.border,
+                    border: "1px solid",
+                  }}
+                >
+                  <div
+                    className="p-6 border-b"
+                    style={{ borderColor: themeConfig.colors.border }}
+                  >
+                    <h2
+                      className="text-lg font-semibold"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      Recent Requests
+                    </h2>
+                  </div>
+                  <div className="p-6">
+                    <div className="space-y-3">
+                      {recentRequests.slice(0, 5).map((request) => (
+                        <div
+                          key={request.id}
+                          className="p-4 rounded-xl border"
+                          style={{
+                            backgroundColor: themeConfig.colors.background,
+                            borderColor: themeConfig.colors.border,
+                          }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <h3
+                                className="font-medium truncate"
+                                style={{ color: themeConfig.colors.text }}
+                              >
+                                {request.title}
+                              </h3>
+                              <p
+                                className="text-sm mt-1"
+                                style={{
+                                  color: themeConfig.colors.textSecondary,
+                                }}
+                              >
+                                {request.location} • {request.category}
+                              </p>
+                            </div>
+                            <div className="flex items-center space-x-2 ml-4">
+                              <span
+                                className="px-3 py-1 rounded-full font-medium"
+                                style={{
+                                  backgroundColor:
+                                    request.status === "COMPLETED"
+                                      ? `${themeConfig.colors.success}20`
+                                      : request.status === "IN_PROGRESS"
+                                        ? `${themeConfig.colors.primary}20`
+                                        : `${themeConfig.colors.warning}20`,
+                                  color:
+                                    request.status === "COMPLETED"
+                                      ? themeConfig.colors.success
+                                      : request.status === "IN_PROGRESS"
+                                        ? themeConfig.colors.primary
+                                        : themeConfig.colors.warning,
+                                  fontSize: "12px",
+                                }}
+                              >
+                                {request.status.replace("_", " ")}
+                              </span>
+                              <span
+                                className="px-3 py-1 rounded-full font-medium"
+                                style={{
+                                  backgroundColor:
+                                    request.priority === "HIGH"
+                                      ? `${themeConfig.colors.error}20`
+                                      : request.priority === "MEDIUM"
+                                        ? `${themeConfig.colors.warning}20`
+                                        : `${themeConfig.colors.textSecondary}20`,
+                                  color:
+                                    request.priority === "HIGH"
+                                      ? themeConfig.colors.error
+                                      : request.priority === "MEDIUM"
+                                        ? themeConfig.colors.warning
+                                        : themeConfig.colors.textSecondary,
+                                  fontSize: "12px",
+                                }}
+                              >
+                                {request.priority}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

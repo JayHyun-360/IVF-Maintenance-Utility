@@ -139,89 +139,347 @@ export default function UserPage() {
         className="min-h-screen"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
-        {/* Header */}
-        <WebHeader
-          title="Submit Maintenance Request"
-          breadcrumbs={[
-            { label: "Home", href: "/" },
-            { label: "Submit Request" },
-          ]}
-          actions={
-            <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
-              <ThemeSwitcher />
+        {/* Header - Conditional based on device */}
+        {isMobile ? (
+          <WebHeader
+            title="Submit Maintenance Request"
+            breadcrumbs={[
+              { label: "Home", href: "/" },
+              { label: "Submit Request" },
+            ]}
+            actions={
+              <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                <ThemeSwitcher />
+              </div>
+            }
+          />
+        ) : (
+          /* Original Desktop Header */
+          <header
+            className="px-8 py-6 border-b"
+            style={{ borderColor: themeConfig.colors.border }}
+          >
+            <div className="max-w-4xl mx-auto flex items-center justify-between">
+              <div>
+                <h1
+                  className="text-3xl font-bold"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Submit Maintenance Request
+                </h1>
+                <p
+                  className="mt-2"
+                  style={{ color: themeConfig.colors.textSecondary }}
+                >
+                  Report issues and track resolution progress
+                </p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
+                  <ThemeSwitcher />
+                </div>
+                <button
+                  onClick={() => router.push("/")}
+                  className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
+                  style={{
+                    borderColor: themeConfig.colors.border,
+                    color: themeConfig.colors.text,
+                  }}
+                >
+                  Back to Home
+                </button>
+              </div>
             </div>
-          }
-        />
+          </header>
+        )}
 
         {/* Main Content */}
         <div className={`${isMobile ? "px-4 py-4" : "px-6 py-6"}`}>
           <div className={`${isMobile ? "max-w-4xl" : "max-w-4xl"} mx-auto`}>
-            <WebForm
-              title="Request Details"
-              subtitle="Report issues and track resolution progress"
-              onSubmit={handleSubmit}
-              loading={isSubmitting}
-              submitText="Submit Request"
-            >
-              <WebFormSection title="Basic Information">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {isMobile ? (
+              <WebForm
+                title="Request Details"
+                subtitle="Report issues and track resolution progress"
+                onSubmit={handleSubmit}
+                loading={isSubmitting}
+                submitText="Submit Request"
+              >
+                <WebFormSection title="Basic Information">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <WebFormField
+                      name="title"
+                      label="Title"
+                      placeholder="Brief description of the issue"
+                      required
+                    />
+                    <WebFormField
+                      name="location"
+                      label="Location"
+                      placeholder="Building, room, or area"
+                      required
+                    />
+                  </div>
                   <WebFormField
-                    name="title"
-                    label="Title"
-                    placeholder="Brief description of the issue"
+                    name="description"
+                    label="Description"
+                    type="textarea"
+                    placeholder="Detailed description of the maintenance issue..."
                     required
                   />
-                  <WebFormField
-                    name="location"
-                    label="Location"
-                    placeholder="Building, room, or area"
-                    required
-                  />
-                </div>
-                <WebFormField
-                  name="description"
-                  label="Description"
-                  type="textarea"
-                  placeholder="Detailed description of the maintenance issue..."
-                  required
-                />
-              </WebFormSection>
+                </WebFormSection>
 
-              <WebFormSection title="Classification">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <WebFormField
-                    name="category"
-                    label="Category"
-                    type="select"
-                    options={[
-                      { label: "🔧 Plumbing", value: "PLUMBING" },
-                      { label: "⚡ Electrical", value: "ELECTRICAL" },
-                      { label: "🔨 Carpentry", value: "CARPENTRY" },
-                      { label: "👥 Personnel", value: "PERSONNEL" },
-                      { label: "📝 Others", value: "OTHERS" },
-                    ]}
-                  />
-                  <WebFormField
-                    name="priority"
-                    label="Priority"
-                    type="select"
-                    options={[
-                      { label: "🟢 Low", value: "LOW" },
-                      { label: "🟡 Medium", value: "MEDIUM" },
-                      { label: "🔴 High", value: "HIGH" },
-                    ]}
-                  />
+                <WebFormSection title="Classification">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <WebFormField
+                      name="category"
+                      label="Category"
+                      type="select"
+                      options={[
+                        { label: "🔧 Plumbing", value: "PLUMBING" },
+                        { label: "⚡ Electrical", value: "ELECTRICAL" },
+                        { label: "🔨 Carpentry", value: "CARPENTRY" },
+                        { label: "👥 Personnel", value: "PERSONNEL" },
+                        { label: "📝 Others", value: "OTHERS" },
+                      ]}
+                    />
+                    <WebFormField
+                      name="priority"
+                      label="Priority"
+                      type="select"
+                      options={[
+                        { label: "🟢 Low", value: "LOW" },
+                        { label: "🟡 Medium", value: "MEDIUM" },
+                        { label: "🔴 High", value: "HIGH" },
+                      ]}
+                    />
+                  </div>
+                  {formData.category === "OTHERS" && (
+                    <WebFormField
+                      name="otherCategory"
+                      label="Specify Category"
+                      placeholder="Please specify the category..."
+                      required
+                    />
+                  )}
+                </WebFormSection>
+              </WebForm>
+            ) : (
+              /* Original Desktop Form */
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div
+                  className="rounded-xl shadow-lg p-6"
+                  style={{
+                    backgroundColor: themeConfig.colors.surface,
+                    borderColor: themeConfig.colors.border,
+                    border: "1px solid",
+                  }}
+                >
+                  <div className="flex items-center mb-6">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center mr-3"
+                      style={{
+                        background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                      }}
+                    >
+                      <svg
+                        className="w-4 h-4 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                    </div>
+                    <h2
+                      className="text-lg font-semibold"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      Request Details
+                    </h2>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                      <label
+                        className="block text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        Title *
+                      </label>
+                      <input
+                        type="text"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                          border: "1px solid",
+                          fontSize: "16px",
+                        }}
+                        placeholder="Brief description of the issue"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        className="block text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        Location *
+                      </label>
+                      <input
+                        type="text"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                          border: "1px solid",
+                          fontSize: "16px",
+                        }}
+                        placeholder="Building, room, or area"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <label
+                      className="block text-sm font-medium mb-2"
+                      style={{ color: themeConfig.colors.text }}
+                    >
+                      Description *
+                    </label>
+                    <textarea
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      required
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent resize-none"
+                      style={{
+                        backgroundColor: themeConfig.colors.background,
+                        borderColor: themeConfig.colors.border,
+                        color: themeConfig.colors.text,
+                        border: "1px solid",
+                        fontSize: "16px",
+                      }}
+                      placeholder="Detailed description of the maintenance issue..."
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        className="block text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        Category
+                      </label>
+                      <select
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                          border: "1px solid",
+                          fontSize: "16px",
+                        }}
+                      >
+                        <option value="PLUMBING">🔧 Plumbing</option>
+                        <option value="ELECTRICAL">⚡ Electrical</option>
+                        <option value="CARPENTRY">🔨 Carpentry</option>
+                        <option value="PERSONNEL">👥 Personnel</option>
+                        <option value="OTHERS">📝 Others</option>
+                      </select>
+                    </div>
+
+                    {formData.category === "OTHERS" && (
+                      <div>
+                        <label
+                          className="block text-sm font-medium mb-2"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          Specify Category
+                        </label>
+                        <input
+                          type="text"
+                          name="otherCategory"
+                          value={formData.otherCategory}
+                          onChange={handleChange}
+                          placeholder="Please specify the category..."
+                          required
+                          className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                          style={{
+                            backgroundColor: themeConfig.colors.background,
+                            borderColor: themeConfig.colors.border,
+                            color: themeConfig.colors.text,
+                            border: "1px solid",
+                            fontSize: "16px",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-6">
+                    <div>
+                      <label
+                        className="block text-sm font-medium mb-2"
+                        style={{ color: themeConfig.colors.text }}
+                      >
+                        Priority
+                      </label>
+                      <select
+                        name="priority"
+                        value={formData.priority}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:scale-[1.02] focus:border-transparent"
+                        style={{
+                          backgroundColor: themeConfig.colors.background,
+                          borderColor: themeConfig.colors.border,
+                          color: themeConfig.colors.text,
+                          border: "1px solid",
+                          fontSize: "16px",
+                        }}
+                      >
+                        <option value="LOW">🟢 Low</option>
+                        <option value="MEDIUM">🟡 Medium</option>
+                        <option value="HIGH">🔴 High</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                {formData.category === "OTHERS" && (
-                  <WebFormField
-                    name="otherCategory"
-                    label="Specify Category"
-                    placeholder="Please specify the category..."
-                    required
-                  />
-                )}
-              </WebFormSection>
-            </WebForm>
+
+                {/* Submit Button */}
+                <div className="flex justify-center">
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    loading={isSubmitting}
+                    size="lg"
+                    className="text-base"
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit Request"}
+                  </Button>
+                </div>
+              </form>
+            )}
 
             {/* Photo Upload Section */}
             <div
