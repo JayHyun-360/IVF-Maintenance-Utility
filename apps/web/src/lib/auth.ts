@@ -3,6 +3,17 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      email: string;
+      name: string;
+      role: string;
+    };
+  }
+}
+
 // In-memory user storage for demo purposes
 // In production, this would be your database
 const users = [
@@ -31,11 +42,14 @@ export const authOptions: NextAuthOptions = {
   secret:
     process.env.NEXTAUTH_SECRET ||
     "ivf-maintenance-secret-key-2024-secure-production-auth",
+  debug: process.env.NODE_ENV === "development", // Enable debug in development
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID || "missing-google-client-id",
+      clientSecret:
+        process.env.GOOGLE_CLIENT_SECRET || "missing-google-client-secret",
       async profile(profile) {
+        console.log("Google profile:", profile);
         // Check if user exists in our system
         const existingUser = findUserByEmail(profile.email!);
 
@@ -66,13 +80,20 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("Credentials authorize attempt:", {
+          email: credentials?.email,
+        });
+
         if (!credentials?.email || !credentials?.password) {
+          console.log("Missing credentials");
           return null;
         }
 
         const user = findUserByEmail(credentials.email);
+        console.log("Found user:", user);
 
         if (!user) {
+          console.log("User not found");
           return null;
         }
 
@@ -80,11 +101,14 @@ export const authOptions: NextAuthOptions = {
           credentials.password,
           user.password,
         );
+        console.log("Password valid:", isPasswordValid);
 
         if (!isPasswordValid) {
+          console.log("Invalid password");
           return null;
         }
 
+        console.log("Authentication successful for:", user.email);
         return {
           id: user.id,
           email: user.email,
@@ -102,11 +126,12 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
+      if (token && session.user) {
         session.user.id = token.sub!;
         session.user.role = token.role as string;
       }
@@ -120,6 +145,9 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account }) {
       // You can add custom logic here when user signs in
       console.log("User signed in:", { user, account });
+    },
+    async signOut({ session }) {
+      console.log("User signed out:", { session });
     },
   },
 };
