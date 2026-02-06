@@ -138,7 +138,7 @@ export default function AdminDashboard() {
                   onClick={() => router.push("/")}
                   className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
                   style={{
-                    borderColor: "#E5E7EB",
+                    borderColor: themeConfig.colors.border,
                     color: themeConfig.colors.text,
                     fontFamily: "Inter, system-ui, sans-serif",
                   }}
@@ -284,68 +284,80 @@ export default function AdminDashboard() {
                 /* Desktop Stats Cards */
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div
-                    className="p-6 rounded-lg border"
-                    style={{ borderColor: themeConfig.colors.border }}
+                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
+                    style={{
+                      borderColor: themeConfig.colors.border,
+                      backgroundColor: themeConfig.colors.surface,
+                    }}
                   >
                     <div
-                      className="text-2xl font-bold mb-2"
+                      className="text-3xl font-bold mb-3"
                       style={{ color: themeConfig.colors.text }}
                     >
                       {stats.totalRequests}
                     </div>
                     <div
-                      className="text-sm"
+                      className="text-sm font-medium"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Total Requests
                     </div>
                   </div>
                   <div
-                    className="p-6 rounded-lg border"
-                    style={{ borderColor: themeConfig.colors.border }}
+                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
+                    style={{
+                      borderColor: themeConfig.colors.border,
+                      backgroundColor: themeConfig.colors.surface,
+                    }}
                   >
                     <div
-                      className="text-2xl font-bold mb-2"
+                      className="text-3xl font-bold mb-3"
                       style={{ color: themeConfig.colors.text }}
                     >
                       {stats.pendingRequests}
                     </div>
                     <div
-                      className="text-sm"
+                      className="text-sm font-medium"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Pending
                     </div>
                   </div>
                   <div
-                    className="p-6 rounded-lg border"
-                    style={{ borderColor: themeConfig.colors.border }}
+                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
+                    style={{
+                      borderColor: themeConfig.colors.border,
+                      backgroundColor: themeConfig.colors.surface,
+                    }}
                   >
                     <div
-                      className="text-2xl font-bold mb-2"
+                      className="text-3xl font-bold mb-3"
                       style={{ color: themeConfig.colors.text }}
                     >
                       {stats.completedRequests}
                     </div>
                     <div
-                      className="text-sm"
+                      className="text-sm font-medium"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Completed
                     </div>
                   </div>
                   <div
-                    className="p-6 rounded-lg border"
-                    style={{ borderColor: themeConfig.colors.border }}
+                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
+                    style={{
+                      borderColor: themeConfig.colors.border,
+                      backgroundColor: themeConfig.colors.surface,
+                    }}
                   >
                     <div
-                      className="text-2xl font-bold mb-2"
+                      className="text-3xl font-bold mb-3"
                       style={{ color: themeConfig.colors.text }}
                     >
                       {completionRate}%
                     </div>
                     <div
-                      className="text-sm"
+                      className="text-sm font-medium"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Completion Rate
@@ -386,7 +398,7 @@ export default function AdminDashboard() {
                 /* Desktop Quick Actions */
                 <div>
                   <h2
-                    className="text-xl font-semibold mb-4"
+                    className="text-xl font-semibold mb-6"
                     style={{ color: themeConfig.colors.text }}
                   >
                     Quick Actions
@@ -394,18 +406,21 @@ export default function AdminDashboard() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <button
                       onClick={() => router.push("/admin/summary-request")}
-                      className="p-4 rounded-lg border transition-colors hover:bg-gray-50"
-                      style={{ borderColor: themeConfig.colors.border }}
+                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
+                      style={{
+                        borderColor: themeConfig.colors.border,
+                        backgroundColor: themeConfig.colors.surface,
+                      }}
                     >
-                      <div className="text-2xl mb-2">📄</div>
+                      <div className="text-3xl mb-3">📄</div>
                       <div
-                        className="font-medium"
+                        className="font-semibold mb-2"
                         style={{ color: themeConfig.colors.text }}
                       >
                         Generate Summary
                       </div>
                       <div
-                        className="text-sm mt-1"
+                        className="text-sm"
                         style={{ color: themeConfig.colors.textSecondary }}
                       >
                         Create maintenance summary report
@@ -415,18 +430,21 @@ export default function AdminDashboard() {
                       onClick={() =>
                         router.push("/admin/physical-plant-request")
                       }
-                      className="p-4 rounded-lg border transition-colors hover:bg-gray-50"
-                      style={{ borderColor: themeConfig.colors.border }}
+                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
+                      style={{
+                        borderColor: themeConfig.colors.border,
+                        backgroundColor: themeConfig.colors.surface,
+                      }}
                     >
-                      <div className="text-2xl mb-2">🔧</div>
+                      <div className="text-3xl mb-3">🔧</div>
                       <div
-                        className="font-medium"
+                        className="font-semibold mb-2"
                         style={{ color: themeConfig.colors.text }}
                       >
                         Physical Plant Request
                       </div>
                       <div
-                        className="text-sm mt-1"
+                        className="text-sm"
                         style={{ color: themeConfig.colors.textSecondary }}
                       >
                         Submit new maintenance request
@@ -434,18 +452,21 @@ export default function AdminDashboard() {
                     </button>
                     <button
                       onClick={() => router.push("/admin/users")}
-                      className="p-4 rounded-lg border transition-colors hover:bg-gray-50"
-                      style={{ borderColor: themeConfig.colors.border }}
+                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
+                      style={{
+                        borderColor: themeConfig.colors.border,
+                        backgroundColor: themeConfig.colors.surface,
+                      }}
                     >
-                      <div className="text-2xl mb-2">👥</div>
+                      <div className="text-3xl mb-3">👥</div>
                       <div
-                        className="font-medium"
+                        className="font-semibold mb-2"
                         style={{ color: themeConfig.colors.text }}
                       >
                         User Management
                       </div>
                       <div
-                        className="text-sm mt-1"
+                        className="text-sm"
                         style={{ color: themeConfig.colors.textSecondary }}
                       >
                         Manage system users
@@ -453,18 +474,21 @@ export default function AdminDashboard() {
                     </button>
                     <button
                       onClick={() => router.push("/admin/reports")}
-                      className="p-4 rounded-lg border transition-colors hover:bg-gray-50"
-                      style={{ borderColor: themeConfig.colors.border }}
+                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
+                      style={{
+                        borderColor: themeConfig.colors.border,
+                        backgroundColor: themeConfig.colors.surface,
+                      }}
                     >
-                      <div className="text-2xl mb-2">📊</div>
+                      <div className="text-3xl mb-3">📊</div>
                       <div
-                        className="font-medium"
+                        className="font-semibold mb-2"
                         style={{ color: themeConfig.colors.text }}
                       >
                         View Reports
                       </div>
                       <div
-                        className="text-sm mt-1"
+                        className="text-sm"
                         style={{ color: themeConfig.colors.textSecondary }}
                       >
                         Access detailed reports
@@ -572,24 +596,34 @@ export default function AdminDashboard() {
                               <span
                                 className={`px-2 py-1 text-xs font-medium rounded-full ${
                                   request.priority === "High"
-                                    ? "bg-red-100 text-red-800"
+                                    ? "text-white"
                                     : request.priority === "Medium"
-                                      ? "bg-yellow-100 text-yellow-800"
-                                      : "bg-green-100 text-green-800"
+                                      ? "text-white"
+                                      : "text-white"
                                 }`}
+                                style={{
+                                  backgroundColor:
+                                    request.priority === "High"
+                                      ? themeConfig.colors.error
+                                      : request.priority === "Medium"
+                                        ? themeConfig.colors.warning
+                                        : themeConfig.colors.primary,
+                                }}
                               >
                                 {request.priority}
                               </span>
                             </td>
                             <td className="px-6 py-4">
                               <span
-                                className={`px-2 py-1 text-xs font-medium rounded-full ${
-                                  request.status === "Completed"
-                                    ? "bg-green-100 text-green-800"
-                                    : request.status === "In Progress"
-                                      ? "bg-blue-100 text-blue-800"
-                                      : "bg-yellow-100 text-yellow-800"
-                                }`}
+                                className="px-2 py-1 text-xs font-medium rounded-full text-white"
+                                style={{
+                                  backgroundColor:
+                                    request.status === "Completed"
+                                      ? themeConfig.colors.success
+                                      : request.status === "In Progress"
+                                        ? themeConfig.colors.primary
+                                        : themeConfig.colors.warning,
+                                }}
                               >
                                 {request.status}
                               </span>
@@ -626,8 +660,11 @@ export default function AdminDashboard() {
               {/* Search Bar - Conditional based on device */}
               {isMobile ? (
                 <div
-                  className="bg-white rounded-lg border p-3"
-                  style={{ borderColor: "#E5E7EB" }}
+                  className="rounded-lg border p-3"
+                  style={{
+                    backgroundColor: themeConfig.colors.surface,
+                    borderColor: themeConfig.colors.border,
+                  }}
                 >
                   <input
                     type="text"
@@ -636,7 +673,9 @@ export default function AdminDashboard() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full px-3 py-2 border rounded-lg text-sm"
                     style={{
-                      borderColor: "#D1D5DB",
+                      borderColor: themeConfig.colors.border,
+                      backgroundColor: themeConfig.colors.background,
+                      color: themeConfig.colors.text,
                       fontFamily: "Inter, system-ui, sans-serif",
                     }}
                   />

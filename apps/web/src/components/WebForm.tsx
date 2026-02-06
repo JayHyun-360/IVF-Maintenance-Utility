@@ -78,8 +78,11 @@ export function WebForm({
 
   return (
     <div
-      className={`bg-white rounded-lg border ${className}`}
-      style={{ borderColor: themeConfig.colors.border }}
+      className={`rounded-lg border ${className}`}
+      style={{
+        backgroundColor: themeConfig.colors.surface,
+        borderColor: themeConfig.colors.border,
+      }}
     >
       {/* Header */}
       {(title || subtitle) && (
@@ -140,7 +143,7 @@ export function WebForm({
               type="button"
               onClick={onCancel}
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
+              className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors active:scale-95"
               style={{
                 borderColor: themeConfig.colors.border,
                 color: themeConfig.colors.text,
@@ -219,6 +222,10 @@ export function WebFormField({
         borderColor: error
           ? themeConfig.colors.error
           : themeConfig.colors.border,
+        backgroundColor: disabled
+          ? themeConfig.colors.surface
+          : themeConfig.colors.background,
+        outlineColor: themeConfig.colors.primary,
       },
       placeholder,
     };
@@ -276,14 +283,23 @@ export function WebFormField({
           }}
         >
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && (
+            <span style={{ color: themeConfig.colors.error }}> *</span>
+          )}
         </label>
       )}
-
       {type === "textarea" ? (
-        <textarea {...getInputProps()} rows={4} />
+        <textarea
+          {...getInputProps()}
+          aria-invalid={error ? "true" : "false"}
+          aria-describedby={error ? `${name}-error` : undefined}
+        />
       ) : type === "select" ? (
-        <select {...getInputProps()}>
+        <select
+          {...getInputProps()}
+          aria-invalid={error ? "true" : "false"}
+          aria-describedby={error ? `${name}-error` : undefined}
+        >
           <option value="">Select an option</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -292,9 +308,12 @@ export function WebFormField({
           ))}
         </select>
       ) : (
-        <input {...getInputProps()} />
+        <input
+          {...getInputProps()}
+          aria-invalid={error ? "true" : "false"}
+          aria-describedby={error ? `${name}-error` : undefined}
+        />
       )}
-
       {helper && !error && (
         <p
           className="text-xs mt-1"
@@ -306,11 +325,15 @@ export function WebFormField({
           {helper}
         </p>
       )}
-
       {error && (
         <p
-          className="text-xs mt-1 text-red-600"
-          style={{ fontFamily: "Inter, system-ui, sans-serif" }}
+          id={`${name}-error`}
+          className="text-xs mt-1"
+          role="alert"
+          style={{
+            color: themeConfig.colors.error,
+            fontFamily: "Inter, system-ui, sans-serif",
+          }}
         >
           {error}
         </p>

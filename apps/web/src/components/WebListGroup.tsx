@@ -242,8 +242,11 @@ export function WebStatsList({
 
   return (
     <div
-      className={`bg-white rounded-lg border ${compact ? "p-3" : "p-4"}`}
-      style={{ borderColor: themeConfig.colors.border }}
+      className={`rounded-lg border ${compact ? "p-3" : "p-4"}`}
+      style={{
+        borderColor: themeConfig.colors.border,
+        backgroundColor: themeConfig.colors.surface,
+      }}
     >
       <div className={`grid ${getColumnsClass()} gap-4`}>
         {stats.map((stat, index) => (
@@ -268,13 +271,15 @@ export function WebStatsList({
             </div>
             {stat.change && (
               <div
-                className={`text-xs mt-1 font-medium ${
-                  stat.change.type === "increase"
-                    ? "text-green-600"
-                    : stat.change.type === "decrease"
-                      ? "text-red-600"
-                      : "text-gray-500"
-                }`}
+                className={`text-xs mt-1 font-medium`}
+                style={{
+                  color:
+                    stat.change.type === "increase"
+                      ? themeConfig.colors.success
+                      : stat.change.type === "decrease"
+                        ? themeConfig.colors.error
+                        : themeConfig.colors.textSecondary,
+                }}
               >
                 {stat.change.value}
               </div>

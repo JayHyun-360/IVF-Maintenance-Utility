@@ -72,7 +72,7 @@ export default function ThemeSwitcher() {
     ripple.style.opacity = "0.6";
     ripple.style.transform = "translate(-50%, -50%) scale(0)";
     ripple.style.transition =
-      "transform 0.6s cubic-bezier(0.4, 0, 0.0.1), opacity 0.6s ease-out";
+      "transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out";
     ripple.style.pointerEvents = "none";
     ripple.style.zIndex = Z_INDEX.MAX.toString();
 
