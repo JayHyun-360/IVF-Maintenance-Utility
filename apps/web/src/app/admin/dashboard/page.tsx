@@ -183,7 +183,13 @@ export default function AdminDashboard() {
             </div>
 
             <div className="absolute bottom-8 left-8 right-8">
-              <div className="p-4 rounded-3xl bg-black/5 backdrop-blur-md border border-white/5">
+              <div
+                className="p-4 rounded-3xl backdrop-blur-md border"
+                style={{
+                  backgroundColor: `${themeConfig.colors.text}10`,
+                  borderColor: `${themeConfig.colors.border}20`,
+                }}
+              >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-xs font-bold text-slate-600">
                     AD
@@ -197,7 +203,11 @@ export default function AdminDashboard() {
                 </div>
                 <button
                   onClick={() => router.push("/")}
-                  className="w-full py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition-all"
+                  className="w-full py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                  style={{
+                    backgroundColor: `${themeConfig.colors.background}40`,
+                    color: themeConfig.colors.text,
+                  }}
                 >
                   Sign Out
                 </button>
@@ -247,7 +257,13 @@ export default function AdminDashboard() {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="hidden sm:flex items-center bg-black/5 rounded-full px-4 py-2 border border-white/5">
+              <div
+                className="hidden sm:flex items-center rounded-full px-4 py-2 border"
+                style={{
+                  backgroundColor: `${themeConfig.colors.text}08`,
+                  borderColor: `${themeConfig.colors.border}20`,
+                }}
+              >
                 <svg
                   className="w-4 h-4 opacity-30 mr-2"
                   fill="none"
@@ -304,7 +320,7 @@ export default function AdminDashboard() {
                       <div className="text-3xl font-black mb-1">
                         {stat.value}
                       </div>
-                      <div className="text-[10px] font-black uppercase tracking-widest opacity-40">
+                      <div className="text-[10px] font-black uppercase tracking-widest opacity-60">
                         {stat.label}
                       </div>
                     </div>
@@ -352,7 +368,7 @@ export default function AdminDashboard() {
                                 <h3 className="font-bold text-sm truncate">
                                   {req.title}
                                 </h3>
-                                <p className="text-[10px] font-medium opacity-50">
+                                <p className="text-[10px] font-medium opacity-70">
                                   {req.submittedBy} • {req.date}
                                 </p>
                               </div>
@@ -368,7 +384,12 @@ export default function AdminDashboard() {
                               >
                                 {req.status}
                               </span>
-                              <button className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/5 transition-all">
+                              <button
+                                className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
+                                style={{
+                                  backgroundColor: `${themeConfig.colors.text}08`,
+                                }}
+                              >
                                 <svg
                                   className="w-4 h-4"
                                   fill="none"
@@ -437,7 +458,13 @@ export default function AdminDashboard() {
                       ))}
                     </div>
 
-                    <div className="p-6 rounded-[2.5rem] bg-black/5 border border-white/5 mt-8">
+                    <div
+                      className="p-6 rounded-[2.5rem] border mt-8"
+                      style={{
+                        backgroundColor: `${themeConfig.colors.text}05`,
+                        borderColor: `${themeConfig.colors.border}20`,
+                      }}
+                    >
                       <h3 className="text-sm font-black mb-4">
                         Urgent Attention
                       </h3>
@@ -447,7 +474,7 @@ export default function AdminDashboard() {
                             <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />{" "}
                             Urgent Fault
                           </p>
-                          <p className="text-[10px] opacity-70 leading-relaxed font-medium">
+                          <p className="text-[10px] opacity-80 leading-relaxed font-medium">
                             Main generator cooling system reported failure in
                             Block B.
                           </p>

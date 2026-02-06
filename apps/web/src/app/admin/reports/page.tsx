@@ -65,8 +65,11 @@ export default function AdminReportsPage() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => router.push("/admin/dashboard")}
-                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:bg-black/5"
-                style={{ border: `1px solid ${themeConfig.colors.border}` }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
+                style={{
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  backgroundColor: `${themeConfig.colors.text}08`,
+                }}
               >
                 <svg
                   className="w-5 h-5"
@@ -86,7 +89,13 @@ export default function AdminReportsPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center gap-2 bg-black/5 p-1 rounded-xl border border-white/5">
+              <div
+                className="hidden sm:flex items-center gap-2 p-1 rounded-xl border"
+                style={{
+                  backgroundColor: `${themeConfig.colors.text}08`,
+                  borderColor: `${themeConfig.colors.border}20`,
+                }}
+              >
                 {["7", "30", "90"].map((range) => (
                   <button
                     key={range}
@@ -127,7 +136,7 @@ export default function AdminReportsPage() {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="space-y-2">
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">
                       Operational Efficiency
                     </p>
                     <div className="flex items-baseline gap-3">
@@ -150,7 +159,7 @@ export default function AdminReportsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">
                       Avg. Resolution Time
                     </p>
                     <div className="flex items-baseline gap-3">
@@ -168,7 +177,7 @@ export default function AdminReportsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">
                       Active Tasks
                     </p>
                     <div className="flex items-baseline gap-3">
@@ -209,7 +218,12 @@ export default function AdminReportsPage() {
                           <span className="opacity-60">{cat}</span>
                           <span>{String(count)}</span>
                         </div>
-                        <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
+                        <div
+                          className="h-1.5 w-full rounded-full overflow-hidden"
+                          style={{
+                            backgroundColor: `${themeConfig.colors.text}10`,
+                          }}
+                        >
                           <div
                             className="h-full transition-all duration-1000"
                             style={{
@@ -240,7 +254,10 @@ export default function AdminReportsPage() {
                     {Object.entries(priorityData).map(([priority, count]) => (
                       <div
                         key={priority}
-                        className="flex items-center gap-4 p-4 rounded-2xl bg-black/5"
+                        className="flex items-center gap-4 p-4 rounded-2xl"
+                        style={{
+                          backgroundColor: `${themeConfig.colors.text}08`,
+                        }}
                       >
                         <div
                           className="w-3 h-3 rounded-full"
@@ -285,7 +302,11 @@ export default function AdminReportsPage() {
                   ].map((btn, i) => (
                     <button
                       key={i}
-                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all hover:bg-black/5 group"
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all group"
+                      style={{
+                        backgroundColor: `${themeConfig.colors.text}05`,
+                        borderColor: `${themeConfig.colors.border}20`,
+                      }}
                     >
                       <span className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-xl shadow-inner">
                         {btn.icon}
@@ -325,7 +346,13 @@ export default function AdminReportsPage() {
                       </span>
                     </div>
                   </div>
-                  <button className="w-full mt-6 py-3 rounded-xl bg-white text-black font-black text-[10px] uppercase tracking-widest shadow-lg">
+                  <button
+                    className="w-full mt-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg"
+                    style={{
+                      backgroundColor: themeConfig.colors.background,
+                      color: themeConfig.colors.text,
+                    }}
+                  >
                     Manage Schedule
                   </button>
                 </div>

@@ -79,8 +79,11 @@ export default function UserHistoryPage() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => router.push("/student")}
-                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:bg-black/5"
-                style={{ border: `1px solid ${themeConfig.colors.border}` }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
+                style={{
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  backgroundColor: `${themeConfig.colors.text}08`,
+                }}
               >
                 <svg
                   className="w-5 h-5"
@@ -217,7 +220,7 @@ export default function UserHistoryPage() {
                             #{request.id}
                           </span>
                         </div>
-                        <p className="text-sm font-medium opacity-50 flex items-center gap-2">
+                        <p className="text-sm font-medium opacity-70 flex items-center gap-2">
                           <svg
                             className="w-4 h-4"
                             fill="none"
@@ -258,7 +261,12 @@ export default function UserHistoryPage() {
                             {request.status.replace("_", " ")}
                           </span>
                         </div>
-                        <button className="w-10 h-10 rounded-full flex items-center justify-center bg-black/5 hover:bg-black/10 transition-all">
+                        <button
+                          className="w-10 h-10 rounded-full flex items-center justify-center transition-all"
+                          style={{
+                            backgroundColor: `${themeConfig.colors.text}08`,
+                          }}
+                        >
                           <svg
                             className="w-5 h-5"
                             fill="none"
@@ -285,7 +293,7 @@ export default function UserHistoryPage() {
               >
                 <div className="text-6xl mb-6">🔍</div>
                 <h3 className="text-xl font-black mb-2">No Requests Found</h3>
-                <p className="text-sm opacity-50 font-medium">
+                <p className="text-sm opacity-70 font-medium">
                   Try adjusting your filters or search query.
                 </p>
               </div>

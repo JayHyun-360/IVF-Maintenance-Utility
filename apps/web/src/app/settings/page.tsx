@@ -35,7 +35,10 @@ export default function SettingsPage() {
     >
       <div className="flex items-center gap-4 flex-1">
         {icon && (
-          <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-xl shadow-inner">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-inner"
+            style={{ backgroundColor: `${themeConfig.colors.text}08` }}
+          >
             {icon}
           </div>
         )}
@@ -43,7 +46,7 @@ export default function SettingsPage() {
           <h3 className="text-sm font-black uppercase tracking-wider mb-1">
             {title}
           </h3>
-          <p className="text-xs font-medium opacity-50 max-w-sm">{desc}</p>
+          <p className="text-xs font-medium opacity-70 max-w-sm">{desc}</p>
         </div>
       </div>
       <div>{children}</div>
@@ -103,8 +106,11 @@ export default function SettingsPage() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => router.push("/")}
-                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:bg-black/5"
-                style={{ border: `1px solid ${themeConfig.colors.border}` }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
+                style={{
+                  border: `1px solid ${themeConfig.colors.border}`,
+                  backgroundColor: `${themeConfig.colors.text}08`,
+                }}
               >
                 <svg
                   className="w-5 h-5"
@@ -260,7 +266,7 @@ export default function SettingsPage() {
             className="pt-8 pb-12 flex items-center justify-between border-t"
             style={{ borderColor: `${themeConfig.colors.border}30` }}
           >
-            <p className="text-xs font-medium opacity-40">
+            <p className="text-xs font-medium opacity-60">
               System Version: v2.4.0-stable
             </p>
             <button

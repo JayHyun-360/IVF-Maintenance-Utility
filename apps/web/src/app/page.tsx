@@ -160,7 +160,7 @@ export default function Home() {
                       {String.fromCharCode(64 + i)}
                     </div>
                   ))}
-                  <span className="ml-4 text-sm font-bold opacity-60">
+                  <span className="ml-4 text-sm font-bold opacity-70">
                     Joined by 500+ users
                   </span>
                 </div>
@@ -217,7 +217,7 @@ export default function Home() {
                 <div className="text-3xl font-black mb-1 tabular-nums">
                   {stat.value}
                 </div>
-                <div className="text-sm font-bold opacity-60 uppercase tracking-wider">
+                <div className="text-sm font-bold opacity-70 uppercase tracking-wider">
                   {stat.label}
                 </div>
               </div>
@@ -275,7 +275,7 @@ export default function Home() {
                       {service.icon}
                     </div>
                     <h3 className="text-xl font-black mb-2">{service.title}</h3>
-                    <p className="text-sm opacity-60 font-medium leading-relaxed">
+                    <p className="text-sm opacity-70 font-medium leading-relaxed">
                       {service.desc}
                     </p>
                     <div
@@ -337,7 +337,10 @@ export default function Home() {
                   ].map((item, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between p-4 rounded-2xl bg-black/5"
+                      className="flex items-center justify-between p-4 rounded-2xl"
+                      style={{
+                        backgroundColor: `${themeConfig.colors.text}08`,
+                      }}
                     >
                       <span className="font-bold text-sm opacity-70">
                         {item.label}
@@ -373,7 +376,7 @@ export default function Home() {
                       >
                         Need Assistance?
                       </h4>
-                      <p className="text-xs font-medium opacity-60 mb-4">
+                      <p className="text-xs font-medium opacity-70 mb-4">
                         Our dedicated maintenance support team is available 24/7
                         for urgent inquiries.
                       </p>
