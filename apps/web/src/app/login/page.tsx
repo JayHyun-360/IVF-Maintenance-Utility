@@ -1,5 +1,7 @@
 "use client";
 
+// Login page component - Fixed for Vercel deployment
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, getSession } from "next-auth/react";
@@ -268,7 +270,20 @@ export default function LoginPage() {
                   />
                 </svg>
               </div>
-              <WebForm
+              <h1
+                className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2"
+                style={{ color: themeConfig.colors.text }}
+              >
+                IVF Maintenance Utility
+              </h1>
+              <p
+                className="text-sm sm:text-base"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Access your maintenance dashboard
+              </p>
+            </div>
+            <WebForm
               title="Sign In"
               subtitle="Access your maintenance dashboard"
               onSubmit={handleSubmit}
@@ -289,7 +304,6 @@ export default function LoginPage() {
                 placeholder="Enter your password"
                 required
               />
-            </WebForm>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
@@ -316,6 +330,7 @@ export default function LoginPage() {
               </div>
             </WebForm>
           </div>
+        </div>
       )}
     </div>
   );

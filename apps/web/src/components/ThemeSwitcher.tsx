@@ -55,11 +55,14 @@ export default function ThemeSwitcher() {
     // Add visual feedback with enhanced animations
     const button = document.activeElement as HTMLElement;
     if (button) {
-      button.style.transform = "scale(0.95) rotate(2deg)";
-      button.style.transition = "transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)";
-      setTimeout(() => {
-        button.style.transform = "scale(1) rotate(0deg)";
-      }, 200);
+      // Use requestAnimationFrame to avoid React hooks violations
+      requestAnimationFrame(() => {
+        button.style.transform = "scale(0.95) rotate(2deg)";
+        button.style.transition = "transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)";
+        setTimeout(() => {
+          button.style.transform = "scale(1) rotate(0deg)";
+        }, 200);
+      });
     }
 
     // Add ripple effect to theme switcher

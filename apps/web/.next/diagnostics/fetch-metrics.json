@@ -1,0 +1,22 @@
+{
+  "/_global-error": [],
+  "/_not-found": [],
+  "/admin-pin-verification": [],
+  "/admin/dashboard": [],
+  "/admin/physical-plant-request": [],
+  "/admin/reports": [],
+  "/admin/summary-request": [],
+  "/admin/users": [],
+  "/dashboard": [],
+  "/emergency": [],
+  "/login": [],
+  "/": [],
+  "/register": [],
+  "/role-selection": [],
+  "/settings": [],
+  "/student/history": [],
+  "/student": [],
+  "/test-auth": [],
+  "/test-env": [],
+  "/test-ui": []
+}
