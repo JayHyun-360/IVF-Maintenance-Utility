@@ -85,7 +85,7 @@ export default function AdminPinVerificationPage() {
       style={{ backgroundColor: themeConfig.colors.background }}
     >
       {/* Background Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className="absolute top-20 left-20 w-64 h-64 rounded-full opacity-10"
           style={{ backgroundColor: themeConfig.colors.primary }}

@@ -17,10 +17,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  // State management handled by WebForm component
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
@@ -51,15 +48,14 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (data: any) => {
     setIsLoading(true);
     setError("");
 
     try {
       const result = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
+        email: data.email,
+        password: data.password,
         redirect: false,
       });
 
@@ -76,13 +72,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <div
       className="min-h-screen mobile-scroll"
@@ -91,7 +80,7 @@ export default function LoginPage() {
       {/* Background Decorative Elements - Conditional based on device */}
       {isMobile ? (
         /* Mobile Background */
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
             className="absolute top-8 sm:top-10 md:top-12 lg:top-16 left-8 sm:left-10 md:left-12 lg:left-16 w-24 sm:w-32 md:w-40 lg:w-48 h-24 sm:h-32 md:h-40 lg:h-48 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
             style={{ backgroundColor: themeConfig.colors.primary }}
@@ -107,7 +96,7 @@ export default function LoginPage() {
         </div>
       ) : (
         /* Desktop Background - Original */
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
             className="absolute top-8 sm:top-10 md:top-12 lg:top-16 left-8 sm:left-10 md:left-12 lg:left-16 w-24 sm:w-32 md:w-40 lg:w-48 h-24 sm:h-32 md:h-40 lg:h-48 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
             style={{ backgroundColor: themeConfig.colors.primary }}
@@ -329,6 +318,20 @@ export default function LoginPage() {
                 </a>
               </div>
             </WebForm>
+
+            {/* Desktop Error Display */}
+            {error && (
+              <div
+                className="mt-4 p-3 rounded-lg text-sm text-center"
+                style={{
+                  backgroundColor: `${themeConfig.colors.error}20`,
+                  color: themeConfig.colors.error,
+                  border: `1px solid ${themeConfig.colors.error}50`,
+                }}
+              >
+                {error}
+              </div>
+            )}
           </div>
         </div>
       )}
