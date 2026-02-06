@@ -242,7 +242,7 @@ export default function UserHistoryPage() {
                           Last Update
                         </p>
                         <p className="text-xs font-bold">
-                          {request.submittedDate}
+                          {request.createdAt.toLocaleDateString()}
                         </p>
                       </div>
                       <div className="flex items-center gap-4">
