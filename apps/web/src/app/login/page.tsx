@@ -1,68 +1,60 @@
 "use client";
 
-// Login page component - Fixed for Vercel deployment
+// Login page component - Enhanced UI with Demo Accounts
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, getSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
-import WebHeader from "@/components/WebHeader";
-import { WebForm, WebFormField, WebFormSection } from "@/components/WebForm";
+
+// Demo accounts for testing
+const DEMO_ACCOUNTS = [
+  {
+    role: "Admin",
+    email: "admin@test.com",
+    password: "admin12345",
+    description: "Full system access",
+    icon: "🛡️",
+    color: "#6366f1",
+  },
+  {
+    role: "User",
+    email: "user@test.com",
+    password: "user12345",
+    description: "Submit maintenance requests",
+    icon: "👤",
+    color: "#10b981",
+  },
+];
 
 export default function LoginPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
-  // State management handled by WebForm component
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleGoogleSignIn = async () => {
-    setIsGoogleLoading(true);
-    setError("");
-    try {
-      // Check if Google OAuth is properly configured
-      if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
-        setError(
-          "Google OAuth is not configured. Please use email/password login.",
-        );
-        return;
-      }
-
-      await signIn("google", {
-        callbackUrl: "/role-selection",
-        redirect: true,
-      });
-    } catch (error) {
-      console.error("Google sign-in error:", error);
-      setError(
-        "Google sign-in failed. Please try again or use email/password.",
-      );
-    } finally {
-      setIsGoogleLoading(false);
-    }
-  };
-
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
     setError("");
 
     try {
       const result = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
+        email,
+        password,
         redirect: false,
       });
 
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        // Successfully authenticated, redirect to role selection
         router.push("/role-selection");
       }
     } catch {
@@ -72,83 +64,88 @@ export default function LoginPage() {
     }
   };
 
+  const fillDemoCredentials = (demoEmail: string, demoPassword: string) => {
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    setError("");
+  };
+
   return (
     <div
-      className="min-h-screen mobile-scroll"
+      className="min-h-screen relative overflow-hidden"
       style={{ backgroundColor: themeConfig.colors.background }}
     >
-      {/* Background Decorative Elements - Conditional based on device */}
-      {isMobile ? (
-        /* Mobile Background */
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className="absolute top-8 sm:top-10 md:top-12 lg:top-16 left-8 sm:left-10 md:left-12 lg:left-16 w-24 sm:w-32 md:w-40 lg:w-48 h-24 sm:h-32 md:h-40 lg:h-48 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
-            style={{ backgroundColor: themeConfig.colors.primary }}
-          />
-          <div
-            className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-16 right-8 sm:right-10 md:right-12 lg:right-16 w-32 sm:w-40 md:w-48 lg:w-56 h-32 sm:h-40 md:h-48 lg:h-56 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
-            style={{ backgroundColor: themeConfig.colors.secondary }}
-          />
-          <div
-            className="absolute top-1/3 sm:top-1/2 left-1/4 sm:left-1/3 w-20 sm:w-24 md:w-32 lg:w-40 h-20 sm:h-24 md:h-32 lg:h-40 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
-            style={{ backgroundColor: themeConfig.colors.accent }}
-          />
-        </div>
-      ) : (
-        /* Desktop Background - Original */
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className="absolute top-8 sm:top-10 md:top-12 lg:top-16 left-8 sm:left-10 md:left-12 lg:left-16 w-24 sm:w-32 md:w-40 lg:w-48 h-24 sm:h-32 md:h-40 lg:h-48 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
-            style={{ backgroundColor: themeConfig.colors.primary }}
-          />
-          <div
-            className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-16 right-8 sm:right-10 md:right-12 lg:right-16 w-32 sm:w-40 md:w-48 lg:w-56 h-32 sm:h-40 md:h-48 lg:h-56 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
-            style={{ backgroundColor: themeConfig.colors.secondary }}
-          />
-          <div
-            className="absolute top-1/3 sm:top-1/2 left-1/4 sm:left-1/3 w-20 sm:w-24 md:w-32 lg:w-40 h-20 sm:h-24 md:h-32 lg:h-40 rounded-full opacity-5 sm:opacity-8 md:opacity-10"
-            style={{ backgroundColor: themeConfig.colors.accent }}
-          />
-        </div>
-      )}
-
-      {/* Theme Switcher - Conditional based on device */}
-      {isMobile ? (
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Gradient Orbs */}
         <div
-          className="fixed top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 mobile-safe-padding-top"
-          style={{ zIndex: Z_INDEX.DROPDOWN }}
+          className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl opacity-20 animate-pulse"
+          style={{ backgroundColor: themeConfig.colors.primary }}
+        />
+        <div
+          className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-15 animate-pulse"
+          style={{
+            backgroundColor: themeConfig.colors.secondary,
+            animationDelay: "1s",
+          }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl opacity-10"
+          style={{ backgroundColor: themeConfig.colors.accent }}
+        />
+
+        {/* Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `linear-gradient(${themeConfig.colors.text} 1px, transparent 1px), linear-gradient(90deg, ${themeConfig.colors.text} 1px, transparent 1px)`,
+            backgroundSize: "50px 50px",
+          }}
+        />
+      </div>
+
+      {/* Theme Switcher */}
+      <div
+        className={`fixed ${isMobile ? "top-4 right-4" : "top-6 right-6"}`}
+        style={{ zIndex: Z_INDEX.DROPDOWN }}
+      >
+        <ThemeSwitcher />
+      </div>
+
+      {/* Main Content */}
+      <div
+        className={`min-h-screen flex items-center justify-center ${isMobile ? "px-4 py-8" : "px-6 py-12"}`}
+      >
+        <div
+          className={`w-full ${isMobile ? "max-w-sm" : "max-w-md"} relative z-10`}
         >
-          <ThemeSwitcher />
-        </div>
-      ) : (
-        <div className="fixed top-6 right-6" style={{ zIndex: 1000 }}>
-          <ThemeSwitcher />
-        </div>
-      )}
-
-      {/* Main Content - Conditional based on device */}
-      {isMobile ? (
-        /* Mobile Login Form */
-        <div className="min-h-screen flex items-center justify-center px-3 sm:px-4 md:px-6 mobile-safe-padding">
+          {/* Login Card */}
           <div
-            className="w-full max-w-sm sm:max-w-md relative z-10 rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8"
+            className="rounded-2xl overflow-hidden backdrop-blur-xl"
             style={{
-              background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+              background: `linear-gradient(145deg, ${themeConfig.colors.surface}f0 0%, ${themeConfig.colors.surface}e0 100%)`,
               border: `1px solid ${themeConfig.colors.border}`,
-              boxShadow: `0 12px 24px ${themeConfig.colors.primary}15, 0 0 0 1px ${themeConfig.colors.border}15`,
+              boxShadow: `0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px ${themeConfig.colors.border}30`,
             }}
           >
-            {/* Mobile Logo */}
-            <div className="text-center mb-4 sm:mb-6">
+            {/* Header Section */}
+            <div
+              className="px-6 py-8 text-center"
+              style={{
+                background: `linear-gradient(135deg, ${themeConfig.colors.primary}15 0%, ${themeConfig.colors.secondary}10 100%)`,
+                borderBottom: `1px solid ${themeConfig.colors.border}50`,
+              }}
+            >
+              {/* Logo */}
               <div
-                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 mx-auto rounded-lg sm:rounded-xl md:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg sm:shadow-xl md:shadow-2xl transform hover:scale-105 transition-all duration-500"
+                className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-5 shadow-2xl transform hover:scale-105 transition-all duration-500"
                 style={{
                   background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                  boxShadow: `0 6px 16px ${themeConfig.colors.primary}25`,
+                  boxShadow: `0 10px 40px ${themeConfig.colors.primary}40`,
                 }}
               >
                 <svg
-                  className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white"
+                  className="w-10 h-10 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -157,184 +154,401 @@ export default function LoginPage() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
                   />
                 </svg>
               </div>
+
               <h1
-                className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2"
+                className="text-2xl font-bold mb-2 tracking-tight"
                 style={{ color: themeConfig.colors.text }}
               >
                 IVF Maintenance Utility
               </h1>
               <p
-                className="text-sm sm:text-base"
-                style={{ color: themeConfig.colors.textSecondary }}
-              >
-                Sign in to access the maintenance system
-              </p>
-            </div>
-
-            {/* Mobile Form */}
-            <WebForm
-              title="Sign In"
-              subtitle="Enter your credentials to continue"
-              onSubmit={handleSubmit}
-              loading={isLoading}
-              submitText="Sign In"
-            >
-              <WebFormField
-                name="email"
-                label="Email"
-                type="email"
-                placeholder="Enter your email"
-                required
-              />
-              <WebFormField
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="Enter your password"
-                required
-              />
-            </WebForm>
-
-            {/* Mobile Error Display */}
-            {error && (
-              <div
-                className="mt-4 p-3 rounded-lg text-sm text-center"
-                style={{
-                  backgroundColor: `${themeConfig.colors.error}20`,
-                  color: themeConfig.colors.error,
-                  border: `1px solid ${themeConfig.colors.error}50`,
-                }}
-              >
-                {error}
-              </div>
-            )}
-
-            {/* Mobile Links */}
-            <div className="mt-6 text-center">
-              <button
-                onClick={() => router.push("/register")}
                 className="text-sm"
-                style={{ color: themeConfig.colors.primary }}
-              >
-                Don't have an account? Create one →
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* Desktop Login Form - Improved Layout */
-        <div className="min-h-screen flex items-center justify-center px-4 py-12">
-          <div
-            className="w-full max-w-lg"
-            style={{
-              backgroundColor: themeConfig.colors.surface,
-              border: `1px solid ${themeConfig.colors.border}`,
-              boxShadow: `0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 20px 25px -5px rgba(0, 0, 0, 0.1)`,
-              borderRadius: "1rem",
-            }}
-          >
-            <div className="text-center mb-8">
-              <div
-                className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4"
-                style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                  boxShadow: `0 4px 15px ${themeConfig.colors.primary}20`,
-                }}
-              >
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-              </div>
-              <h1
-                className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2"
-                style={{ color: themeConfig.colors.text }}
-              >
-                IVF Maintenance Utility
-              </h1>
-              <p
-                className="text-sm sm:text-base"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
-                Access your maintenance dashboard
+                Integrated Visual Feedback & Maintenance System
               </p>
             </div>
-            <WebForm
-              title="Sign In"
-              subtitle="Access your maintenance dashboard"
-              onSubmit={handleSubmit}
-              loading={isLoading}
-              submitText={isLoading ? "Signing in..." : "Sign in"}
-            >
-              <WebFormField
-                name="email"
-                label="Email"
-                type="email"
-                placeholder="Enter your email"
-                required
-              />
-              <WebFormField
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="Enter your password"
-                required
-              />
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="remember"
-                    className="h-4 w-4 rounded border-gray-300 focus:ring-blue-500"
-                    style={{ accentColor: themeConfig.colors.primary }}
-                  />
+
+            {/* Form Section */}
+            <div className="p-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Email Field */}
+                <div>
                   <label
-                    htmlFor="remember"
-                    className="ml-2 block text-sm"
+                    htmlFor="email"
+                    className="block text-sm font-medium mb-2"
                     style={{ color: themeConfig.colors.text }}
                   >
-                    Remember me
+                    Email Address
                   </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg
+                        className="w-5 h-5"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border-2 transition-all duration-300 focus:ring-2 focus:ring-offset-1 focus:border-transparent outline-none"
+                      style={{
+                        backgroundColor: themeConfig.colors.background,
+                        borderColor: themeConfig.colors.border,
+                        color: themeConfig.colors.text,
+                      }}
+                      placeholder="you@example.com"
+                    />
+                  </div>
                 </div>
-                <a
-                  href="#"
-                  className="text-sm hover:underline"
+
+                {/* Password Field */}
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium mb-2"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    Password
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg
+                        className="w-5 h-5"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="w-full pl-10 pr-12 py-3 rounded-xl border-2 transition-all duration-300 focus:ring-2 focus:ring-offset-1 focus:border-transparent outline-none"
+                      style={{
+                        backgroundColor: themeConfig.colors.background,
+                        borderColor: themeConfig.colors.border,
+                        color: themeConfig.colors.text,
+                      }}
+                      placeholder="••••••••"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    >
+                      {showPassword ? (
+                        <svg
+                          className="w-5 h-5"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="w-5 h-5"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                          />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Error Display */}
+                {error && (
+                  <div
+                    className="p-3 rounded-xl text-sm text-center flex items-center justify-center gap-2"
+                    style={{
+                      backgroundColor: `${themeConfig.colors.error}15`,
+                      color: themeConfig.colors.error,
+                      border: `1px solid ${themeConfig.colors.error}30`,
+                    }}
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {error}
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 px-4 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                    boxShadow: `0 4px 15px ${themeConfig.colors.primary}40`,
+                  }}
+                >
+                  {isLoading ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      Signing in...
+                    </>
+                  ) : (
+                    <>
+                      Sign In
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+
+            {/* Demo Accounts Section */}
+            <div
+              className="px-6 py-5"
+              style={{
+                background: `linear-gradient(180deg, ${themeConfig.colors.background}50 0%, ${themeConfig.colors.background}80 100%)`,
+                borderTop: `1px solid ${themeConfig.colors.border}50`,
+              }}
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <div
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ backgroundColor: `${themeConfig.colors.primary}20` }}
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    style={{ color: themeConfig.colors.primary }}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <span
+                  className="text-sm font-semibold"
+                  style={{ color: themeConfig.colors.text }}
+                >
+                  Demo Accounts
+                </span>
+                <span
+                  className="text-xs px-2 py-0.5 rounded-full"
+                  style={{
+                    backgroundColor: `${themeConfig.colors.success}20`,
+                    color: themeConfig.colors.success,
+                  }}
+                >
+                  Click to autofill
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3">
+                {DEMO_ACCOUNTS.map((account) => (
+                  <button
+                    key={account.email}
+                    type="button"
+                    onClick={() =>
+                      fillDemoCredentials(account.email, account.password)
+                    }
+                    className="w-full p-4 rounded-xl border-2 text-left transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
+                    style={{
+                      backgroundColor: themeConfig.colors.surface,
+                      borderColor:
+                        email === account.email
+                          ? account.color
+                          : themeConfig.colors.border,
+                      boxShadow:
+                        email === account.email
+                          ? `0 0 0 3px ${account.color}20`
+                          : "none",
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-transform group-hover:scale-110"
+                        style={{ backgroundColor: `${account.color}15` }}
+                      >
+                        {account.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="font-semibold text-sm"
+                            style={{ color: themeConfig.colors.text }}
+                          >
+                            {account.role}
+                          </span>
+                          <span
+                            className="text-xs px-1.5 py-0.5 rounded"
+                            style={{
+                              backgroundColor: `${account.color}15`,
+                              color: account.color,
+                            }}
+                          >
+                            {account.description}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3 mt-1">
+                          <code
+                            className="text-xs truncate"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            {account.email}
+                          </code>
+                          <span
+                            className="text-xs"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            •
+                          </span>
+                          <code
+                            className="text-xs"
+                            style={{ color: themeConfig.colors.textSecondary }}
+                          >
+                            {account.password}
+                          </code>
+                        </div>
+                      </div>
+                      <svg
+                        className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ color: account.color }}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div
+              className="px-6 py-4 text-center"
+              style={{ borderTop: `1px solid ${themeConfig.colors.border}30` }}
+            >
+              <p
+                className="text-xs"
+                style={{ color: themeConfig.colors.textSecondary }}
+              >
+                Need an account?{" "}
+                <button
+                  onClick={() => router.push("/register")}
+                  className="font-semibold hover:underline transition-colors"
                   style={{ color: themeConfig.colors.primary }}
                 >
-                  Forgot password?
-                </a>
-              </div>
-            </WebForm>
-
-            {/* Desktop Error Display */}
-            {error && (
-              <div
-                className="mt-4 p-3 rounded-lg text-sm text-center"
-                style={{
-                  backgroundColor: `${themeConfig.colors.error}20`,
-                  color: themeConfig.colors.error,
-                  border: `1px solid ${themeConfig.colors.error}50`,
-                }}
-              >
-                {error}
-              </div>
-            )}
+                  Register here
+                </button>
+              </p>
+            </div>
           </div>
+
+          {/* Bottom Branding */}
+          <p
+            className="text-center text-xs mt-6"
+            style={{ color: themeConfig.colors.textSecondary }}
+          >
+            © {new Date().getFullYear()} IVF Maintenance Utility. All rights
+            reserved.
+          </p>
         </div>
-      )}
+      </div>
     </div>
   );
 }
