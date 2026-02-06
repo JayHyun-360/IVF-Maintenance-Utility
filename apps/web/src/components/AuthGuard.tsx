@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default function AuthGuard({
 }: AuthGuardProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const { themeConfig } = useTheme();
   const [hasTimedOut, setHasTimedOut] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
 
@@ -77,15 +79,16 @@ export default function AuthGuard({
       return (
         <div
           className="min-h-screen flex items-center justify-center"
-          style={{ backgroundColor: "#ffffff" }}
+          style={{ backgroundColor: themeConfig.colors.background }}
         >
           <div className="text-center max-w-md mx-auto p-6">
             <div
               className="rounded-full h-12 w-12 mx-auto mb-4 flex items-center justify-center"
-              style={{ backgroundColor: "#FEF3C7" }}
+              style={{ backgroundColor: `${themeConfig.colors.warning}20` }}
             >
               <svg
-                className="w-6 h-6 text-yellow-600"
+                className="w-6 h-6"
+                style={{ color: themeConfig.colors.warning }}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -100,7 +103,7 @@ export default function AuthGuard({
             </div>
             <p
               style={{
-                color: "#64748B",
+                color: themeConfig.colors.text,
                 fontFamily: "Inter, system-ui, sans-serif",
                 marginBottom: "16px",
               }}
@@ -110,7 +113,7 @@ export default function AuthGuard({
             {debugInfo && (
               <p
                 style={{
-                  color: "#94a3b8",
+                  color: themeConfig.colors.textSecondary,
                   fontFamily: "monospace",
                   fontSize: "12px",
                   marginBottom: "16px",
@@ -123,7 +126,7 @@ export default function AuthGuard({
               <button
                 onClick={() => window.location.reload()}
                 style={{
-                  backgroundColor: "#1B4332",
+                  backgroundColor: themeConfig.colors.primary,
                   color: "white",
                   padding: "8px 16px",
                   borderRadius: "6px",
@@ -137,7 +140,7 @@ export default function AuthGuard({
               <button
                 onClick={() => router.push("/login")}
                 style={{
-                  backgroundColor: "#64748B",
+                  backgroundColor: themeConfig.colors.textSecondary,
                   color: "white",
                   padding: "8px 16px",
                   borderRadius: "6px",
@@ -156,16 +159,16 @@ export default function AuthGuard({
     return (
       <div
         className="min-h-screen flex items-center justify-center"
-        style={{ backgroundColor: "#ffffff" }}
+        style={{ backgroundColor: themeConfig.colors.background }}
       >
         <div className="text-center">
           <div
             className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4"
-            style={{ borderColor: "#1B4332" }}
+            style={{ borderColor: themeConfig.colors.primary }}
           ></div>
           <p
             style={{
-              color: "#64748B",
+              color: themeConfig.colors.text,
               fontFamily: "Inter, system-ui, sans-serif",
             }}
           >
@@ -173,7 +176,7 @@ export default function AuthGuard({
           </p>
           <p
             style={{
-              color: "#94a3b8",
+              color: themeConfig.colors.textSecondary,
               fontFamily: "Inter, system-ui, sans-serif",
               fontSize: "12px",
               marginTop: "8px",

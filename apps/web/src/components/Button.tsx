@@ -66,7 +66,7 @@ export default function Button({
         };
       case "danger":
         return {
-          background: `linear-gradient(135deg, ${themeConfig.colors.error} 0%, #DC2626 100%)`,
+          background: `linear-gradient(135deg, ${themeConfig.colors.error} 0%, ${themeConfig.colors.error} 100%)`,
           color: "#FFFFFF",
           border: `1px solid ${themeConfig.colors.error}`,
           boxShadow: `0 4px 14px 0 ${themeConfig.colors.error}25`,

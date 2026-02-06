@@ -130,10 +130,7 @@ export default function LoginPage() {
           <ThemeSwitcher />
         </div>
       ) : (
-        <div
-          className="fixed top-4 right-4"
-          style={{ zIndex: Z_INDEX.MAX, position: "relative" }}
-        >
+        <div className="fixed top-6 right-6" style={{ zIndex: 1000 }}>
           <ThemeSwitcher />
         </div>
       )}
@@ -205,7 +202,7 @@ export default function LoginPage() {
               <WebFormField
                 name="password"
                 label="Password"
-                type="text"
+                type="password"
                 placeholder="Enter your password"
                 required
               />
@@ -238,14 +235,15 @@ export default function LoginPage() {
           </div>
         </div>
       ) : (
-        /* Desktop Login Form - Original */
+        /* Desktop Login Form - Improved Layout */
         <div className="min-h-screen flex items-center justify-center px-4 py-12">
           <div
-            className="w-full max-w-md"
+            className="w-full max-w-lg"
             style={{
               backgroundColor: themeConfig.colors.surface,
               border: `1px solid ${themeConfig.colors.border}`,
-              boxShadow: `0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)`,
+              boxShadow: `0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 20px 25px -5px rgba(0, 0, 0, 0.1)`,
+              borderRadius: "1rem",
             }}
           >
             <div className="text-center mb-8">

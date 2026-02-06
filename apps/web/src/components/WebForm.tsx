@@ -28,6 +28,7 @@ interface WebFormFieldProps {
     | "date"
     | "time"
     | "datetime-local"
+    | "password"
     | "select"
     | "textarea";
   placeholder?: string;
@@ -78,11 +79,14 @@ export function WebForm({
   return (
     <div
       className={`bg-white rounded-lg border ${className}`}
-      style={{ borderColor: "#E5E7EB" }}
+      style={{ borderColor: themeConfig.colors.border }}
     >
       {/* Header */}
       {(title || subtitle) && (
-        <div className="px-4 py-4 border-b" style={{ borderColor: "#E5E7EB" }}>
+        <div
+          className="px-4 py-4 border-b"
+          style={{ borderColor: themeConfig.colors.border }}
+        >
           {title && (
             <h2
               className="text-lg font-semibold"
@@ -129,7 +133,7 @@ export function WebForm({
         {/* Actions */}
         <div
           className="flex items-center justify-end space-x-3 pt-4 border-t"
-          style={{ borderColor: "#E5E7EB" }}
+          style={{ borderColor: themeConfig.colors.border }}
         >
           {onCancel && (
             <button
@@ -138,7 +142,7 @@ export function WebForm({
               disabled={loading}
               className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
               style={{
-                borderColor: "#E5E7EB",
+                borderColor: themeConfig.colors.border,
                 color: themeConfig.colors.text,
                 fontFamily: "Inter, system-ui, sans-serif",
               }}
@@ -212,7 +216,9 @@ export function WebFormField({
       `,
       style: {
         fontFamily: "Inter, system-ui, sans-serif",
-        borderColor: error ? "#EF4444" : "#D1D5DB",
+        borderColor: error
+          ? themeConfig.colors.error
+          : themeConfig.colors.border,
       },
       placeholder,
     };
@@ -242,6 +248,13 @@ export function WebFormField({
         ...baseProps,
         type: "email" as const,
         inputMode: "email" as const,
+      };
+    }
+
+    if (type === "password") {
+      return {
+        ...baseProps,
+        type: "password" as const,
       };
     }
 

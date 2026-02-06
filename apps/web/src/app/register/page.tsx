@@ -49,7 +49,7 @@ export default function RegisterPage() {
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+
       setSuccess("Account created successfully! Redirecting to login...");
       setTimeout(() => {
         router.push("/login");
@@ -117,10 +117,7 @@ export default function RegisterPage() {
           <ThemeSwitcher />
         </div>
       ) : (
-        <div
-          className="absolute top-8 right-8"
-          style={{ zIndex: Z_INDEX.DROPDOWN }}
-        >
+        <div className="fixed top-6 right-6" style={{ zIndex: 1000 }}>
           <ThemeSwitcher />
         </div>
       )}
@@ -189,14 +186,14 @@ export default function RegisterPage() {
             <WebFormField
               name="password"
               label="Password"
-              type="text"
+              type="password"
               placeholder="Create a password"
               required
             />
             <WebFormField
               name="confirmPassword"
               label="Confirm Password"
-              type="text"
+              type="password"
               placeholder="Confirm your password"
               required
             />
@@ -205,10 +202,10 @@ export default function RegisterPage() {
               label="Role"
               type="select"
               options={[
-                { label: 'Student', value: 'STUDENT' },
-                { label: 'Staff', value: 'STAFF' },
-                { label: 'Teacher', value: 'TEACHER' },
-                { label: 'Other', value: 'OTHERS' }
+                { label: "Student", value: "STUDENT" },
+                { label: "Staff", value: "STAFF" },
+                { label: "Teacher", value: "TEACHER" },
+                { label: "Other", value: "OTHERS" },
               ]}
               required
             />
@@ -252,13 +249,13 @@ export default function RegisterPage() {
           </div>
         </div>
       ) : (
-        /* Desktop Registration Form - Original */
+        /* Desktop Registration Form - Improved Layout */
         <div
-          className="w-full max-w-md relative z-10 rounded-2xl p-8"
+          className="w-full max-w-lg relative z-10 rounded-2xl p-8"
           style={{
             background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
             border: `1px solid ${themeConfig.colors.border}`,
-            boxShadow: `0 20px 40px ${themeConfig.colors.primary}20, 0 0 0 1px ${themeConfig.colors.border}20`,
+            boxShadow: `0 25px 50px -12px ${themeConfig.colors.primary}25, 0 20px 25px -5px rgba(0, 0, 0, 0.1)`,
           }}
         >
           {/* Logo/Icon */}

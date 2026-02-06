@@ -40,13 +40,13 @@ export function WebListGroup({
   return (
     <div
       className={`bg-white rounded-lg border ${className}`}
-      style={{ borderColor: "#E5E7EB" }}
+      style={{ borderColor: themeConfig.colors.border }}
     >
       {/* Header */}
       {(title || subtitle) && (
         <div
           className={`px-4 ${compact ? "py-3" : "py-4"} border-b`}
-          style={{ borderColor: "#E5E7EB" }}
+          style={{ borderColor: themeConfig.colors.border }}
         >
           {title && (
             <h3
@@ -76,7 +76,7 @@ export function WebListGroup({
       {/* Items */}
       <div
         className={divided ? "divide-y" : ""}
-        style={{ borderColor: "#E5E7EB" }}
+        style={{ borderColor: themeConfig.colors.border }}
       >
         {children}
       </div>
@@ -102,11 +102,11 @@ export function WebListGroupItem({
   const getStatusColor = () => {
     switch (status) {
       case "success":
-        return "#10B981";
+        return themeConfig.colors.success;
       case "warning":
-        return "#F59E0B";
+        return themeConfig.colors.warning;
       case "error":
-        return "#EF4444";
+        return themeConfig.colors.error;
       default:
         return themeConfig.colors.primary;
     }
@@ -184,7 +184,7 @@ export function WebListGroupItem({
         {onClick && !rightElement && (
           <svg
             className="w-4 h-4 flex-shrink-0"
-            style={{ color: "#9CA3AF" }}
+            style={{ color: themeConfig.colors.textSecondary }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -243,7 +243,7 @@ export function WebStatsList({
   return (
     <div
       className={`bg-white rounded-lg border ${compact ? "p-3" : "p-4"}`}
-      style={{ borderColor: "#E5E7EB" }}
+      style={{ borderColor: themeConfig.colors.border }}
     >
       <div className={`grid ${getColumnsClass()} gap-4`}>
         {stats.map((stat, index) => (
