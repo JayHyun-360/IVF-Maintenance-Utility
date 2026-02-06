@@ -182,6 +182,33 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../src/app/test-auth/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/test-auth">> = Specific
+  const handler = {} as typeof import("../../../src/app/test-auth/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/test-env/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/test-env">> = Specific
+  const handler = {} as typeof import("../../../src/app/test-env/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/test-ui/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/test-ui">> = Specific
+  const handler = {} as typeof import("../../../src/app/test-ui/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../src/app/api/auth/[...nextauth]/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/[...nextauth]">> = Specific

@@ -268,90 +268,39 @@ export default function LoginPage() {
                   />
                 </svg>
               </div>
-              <h1
-                className="text-3xl font-bold mb-2"
-                style={{ color: themeConfig.colors.text }}
-              >
-                IVF Maintenance Utility
-              </h1>
-              <p
-                className="text-lg"
-                style={{ color: themeConfig.colors.textSecondary }}
-              >
-                Sign in to access the maintenance system
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  className="block text-sm font-medium mb-2"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div>
-                <label
-                  className="block text-sm font-medium mb-2"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                  placeholder="Enter your password"
-                />
-              </div>
-
-              {error && (
-                <div
-                  className="p-4 rounded-lg text-sm text-red-600"
-                  style={{
-                    backgroundColor: `${themeConfig.colors.error}10`,
-                    border: `1px solid ${themeConfig.colors.error}30`,
-                  }}
-                >
-                  {error}
-                </div>
-              )}
-
+              <WebForm
+              title="Sign In"
+              subtitle="Access your maintenance dashboard"
+              onSubmit={handleSubmit}
+              loading={isLoading}
+              submitText={isLoading ? "Signing in..." : "Sign in"}
+            >
+              <WebFormField
+                name="email"
+                label="Email"
+                type="email"
+                placeholder="Enter your email"
+                required
+              />
+              <WebFormField
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                required
+              />
+              
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     type="checkbox"
                     id="remember"
-                    className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                    className="h-4 w-4 rounded border-gray-300 focus:ring-blue-500"
                     style={{ accentColor: themeConfig.colors.primary }}
                   />
                   <label
                     htmlFor="remember"
-                    className="ml-2 block text-sm text-gray-700"
+                    className="ml-2 block text-sm"
                     style={{ color: themeConfig.colors.text }}
                   >
                     Remember me
@@ -359,43 +308,13 @@ export default function LoginPage() {
                 </div>
                 <a
                   href="#"
-                  className="text-sm text-blue-600 hover:text-blue-500"
+                  className="text-sm hover:underline"
                   style={{ color: themeConfig.colors.primary }}
                 >
                   Forgot password?
                 </a>
               </div>
-
-              <div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                  style={{
-                    backgroundColor: themeConfig.colors.primary,
-                    borderColor: themeConfig.colors.primary,
-                  }}
-                >
-                  {isLoading ? "Signing in..." : "Sign in"}
-                </button>
-              </div>
-
-              <div className="text-center">
-                <p
-                  className="text-sm text-gray-600"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Don't have an account?{" "}
-                  <a
-                    href="/register"
-                    className="font-medium text-blue-600 hover:text-blue-500"
-                    style={{ color: themeConfig.colors.primary }}
-                  >
-                    Sign up
-                  </a>
-                </p>
-              </div>
-            </form>
+            </WebForm>
           </div>
         </div>
       )}
