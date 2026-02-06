@@ -316,7 +316,6 @@ export default function LoginPage() {
               </div>
             </WebForm>
           </div>
-        </div>
       )}
     </div>
   );
