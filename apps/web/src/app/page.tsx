@@ -1,6 +1,5 @@
 "use client";
 
-// IVF Maintenance Utility - Mobile-Optimized Version
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
@@ -10,7 +9,6 @@ import { Z_INDEX } from "@/lib/z-index";
 import { useSession } from "next-auth/react";
 import AccountDropdown from "@/components/AccountDropdown";
 import { MobileNavigationWrapper } from "@/components/MobileNavigation";
-import MobileCard, { MobileCardGrid } from "@/components/MobileCard";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 
 export default function Home() {
@@ -18,6 +16,7 @@ export default function Home() {
   const { themeConfig } = useTheme();
   const { data: session, status } = useSession();
   const { isMobile } = useMobileOptimizations();
+  const [mounted, setMounted] = useState(false);
   const [stats, setStats] = useState({
     totalRequests: 0,
     pendingRequests: 0,
@@ -25,890 +24,391 @@ export default function Home() {
     completedRequests: 0,
   });
 
-  // Add click outside handler for dropdowns
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      // Close any open dropdowns when clicking outside
-      const target = event.target as Element;
-      if (!target.closest("[data-dropdown]")) {
-        // This will be handled by individual dropdown components
-        // but we ensure the event can bubble up properly
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
+    setMounted(true);
     const loadData = () => {
       const realStats = getMaintenanceStats();
       setStats(realStats);
     };
-
     loadData();
     const interval = setInterval(loadData, 30000);
     return () => clearInterval(interval);
-  }, [session, status]);
-
-  // Check if user is already authenticated and redirect to appropriate dashboard
-  // Only redirect if explicitly coming from login or if user wants to go to dashboard
-  useEffect(() => {
-    if (status === "loading") return;
-
-    console.log("Home page - Session status:", status);
-    console.log("Home page - Session data:", session);
-    console.log("Home page - User role:", session?.user?.role);
-
-    // Remove automatic redirect - allow users to stay on homepage
-    // Users can navigate to their dashboards using the UI buttons
-    console.log("Allowing user to stay on homepage");
-  }, [session, status, router]);
+  }, []);
 
   return (
     <MobileNavigationWrapper>
       <div
-        className="min-h-screen mobile-scroll"
+        className="min-h-screen relative overflow-x-hidden"
         style={{
           backgroundColor: themeConfig.colors.background,
           color: themeConfig.colors.text,
-          transition:
-            "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
         }}
       >
-        {/* Header with Background Image - Desktop Only */}
-        <header
-          className="mobile-safe-padding-top px-4 py-8 text-center relative"
-          style={{
-            background:
-              !isMobile && themeConfig.backgroundImage
-                ? `var(--background-image, url("${themeConfig.backgroundImage}"))`
-                : `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-            backgroundSize:
-              !isMobile && themeConfig.backgroundImage ? "cover" : "auto",
-            backgroundPosition:
-              !isMobile && themeConfig.backgroundImage
-                ? "center center"
-                : "auto",
-            backgroundRepeat:
-              !isMobile && themeConfig.backgroundImage ? "no-repeat" : "auto",
-            backgroundAttachment:
-              !isMobile && themeConfig.backgroundImage ? "scroll" : "scroll",
-            transition:
-              "background 1.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.8s ease-in-out, color 0.8s ease-in-out",
-            minHeight:
-              !isMobile && themeConfig.backgroundImage ? "50vh" : "auto",
-            maxHeight:
-              !isMobile && themeConfig.backgroundImage ? "50vh" : "none",
-            height: !isMobile && themeConfig.backgroundImage ? "50vh" : "auto",
-          }}
-        >
-          {/* Subtle overlay for text readability - Desktop Only */}
-          {!isMobile && themeConfig.backgroundImage && (
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  themeConfig.name === "light"
-                    ? "rgba(0, 0, 0, 0.15)"
-                    : themeConfig.name === "standard"
-                      ? "rgba(0, 0, 0, 0.1)" // Very subtle overlay for Nature theme
-                      : "rgba(0, 0, 0, 0.25)",
-                zIndex: 1,
-                transition: "background 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                pointerEvents: "none", // Prevent overlay from blocking clicks
-              }}
-            />
-          )}
-
-          {/* Desktop-specific background adjustments */}
-          {!isMobile && themeConfig.backgroundImage && (
-            <style jsx>{`
-              @media (min-width: 1024px) {
-                header {
-                  background-size: cover !important;
-                  background-position: center center !important;
-                  background-repeat: no-repeat !important;
-                  background-attachment: scroll !important;
-                  min-height: 50vh !important;
-                  max-height: 50vh !important;
-                  height: 50vh !important;
-                  padding-top: 20px !important;
-                  overflow: hidden !important;
-                }
-              }
-              @media (min-width: 1280px) {
-                header {
-                  background-size: cover !important;
-                  background-position: center center !important;
-                  background-repeat: no-repeat !important;
-                  background-attachment: scroll !important;
-                  min-height: 50vh !important;
-                  max-height: 50vh !important;
-                  height: 50vh !important;
-                  padding-top: 20px !important;
-                  overflow: hidden !important;
-                }
-              }
-              @media (min-width: 1536px) {
-                header {
-                  background-size: cover !important;
-                  background-position: center center !important;
-                  background-repeat: no-repeat !important;
-                  background-attachment: scroll !important;
-                  min-height: 50vh !important;
-                  max-height: 50vh !important;
-                  height: 50vh !important;
-                  padding-top: 20px !important;
-                  overflow: hidden !important;
-                }
-              }
-            `}</style>
-          )}
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
-            className="flex items-center justify-between mb-6"
-            style={{ zIndex: Z_INDEX.MAX + 2, position: "relative" }}
-            data-dropdown
-          >
-            <div>
-              <AccountDropdown />
-            </div>
-            <div>
-              <ThemeSwitcher />
-            </div>
-          </div>
-
-          {/* Professional Logo & Title */}
+            className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] opacity-20 animate-pulse"
+            style={{ backgroundColor: themeConfig.colors.primary }}
+          />
           <div
-            className="flex flex-col items-center"
-            style={{ zIndex: Z_INDEX.MAX, position: "relative" }}
-          >
+            className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] opacity-20 animate-pulse"
+            style={{ backgroundColor: themeConfig.colors.secondary }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03]"
+            style={{
+              backgroundImage: `radial-gradient(${themeConfig.colors.text} 1px, transparent 1px)`,
+              backgroundSize: "40px 40px",
+            }}
+          />
+        </div>
+
+        {/* Dynamic Header */}
+        <header className="relative w-full transition-all duration-700">
+          <div
+            className="absolute inset-0 opacity-10 blur-sm"
+            style={{
+              background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
+              clipPath: "polygon(0 0, 100% 0, 100% 85%, 0% 100%)",
+            }}
+          />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
+            <div className="flex items-center justify-between mb-12">
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg transform hover:rotate-12 transition-transform"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
+                  }}
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
+                </div>
+                <span className="font-bold text-xl tracking-tight hidden sm:block">
+                  IVF Maintenance
+                </span>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <ThemeSwitcher />
+                <AccountDropdown />
+              </div>
+            </div>
+
+            {/* Hero Section */}
             <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg"
-              style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.accent} 0%, ${themeConfig.colors.primary} 100%)`,
-                boxShadow: `0 8px 32px ${themeConfig.colors.primary}25`,
-              }}
+              className={`text-center sm:text-left max-w-2xl transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
-              <svg
-                className="w-8 h-8 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <h1 className="text-4xl sm:text-6xl font-black mb-6 leading-tight">
+                Modern Facility{" "}
+                <span
+                  className="text-transparent bg-clip-text"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
+                  }}
+                >
+                  Management
+                </span>
+              </h1>
+              <p
+                className="text-lg opacity-80 mb-8 max-w-xl font-medium"
+                style={{ color: themeConfig.colors.textSecondary }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                />
-              </svg>
+                Streamline your workflows with our intelligent maintenance
+                utility. Report issues, track progress, and maintain excellence
+                in every corner of your facility.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={() => {
+                    const role = session?.user?.role;
+                    if (role === "ADMIN") router.push("/admin/dashboard");
+                    else if (role === "USER" || role === "STUDENT")
+                      router.push("/student");
+                    else router.push("/login");
+                  }}
+                  className="px-8 py-4 rounded-2xl font-bold text-white shadow-2xl transition-all transform hover:scale-105 active:scale-95"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
+                  }}
+                >
+                  {session ? "Launch Dashboard" : "Get Started Now"}
+                </button>
+                <div className="flex -space-x-3 items-center px-4">
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold"
+                      style={{
+                        backgroundColor: `${themeConfig.colors.primary}${(i + 1) * 20}`,
+                        borderColor: themeConfig.colors.background,
+                      }}
+                    >
+                      {String.fromCharCode(64 + i)}
+                    </div>
+                  ))}
+                  <span className="ml-4 text-sm font-bold opacity-60">
+                    Joined by 500+ users
+                  </span>
+                </div>
+              </div>
             </div>
-            <h1
-              className="text-2xl font-bold mb-2"
-              style={{
-                color:
-                  !isMobile && themeConfig.backgroundImage
-                    ? "#FFFFFF"
-                    : "#FFFFFF",
-                textShadow:
-                  !isMobile && themeConfig.backgroundImage
-                    ? "0 2px 4px rgba(0, 0, 0, 0.5)"
-                    : "0 2px 4px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              IVF Maintenance Utility
-            </h1>
-            <p
-              className="text-sm opacity-90"
-              style={{
-                color:
-                  !isMobile && themeConfig.backgroundImage
-                    ? "rgba(255, 255, 255, 0.9)"
-                    : "rgba(255, 255, 255, 0.9)",
-              }}
-            >
-              Streamlined Facility Management Solutions
-            </p>
           </div>
         </header>
 
-        {/* Main Content */}
-        <main
-          className="px-4 py-6 mobile-scroll"
-          style={{ zIndex: Z_INDEX.BASE, position: "relative" }}
-        >
-          <div className={`${isMobile ? "max-w-4xl" : "max-w-6xl"} mx-auto`}>
-            {/* Professional Stats Section */}
-            <div className="mb-8">
-              <h2
-                className={`${isMobile ? "text-lg" : "text-2xl"} font-semibold mb-4`}
-                style={{ color: themeConfig.colors.text }}
+        {/* Main Content Area */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-20">
+            {[
+              {
+                label: "Total Requests",
+                value: stats.totalRequests,
+                icon: "📊",
+                color: themeConfig.colors.primary,
+              },
+              {
+                label: "Pending",
+                value: stats.pendingRequests,
+                icon: "⏳",
+                color: themeConfig.colors.warning || "#f59e0b",
+              },
+              {
+                label: "In Progress",
+                value: stats.inProgressRequests,
+                icon: "⚙️",
+                color: themeConfig.colors.accent,
+              },
+              {
+                label: "Completed",
+                value: stats.completedRequests,
+                icon: "✅",
+                color: themeConfig.colors.success,
+              },
+            ].map((stat, i) => (
+              <div
+                key={i}
+                className="group p-6 rounded-[2rem] backdrop-blur-xl border transition-all duration-500 hover:translate-y-[-8px]"
+                style={{
+                  backgroundColor: `${themeConfig.colors.surface}80`,
+                  borderColor: `${themeConfig.colors.border}50`,
+                  boxShadow: `0 20px 40px -20px rgba(0,0,0,0.1)`,
+                }}
               >
-                Overview
-              </h2>
-
-              {/* Desktop: Use regular grid, Mobile: Use MobileCardGrid */}
-              {!isMobile ? (
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                  <div
-                    className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `1px solid ${themeConfig.colors.border}`,
-                      boxShadow: `0 4px 12px ${themeConfig.colors.primary}10`,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.totalRequests}
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Total Requests
-                    </div>
-                  </div>
-
-                  <div
-                    className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `1px solid ${themeConfig.colors.warning}30`,
-                      boxShadow: `0 4px 12px ${themeConfig.colors.warning}10`,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.pendingRequests}
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Pending
-                    </div>
-                  </div>
-
-                  <div
-                    className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `1px solid ${themeConfig.colors.border}`,
-                      boxShadow: `0 4px 12px ${themeConfig.colors.primary}10`,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.inProgressRequests}
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      In Progress
-                    </div>
-                  </div>
-
-                  <div
-                    className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `1px solid ${themeConfig.colors.success}30`,
-                      boxShadow: `0 4px 12px ${themeConfig.colors.success}10`,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.completedRequests}
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Completed
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <MobileCardGrid columns={2} className="mb-6">
-                  <MobileCard variant="compact">
-                    <div className="text-center">
-                      <div
-                        className="text-2xl font-bold mb-1"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {stats.totalRequests}
-                      </div>
-                      <div
-                        className="text-xs font-medium"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Total Requests
-                      </div>
-                    </div>
-                  </MobileCard>
-
-                  <MobileCard variant="compact" status="warning">
-                    <div className="text-center">
-                      <div
-                        className="text-2xl font-bold mb-1"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {stats.pendingRequests}
-                      </div>
-                      <div
-                        className="text-xs font-medium"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Pending
-                      </div>
-                    </div>
-                  </MobileCard>
-
-                  <MobileCard variant="compact" status="default">
-                    <div className="text-center">
-                      <div
-                        className="text-2xl font-bold mb-1"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {stats.inProgressRequests}
-                      </div>
-                      <div
-                        className="text-xs font-medium"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        In Progress
-                      </div>
-                    </div>
-                  </MobileCard>
-
-                  <MobileCard variant="compact" status="success">
-                    <div className="text-center">
-                      <div
-                        className="text-2xl font-bold mb-1"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {stats.completedRequests}
-                      </div>
-                      <div
-                        className="text-xs font-medium"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Completed
-                      </div>
-                    </div>
-                  </MobileCard>
-                </MobileCardGrid>
-              )}
-            </div>
-
-            {/* Professional Actions Section */}
-            <div className="mb-8">
-              <h2
-                className={`${isMobile ? "text-lg" : "text-2xl"} font-semibold mb-4`}
-                style={{ color: themeConfig.colors.text }}
-              >
-                Quick Actions
-              </h2>
-
-              {/* Desktop: Use regular card, Mobile: Use MobileCard */}
-              {!isMobile ? (
                 <div
-                  className="p-8 rounded-xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl mb-4"
-                  style={{
-                    background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                    border: `1px solid ${themeConfig.colors.border}`,
-                    boxShadow: `0 6px 16px ${themeConfig.colors.primary}10`,
-                  }}
-                  onClick={() => {
-                    if (session?.user?.role === "ADMIN") {
-                      router.push("/admin/dashboard");
-                    } else if (
-                      session?.user?.role === "USER" ||
-                      session?.user?.role === "STUDENT"
-                    ) {
-                      router.push("/student");
-                    } else {
-                      router.push("/login");
-                    }
-                  }}
+                  className="w-10 h-10 rounded-xl mb-4 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform"
+                  style={{ backgroundColor: `${stat.color}15` }}
                 >
-                  <div className="flex items-center space-x-6">
-                    <div
-                      className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{
-                        background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                        boxShadow: `0 4px 12px ${themeConfig.colors.primary}20`,
-                      }}
-                    >
-                      <svg
-                        className="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 10V3L4 14h7v7l9-11h-7z"
-                        />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <h3
-                        className="text-xl font-semibold mb-2"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {session
-                          ? session.user?.role === "ADMIN"
-                            ? "Admin Dashboard"
-                            : "Request Portal"
-                          : "Get Started"}
-                      </h3>
-                      <p
-                        className="text-base"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        {session
-                          ? "Manage maintenance requests and operations"
-                          : "Sign in to access the maintenance system"}
-                      </p>
-                    </div>
-                    <svg
-                      className="w-6 h-6 flex-shrink-0"
-                      style={{ color: themeConfig.colors.primary }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
+                  {stat.icon}
                 </div>
-              ) : (
-                <MobileCard
-                  onClick={() => {
-                    if (session?.user?.role === "ADMIN") {
-                      router.push("/admin/dashboard");
-                    } else if (
-                      session?.user?.role === "USER" ||
-                      session?.user?.role === "STUDENT"
-                    ) {
-                      router.push("/student");
-                    } else {
-                      router.push("/login");
-                    }
-                  }}
-                  className="mb-4"
-                >
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{
-                        background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                      }}
-                    >
-                      <svg
-                        className="w-6 h-6 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 10V3L4 14h7v7l9-11h-7z"
-                        />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <h3
-                        className="font-semibold mb-1"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        {session
-                          ? session.user?.role === "ADMIN"
-                            ? "Admin Dashboard"
-                            : "Request Portal"
-                          : "Get Started"}
-                      </h3>
-                      <p
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        {session
-                          ? "Manage maintenance requests and operations"
-                          : "Sign in to access the maintenance system"}
-                      </p>
-                    </div>
-                    <svg
-                      className="w-5 h-5 flex-shrink-0"
-                      style={{ color: themeConfig.colors.primary }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                </MobileCard>
-              )}
-            </div>
+                <div className="text-3xl font-black mb-1 tabular-nums">
+                  {stat.value}
+                </div>
+                <div className="text-sm font-bold opacity-60 uppercase tracking-wider">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
 
-            {/* Professional Services Section */}
-            <div>
-              <h2
-                className={`${isMobile ? "text-lg" : "text-2xl"} font-semibold mb-4`}
-                style={{ color: themeConfig.colors.text }}
-              >
-                Services
+          {/* Quick Actions / Services Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-8">
+              <h2 className="text-2xl font-black flex items-center gap-3">
+                <span
+                  className="w-2 h-8 rounded-full"
+                  style={{ backgroundColor: themeConfig.colors.primary }}
+                />
+                Platform Services
               </h2>
 
-              {/* Desktop: Use regular grid, Mobile: Use MobileCardGrid */}
-              {!isMobile ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div
-                    className="p-6 rounded-xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {[
+                  {
+                    title: "History & Archiving",
+                    desc: "Instant access to all past maintenance records and resolution timelines.",
+                    icon: "📜",
+                    path: "/student/history",
+                  },
+                  {
+                    title: "Live Reports",
+                    desc: "Real-time analytics and performance metrics for your facility.",
+                    icon: "📈",
+                    path: "/admin/reports",
+                  },
+                  {
+                    title: "Smart Scheduling",
+                    desc: "Automated prioritization and resource allocation for urgent tasks.",
+                    icon: "📅",
+                    path: "/admin/dashboard",
+                  },
+                  {
+                    title: "Settings & Profile",
+                    desc: "Customize your notification preferences and account security.",
+                    icon: "🛡️",
+                    path: "/settings",
+                  },
+                ].map((service, i) => (
+                  <button
+                    key={i}
+                    onClick={() => router.push(service.path)}
+                    className="text-left group p-8 rounded-[2.5rem] backdrop-blur-xl border transition-all duration-300 hover:shadow-2xl"
                     style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `1px solid ${themeConfig.colors.border}`,
-                      boxShadow: `0 4px 12px ${themeConfig.colors.primary}10`,
+                      backgroundColor: `${themeConfig.colors.surface}a0`,
+                      borderColor: `${themeConfig.colors.border}40`,
                     }}
-                    onClick={() => router.push("/student/history")}
                   >
-                    <div className="flex items-center space-x-4">
-                      <div
-                        className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.success}20`,
-                        }}
+                    <div className="text-3xl mb-6 group-hover:scale-125 transition-transform origin-left">
+                      {service.icon}
+                    </div>
+                    <h3 className="text-xl font-black mb-2">{service.title}</h3>
+                    <p className="text-sm opacity-60 font-medium leading-relaxed">
+                      {service.desc}
+                    </p>
+                    <div
+                      className="mt-6 flex items-center gap-2 text-xs font-black uppercase tracking-widest opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                      style={{ color: themeConfig.colors.primary }}
+                    >
+                      Learn More
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <svg
-                          className="w-6 h-6"
-                          style={{ color: themeConfig.colors.success }}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Side Card - Support/System Info */}
+            <div className="space-y-6">
+              <div
+                className="sticky top-24 p-8 rounded-[3rem] border overflow-hidden relative"
+                style={{
+                  backgroundColor: `${themeConfig.colors.surface}f0`,
+                  borderColor: themeConfig.colors.border,
+                }}
+              >
+                <div
+                  className="absolute top-0 right-0 w-32 h-32 blur-3xl opacity-20 -mr-16 -mt-16"
+                  style={{ backgroundColor: themeConfig.colors.primary }}
+                />
+
+                <h2 className="text-2xl font-black mb-6">System Health</h2>
+                <div className="space-y-6">
+                  {[
+                    {
+                      label: "Cloud API",
+                      status: "Operational",
+                      color: themeConfig.colors.success,
+                    },
+                    {
+                      label: "Database",
+                      status: "Optimal",
+                      color: themeConfig.colors.success,
+                    },
+                    {
+                      label: "Asset Tracker",
+                      status: "Active",
+                      color: themeConfig.colors.success,
+                    },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between p-4 rounded-2xl bg-black/5"
+                    >
+                      <span className="font-bold text-sm opacity-70">
+                        {item.label}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-2 h-2 rounded-full animate-pulse"
+                          style={{ backgroundColor: item.color }}
+                        />
+                        <span
+                          className="text-[10px] font-black uppercase"
+                          style={{ color: item.color }}
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 6v6l4 2"
-                          />
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            fill="none"
-                          />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h4
-                          className="font-semibold text-base mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Request History
-                        </h4>
-                        <p
-                          className="text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          View and track your maintenance requests
-                        </p>
+                          {item.status}
+                        </span>
                       </div>
                     </div>
-                  </div>
+                  ))}
 
                   <div
-                    className="p-6 rounded-xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `1px solid ${themeConfig.colors.border}`,
-                      boxShadow: `0 4px 12px ${themeConfig.colors.primary}10`,
-                    }}
-                    onClick={() => router.push("/admin/reports")}
+                    className="pt-6 border-t"
+                    style={{ borderColor: `${themeConfig.colors.border}40` }}
                   >
-                    <div className="flex items-center space-x-4">
-                      <div
-                        className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.warning}20`,
-                        }}
+                    <div
+                      className="p-6 rounded-3xl"
+                      style={{
+                        backgroundColor: `${themeConfig.colors.primary}10`,
+                      }}
+                    >
+                      <h4
+                        className="font-black text-sm mb-2"
+                        style={{ color: themeConfig.colors.primary }}
                       >
-                        <svg
-                          className="w-6 h-6"
-                          style={{ color: themeConfig.colors.warning }}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                          />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h4
-                          className="font-semibold text-base mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Reports & Analytics
-                        </h4>
-                        <p
-                          className="text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Comprehensive insights and reporting
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    className="p-6 rounded-xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `1px solid ${themeConfig.colors.border}`,
-                      boxShadow: `0 4px 12px ${themeConfig.colors.primary}10`,
-                    }}
-                    onClick={() => router.push("/settings")}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div
-                        className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.accent}20`,
-                        }}
-                      >
-                        <svg
-                          className="w-6 h-6"
-                          style={{ color: themeConfig.colors.accent }}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h4
-                          className="font-semibold text-base mb-1"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Settings
-                        </h4>
-                        <p
-                          className="text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Manage your account and preferences
-                        </p>
-                      </div>
+                        Need Assistance?
+                      </h4>
+                      <p className="text-xs font-medium opacity-60 mb-4">
+                        Our dedicated maintenance support team is available 24/7
+                        for urgent inquiries.
+                      </p>
+                      <button className="w-full py-3 rounded-xl font-black text-xs uppercase tracking-widest bg-white text-black shadow-lg">
+                        Contact Support
+                      </button>
                     </div>
                   </div>
                 </div>
-              ) : (
-                <MobileCardGrid columns={1} className="gap-3">
-                  <MobileCard
-                    onClick={() => router.push("/student/history")}
-                    variant="compact"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.success}20`,
-                        }}
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          style={{ color: themeConfig.colors.success }}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 6v6l4 2"
-                          />
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            fill="none"
-                          />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h4
-                          className="font-medium text-sm"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Request History
-                        </h4>
-                        <p
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          View and track your maintenance requests
-                        </p>
-                      </div>
-                    </div>
-                  </MobileCard>
-
-                  <MobileCard
-                    onClick={() => router.push("/admin/reports")}
-                    variant="compact"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.warning}20`,
-                        }}
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          style={{ color: themeConfig.colors.warning }}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                          />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h4
-                          className="font-medium text-sm"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Reports & Analytics
-                        </h4>
-                        <p
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Comprehensive insights and reporting
-                        </p>
-                      </div>
-                    </div>
-                  </MobileCard>
-
-                  <MobileCard
-                    onClick={() => router.push("/settings")}
-                    variant="compact"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.accent}20`,
-                        }}
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          style={{ color: themeConfig.colors.accent }}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                      </div>
-                      <div className="flex-1">
-                        <h4
-                          className="font-medium text-sm"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          Settings
-                        </h4>
-                        <p
-                          className="text-xs"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Manage your account and preferences
-                        </p>
-                      </div>
-                    </div>
-                  </MobileCard>
-                </MobileCardGrid>
-              )}
+              </div>
             </div>
           </div>
         </main>
 
         {/* Footer */}
         <footer
-          className="px-8 py-8 border-t"
-          style={{ borderColor: themeConfig.colors.border }}
+          className="mt-20 border-t py-12"
+          style={{ borderColor: `${themeConfig.colors.border}40` }}
         >
-          <div className="max-w-6xl mx-auto text-center">
-            <p
-              className="text-sm"
-              style={{ color: themeConfig.colors.textSecondary }}
-            >
-              2026 IVF Maintenance. All rights reserved.
-            </p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-8">
+            <div className="flex items-center gap-3 opacity-50">
+              <div className="w-6 h-6 rounded-lg bg-current" />
+              <span className="font-bold">IVF Maintenance Utility © 2024</span>
+            </div>
+            <div className="flex gap-8 text-sm font-bold opacity-50">
+              <a href="#" className="hover:opacity-100 transition-opacity">
+                Privacy Policy
+              </a>
+              <a href="#" className="hover:opacity-100 transition-opacity">
+                Terms of Service
+              </a>
+              <a href="#" className="hover:opacity-100 transition-opacity">
+                Help Center
+              </a>
+            </div>
           </div>
         </footer>
       </div>

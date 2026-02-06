@@ -5,27 +5,34 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
-import WebHeader from "@/components/WebHeader";
-import { WebForm, WebFormField } from "@/components/WebForm";
-import { WebListGroup, WebListGroupItem } from "@/components/WebListGroup";
-import { WebStatsList } from "@/components/WebListGroup";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-
-// Constants
-const Z_INDEX = {
-  MAX: 9999,
-  DROPDOWN: 1000,
-  MODAL: 2000,
-  TOOLTIP: 3000,
-};
+import { Z_INDEX } from "@/lib/z-index";
 
 // Mock data for demonstration
-const mockStats = {
-  totalRequests: 156,
-  pendingRequests: 23,
-  completedRequests: 133,
-  completionRate: 85.3,
-};
+const mockStats = [
+  {
+    label: "Total Requests",
+    value: 156,
+    icon: "📊",
+    trend: "+12%",
+    color: "#6366f1",
+  },
+  { label: "Pending", value: 23, icon: "⏳", trend: "-5%", color: "#f59e0b" },
+  {
+    label: "In Progress",
+    value: 18,
+    icon: "⚙️",
+    trend: "+2%",
+    color: "#3b82f6",
+  },
+  {
+    label: "Completed",
+    value: 133,
+    icon: "✅",
+    trend: "+18%",
+    color: "#10b981",
+  },
+];
 
 const mockRecentRequests = [
   {
@@ -35,7 +42,7 @@ const mockRecentRequests = [
     priority: "High",
     status: "Pending",
     submittedBy: "John Doe",
-    submittedDate: "2024-01-15",
+    date: "2h ago",
   },
   {
     id: 2,
@@ -44,7 +51,7 @@ const mockRecentRequests = [
     priority: "Medium",
     status: "In Progress",
     submittedBy: "Jane Smith",
-    submittedDate: "2024-01-14",
+    date: "5h ago",
   },
   {
     id: 3,
@@ -53,12 +60,8 @@ const mockRecentRequests = [
     priority: "High",
     status: "Completed",
     submittedBy: "Bob Johnson",
-    submittedDate: "2024-01-13",
+    date: "1d ago",
   },
-];
-
-const mockRequests = [
-  ...mockRecentRequests,
   {
     id: 4,
     title: "Lighting Fixture Replacement",
@@ -66,16 +69,7 @@ const mockRequests = [
     priority: "Low",
     status: "Pending",
     submittedBy: "Alice Brown",
-    submittedDate: "2024-01-12",
-  },
-  {
-    id: 5,
-    title: "Fire Extinguisher Inspection",
-    category: "Safety",
-    priority: "High",
-    status: "Completed",
-    submittedBy: "Charlie Wilson",
-    submittedDate: "2024-01-11",
+    date: "1d ago",
   },
 ];
 
@@ -83,955 +77,443 @@ export default function AdminDashboard() {
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
-  const [stats] = useState(mockStats);
-  const [recentRequests] = useState(mockRecentRequests);
-  const [requests] = useState(mockRequests);
-  const [filteredRequests, setFilteredRequests] = useState(requests);
 
-  // Filter requests based on search query
   useEffect(() => {
-    const filtered = requests.filter(
-      (request) =>
-        request.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        request.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        request.submittedBy.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-    setFilteredRequests(filtered);
-  }, [searchQuery, requests]);
+    setMounted(true);
+  }, []);
 
-  const handleStatusUpdate = (requestId: number, newStatus: string) => {
-    console.log(`Updating request ${requestId} to status: ${newStatus}`);
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case "completed":
+        return themeConfig.colors.success;
+      case "in progress":
+        return themeConfig.colors.primary;
+      case "pending":
+        return themeConfig.colors.warning || "#f59e0b";
+      default:
+        return themeConfig.colors.textSecondary;
+    }
   };
-
-  const handleDeleteRequest = (requestId: number) => {
-    console.log(`Deleting request: ${requestId}`);
-  };
-
-  const viewRequestDetails = (request: any) => {
-    console.log("Viewing request details:", request);
-  };
-
-  const completionRate = stats.completionRate;
 
   return (
     <AuthGuard requiredRole="ADMIN">
       <div
-        className="min-h-screen"
+        className="min-h-screen relative overflow-hidden"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
-        {/* Header - Conditional based on device */}
-        {isMobile ? (
-          <WebHeader
-            title="Admin Dashboard"
-            breadcrumbs={[
-              { label: "Home", href: "/" },
-              { label: "Admin Dashboard" },
-            ]}
-            actions={
-              <div className="flex items-center space-x-2">
-                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
-                  <ThemeSwitcher />
-                </div>
-                <button
-                  onClick={() => router.push("/")}
-                  className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
-                  style={{
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                    fontFamily: "Inter, system-ui, sans-serif",
-                  }}
-                >
-                  Back to Home
-                </button>
-              </div>
-            }
-          />
-        ) : (
-          /* Original Desktop Header */
-          <header
-            className="px-8 py-6 border-b"
-            style={{ borderColor: themeConfig.colors.border }}
-          >
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-              <div>
-                <h1
-                  className="text-3xl font-bold"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Admin Dashboard
-                </h1>
-                <p
-                  className="mt-2"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Manage maintenance requests and monitor system performance
-                </p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
-                  <ThemeSwitcher />
-                </div>
-                <button
-                  onClick={() => router.push("/")}
-                  className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50 active:scale-95"
-                  style={{
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  Back to Home
-                </button>
-              </div>
-            </div>
-          </header>
-        )}
-
-        {/* Navigation Tabs - Conditional based on device */}
-        {isMobile ? (
-          /* Mobile Navigation */
-          <div className="px-4 py-3">
-            <div className="flex space-x-2 overflow-x-auto">
-              {[
-                { id: "overview", label: "Overview", icon: "📊" },
-                { id: "requests", label: "Requests", icon: "📋" },
-                { id: "analytics", label: "Analytics", icon: "📈" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
-                    activeTab === tab.id ? "scale-105" : "hover:scale-102"
-                  }`}
-                  style={{
-                    backgroundColor:
-                      activeTab === tab.id
-                        ? themeConfig.colors.primary
-                        : "transparent",
-                    color:
-                      activeTab === tab.id
-                        ? "white"
-                        : themeConfig.colors.textSecondary,
-                    border: `1px solid ${themeConfig.colors.border}`,
-                  }}
-                >
-                  <span>{tab.icon}</span>
-                  <span>{tab.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          /* Desktop Navigation */
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
-            className="px-8 py-6 border-b"
-            style={{ borderColor: themeConfig.colors.border }}
+            className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full blur-[120px] opacity-10"
+            style={{ backgroundColor: themeConfig.colors.primary }}
+          />
+          <div
+            className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full blur-[120px] opacity-10"
+            style={{ backgroundColor: themeConfig.colors.secondary }}
+          />
+        </div>
+
+        {/* Sidebar (Desktop) / Bottom Nav (Mobile) */}
+        {!isMobile && (
+          <aside
+            className="fixed left-0 top-0 bottom-0 w-72 backdrop-blur-2xl border-r z-40 transition-all duration-500"
+            style={{
+              backgroundColor: `${themeConfig.colors.surface}cc`,
+              borderColor: `${themeConfig.colors.border}50`,
+            }}
           >
-            <div className="max-w-7xl mx-auto">
-              <div className="flex space-x-1">
+            <div className="p-8">
+              <div className="flex items-center gap-3 mb-12">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-white"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
+                  }}
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
+                </div>
+                <span className="font-black text-xl tracking-tight">
+                  ivf.admin
+                </span>
+              </div>
+
+              <nav className="space-y-2">
                 {[
                   { id: "overview", label: "Overview", icon: "📊" },
-                  { id: "requests", label: "Requests", icon: "📋" },
-                  { id: "analytics", label: "Analytics", icon: "📈" },
-                ].map((tab) => (
+                  { id: "requests", label: "All Requests", icon: "📋" },
+                  { id: "users", label: "User Management", icon: "👥" },
+                  { id: "reports", label: "Reports", icon: "📈" },
+                  { id: "settings", label: "Settings", icon: "⚙️" },
+                ].map((item) => (
                   <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center space-x-2 px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      activeTab === tab.id ? "scale-105" : "hover:scale-102"
-                    }`}
+                    key={item.id}
+                    onClick={() => setActiveTab(item.id)}
+                    className="w-full flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-all"
                     style={{
                       backgroundColor:
-                        activeTab === tab.id
-                          ? themeConfig.colors.primary
-                          : themeConfig.colors.surface,
+                        activeTab === item.id
+                          ? `${themeConfig.colors.primary}15`
+                          : "transparent",
                       color:
-                        activeTab === tab.id
-                          ? "white"
-                          : themeConfig.colors.text,
-                      border: `1px solid ${themeConfig.colors.border}`,
+                        activeTab === item.id
+                          ? themeConfig.colors.primary
+                          : themeConfig.colors.textSecondary,
                     }}
                   >
-                    <span>{tab.icon}</span>
-                    <span>{tab.label}</span>
+                    <span className="text-xl">{item.icon}</span>
+                    {item.label}
                   </button>
                 ))}
+              </nav>
+            </div>
+
+            <div className="absolute bottom-8 left-8 right-8">
+              <div className="p-4 rounded-3xl bg-black/5 backdrop-blur-md border border-white/5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-xs font-bold text-slate-600">
+                    AD
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold truncate">Admin User</p>
+                    <p className="text-[10px] opacity-50 truncate">
+                      admin@ivf.system
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => router.push("/")}
+                  className="w-full py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition-all"
+                >
+                  Sign Out
+                </button>
               </div>
             </div>
-          </div>
+          </aside>
         )}
 
-        {/* Main Content */}
-        <div
-          className={`${isMobile ? "max-w-4xl" : "max-w-7xl"} mx-auto ${isMobile ? "px-4 py-4" : "px-8 py-8"}`}
+        {/* Main Content Area */}
+        <main
+          className={`transition-all duration-500 ${!isMobile ? "pl-72" : "pb-24"}`}
         >
-          {activeTab === "overview" && (
-            <div className="space-y-8">
-              {/* Stats Cards - Conditional based on device */}
-              {isMobile ? (
-                <WebStatsList
-                  stats={[
-                    { label: "Total Requests", value: stats.totalRequests },
-                    { label: "Pending", value: stats.pendingRequests },
-                    { label: "Completed", value: stats.completedRequests },
-                    { label: "Completion Rate", value: `${completionRate}%` },
-                  ]}
-                  columns={2}
-                  compact={true}
-                />
-              ) : (
-                /* Desktop Stats Cards */
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div
-                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
-                    style={{
-                      borderColor: themeConfig.colors.border,
-                      backgroundColor: themeConfig.colors.surface,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-3"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.totalRequests}
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Total Requests
-                    </div>
-                  </div>
-                  <div
-                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
-                    style={{
-                      borderColor: themeConfig.colors.border,
-                      backgroundColor: themeConfig.colors.surface,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-3"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.pendingRequests}
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Pending
-                    </div>
-                  </div>
-                  <div
-                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
-                    style={{
-                      borderColor: themeConfig.colors.border,
-                      backgroundColor: themeConfig.colors.surface,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-3"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {stats.completedRequests}
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Completed
-                    </div>
-                  </div>
-                  <div
-                    className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow duration-200"
-                    style={{
-                      borderColor: themeConfig.colors.border,
-                      backgroundColor: themeConfig.colors.surface,
-                    }}
-                  >
-                    <div
-                      className="text-3xl font-bold mb-3"
-                      style={{ color: themeConfig.colors.text }}
-                    >
-                      {completionRate}%
-                    </div>
-                    <div
-                      className="text-sm font-medium"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Completion Rate
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Quick Actions - Conditional based on device */}
-              {isMobile ? (
-                <WebListGroup title="Quick Actions">
-                  <WebListGroupItem
-                    title="Generate Summary"
-                    subtitle="Create maintenance summary report"
-                    leftIcon="📄"
-                    onClick={() => router.push("/admin/summary-request")}
-                  />
-                  <WebListGroupItem
-                    title="Physical Plant Request"
-                    subtitle="Submit new maintenance request"
-                    leftIcon="🔧"
-                    onClick={() => router.push("/admin/physical-plant-request")}
-                  />
-                  <WebListGroupItem
-                    title="User Management"
-                    subtitle="Manage system users"
-                    leftIcon="👥"
-                    onClick={() => router.push("/admin/users")}
-                  />
-                  <WebListGroupItem
-                    title="View Reports"
-                    subtitle="Access detailed reports"
-                    leftIcon="📊"
-                    onClick={() => router.push("/admin/reports")}
-                  />
-                </WebListGroup>
-              ) : (
-                /* Desktop Quick Actions */
-                <div>
-                  <h2
-                    className="text-xl font-semibold mb-6"
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    Quick Actions
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <button
-                      onClick={() => router.push("/admin/summary-request")}
-                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
-                      style={{
-                        borderColor: themeConfig.colors.border,
-                        backgroundColor: themeConfig.colors.surface,
-                      }}
-                    >
-                      <div className="text-3xl mb-3">📄</div>
-                      <div
-                        className="font-semibold mb-2"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        Generate Summary
-                      </div>
-                      <div
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Create maintenance summary report
-                      </div>
-                    </button>
-                    <button
-                      onClick={() =>
-                        router.push("/admin/physical-plant-request")
-                      }
-                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
-                      style={{
-                        borderColor: themeConfig.colors.border,
-                        backgroundColor: themeConfig.colors.surface,
-                      }}
-                    >
-                      <div className="text-3xl mb-3">🔧</div>
-                      <div
-                        className="font-semibold mb-2"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        Physical Plant Request
-                      </div>
-                      <div
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Submit new maintenance request
-                      </div>
-                    </button>
-                    <button
-                      onClick={() => router.push("/admin/users")}
-                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
-                      style={{
-                        borderColor: themeConfig.colors.border,
-                        backgroundColor: themeConfig.colors.surface,
-                      }}
-                    >
-                      <div className="text-3xl mb-3">👥</div>
-                      <div
-                        className="font-semibold mb-2"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        User Management
-                      </div>
-                      <div
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Manage system users
-                      </div>
-                    </button>
-                    <button
-                      onClick={() => router.push("/admin/reports")}
-                      className="p-6 rounded-xl border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
-                      style={{
-                        borderColor: themeConfig.colors.border,
-                        backgroundColor: themeConfig.colors.surface,
-                      }}
-                    >
-                      <div className="text-3xl mb-3">📊</div>
-                      <div
-                        className="font-semibold mb-2"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        View Reports
-                      </div>
-                      <div
-                        className="text-sm"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
-                        Access detailed reports
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Recent Requests - Conditional based on device */}
-              {isMobile ? (
-                <WebListGroup title="Recent Requests">
-                  {recentRequests.slice(0, 5).map((request) => (
-                    <WebListGroupItem
-                      key={request.id}
-                      title={request.title}
-                      subtitle={`${request.category} • ${request.priority} • ${request.status}`}
-                      leftIcon="📋"
-                      onClick={() => viewRequestDetails(request)}
-                      badge={request.status}
-                    />
-                  ))}
-                </WebListGroup>
-              ) : (
-                /* Desktop Recent Requests Table */
-                <div>
-                  <h2
-                    className="text-xl font-semibold mb-4"
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    Recent Requests
-                  </h2>
-                  <div
-                    className="rounded-lg border overflow-hidden"
-                    style={{ borderColor: themeConfig.colors.border }}
-                  >
-                    <table className="w-full">
-                      <thead
-                        style={{ backgroundColor: themeConfig.colors.surface }}
-                      >
-                        <tr>
-                          <th
-                            className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Request
-                          </th>
-                          <th
-                            className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Category
-                          </th>
-                          <th
-                            className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Priority
-                          </th>
-                          <th
-                            className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Status
-                          </th>
-                          <th
-                            className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Submitted By
-                          </th>
-                          <th
-                            className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            Actions
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {recentRequests.slice(0, 5).map((request) => (
-                          <tr
-                            key={request.id}
-                            className="border-t"
-                            style={{ borderColor: themeConfig.colors.border }}
-                          >
-                            <td className="px-6 py-4">
-                              <div
-                                className="font-medium"
-                                style={{ color: themeConfig.colors.text }}
-                              >
-                                {request.title}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <div
-                                style={{
-                                  color: themeConfig.colors.textSecondary,
-                                }}
-                              >
-                                {request.category}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <span
-                                className={`px-2 py-1 text-xs font-medium rounded-full ${
-                                  request.priority === "High"
-                                    ? "text-white"
-                                    : request.priority === "Medium"
-                                      ? "text-white"
-                                      : "text-white"
-                                }`}
-                                style={{
-                                  backgroundColor:
-                                    request.priority === "High"
-                                      ? themeConfig.colors.error
-                                      : request.priority === "Medium"
-                                        ? themeConfig.colors.warning
-                                        : themeConfig.colors.primary,
-                                }}
-                              >
-                                {request.priority}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4">
-                              <span
-                                className="px-2 py-1 text-xs font-medium rounded-full text-white"
-                                style={{
-                                  backgroundColor:
-                                    request.status === "Completed"
-                                      ? themeConfig.colors.success
-                                      : request.status === "In Progress"
-                                        ? themeConfig.colors.primary
-                                        : themeConfig.colors.warning,
-                                }}
-                              >
-                                {request.status}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4">
-                              <div
-                                style={{
-                                  color: themeConfig.colors.textSecondary,
-                                }}
-                              >
-                                {request.submittedBy}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <button
-                                onClick={() => viewRequestDetails(request)}
-                                className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                              >
-                                View
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTab === "requests" && (
-            <div className="space-y-6">
-              {/* Search Bar - Conditional based on device */}
-              {isMobile ? (
+          {/* Top Bar */}
+          <div
+            className="sticky top-0 z-30 backdrop-blur-md px-4 sm:px-8 py-4 flex items-center justify-between border-b"
+            style={{
+              backgroundColor: `${themeConfig.colors.background}aa`,
+              borderColor: `${themeConfig.colors.border}30`,
+            }}
+          >
+            <div className="flex items-center gap-4">
+              {isMobile && (
                 <div
-                  className="rounded-lg border p-3"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
                   style={{
-                    backgroundColor: themeConfig.colors.surface,
-                    borderColor: themeConfig.colors.border,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
                   }}
                 >
-                  <input
-                    type="text"
-                    placeholder="Search requests..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg text-sm"
-                    style={{
-                      borderColor: themeConfig.colors.border,
-                      backgroundColor: themeConfig.colors.background,
-                      color: themeConfig.colors.text,
-                      fontFamily: "Inter, system-ui, sans-serif",
-                    }}
-                  />
-                </div>
-              ) : (
-                /* Desktop Search Bar */
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 max-w-lg">
-                    <input
-                      type="text"
-                      placeholder="Search requests..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full px-4 py-2 border rounded-lg"
-                      style={{
-                        borderColor: themeConfig.colors.border,
-                        fontFamily: "Inter, system-ui, sans-serif",
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Requests Table - Conditional based on device */}
-              {isMobile ? (
-                <WebListGroup title="All Requests">
-                  {filteredRequests.slice(0, 10).map((request) => (
-                    <WebListGroupItem
-                      key={request.id}
-                      title={request.title}
-                      subtitle={`${request.category} • ${request.priority} • ${request.status}`}
-                      leftIcon="📋"
-                      onClick={() => viewRequestDetails(request)}
-                      badge={request.status}
-                    />
-                  ))}
-                </WebListGroup>
-              ) : (
-                /* Desktop Requests Table */
-                <div
-                  className="rounded-lg border overflow-hidden"
-                  style={{ borderColor: themeConfig.colors.border }}
-                >
-                  <table className="w-full">
-                    <thead
-                      style={{ backgroundColor: themeConfig.colors.surface }}
-                    >
-                      <tr>
-                        <th
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Request
-                        </th>
-                        <th
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Category
-                        </th>
-                        <th
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Priority
-                        </th>
-                        <th
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Status
-                        </th>
-                        <th
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Submitted By
-                        </th>
-                        <th
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Date
-                        </th>
-                        <th
-                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredRequests.map((request, index) => (
-                        <tr
-                          key={request.id}
-                          className={`border-t ${
-                            index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                          }`}
-                          style={{ borderColor: themeConfig.colors.border }}
-                        >
-                          <td className="px-6 py-4">
-                            <div
-                              className="font-medium"
-                              style={{ color: themeConfig.colors.text }}
-                            >
-                              {request.title}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div
-                              style={{
-                                color: themeConfig.colors.textSecondary,
-                              }}
-                            >
-                              {request.category}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span
-                              className={`px-2 py-1 text-xs font-medium rounded-full ${
-                                request.priority === "High"
-                                  ? "bg-red-100 text-red-800"
-                                  : request.priority === "Medium"
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : "bg-green-100 text-green-800"
-                              }`}
-                            >
-                              {request.priority}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span
-                              className={`px-2 py-1 text-xs font-medium rounded-full ${
-                                request.status === "Completed"
-                                  ? "bg-green-100 text-green-800"
-                                  : request.status === "In Progress"
-                                    ? "bg-blue-100 text-blue-800"
-                                    : "bg-yellow-100 text-yellow-800"
-                              }`}
-                            >
-                              {request.status}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div
-                              style={{
-                                color: themeConfig.colors.textSecondary,
-                              }}
-                            >
-                              {request.submittedBy}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div
-                              style={{
-                                color: themeConfig.colors.textSecondary,
-                              }}
-                            >
-                              {request.submittedDate}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex space-x-2">
-                              <button
-                                onClick={() => viewRequestDetails(request)}
-                                className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                              >
-                                View
-                              </button>
-                              <button
-                                onClick={() =>
-                                  handleStatusUpdate(request.id, "Completed")
-                                }
-                                className="text-green-600 hover:text-green-800 text-sm font-medium"
-                              >
-                                Complete
-                              </button>
-                              <button
-                                onClick={() => handleDeleteRequest(request.id)}
-                                className="text-red-600 hover:text-red-800 text-sm font-medium"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTab === "analytics" && (
-            <div className="space-y-8">
-              {isMobile ? (
-                /* Mobile Analytics */
-                <div className="space-y-6">
-                  <WebListGroup title="Analytics Overview">
-                    <WebListGroupItem
-                      title="Request Trends"
-                      subtitle="Monthly request patterns"
-                      leftIcon="📈"
-                    />
-                    <WebListGroupItem
-                      title="Category Distribution"
-                      subtitle="Requests by category"
-                      leftIcon="📊"
-                    />
-                    <WebListGroupItem
-                      title="Completion Rates"
-                      subtitle="Performance metrics"
-                      leftIcon="✅"
-                    />
-                    <WebListGroupItem
-                      title="Response Times"
-                      subtitle="Average resolution time"
-                      leftIcon="⏱️"
-                    />
-                  </WebListGroup>
-
-                  <WebListGroup title="Key Metrics">
-                    <WebListGroupItem
-                      title="Average Response Time"
-                      subtitle="2.3 days"
-                      leftIcon="⏱️"
-                    />
-                    <WebListGroupItem
-                      title="Most Active Category"
-                      subtitle="HVAC (45 requests)"
-                      leftIcon="🔧"
-                    />
-                    <WebListGroupItem
-                      title="Top Performer"
-                      subtitle="John Doe (12 completed)"
-                      leftIcon="🏆"
-                    />
-                  </WebListGroup>
-                </div>
-              ) : (
-                /* Desktop Analytics */
-                <div className="space-y-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div
-                      className="p-6 rounded-lg border"
-                      style={{ borderColor: themeConfig.colors.border }}
-                    >
-                      <h3
-                        className="text-lg font-semibold mb-4"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        Request Trends
-                      </h3>
-                      <div
-                        className="h-64 flex items-center justify-center"
-                        style={{
-                          backgroundColor: themeConfig.colors.surface,
-                          borderRadius: "8px",
-                        }}
-                      >
-                        <div
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          📊 Chart placeholder - Request trends over time
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      className="p-6 rounded-lg border"
-                      style={{ borderColor: themeConfig.colors.border }}
-                    >
-                      <h3
-                        className="text-lg font-semibold mb-4"
-                        style={{ color: themeConfig.colors.text }}
-                      >
-                        Category Distribution
-                      </h3>
-                      <div
-                        className="h-64 flex items-center justify-center"
-                        style={{
-                          backgroundColor: themeConfig.colors.surface,
-                          borderRadius: "8px",
-                        }}
-                      >
-                        <div
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          📈 Chart placeholder - Category breakdown
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    className="p-6 rounded-lg border"
-                    style={{ borderColor: themeConfig.colors.border }}
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <h3
-                      className="text-lg font-semibold mb-4"
-                      style={{ color: themeConfig.colors.text }}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
+                </div>
+              )}
+              <h1 className="text-lg sm:text-2xl font-black capitalize">
+                {activeTab}
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="hidden sm:flex items-center bg-black/5 rounded-full px-4 py-2 border border-white/5">
+                <svg
+                  className="w-4 h-4 opacity-30 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search dashboard..."
+                  className="bg-transparent border-none outline-none text-xs font-bold w-48"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              <ThemeSwitcher />
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+            {activeTab === "overview" && (
+              <div className="space-y-8 animate-fade-in">
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                  {mockStats.map((stat, i) => (
+                    <div
+                      key={i}
+                      className="group p-6 rounded-[2rem] border backdrop-blur-xl transition-all duration-500 hover:translate-y-[-4px]"
+                      style={{
+                        backgroundColor: `${themeConfig.colors.surface}90`,
+                        borderColor: `${themeConfig.colors.border}40`,
+                        boxShadow: `0 15px 30px -15px rgba(0,0,0,0.05)`,
+                      }}
                     >
-                      Performance Metrics
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div>
+                      <div className="flex items-start justify-between mb-4">
                         <div
-                          className="text-2xl font-bold mb-2"
-                          style={{ color: themeConfig.colors.text }}
+                          className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+                          style={{ backgroundColor: `${stat.color}15` }}
                         >
-                          2.3 days
+                          {stat.icon}
                         </div>
-                        <div
-                          className="text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
+                        <span
+                          className={`text-[10px] font-black px-2 py-1 rounded-full ${stat.trend.startsWith("+") ? "text-green-500 bg-green-500/10" : "text-red-500 bg-red-500/10"}`}
                         >
-                          Average Response Time
-                        </div>
+                          {stat.trend}
+                        </span>
                       </div>
-                      <div>
-                        <div
-                          className="text-2xl font-bold mb-2"
-                          style={{ color: themeConfig.colors.text }}
-                        >
-                          HVAC
-                        </div>
-                        <div
-                          className="text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Most Active Category (45 requests)
-                        </div>
+                      <div className="text-3xl font-black mb-1">
+                        {stat.value}
                       </div>
-                      <div>
+                      <div className="text-[10px] font-black uppercase tracking-widest opacity-40">
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Recent Activity */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-black">Recent Requests</h2>
+                      <button
+                        className="text-xs font-black uppercase tracking-widest"
+                        style={{ color: themeConfig.colors.primary }}
+                      >
+                        View All
+                      </button>
+                    </div>
+
+                    <div className="space-y-4">
+                      {mockRecentRequests.map((req) => (
                         <div
-                          className="text-2xl font-bold mb-2"
-                          style={{ color: themeConfig.colors.text }}
+                          key={req.id}
+                          className="group p-5 rounded-3xl border backdrop-blur-xl transition-all hover:shadow-lg"
+                          style={{
+                            backgroundColor: `${themeConfig.colors.surface}70`,
+                            borderColor: `${themeConfig.colors.border}30`,
+                          }}
                         >
-                          John Doe
+                          <div className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-4 flex-1 min-w-0">
+                              <div
+                                className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl flex-shrink-0"
+                                style={{
+                                  backgroundColor: `${getStatusColor(req.status)}10`,
+                                }}
+                              >
+                                {req.category === "HVAC"
+                                  ? "❄️"
+                                  : req.category === "Electrical"
+                                    ? "⚡"
+                                    : "💧"}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-bold text-sm truncate">
+                                  {req.title}
+                                </h3>
+                                <p className="text-[10px] font-medium opacity-50">
+                                  {req.submittedBy} • {req.date}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span
+                                className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border"
+                                style={{
+                                  color: getStatusColor(req.status),
+                                  borderColor: `${getStatusColor(req.status)}30`,
+                                  backgroundColor: `${getStatusColor(req.status)}05`,
+                                }}
+                              >
+                                {req.status}
+                              </span>
+                              <button className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/5 transition-all">
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M9 5l7 7-7 7"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                        <div
-                          className="text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* System Insights */}
+                  <div className="space-y-6">
+                    <h2 className="text-xl font-black">Quick Actions</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                      {[
+                        {
+                          label: "Generate Summary",
+                          icon: "📄",
+                          color: themeConfig.colors.primary,
+                        },
+                        {
+                          label: "Physical Plant Request",
+                          icon: "🔧",
+                          color: themeConfig.colors.secondary,
+                        },
+                        {
+                          label: "User Management",
+                          icon: "👥",
+                          color: themeConfig.colors.accent,
+                        },
+                        {
+                          label: "System Reports",
+                          icon: "📈",
+                          color: themeConfig.colors.primary,
+                        },
+                      ].map((action, i) => (
+                        <button
+                          key={i}
+                          className="flex items-center gap-4 p-4 rounded-3xl border transition-all hover:shadow-xl hover:translate-x-2"
+                          style={{
+                            backgroundColor: `${themeConfig.colors.surface}e0`,
+                            borderColor: themeConfig.colors.border,
+                          }}
                         >
-                          Top Performer (12 completed)
+                          <span
+                            className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+                            style={{ backgroundColor: `${action.color}15` }}
+                          >
+                            {action.icon}
+                          </span>
+                          <span className="font-bold text-sm">
+                            {action.label}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="p-6 rounded-[2.5rem] bg-black/5 border border-white/5 mt-8">
+                      <h3 className="text-sm font-black mb-4">
+                        Urgent Attention
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20">
+                          <p className="text-[10px] font-bold text-red-500 mb-1 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />{" "}
+                            Urgent Fault
+                          </p>
+                          <p className="text-[10px] opacity-70 leading-relaxed font-medium">
+                            Main generator cooling system reported failure in
+                            Block B.
+                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
+              </div>
+            )}
+          </div>
+        </main>
+
+        {/* Mobile Navigation Bar */}
+        {isMobile && (
+          <nav
+            className="fixed bottom-0 left-0 right-0 h-20 backdrop-blur-2xl border-t z-50 flex items-center justify-around px-4"
+            style={{
+              backgroundColor: `${themeConfig.colors.surface}cc`,
+              borderColor: `${themeConfig.colors.border}50`,
+            }}
+          >
+            {[
+              { id: "overview", icon: "📊" },
+              { id: "requests", icon: "📋" },
+              { id: "analytics", icon: "📈" },
+              { id: "settings", icon: "⚙️" },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300"
+                style={{
+                  backgroundColor:
+                    activeTab === item.id
+                      ? `${themeConfig.colors.primary}15`
+                      : "transparent",
+                  transform:
+                    activeTab === item.id ? "translateY(-8px)" : "none",
+                }}
+              >
+                <span
+                  className={`text-xl transition-all ${activeTab === item.id ? "grayscale-0" : "grayscale opacity-50"}`}
+                >
+                  {item.icon}
+                </span>
+              </button>
+            ))}
+          </nav>
+        )}
+
+        <style jsx>{`
+          @keyframes fade-in {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .animate-fade-in {
+            animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+        `}</style>
       </div>
     </AuthGuard>
   );
