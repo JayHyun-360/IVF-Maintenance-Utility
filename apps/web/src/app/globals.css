@@ -1,44 +1,101 @@
 @import "tailwindcss";
 
 :root {
-  /* Academic Minimalist color palette */
-  --background: #f8fafc;
-  --foreground: #1e293b;
-  --primary: #1b4332;
-  --primary-light: #2d5f4f;
-  --primary-dark: #0d5f56;
-  --secondary: #ffffff;
-  --accent-slate: #64748b;
-  --accent-amber: #f59e0b;
+  /* Cloud Dancer Foundation - Modern Neutrals */
+  --background: #f0eee9;
+  --background-secondary: #f7f3ee;
+  --foreground: #141414;
   --surface: #ffffff;
+  --surface-secondary: #f8f6f3;
   --surface-elevated: #ffffff;
-  --surface-secondary: #f1f5f9;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
-  --border: #e2e8f0;
-  --border-light: #f1f5f9;
+
+  /* Modern Color Palette with 2026 Trends */
+  --primary: #316263; /* Transformative Teal */
+  --primary-light: #4a8586;
+  --primary-dark: #244748;
+  --secondary: #ffffff;
+
+  /* Accent Colors */
+  --accent-slate: #2b2f36; /* Slate UI */
+  --accent-amber: #c36a4a; /* Clay */
+  --accent-cyan: #40e0ff; /* Electric Cyan */
+  --accent-lime: #b6ff3b; /* Neon Lime */
+  --accent-plum: #5a4b8a; /* Dusk Violet */
+
+  /* Typography Colors */
+  --text-primary: #141414; /* Ink */
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+
+  /* Border and Interactive */
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+  --border-focus: #316263;
+
+  /* Status Colors */
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
   --info: #3b82f6;
 
-  /* Modern shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  /* Modern Shadows with Depth */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+  --shadow-md:
+    0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   --shadow-lg:
-    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
   --shadow-xl:
-    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 
-  /* Enhanced gradients */
-  --gradient-primary: linear-gradient(135deg, #1b4332 0%, #2d5f4f 100%);
-  --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  --gradient-accent: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+  /* Modern Gradients - Cinematic & Soft */
+  --gradient-primary: linear-gradient(
+    135deg,
+    #316263 0%,
+    #4a8586 50%,
+    #5a9b9c 100%
+  );
+  --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8f6f3 100%);
+  --gradient-hero: linear-gradient(
+    135deg,
+    #2b1538 0%,
+    #5a4b8a 50%,
+    #88a3d6 100%
+  );
+  --gradient-accent: linear-gradient(135deg, #bfd3e7 0%, #e7d8c6 100%);
+  --gradient-neon: linear-gradient(
+    135deg,
+    #b6ff3b 0%,
+    #40e0ff 50%,
+    #ff3bd4 100%
+  );
 
   /* Typography */
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Spacing Scale - More Refined */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* Border Radius - Modern & Soft */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
 
   /* Mobile-specific variables */
   --mobile-safe-area-top: env(safe-area-inset-top);
