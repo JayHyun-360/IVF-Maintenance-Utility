@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* Professional Design System */
+  /* Academic Minimalist color palette */
   --background: #f8fafc;
   --foreground: #1e293b;
-  --primary: #0f766e;
-  --primary-light: #14b8a6;
+  --primary: #1b4332;
+  --primary-light: #2d5f4f;
   --primary-dark: #0d5f56;
   --secondary: #ffffff;
   --accent-slate: #64748b;
-  --accent-indigo: #6366f1;
   --accent-amber: #f59e0b;
   --surface: #ffffff;
   --surface-elevated: #ffffff;
@@ -19,20 +18,23 @@
   --text-muted: #94a3b8;
   --border: #e2e8f0;
   --border-light: #f1f5f9;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Modern shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg:
     0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl:
     0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --gradient-primary: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+
+  /* Enhanced gradients */
+  --gradient-primary: linear-gradient(135deg, #1b4332 0%, #2d5f4f 100%);
   --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  --gradient-accent: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --info: #3b82f6;
+  --gradient-accent: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
 
   /* Typography */
   --font-sans: "Inter", system-ui, sans-serif;

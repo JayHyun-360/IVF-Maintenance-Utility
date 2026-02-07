@@ -1,4 +1,4 @@
-// Mock database for demonstration - in production this would come from your actual database
+// Optimized mock database for demonstration - in production this would come from your actual database
 export interface MaintenanceRequest {
   id: string;
   title: string;
@@ -12,6 +12,11 @@ export interface MaintenanceRequest {
   updatedAt: Date;
   images?: string[]; // Array of base64 image strings
 }
+
+// Cache for computed stats to avoid recalculation
+let cachedStats: ReturnType<typeof getMaintenanceStats> | null = null;
+let lastStatsUpdate = 0;
+const STATS_CACHE_TTL = 5000; // 5 seconds cache
 
 // Test examples for demonstration - in production this would come from your actual database
 let maintenanceRequests: MaintenanceRequest[] = [
@@ -331,15 +336,42 @@ export const getMaintenanceStats = (): {
   inProgressRequests: number;
   completedRequests: number;
 } => {
+  // Use cached stats if still valid
+  const now = Date.now();
+  if (cachedStats && now - lastStatsUpdate < STATS_CACHE_TTL) {
+    return cachedStats;
+  }
+
   const requests = getMaintenanceRequests();
 
-  return {
+  // Compute stats efficiently
+  const stats = {
     totalRequests: requests.length,
-    pendingRequests: requests.filter((r) => r.status === "PENDING").length,
-    inProgressRequests: requests.filter((r) => r.status === "IN_PROGRESS")
-      .length,
-    completedRequests: requests.filter((r) => r.status === "COMPLETED").length,
+    pendingRequests: 0,
+    inProgressRequests: 0,
+    completedRequests: 0,
   };
+
+  // Single pass through requests for better performance
+  for (const request of requests) {
+    switch (request.status) {
+      case "PENDING":
+        stats.pendingRequests++;
+        break;
+      case "IN_PROGRESS":
+        stats.inProgressRequests++;
+        break;
+      case "COMPLETED":
+        stats.completedRequests++;
+        break;
+    }
+  }
+
+  // Cache the results
+  cachedStats = stats;
+  lastStatsUpdate = now;
+
+  return stats;
 };
 
 export const getRecentRequests = (limit: number = 10): MaintenanceRequest[] => {
@@ -396,7 +428,7 @@ export const addMaintenanceRequest = (
   return newRequest;
 };
 
-// Update request status
+// Update request status with cache invalidation
 export const updateRequestStatus = (
   id: string,
   status: "PENDING" | "IN_PROGRESS" | "COMPLETED",
@@ -405,16 +437,26 @@ export const updateRequestStatus = (
   if (request) {
     request.status = status;
     request.updatedAt = new Date();
+
+    // Invalidate stats cache when data changes
+    cachedStats = null;
+    lastStatsUpdate = 0;
+
     return request;
   }
   return null;
 };
 
-// Delete request
+// Delete request with cache invalidation
 export const deleteMaintenanceRequest = (id: string): boolean => {
   const index = maintenanceRequests.findIndex((r) => r.id === id);
   if (index !== -1) {
     maintenanceRequests.splice(index, 1);
+
+    // Invalidate stats cache when data changes
+    cachedStats = null;
+    lastStatsUpdate = 0;
+
     return true;
   }
   return false;
