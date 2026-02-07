@@ -15,6 +15,7 @@ interface ButtonProps {
   hapticFeedback?: boolean;
   onTouchStart?: () => void;
   onTouchEnd?: () => void;
+  style?: React.CSSProperties;
 }
 
 export default function Button({
@@ -30,6 +31,7 @@ export default function Button({
   hapticFeedback = true,
   onTouchStart,
   onTouchEnd,
+  style = {},
 }: ButtonProps) {
   const { themeConfig } = useTheme();
 
@@ -122,7 +124,7 @@ export default function Button({
         touch-manipulation
         ${className}
       `}
-      style={styles}
+      style={{ ...styles, ...style }}
     >
       {loading ? (
         <div className="flex items-center justify-center space-x-2">
