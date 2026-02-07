@@ -142,177 +142,183 @@ export default function Home() {
         </motion.header>
 
         {/* Hero Section */}
-        <section className="pt-32 pb-20 px-6 sm:px-8 lg:px-12">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Hero Content */}
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-50">
+            <svg
+              width="60"
+              height="60"
+              viewBox="0 0 60 60"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full"
+            >
+              <g fill="none" fillRule="evenodd">
+                <g fill="#10b981" fillOpacity="0.03">
+                  <path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z" />
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto"
+            >
+              {/* Logo and Badge */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="mb-8"
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="inline-flex items-center px-3 py-1 rounded-full bg-green-50 border border-green-200 mb-6"
-                >
-                  <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
-                  <span className="text-sm font-medium text-green-800">
-                    Smart Facility Management
-                  </span>
-                </motion.div>
-
-                <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight"
-                >
-                  Streamline Your
-                  <span className="block text-green-600">
-                    Maintenance Operations
-                  </span>
-                </motion.h1>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="text-xl text-gray-600 mb-8 leading-relaxed"
-                >
-                  Transform your facility management with our intelligent
-                  maintenance utility. Experience seamless operations, real-time
-                  analytics, and automated workflows designed for modern
-                  organizations.
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="flex flex-col sm:flex-row gap-4"
-                >
-                  <motion.button
-                    onClick={() => {
-                      const role = session?.user?.role;
-                      if (role === "ADMIN") router.push("/admin/dashboard");
-                      else if (
-                        role === "USER" ||
-                        role === "STUDENT" ||
-                        role === "STAFF"
-                      )
-                        router.push("/student");
-                      else router.push("/login");
-                    }}
-                    className="px-8 py-4 bg-green-600 text-white rounded-xl font-semibold text-lg hover:bg-green-700 transition-colors shadow-lg"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {session ? "Launch Dashboard" : "Get Started"}
-                  </motion.button>
-                  <motion.button
-                    onClick={() => router.push("#features")}
-                    className="px-8 py-4 bg-gray-100 text-gray-900 rounded-xl font-semibold text-lg hover:bg-gray-200 transition-colors"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Learn More
-                  </motion.button>
-                </motion.div>
-
-                {/* Stats */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="grid grid-cols-3 gap-8 mt-12"
-                >
-                  {[
-                    { value: "98%", label: "Uptime" },
-                    { value: "24/7", label: "Support" },
-                    { value: "500+", label: "Users" },
-                  ].map((stat, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7 + i * 0.1 }}
-                      whileHover={{ scale: 1.05 }}
-                      className="text-center"
+                <div className="inline-flex items-center gap-3 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-xl">
+                    <svg
+                      className="w-10 h-10 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      <div className="text-3xl font-bold text-gray-900 mb-1">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm text-gray-600">{stat.label}</div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-
-              {/* Hero Visual */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative"
-              >
-                <div className="relative bg-gradient-to-br from-green-50 to-gray-50 rounded-3xl p-8 shadow-2xl border border-gray-100">
-                  <div className="grid grid-cols-2 gap-4">
-                    {[
-                      {
-                        label: "Total Requests",
-                        value: stats.totalRequests,
-                        icon: "📊",
-                        color: "bg-blue-500",
-                      },
-                      {
-                        label: "Pending",
-                        value: stats.pendingRequests,
-                        icon: "⏳",
-                        color: "bg-yellow-500",
-                      },
-                      {
-                        label: "In Progress",
-                        value: stats.inProgressRequests,
-                        icon: "⚙️",
-                        color: "bg-purple-500",
-                      },
-                      {
-                        label: "Completed",
-                        value: stats.completedRequests,
-                        icon: "✅",
-                        color: "bg-green-500",
-                      },
-                    ].map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.5 + i * 0.1 }}
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white rounded-xl p-4 shadow-md border border-gray-100"
-                      >
-                        <div className="flex items-center gap-3 mb-2">
-                          <div
-                            className={`w-8 h-8 ${item.color} rounded-lg flex items-center justify-center text-white text-sm`}
-                          >
-                            {item.icon}
-                          </div>
-                          <span className="text-xs text-gray-600 font-medium">
-                            {item.label}
-                          </span>
-                        </div>
-                        <div className="text-2xl font-bold text-gray-900">
-                          {item.value}
-                        </div>
-                      </motion.div>
-                    ))}
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                      />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <h1 className="text-2xl font-bold text-gray-900">
+                      IVF Maintenance
+                    </h1>
+                    <p className="text-sm text-gray-500">
+                      Professional Facility Management
+                    </p>
                   </div>
                 </div>
+
+                <div className="inline-flex items-center px-4 py-2 rounded-full bg-green-50 border border-green-200 mb-8">
+                  <span className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse"></span>
+                  <span className="text-sm font-medium text-green-800">
+                    Trusted by 500+ Organizations
+                  </span>
+                </div>
               </motion.div>
-            </div>
+
+              {/* Main Headline */}
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
+              >
+                Streamline Your
+                <span className="block text-green-600">
+                  Facility Management
+                </span>
+              </motion.h1>
+
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-xl sm:text-2xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto"
+              >
+                Transform your maintenance operations with intelligent
+                automation, real-time analytics, and seamless workflow
+                management designed for modern facilities.
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+              >
+                <motion.button
+                  onClick={() => router.push("/login")}
+                  className="px-8 py-4 bg-green-600 text-white rounded-xl font-semibold text-lg hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Get Started
+                  <svg
+                    className="inline-block w-5 h-5 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </motion.button>
+
+                <motion.button
+                  onClick={() => router.push("#features")}
+                  className="px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-green-600 hover:text-green-600 transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  View Demo
+                </motion.button>
+              </motion.div>
+
+              {/* Trust Indicators */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="grid grid-cols-3 gap-8 max-w-2xl mx-auto"
+              >
+                {[
+                  { value: "99.9%", label: "Uptime" },
+                  { value: "24/7", label: "Support" },
+                  { value: "500+", label: "Clients" },
+                ].map((stat, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 + i * 0.1 }}
+                    whileHover={{ scale: 1.1 }}
+                    className="text-center"
+                  >
+                    <div className="text-3xl font-bold text-gray-900 mb-2">
+                      {stat.value}
+                    </div>
+                    <div className="text-sm text-gray-600 font-medium">
+                      {stat.label}
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          >
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center"
+            >
+              <div className="w-1 h-3 bg-gray-400 rounded-full mt-2"></div>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* Features Section */}
@@ -429,22 +435,12 @@ export default function Home() {
                 excellence.
               </p>
               <motion.button
-                onClick={() => {
-                  const role = session?.user?.role;
-                  if (role === "ADMIN") router.push("/admin/dashboard");
-                  else if (
-                    role === "USER" ||
-                    role === "STUDENT" ||
-                    role === "STAFF"
-                  )
-                    router.push("/student");
-                  else router.push("/login");
-                }}
+                onClick={() => router.push("/login")}
                 className="px-8 py-4 bg-white text-green-600 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors shadow-xl"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {session ? "Access Dashboard" : "Start Free Trial"}
+                Get Started Free
               </motion.button>
             </motion.div>
           </div>
