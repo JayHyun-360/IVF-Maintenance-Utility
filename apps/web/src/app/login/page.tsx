@@ -1,7 +1,5 @@
 "use client";
 
-// Login page component - Enhanced UI with Demo Accounts
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -9,28 +7,6 @@ import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { Z_INDEX } from "@/lib/z-index";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
-
-// Demo accounts for testing
-const DEMO_ACCOUNTS = [
-  {
-    role: "Admin",
-    email: "admin@test.com",
-    password: "admin12345",
-    description: "Full system access",
-    icon: "🛡️",
-    gradient: "from-indigo-500 to-purple-600",
-    color: "#6366f1",
-  },
-  {
-    role: "User",
-    email: "user@test.com",
-    password: "user12345",
-    description: "Submit maintenance requests",
-    icon: "👤",
-    gradient: "from-emerald-500 to-teal-600",
-    color: "#10b981",
-  },
-];
 
 export default function LoginPage() {
   const router = useRouter();
@@ -42,7 +18,6 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -72,16 +47,8 @@ export default function LoginPage() {
     }
   };
 
-  const fillDemoCredentials = (demoEmail: string, demoPassword: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-    setError("");
-  };
-
   return (
-    <div
-      className="min-h-screen relative bg-white"
-    >
+    <div className="min-h-screen bg-white">
       {/* Simple Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -122,7 +89,7 @@ export default function LoginPage() {
           >
             {/* Header Section */}
             <div
-              className={`${isMobile ? "px-6 py-6" : "px-8 py-8" text-center border-b`}
+              className={`${isMobile ? "px-6 py-6" : "px-8 py-8"} text-center border-b`}
               style={{
                 borderColor: themeConfig.colors.border,
               }}
@@ -130,7 +97,7 @@ export default function LoginPage() {
               {/* Logo */}
               <div className="inline-block mb-4">
                 <div
-                  className={`${isMobile ? "w-12 h-12" : "w-16 h-16"} rounded-lg flex items-center justify-center"}
+                  className={`${isMobile ? "w-12 h-12" : "w-16 h-16"} rounded-lg flex items-center justify-center`}
                   style={{
                     backgroundColor: themeConfig.colors.primary,
                   }}
@@ -277,152 +244,10 @@ export default function LoginPage() {
               </form>
             </div>
 
-            {/* Demo Accounts Section */}
-            <div
-              className={`${isMobile ? "px-6 py-5" : "px-8 py-6"}`}
-              style={{
-                background: `linear-gradient(180deg, ${themeConfig.colors.background}40 0%, ${themeConfig.colors.background}80 100%)`,
-                borderTop: `1px solid ${themeConfig.colors.border}40`,
-              }}
-            >
-              {/* Section Header */}
-              <div className="flex items-center gap-3 mb-4">
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: `${themeConfig.colors.success}15` }}
-                >
-                  <svg
-                    className="w-4 h-4"
-                    style={{ color: themeConfig.colors.success }}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <span
-                    className="text-sm font-semibold"
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    Quick Access
-                  </span>
-                  <span
-                    className="block text-xs"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Tap to auto-fill demo credentials
-                  </span>
-                </div>
-              </div>
-
-              {/* Demo Account Cards */}
-              <div
-                className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-2"} gap-3`}
-              >
-                {DEMO_ACCOUNTS.map((account, index) => (
-                  <button
-                    key={account.email}
-                    type="button"
-                    onClick={() =>
-                      fillDemoCredentials(account.email, account.password)
-                    }
-                    className="group relative p-4 rounded-xl text-left transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] overflow-hidden"
-                    style={{
-                      background: `linear-gradient(145deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
-                      border: `2px solid ${
-                        email === account.email
-                          ? account.color
-                          : themeConfig.colors.border
-                      }`,
-                      boxShadow:
-                        email === account.email
-                          ? `0 8px 25px ${account.color}25, 0 0 0 1px ${account.color}30`
-                          : `0 2px 8px rgba(0,0,0,0.04)`,
-                    }}
-                  >
-                    {/* Hover glow */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{
-                        background: `linear-gradient(135deg, ${account.color}08 0%, ${account.color}04 100%)`,
-                      }}
-                    />
-
-                    <div className="relative flex items-center gap-3">
-                      {/* Icon */}
-                      <div
-                        className="w-11 h-11 rounded-xl flex items-center justify-center text-lg transition-transform duration-300 group-hover:scale-110"
-                        style={{
-                          background: `linear-gradient(135deg, ${account.color}20 0%, ${account.color}10 100%)`,
-                        }}
-                      >
-                        {account.icon}
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span
-                            className="font-bold text-sm"
-                            style={{ color: themeConfig.colors.text }}
-                          >
-                            {account.role}
-                          </span>
-                          {email === account.email && (
-                            <svg
-                              className="w-4 h-4"
-                              style={{ color: account.color }}
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <p
-                          className="text-xs truncate"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          {account.description}
-                        </p>
-                      </div>
-
-                      {/* Arrow indicator */}
-                      <svg
-                        className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1"
-                        style={{ color: account.color }}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 7l5 5m0 0l-5 5m5-5H6"
-                        />
-                      </svg>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Footer */}
             <div
-              className={`${isMobile ? "px-6 py-4" : "px-8 py-5"} text-center`}
-              style={{ borderTop: `1px solid ${themeConfig.colors.border}30` }}
+              className={`${isMobile ? "px-6 py-4" : "px-8 py-5"} text-center border-t`}
+              style={{ borderColor: themeConfig.colors.border }}
             >
               <p
                 className="text-sm"
@@ -431,7 +256,7 @@ export default function LoginPage() {
                 Need an account?{" "}
                 <button
                   onClick={() => router.push("/register")}
-                  className="font-semibold transition-all duration-200 hover:underline"
+                  className="font-semibold transition-colors duration-200 hover:underline"
                   style={{ color: themeConfig.colors.primary }}
                 >
                   Register here
@@ -445,27 +270,10 @@ export default function LoginPage() {
             className="text-center text-xs mt-6"
             style={{ color: themeConfig.colors.textSecondary }}
           >
-            © {new Date().getFullYear()} IVF Maintenance Utility. All rights
-            reserved.
+            © {new Date().getFullYear()} IVF Maintenance Utility. All rights reserved.
           </p>
         </div>
       </div>
-
-      {/* Custom animations */}
-      <style jsx>{`
-        @keyframes shake {
-          0%,
-          100% {
-            transform: translateX(0);
-          }
-          25% {
-            transform: translateX(-5px);
-          }
-          75% {
-            transform: translateX(5px);
-          }
-        }
-      `}</style>
     </div>
   );
 }
