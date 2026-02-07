@@ -24,16 +24,16 @@ export const themes: Record<Theme, ThemeConfig> = {
     name: "standard",
     displayName: "Academic Minimalist",
     colors: {
-      primary: "#1B4332", // Deep forest green
+      primary: "#0F766E", // Modern teal green
       secondary: "#FFFFFF", // Pure white
-      accent: "#64748B", // Slate
+      accent: "#6366F1", // Professional indigo
       accent_amber: "#F59E0B", // Amber accent
-      background: "#FFFFFF", // Pure white
-      surface: "#F8FAFC", // Very light gray
+      background: "#F8FAFC", // Soft light gray
+      surface: "#FFFFFF", // Pure white
       text: "#1E293B", // Dark slate
       textSecondary: "#64748B", // Slate
       border: "#E2E8F0", // Light gray border
-      success: "#1B4332", // Primary green
+      success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
@@ -42,16 +42,16 @@ export const themes: Record<Theme, ThemeConfig> = {
     name: "light",
     displayName: "Academic Light",
     colors: {
-      primary: "#1B4332", // Deep forest green
+      primary: "#0891B2", // Cyan blue
       secondary: "#FFFFFF", // Pure white
-      accent: "#64748B", // Slate
+      accent: "#0EA5E9", // Sky blue
       accent_amber: "#F59E0B", // Amber accent
-      background: "#F8FAFC", // Very light gray
+      background: "#F0F9FF", // Very light blue tint
       surface: "#FFFFFF", // Pure white
-      text: "#1E293B", // Dark slate
+      text: "#0C4A6E", // Deep blue
       textSecondary: "#64748B", // Slate
-      border: "#E2E8F0", // Light gray border
-      success: "#1B4332", // Primary green
+      border: "#BAE6FD", // Light blue border
+      success: "#10B981", // Emerald green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
