@@ -1,9 +1,9 @@
 "use client";
 
-import React, { forwardRef } from 'react';
-import { useTheme } from '@/components/ThemeProvider';
-import { useMobileOptimizations } from '@/hooks/useMobileOptimizations';
-import { useHapticFeedback } from '@/hooks/useMobileOptimizations';
+import React, { forwardRef } from "react";
+import { useTheme } from "@/components/ThemeProvider";
+import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
+import { useHapticFeedback } from "@/hooks/useMobileOptimizations";
 
 // Mobile-optimized input component
 interface MobileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -12,7 +12,7 @@ interface MobileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   helperText?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  variant?: 'default' | 'search' | 'numeric';
+  variant?: "default" | "search" | "numeric";
 }
 
 export const MobileInput = forwardRef<HTMLInputElement, MobileInputProps>(
@@ -23,30 +23,30 @@ export const MobileInput = forwardRef<HTMLInputElement, MobileInputProps>(
       helperText,
       leftIcon,
       rightIcon,
-      variant = 'default',
-      className = '',
+      variant = "default",
+      className = "",
       ...props
     },
-    ref
+    ref,
   ) => {
     const { themeConfig } = useTheme();
     const { isMobile } = useMobileOptimizations();
     const { triggerLightHaptic } = useHapticFeedback();
 
-    const handleFocus = () => {
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       triggerLightHaptic();
-      props.onFocus?.(null as any);
+      props.onFocus?.(e);
     };
 
     const getInputType = () => {
-      if (variant === 'numeric') return 'tel';
-      if (variant === 'search') return 'search';
-      return props.type || 'text';
+      if (variant === "numeric") return "tel";
+      if (variant === "search") return "search";
+      return props.type || "text";
     };
 
     const getInputMode = () => {
-      if (variant === 'numeric') return 'numeric';
-      if (variant === 'search') return 'search';
+      if (variant === "numeric") return "numeric";
+      if (variant === "search") return "search";
       return undefined;
     };
 
@@ -60,60 +60,68 @@ export const MobileInput = forwardRef<HTMLInputElement, MobileInputProps>(
             {label}
           </label>
         )}
-        
+
         <div className="relative">
           {leftIcon && (
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               {leftIcon}
             </div>
           )}
-          
+
           <input
             ref={ref}
             type={getInputType()}
             inputMode={getInputMode()}
             className={`
               w-full px-4 py-3 rounded-xl border transition-all duration-200
-              ${leftIcon ? 'pl-10' : ''}
-              ${rightIcon ? 'pr-10' : ''}
-              ${error ? 'border-red-500' : ''}
+              ${leftIcon ? "pl-10" : ""}
+              ${rightIcon ? "pr-10" : ""}
+              ${error ? "border-red-500" : ""}
               ${className}
             `}
             style={{
               backgroundColor: themeConfig.colors.background,
-              borderColor: error ? themeConfig.colors.error : themeConfig.colors.border,
+              borderColor: error
+                ? themeConfig.colors.error
+                : themeConfig.colors.border,
               color: themeConfig.colors.text,
-              fontSize: isMobile ? '16px' : '14px', // Prevents zoom on iOS
-              minHeight: isMobile ? '44px' : '40px',
+              fontSize: isMobile ? "16px" : "14px", // Prevents zoom on iOS
+              minHeight: isMobile ? "44px" : "40px",
             }}
             onFocus={handleFocus}
             {...props}
           />
-          
+
           {rightIcon && (
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               {rightIcon}
             </div>
           )}
         </div>
-        
+
         {error && (
-          <p className="mt-1 text-xs" style={{ color: themeConfig.colors.error }}>
+          <p
+            className="mt-1 text-xs"
+            style={{ color: themeConfig.colors.error }}
+          >
             {error}
           </p>
         )}
-        
+
         {helperText && !error && (
-          <p className="mt-1 text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+          <p
+            className="mt-1 text-xs"
+            style={{ color: themeConfig.colors.textSecondary }}
+          >
             {helperText}
           </p>
         )}
       </div>
     );
-  }
+  },
 );
 
-MobileInput.displayName = 'MobileInput';
+MobileInput.displayName = "MobileInput";
 
 // Mobile-optimized textarea component
 interface MobileTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -123,26 +131,30 @@ interface MobileTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaE
   autoResize?: boolean;
 }
 
-export const MobileTextarea = forwardRef<HTMLTextAreaElement, MobileTextareaProps>(
+export const MobileTextarea = forwardRef<
+  HTMLTextAreaElement,
+  MobileTextareaProps
+>(
   (
-    { label, error, helperText, autoResize = false, className = '', ...props },
-    ref
+    { label, error, helperText, autoResize = false, className = "", ...props },
+    ref,
   ) => {
     const { themeConfig } = useTheme();
     const { isMobile } = useMobileOptimizations();
     const { triggerLightHaptic } = useHapticFeedback();
 
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
-    const mergedRef = (ref as React.RefObject<HTMLTextAreaElement>) || textareaRef;
+    const mergedRef =
+      (ref as React.RefObject<HTMLTextAreaElement>) || textareaRef;
 
-    const handleFocus = () => {
+    const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
       triggerLightHaptic();
-      props.onFocus?.(null as any);
+      props.onFocus?.(e);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (autoResize && mergedRef?.current) {
-        mergedRef.current.style.height = 'auto';
+        mergedRef.current.style.height = "auto";
         mergedRef.current.style.height = `${mergedRef.current.scrollHeight}px`;
       }
       props.onChange?.(e);
@@ -158,43 +170,51 @@ export const MobileTextarea = forwardRef<HTMLTextAreaElement, MobileTextareaProp
             {label}
           </label>
         )}
-        
+
         <textarea
           ref={mergedRef}
           className={`
             w-full px-4 py-3 rounded-xl border transition-all duration-200 resize-none
-            ${error ? 'border-red-500' : ''}
+            ${error ? "border-red-500" : ""}
             ${className}
           `}
           style={{
             backgroundColor: themeConfig.colors.background,
-            borderColor: error ? themeConfig.colors.error : themeConfig.colors.border,
+            borderColor: error
+              ? themeConfig.colors.error
+              : themeConfig.colors.border,
             color: themeConfig.colors.text,
-            fontSize: isMobile ? '16px' : '14px',
-            minHeight: isMobile ? '100px' : '80px',
+            fontSize: isMobile ? "16px" : "14px",
+            minHeight: isMobile ? "100px" : "80px",
           }}
           onFocus={handleFocus}
           onChange={handleChange}
           {...props}
         />
-        
+
         {error && (
-          <p className="mt-1 text-xs" style={{ color: themeConfig.colors.error }}>
+          <p
+            className="mt-1 text-xs"
+            style={{ color: themeConfig.colors.error }}
+          >
             {error}
           </p>
         )}
-        
+
         {helperText && !error && (
-          <p className="mt-1 text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+          <p
+            className="mt-1 text-xs"
+            style={{ color: themeConfig.colors.textSecondary }}
+          >
             {helperText}
           </p>
         )}
       </div>
     );
-  }
+  },
 );
 
-MobileTextarea.displayName = 'MobileTextarea';
+MobileTextarea.displayName = "MobileTextarea";
 
 // Mobile-optimized select component
 interface MobileSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
@@ -207,16 +227,24 @@ interface MobileSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement
 
 export const MobileSelect = forwardRef<HTMLSelectElement, MobileSelectProps>(
   (
-    { label, error, helperText, options, placeholder, className = '', ...props },
-    ref
+    {
+      label,
+      error,
+      helperText,
+      options,
+      placeholder,
+      className = "",
+      ...props
+    },
+    ref,
   ) => {
     const { themeConfig } = useTheme();
     const { isMobile } = useMobileOptimizations();
     const { triggerLightHaptic } = useHapticFeedback();
 
-    const handleFocus = () => {
+    const handleFocus = (e: React.FocusEvent<HTMLSelectElement>) => {
       triggerLightHaptic();
-      props.onFocus?.(null as any);
+      props.onFocus?.(e);
     };
 
     return (
@@ -229,25 +257,27 @@ export const MobileSelect = forwardRef<HTMLSelectElement, MobileSelectProps>(
             {label}
           </label>
         )}
-        
+
         <select
           ref={ref}
           className={`
             w-full px-4 py-3 rounded-xl border transition-all duration-200 appearance-none
-            ${error ? 'border-red-500' : ''}
+            ${error ? "border-red-500" : ""}
             ${className}
           `}
           style={{
             backgroundColor: themeConfig.colors.background,
-            borderColor: error ? themeConfig.colors.error : themeConfig.colors.border,
+            borderColor: error
+              ? themeConfig.colors.error
+              : themeConfig.colors.border,
             color: themeConfig.colors.text,
-            fontSize: isMobile ? '16px' : '14px',
-            minHeight: isMobile ? '44px' : '40px',
+            fontSize: isMobile ? "16px" : "14px",
+            minHeight: isMobile ? "44px" : "40px",
             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23${themeConfig.colors.textSecondary.slice(1)}'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right 12px center',
-            backgroundSize: '20px',
-            paddingRight: '40px',
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right 12px center",
+            backgroundSize: "20px",
+            paddingRight: "40px",
           }}
           onFocus={handleFocus}
           {...props}
@@ -263,24 +293,30 @@ export const MobileSelect = forwardRef<HTMLSelectElement, MobileSelectProps>(
             </option>
           ))}
         </select>
-        
+
         {error && (
-          <p className="mt-1 text-xs" style={{ color: themeConfig.colors.error }}>
+          <p
+            className="mt-1 text-xs"
+            style={{ color: themeConfig.colors.error }}
+          >
             {error}
           </p>
         )}
-        
+
         {helperText && !error && (
-          <p className="mt-1 text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+          <p
+            className="mt-1 text-xs"
+            style={{ color: themeConfig.colors.textSecondary }}
+          >
             {helperText}
           </p>
         )}
       </div>
     );
-  }
+  },
 );
 
-MobileSelect.displayName = 'MobileSelect';
+MobileSelect.displayName = "MobileSelect";
 
 // Mobile-optimized checkbox component
 interface MobileCheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -289,7 +325,7 @@ interface MobileCheckboxProps extends React.InputHTMLAttributes<HTMLInputElement
 }
 
 export const MobileCheckbox = forwardRef<HTMLInputElement, MobileCheckboxProps>(
-  ({ label, error, className = '', ...props }, ref) => {
+  ({ label, error, className = "", ...props }, ref) => {
     const { themeConfig } = useTheme();
     const { triggerLightHaptic } = useHapticFeedback();
 
@@ -305,18 +341,22 @@ export const MobileCheckbox = forwardRef<HTMLInputElement, MobileCheckboxProps>(
           type="checkbox"
           className={`
             w-5 h-5 rounded border-2 transition-all duration-200
-            ${error ? 'border-red-500' : ''}
+            ${error ? "border-red-500" : ""}
             ${className}
           `}
           style={{
-            backgroundColor: props.checked ? themeConfig.colors.primary : themeConfig.colors.background,
-            borderColor: error ? themeConfig.colors.error : themeConfig.colors.border,
-            color: props.checked ? 'white' : themeConfig.colors.text,
+            backgroundColor: props.checked
+              ? themeConfig.colors.primary
+              : themeConfig.colors.background,
+            borderColor: error
+              ? themeConfig.colors.error
+              : themeConfig.colors.border,
+            color: props.checked ? "white" : themeConfig.colors.text,
           }}
           onChange={handleChange}
           {...props}
         />
-        
+
         {label && (
           <label
             className="text-sm font-medium leading-tight cursor-pointer"
@@ -326,30 +366,35 @@ export const MobileCheckbox = forwardRef<HTMLInputElement, MobileCheckboxProps>(
               const checkbox = ref as React.RefObject<HTMLInputElement>;
               if (checkbox?.current) {
                 checkbox.current.checked = !checkbox.current.checked;
-                checkbox.current.dispatchEvent(new Event('change', { bubbles: true }));
+                checkbox.current.dispatchEvent(
+                  new Event("change", { bubbles: true }),
+                );
               }
             }}
           >
             {label}
           </label>
         )}
-        
+
         {error && (
-          <p className="mt-1 text-xs" style={{ color: themeConfig.colors.error }}>
+          <p
+            className="mt-1 text-xs"
+            style={{ color: themeConfig.colors.error }}
+          >
             {error}
           </p>
         )}
       </div>
     );
-  }
+  },
 );
 
-MobileCheckbox.displayName = 'MobileCheckbox';
+MobileCheckbox.displayName = "MobileCheckbox";
 
 // Mobile-optimized button component
 interface MobileButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
-  size?: 'small' | 'medium' | 'large';
+  variant?: "primary" | "secondary" | "outline" | "ghost";
+  size?: "small" | "medium" | "large";
   loading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -358,17 +403,17 @@ interface MobileButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
 export const MobileButton = forwardRef<HTMLButtonElement, MobileButtonProps>(
   (
     {
-      variant = 'primary',
-      size = 'medium',
+      variant = "primary",
+      size = "medium",
       loading = false,
       leftIcon,
       rightIcon,
       children,
-      className = '',
+      className = "",
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     const { themeConfig } = useTheme();
     const { isMobile } = useMobileOptimizations();
@@ -383,41 +428,41 @@ export const MobileButton = forwardRef<HTMLButtonElement, MobileButtonProps>(
 
     const getVariantStyles = () => {
       switch (variant) {
-        case 'secondary':
+        case "secondary":
           return {
             backgroundColor: themeConfig.colors.surface,
             color: themeConfig.colors.text,
             border: `1px solid ${themeConfig.colors.border}`,
           };
-        case 'outline':
+        case "outline":
           return {
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             color: themeConfig.colors.primary,
             border: `1px solid ${themeConfig.colors.primary}`,
           };
-        case 'ghost':
+        case "ghost":
           return {
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             color: themeConfig.colors.text,
-            border: 'none',
+            border: "none",
           };
         default:
           return {
             backgroundColor: themeConfig.colors.primary,
-            color: 'white',
-            border: 'none',
+            color: "white",
+            border: "none",
           };
       }
     };
 
     const getSizeStyles = () => {
       switch (size) {
-        case 'small':
-          return 'px-3 py-2 text-sm';
-        case 'large':
-          return 'px-6 py-4 text-base';
+        case "small":
+          return "px-3 py-2 text-sm";
+        case "large":
+          return "px-6 py-4 text-base";
         default:
-          return 'px-4 py-3 text-sm';
+          return "px-4 py-3 text-sm";
       }
     };
 
@@ -429,11 +474,11 @@ export const MobileButton = forwardRef<HTMLButtonElement, MobileButtonProps>(
           w-full rounded-xl font-medium transition-all duration-200
           flex items-center justify-center space-x-2
           ${getSizeStyles()}
-          ${disabled || loading ? 'opacity-50 cursor-not-allowed' : 'active:scale-[0.98]'}
+          ${disabled || loading ? "opacity-50 cursor-not-allowed" : "active:scale-[0.98]"}
           ${className}
         `}
         style={{
-          minHeight: isMobile ? '44px' : '40px',
+          minHeight: isMobile ? "44px" : "40px",
           ...getVariantStyles(),
         }}
         onClick={handleClick}
@@ -447,7 +492,7 @@ export const MobileButton = forwardRef<HTMLButtonElement, MobileButtonProps>(
         {!loading && rightIcon && rightIcon}
       </button>
     );
-  }
+  },
 );
 
-MobileButton.displayName = 'MobileButton';
+MobileButton.displayName = "MobileButton";

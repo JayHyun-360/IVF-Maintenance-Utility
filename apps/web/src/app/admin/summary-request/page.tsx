@@ -37,11 +37,11 @@ export default function SummaryRequestPage() {
     if (!selectedCategory) return;
 
     setIsGenerating(true);
-    
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Mock data for demonstration
       const mockSummaryData: SummaryData = {
         category: selectedCategory,
@@ -51,13 +51,13 @@ export default function SummaryRequestPage() {
         descriptions: [
           "Request for maintenance in main hallway",
           "Electrical issue in classroom 203",
-          "Plumbing problem in restroom"
+          "Plumbing problem in restroom",
         ],
         requesters: ["John Doe", "Jane Smith", "Admin User"],
         dates: [new Date(), new Date(), new Date()],
-        summaryDescription: `Summary of ${selectedCategory} maintenance requests. Total of ${Math.floor(Math.random() * 20) + 5} requests processed this month. Most requests are concentrated in Building A with medium priority levels. Response time has improved by 15% compared to last month.`
+        summaryDescription: `Summary of ${selectedCategory} maintenance requests. Total of ${Math.floor(Math.random() * 20) + 5} requests processed this month. Most requests are concentrated in Building A with medium priority levels. Response time has improved by 15% compared to last month.`,
       };
-      
+
       setSummaryData(mockSummaryData);
     } catch (error) {
       console.error("Error generating summary:", error);
@@ -77,8 +77,8 @@ export default function SummaryRequestPage() {
           <WebHeader
             title="Generate Summary Report"
             breadcrumbs={[
-              { label: 'Admin Dashboard', href: '/admin/dashboard' },
-              { label: 'Summary Report' }
+              { label: "Admin Dashboard", href: "/admin/dashboard" },
+              { label: "Summary Report" },
             ]}
             actions={
               <div style={{ zIndex: Z_INDEX.MAX, position: "relative" }}>
@@ -142,8 +142,7 @@ export default function SummaryRequestPage() {
               <WebForm
                 title="Generate Summary Report"
                 subtitle="Select a category to generate a comprehensive summary report"
-                onSubmit={(e) => {
-                  e.preventDefault();
+                onSubmit={() => {
                   generateSummary();
                 }}
                 loading={isGenerating}
@@ -155,11 +154,11 @@ export default function SummaryRequestPage() {
                     label="Select Category"
                     type="select"
                     options={[
-                      { label: 'Select a category...', value: '' },
-                      { label: '🔧 Plumbing', value: 'PLUMBING' },
-                      { label: '⚡ Electrical', value: 'ELECTRICAL' },
-                      { label: '🔨 Carpentry', value: 'CARPENTRY' },
-                      { label: '👥 Personnel', value: 'PERSONNEL' }
+                      { label: "Select a category...", value: "" },
+                      { label: "🔧 Plumbing", value: "PLUMBING" },
+                      { label: "⚡ Electrical", value: "ELECTRICAL" },
+                      { label: "🔨 Carpentry", value: "CARPENTRY" },
+                      { label: "👥 Personnel", value: "PERSONNEL" },
                     ]}
                     value={selectedCategory}
                     onChange={(e: any) => setSelectedCategory(e.target.value)}
@@ -170,36 +169,60 @@ export default function SummaryRequestPage() {
 
               {/* Summary Results */}
               {summaryData && (
-                <div className="bg-white rounded-lg border p-4" style={{ borderColor: '#E5E7EB' }}>
-                  <h3 className="text-lg font-semibold mb-4" style={{ color: themeConfig.colors.text }}>
+                <div
+                  className="bg-white rounded-lg border p-4"
+                  style={{ borderColor: "#E5E7EB" }}
+                >
+                  <h3
+                    className="text-lg font-semibold mb-4"
+                    style={{ color: themeConfig.colors.text }}
+                  >
                     Summary Report - {summaryData.category}
                   </h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-sm font-medium" style={{ color: themeConfig.colors.textSecondary }}>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
                         Total Requests:
                       </span>
-                      <span className="text-sm font-bold" style={{ color: themeConfig.colors.primary }}>
+                      <span
+                        className="text-sm font-bold"
+                        style={{ color: themeConfig.colors.primary }}
+                      >
                         {summaryData.totalRequests}
                       </span>
                     </div>
                     <div>
-                      <span className="text-sm font-medium" style={{ color: themeConfig.colors.textSecondary }}>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
                         Locations:
                       </span>
                       <div className="mt-1">
                         {summaryData.locations.map((location, index) => (
-                          <span key={index} className="inline-block px-2 py-1 bg-gray-100 rounded text-xs mr-2 mb-2">
+                          <span
+                            key={index}
+                            className="inline-block px-2 py-1 bg-gray-100 rounded text-xs mr-2 mb-2"
+                          >
                             {location}
                           </span>
                         ))}
                       </div>
                     </div>
                     <div>
-                      <span className="text-sm font-medium" style={{ color: themeConfig.colors.textSecondary }}>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
                         Summary:
                       </span>
-                      <p className="mt-1 text-sm" style={{ color: themeConfig.colors.text }}>
+                      <p
+                        className="mt-1 text-sm"
+                        style={{ color: themeConfig.colors.text }}
+                      >
                         {summaryData.summaryDescription}
                       </p>
                     </div>
@@ -239,12 +262,14 @@ export default function SummaryRequestPage() {
                           : ""
                       }`}
                       style={{
-                        backgroundColor: selectedCategory === category
-                          ? themeConfig.colors.primary
-                          : themeConfig.colors.background,
-                        color: selectedCategory === category
-                          ? "white"
-                          : themeConfig.colors.text,
+                        backgroundColor:
+                          selectedCategory === category
+                            ? themeConfig.colors.primary
+                            : themeConfig.colors.background,
+                        color:
+                          selectedCategory === category
+                            ? "white"
+                            : themeConfig.colors.text,
                         border: `1px solid ${themeConfig.colors.border}`,
                       }}
                     >

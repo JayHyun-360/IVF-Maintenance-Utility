@@ -46,8 +46,13 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   // Initialize theme in a useEffect to avoid blocking initial render
   useEffect(() => {
     const initialTheme = initializeTheme();
-    setThemeState(initialTheme);
-    setIsInitialized(true);
+    // Use flushSync to avoid cascading renders while still ensuring synchronous theme application
+    import("react-dom").then(({ flushSync }) => {
+      flushSync(() => {
+        setThemeState(initialTheme);
+        setIsInitialized(true);
+      });
+    });
   }, []);
 
   const setTheme = (newTheme: Theme) => {

@@ -1,6 +1,5 @@
-import { PrismaConfig } from "@prisma/config";
-
-const config: PrismaConfig = {
+// Prisma configuration
+const config = {
   schema: "prisma/schema.prisma",
   datasource: {
     url: process.env.DATABASE_URL,

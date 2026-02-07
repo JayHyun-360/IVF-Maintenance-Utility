@@ -8,7 +8,7 @@ interface WebFormProps {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
-  onSubmit?: (data: any) => void;
+  onSubmit?: (data: Record<string, string | number>) => void;
   submitText?: string;
   cancelText?: string;
   onCancel?: () => void;
@@ -67,7 +67,7 @@ export function WebForm({
 }: WebFormProps) {
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<Record<string, string | number>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,12 +123,12 @@ export function WebForm({
             return React.cloneElement(child, {
               value: formData[childProps.name] || "",
               onChange: (value: string | number) => {
-                setFormData((prev: any) => ({
+                setFormData((prev) => ({
                   ...prev,
                   [childProps.name]: value,
                 }));
               },
-            } as any);
+            } as Partial<React.ComponentProps<any>>);
           }
           return child;
         })}
@@ -267,7 +267,7 @@ export function WebFormField({
 
     return {
       ...baseProps,
-      type: type as any,
+      type: type as React.InputHTMLAttributes<HTMLInputElement>["type"],
     };
   };
 

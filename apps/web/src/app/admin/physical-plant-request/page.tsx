@@ -138,8 +138,7 @@ export default function PhysicalPlantRequestPage() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (data: Record<string, string | number>) => {
     setIsLoading(true);
 
     // Simulate API call
