@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/components/ThemeProvider";
-import { LoadingSpinner } from "./LoadingSpinner";
 
 interface SearchInputProps {
   onSearch: (query: string) => void;
@@ -76,7 +75,10 @@ export function SearchInput({
 
       {isLoading && (
         <div className="mr-3">
-          <LoadingSpinner size="sm" />
+          <div
+            className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"
+            style={{ borderColor: `${themeConfig.colors.primary}80` }}
+          />
         </div>
       )}
     </div>
