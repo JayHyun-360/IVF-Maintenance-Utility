@@ -7,6 +7,7 @@ export interface ThemeConfig {
     primary: string;
     secondary: string;
     accent: string;
+    accent_amber: string;
     background: string;
     surface: string;
     text: string;
@@ -16,66 +17,62 @@ export interface ThemeConfig {
     warning: string;
     error: string;
   };
-  backgroundImage?: string;
 }
 
 export const themes: Record<Theme, ThemeConfig> = {
   standard: {
     name: "standard",
-    displayName: "Nature",
+    displayName: "Academic Minimalist",
     colors: {
-      primary: "#10B981", // Emerald green
-      secondary: "#059669", // Darker green
-      accent: "#F3F4F6", // Light gray
+      primary: "#1B4332", // Deep forest green
+      secondary: "#FFFFFF", // Pure white
+      accent: "#64748B", // Slate
+      accent_amber: "#F59E0B", // Amber accent
       background: "#FFFFFF", // Pure white
-      surface: "#F9FAFB", // Very light gray
-      text: "#111827", // Dark gray
-      textSecondary: "#4B5563", // Darker medium gray - improved contrast
-      border: "#E5E7EB", // Light gray border
-      success: "#10B981", // Emerald green
+      surface: "#F8FAFC", // Very light gray
+      text: "#1E293B", // Dark slate
+      textSecondary: "#64748B", // Slate
+      border: "#E2E8F0", // Light gray border
+      success: "#1B4332", // Primary green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
-    backgroundImage:
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop", // Mountain landscape with better aspect ratio
   },
   light: {
     name: "light",
-    displayName: "Ocean Light",
+    displayName: "Academic Light",
     colors: {
-      primary: "#0891B2", // Deep ocean cyan - more distinct from green
-      secondary: "#0E7490", // Darker ocean blue
-      accent: "#06B6D4", // Bright cyan accent
-      background: "#F0FDF4", // Very light aqua background - distinct from pure white
-      surface: "#ECFEFF", // Light cyan surface - noticeable ocean tint
-      text: "#134E4A", // Deep teal text - very distinct from green
-      textSecondary: "#0F766E", // Darker teal secondary text
-      border: "#5EEAD4", // Mint cyan border - distinctive ocean feel
-      success: "#059669", // Emerald green
-      warning: "#EA580C", // Dark orange - better contrast
-      error: "#DC2626", // Red
-    },
-    backgroundImage:
-      "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&h=1080&fit=crop", // Ocean scene with better aspect ratio
-  },
-  dark: {
-    name: "dark",
-    displayName: "Midnight Dark",
-    colors: {
-      primary: "#6366F1", // Indigo - more vibrant than blue
-      secondary: "#4F46E5", // Darker indigo
-      accent: "#818CF8", // Light indigo accent
-      background: "#0F172A", // Slate background - kept for depth
-      surface: "#1E293B", // Dark slate surface - kept
-      text: "#F1F5F9", // Light slate text - kept
-      textSecondary: "#CBD5E1", // Much lighter muted text for better contrast
-      border: "#334155", // Lighter border for better visibility on dark backgrounds
-      success: "#10B981", // Emerald green
+      primary: "#1B4332", // Deep forest green
+      secondary: "#FFFFFF", // Pure white
+      accent: "#64748B", // Slate
+      accent_amber: "#F59E0B", // Amber accent
+      background: "#F8FAFC", // Very light gray
+      surface: "#FFFFFF", // Pure white
+      text: "#1E293B", // Dark slate
+      textSecondary: "#64748B", // Slate
+      border: "#E2E8F0", // Light gray border
+      success: "#1B4332", // Primary green
       warning: "#F59E0B", // Amber
       error: "#EF4444", // Red
     },
-    backgroundImage:
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=1080&fit=crop&crop=bottom", // Original midnight image cropped to show mountain half
+  },
+  dark: {
+    name: "dark",
+    displayName: "Academic Dark",
+    colors: {
+      primary: "#1B4332", // Deep forest green
+      secondary: "#FFFFFF", // Pure white
+      accent: "#64748B", // Slate
+      accent_amber: "#F59E0B", // Amber accent
+      background: "#0F172A", // Dark slate
+      surface: "#1E293B", // Darker surface
+      text: "#F8FAFC", // Light text
+      textSecondary: "#CBD5E1", // Muted light text
+      border: "#334155", // Dark border
+      success: "#1B4332", // Primary green
+      warning: "#F59E0B", // Amber
+      error: "#EF4444", // Red
+    },
   },
 };
 
@@ -228,16 +225,6 @@ export const applyTheme = (
   root.style.setProperty("--color-success", themeConfig.colors.success);
   root.style.setProperty("--color-warning", themeConfig.colors.warning);
   root.style.setProperty("--color-error", themeConfig.colors.error);
-
-  // Set background image as CSS custom property for smooth transitions
-  if (themeConfig.backgroundImage) {
-    root.style.setProperty(
-      "--background-image",
-      `url("${themeConfig.backgroundImage}")`,
-    );
-  } else {
-    root.style.setProperty("--background-image", "none");
-  }
 
   // Apply theme class to body
   body.className = `theme-${theme} theme-transitioning`;
@@ -512,26 +499,8 @@ const addEnhancedHoverEffects = (element: HTMLElement, theme: Theme): void => {
   addHoverListener();
 };
 
-// Preload background images for smoother transitions
-const preloadBackgroundImages = (): void => {
-  // Only run on client-side
-  if (typeof window === "undefined" || typeof document === "undefined") {
-    return;
-  }
-
-  Object.values(themes).forEach((theme) => {
-    if (theme.backgroundImage) {
-      const img = new Image();
-      img.src = theme.backgroundImage;
-    }
-  });
-};
-
 // Initialize theme on app load with smart features
 export const initializeTheme = (): Theme => {
-  // Preload background images for smoother transitions
-  preloadBackgroundImages();
-
   // Set up system preference listeners
   setupSystemPreferenceListener();
 

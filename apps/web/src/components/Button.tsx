@@ -55,10 +55,10 @@ export default function Button({
     switch (variant) {
       case "primary":
         return {
-          background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-          color: "#FFFFFF",
+          backgroundColor: themeConfig.colors.primary,
+          color: themeConfig.colors.secondary,
           border: `1px solid ${themeConfig.colors.primary}`,
-          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}25`,
+          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         };
       case "secondary":
         return {
@@ -68,10 +68,10 @@ export default function Button({
         };
       case "danger":
         return {
-          background: `linear-gradient(135deg, ${themeConfig.colors.error} 0%, ${themeConfig.colors.error} 100%)`,
-          color: "#FFFFFF",
+          backgroundColor: themeConfig.colors.error,
+          color: themeConfig.colors.secondary,
           border: `1px solid ${themeConfig.colors.error}`,
-          boxShadow: `0 4px 14px 0 ${themeConfig.colors.error}25`,
+          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         };
       case "ghost":
         return {
@@ -81,10 +81,10 @@ export default function Button({
         };
       default:
         return {
-          background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-          color: "#FFFFFF",
+          backgroundColor: themeConfig.colors.primary,
+          color: themeConfig.colors.secondary,
           border: `1px solid ${themeConfig.colors.primary}`,
-          boxShadow: `0 4px 14px 0 ${themeConfig.colors.primary}25`,
+          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         };
     }
   };
@@ -92,15 +92,15 @@ export default function Button({
   const getSizeStyles = () => {
     switch (size) {
       case "sm":
-        return "px-3 py-2 text-xs sm:text-sm";
+        return "px-3 py-2 text-xs";
       case "md":
-        return "px-4 py-3 text-sm sm:text-base";
+        return "px-4 py-3 text-sm";
       case "lg":
-        return "px-6 py-4 text-base sm:text-lg";
+        return "px-6 py-4 text-base";
       case "mobile":
         return "px-4 py-4 text-base min-h-[44px] min-w-[44px]";
       default:
-        return "px-4 py-3 text-sm sm:text-base";
+        return "px-4 py-3 text-sm";
     }
   };
 
@@ -116,10 +116,10 @@ export default function Button({
       className={`
         ${getSizeStyles()}
         ${fullWidth ? "w-full" : ""}
-        rounded-xl font-medium transition-all duration-300 
-        hover:scale-105 hover:shadow-xl active:scale-95
+        rounded-md font-medium transition-all duration-200 
+        hover:shadow-sm active:scale-95
         disabled:opacity-50 disabled:cursor-not-allowed
-        disabled:hover:scale-100 disabled:hover:shadow-lg
+        disabled:hover:shadow-none disabled:hover:scale-100
         ${hapticFeedback ? "haptic-feedback" : ""}
         touch-manipulation
         ${className}

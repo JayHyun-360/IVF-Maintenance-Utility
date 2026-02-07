@@ -19,24 +19,24 @@ const themes: {
 }[] = [
   {
     value: "standard",
-    label: "Nature",
-    icon: "🌿",
-    colors: { primary: "#10B981", secondary: "#059669" },
-    description: "Clean green and white theme",
+    label: "Academic Minimalist",
+    icon: "�",
+    colors: { primary: "#1B4332", secondary: "#FFFFFF" },
+    description: "Clean forest green and white theme",
   },
   {
     value: "light",
-    label: "Ocean Light",
-    icon: "🌊",
-    colors: { primary: "#0EA5E9", secondary: "#06B6D4" },
-    description: "Fresh sky blue and cyan theme",
+    label: "Academic Light",
+    icon: "📖",
+    colors: { primary: "#1B4332", secondary: "#F8FAFC" },
+    description: "Light gray with forest green accents",
   },
   {
     value: "dark",
-    label: "Midnight Dark",
+    label: "Academic Dark",
     icon: "🌃",
-    colors: { primary: "#3B82F6", secondary: "#1D4ED8" },
-    description: "Professional blue slate theme",
+    colors: { primary: "#1B4332", secondary: "#0F172A" },
+    description: "Dark slate with forest green accents",
   },
 ];
 
@@ -145,12 +145,11 @@ export default function ThemeSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105 transform active:scale-95"
+        className="flex items-center space-x-2 px-3 py-2 rounded-md transition-all duration-200 hover:shadow-sm active:scale-95"
         style={{
           backgroundColor: themeConfig.colors.surface,
           border: `1px solid ${themeConfig.colors.border}`,
           color: themeConfig.colors.text,
-          transition: "all 0.3s ease-in-out, transform 0.2s ease-in-out",
         }}
       >
         <span className="text-lg">{currentThemeData?.icon}</span>
@@ -172,7 +171,7 @@ export default function ThemeSwitcher() {
 
       {isOpen && (
         <div
-          className="absolute top-full right-0 mt-2 w-64 rounded-xl shadow-lg border"
+          className="absolute top-full right-0 mt-2 w-56 rounded-md shadow-sm border"
           style={{
             backgroundColor: themeConfig.colors.surface,
             borderColor: themeConfig.colors.border,
@@ -184,19 +183,13 @@ export default function ThemeSwitcher() {
               <button
                 key={theme.value}
                 onClick={() => handleThemeChange(theme.value)}
-                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-300 transform ${
+                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md transition-all duration-200 ${
                   currentTheme === theme.value
-                    ? "scale-105"
-                    : "hover:scale-105 active:scale-95"
+                    ? "bg-primary/10"
+                    : "hover:bg-surface"
                 }`}
                 style={{
-                  backgroundColor:
-                    currentTheme === theme.value
-                      ? `${theme.colors.primary}20`
-                      : "transparent",
                   color: themeConfig.colors.text,
-                  transition:
-                    "all 0.3s ease-in-out, transform 0.2s ease-in-out",
                 }}
               >
                 <div className="flex items-center space-x-2">
