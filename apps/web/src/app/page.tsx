@@ -80,12 +80,14 @@ export default function Home() {
                 </motion.div>
                 <div className="hidden sm:block">
                   <h1 className="text-lg md:text-xl font-bold text-gray-900">
-                    IVF Maintenance
+                    Integrated Visual Feedback
                   </h1>
-                  <p className="text-xs text-gray-500">Facility Management</p>
+                  <p className="text-xs text-gray-500">Maintenance Utility</p>
                 </div>
                 <div className="sm:hidden">
-                  <h1 className="text-lg font-bold text-gray-900">IVF</h1>
+                  <h1 className="text-lg font-bold text-gray-900">
+                    IVF Utility
+                  </h1>
                 </div>
               </motion.div>
 
@@ -203,10 +205,10 @@ export default function Home() {
                   </div>
                   <div className="text-left">
                     <h1 className="text-lg md:text-2xl font-bold text-gray-900">
-                      IVF Maintenance
+                      Integrated Visual Feedback
                     </h1>
                     <p className="text-xs md:text-sm text-gray-500">
-                      Professional Facility Management
+                      Maintenance Utility
                     </p>
                   </div>
                 </div>
@@ -228,7 +230,7 @@ export default function Home() {
               >
                 Streamline Your
                 <span className="block text-green-600">
-                  Facility Management
+                  Maintenance Operations
                 </span>
               </motion.h1>
 
@@ -240,7 +242,7 @@ export default function Home() {
                 className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto px-4"
               >
                 Transform your maintenance operations with intelligent
-                automation, real-time analytics, and seamless workflow
+                automation, real-time visual feedback, and seamless workflow
                 management designed for modern facilities.
               </motion.p>
 
@@ -357,11 +359,12 @@ export default function Home() {
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Powerful Features for
-                <span className="text-green-600"> Modern Facilities</span>
+                <span className="text-green-600"> Modern Maintenance</span>
               </h2>
               <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
                 Everything you need to manage, track, and optimize your
-                maintenance operations in one comprehensive platform.
+                maintenance operations with visual feedback in one comprehensive
+                platform.
               </p>
             </motion.div>
 
@@ -452,8 +455,8 @@ export default function Home() {
               </h2>
               <p className="text-lg md:text-xl text-green-100 mb-8 leading-relaxed">
                 Join hundreds of organizations already using our platform to
-                streamline their facility management and achieve operational
-                excellence.
+                streamline their maintenance operations and achieve operational
+                excellence with visual feedback.
               </p>
               <motion.button
                 onClick={() => router.push("/login")}
@@ -489,13 +492,15 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold">IVF Maintenance</h3>
-                    <p className="text-xs text-gray-400">Facility Management</p>
+                    <h3 className="text-lg font-bold">
+                      Integrated Visual Feedback
+                    </h3>
+                    <p className="text-xs text-gray-400">Maintenance Utility</p>
                   </div>
                 </div>
                 <p className="text-gray-400 text-sm">
-                  Modern facility management solution for organizations of all
-                  sizes.
+                  Modern maintenance solution with visual feedback for
+                  organizations of all sizes.
                 </p>
               </div>
 
@@ -579,7 +584,10 @@ export default function Home() {
             </div>
 
             <div className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8 text-center text-gray-400 text-sm">
-              <p>&copy; 2024 IVF Maintenance. All rights reserved.</p>
+              <p>
+                &copy; 2024 Integrated Visual Feedback & Maintenance Utility.
+                All rights reserved.
+              </p>
             </div>
           </div>
         </footer>
