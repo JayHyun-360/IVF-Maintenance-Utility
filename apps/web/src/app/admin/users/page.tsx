@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import Button from "@/components/Button";
@@ -24,35 +24,34 @@ export default function AdminUsersPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: "1",
-      name: "John Administrator",
-      email: "admin@campus.edu",
-      role: "ADMIN",
-      department: "Facilities",
-      status: "ACTIVE",
-      lastLogin: new Date("2026-01-25T10:30:00Z"),
-    },
-    {
-      id: "2",
-      name: "Sarah Staff",
-      email: "sarah.staff@campus.edu",
-      role: "STAFF",
-      department: "Maintenance",
-      status: "ACTIVE",
-      lastLogin: new Date("2026-01-24T14:20:00Z"),
-    },
-    {
-      id: "3",
-      name: "Mike User",
-      email: "mike.user@campus.edu",
-      role: "STUDENT",
-      department: "User Services",
-      status: "ACTIVE",
-      lastLogin: new Date("2026-01-23T09:15:00Z"),
-    },
-  ]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/admin/users");
+      if (response.ok) {
+        const data = await response.json();
+        // Map Prisma data to local User interface
+        const mappedUsers = data.map((u: any) => ({
+          ...u,
+          department: "Facilities", // Prisma model doesn't have department, defaulting for UI
+          status: "ACTIVE", // Prisma model doesn't have status, defaulting for UI
+          lastLogin: new Date(u.createdAt), // Using createdAt as mock for lastLogin
+        }));
+        setUsers(mappedUsers);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -113,28 +112,33 @@ export default function AdminUsersPage() {
 
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     try {
-      const newUser: User = {
-        id: Date.now().toString(),
-        ...formData,
-        lastLogin: new Date(),
-      };
-      setUsers([...users, newUser]);
-      setShowAddModal(false);
-      setFormData({
-        name: "",
-        email: "",
-        role: "STUDENT",
-        department: "",
-        status: "ACTIVE",
+      const response = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          password: "password123", // Default password for new users
+        }),
       });
-      setFormErrors({});
+
+      if (response.ok) {
+        await fetchUsers();
+        setShowAddModal(false);
+        setFormData({
+          name: "",
+          email: "",
+          role: "STUDENT",
+          department: "",
+          status: "ACTIVE",
+        });
+        setFormErrors({});
+      } else {
+        const error = await response.json();
+        alert(error.error || "Failed to add user");
+      }
     } catch (error) {
       console.error("Error adding user:", error);
-      // Could add toast notification here
     } finally {
       setIsLoading(false);
     }
@@ -147,28 +151,35 @@ export default function AdminUsersPage() {
 
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     try {
-      setUsers(
-        users.map((user) =>
-          user.id === selectedUser.id ? { ...user, ...formData } : user,
-        ),
-      );
-      setShowEditModal(false);
-      setSelectedUser(null);
-      setFormData({
-        name: "",
-        email: "",
-        role: "STUDENT",
-        department: "",
-        status: "ACTIVE",
+      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          role: formData.role,
+        }),
       });
-      setFormErrors({});
+
+      if (response.ok) {
+        await fetchUsers();
+        setShowEditModal(false);
+        setSelectedUser(null);
+        setFormData({
+          name: "",
+          email: "",
+          role: "STUDENT",
+          department: "",
+          status: "ACTIVE",
+        });
+        setFormErrors({});
+      } else {
+        const error = await response.json();
+        alert(error.error || "Failed to update user");
+      }
     } catch (error) {
       console.error("Error updating user:", error);
-      // Could add toast notification here
     } finally {
       setIsLoading(false);
     }
@@ -179,16 +190,21 @@ export default function AdminUsersPage() {
 
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     try {
-      setUsers(users.filter((user) => user.id !== selectedUser.id));
-      setShowDeleteModal(false);
-      setSelectedUser(null);
+      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await fetchUsers();
+        setShowDeleteModal(false);
+        setSelectedUser(null);
+      } else {
+        const error = await response.json();
+        alert(error.error || "Failed to delete user");
+      }
     } catch (error) {
       console.error("Error deleting user:", error);
-      // Could add toast notification here
     } finally {
       setIsLoading(false);
     }

@@ -80,10 +80,38 @@ export default function AdminDashboard() {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
+  const [stats, setStats] = useState<any[]>([]);
+  const [recentRequests, setRecentRequests] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
+    fetchDashboardData();
   }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const [statsRes, requestsRes] = await Promise.all([
+        fetch("/api/admin/stats"),
+        fetch("/api/requests?limit=5"),
+      ]);
+
+      if (statsRes.ok) {
+        const statsData = await statsRes.json();
+        setStats(statsData);
+      }
+
+      if (requestsRes.ok) {
+        const requestsData = await requestsRes.json();
+        setRecentRequests(requestsData);
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -294,7 +322,7 @@ export default function AdminDashboard() {
               <div className="space-y-8 animate-fade-in">
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                  {mockStats.map((stat, i) => (
+                  {(stats.length > 0 ? stats : mockStats).map((stat, i) => (
                     <div
                       key={i}
                       className="group p-6 rounded-[2rem] border backdrop-blur-xl transition-all duration-500 hover:translate-y-[-4px]"
@@ -318,7 +346,7 @@ export default function AdminDashboard() {
                         </span>
                       </div>
                       <div className="text-3xl font-black mb-1">
-                        {stat.value}
+                        {loading ? "..." : stat.value}
                       </div>
                       <div className="text-[10px] font-black uppercase tracking-widest opacity-60">
                         {stat.label}
@@ -341,73 +369,91 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="space-y-4">
-                      {mockRecentRequests.map((req) => (
-                        <div
-                          key={req.id}
-                          className="group p-5 rounded-3xl border backdrop-blur-xl transition-all hover:shadow-lg"
-                          style={{
-                            backgroundColor: `${themeConfig.colors.surface}70`,
-                            borderColor: `${themeConfig.colors.border}30`,
-                          }}
-                        >
-                          <div className="flex items-center justify-between gap-4">
-                            <div className="flex items-center gap-4 flex-1 min-w-0">
-                              <div
-                                className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl flex-shrink-0"
-                                style={{
-                                  backgroundColor: `${getStatusColor(req.status)}10`,
-                                }}
-                              >
-                                {req.category === "HVAC"
-                                  ? "❄️"
-                                  : req.category === "Electrical"
-                                    ? "⚡"
-                                    : "💧"}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="font-bold text-sm truncate">
-                                  {req.title}
-                                </h3>
-                                <p className="text-[10px] font-medium opacity-70">
-                                  {req.submittedBy} • {req.date}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <span
-                                className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border"
-                                style={{
-                                  color: getStatusColor(req.status),
-                                  borderColor: `${getStatusColor(req.status)}30`,
-                                  backgroundColor: `${getStatusColor(req.status)}05`,
-                                }}
-                              >
-                                {req.status}
-                              </span>
-                              <button
-                                className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
-                                style={{
-                                  backgroundColor: `${themeConfig.colors.text}08`,
-                                }}
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
+                      {loading ? (
+                        <div className="text-center py-10 opacity-50 font-bold">
+                          Loading requests...
+                        </div>
+                      ) : recentRequests.length === 0 ? (
+                        <div className="text-center py-10 opacity-50 font-bold">
+                          No requests found.
+                        </div>
+                      ) : (
+                        recentRequests.map((req) => (
+                          <div
+                            key={req.id}
+                            className="group p-5 rounded-3xl border backdrop-blur-xl transition-all hover:shadow-lg"
+                            style={{
+                              backgroundColor: `${themeConfig.colors.surface}70`,
+                              borderColor: `${themeConfig.colors.border}30`,
+                            }}
+                          >
+                            <div className="flex items-center justify-between gap-4">
+                              <div className="flex items-center gap-4 flex-1 min-w-0">
+                                <div
+                                  className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl flex-shrink-0"
+                                  style={{
+                                    backgroundColor: `${getStatusColor(req.status)}10`,
+                                  }}
                                 >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M9 5l7 7-7 7"
-                                  />
-                                </svg>
-                              </button>
+                                  {req.category === "PLUMBING"
+                                    ? "💧"
+                                    : req.category === "ELECTRICAL"
+                                      ? "⚡"
+                                      : req.category === "CARPENTRY"
+                                        ? "🔨"
+                                        : "👥"}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h3 className="font-bold text-sm truncate">
+                                    {req.title}
+                                  </h3>
+                                  <p className="text-[10px] font-medium opacity-70">
+                                    {req.user?.name || "Unknown"} •{" "}
+                                    {new Date(
+                                      req.createdAt,
+                                    ).toLocaleDateString()}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <span
+                                  className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border"
+                                  style={{
+                                    color: getStatusColor(req.status),
+                                    borderColor: `${getStatusColor(req.status)}30`,
+                                    backgroundColor: `${getStatusColor(req.status)}05`,
+                                  }}
+                                >
+                                  {req.status}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    router.push(`/admin/requests/${req.id}`)
+                                  }
+                                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
+                                  style={{
+                                    backgroundColor: `${themeConfig.colors.text}08`,
+                                  }}
+                                >
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M9 5l7 7-7 7"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))
+                      )}
                     </div>
                   </div>
 

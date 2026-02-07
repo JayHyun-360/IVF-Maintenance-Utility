@@ -1,24 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
-// In-memory storage for demo purposes
-// In production, you would save to your database
-let users = [
-  {
-    id: "1",
-    email: "admin@test.com",
-    name: "Admin User",
-    password: "$2b$12$vwxEfJR/W2qRw4k6nLIC5.ncGhon.drnZCTWvXgTcXF5AMFIgxjQW", // Hashed "admin12345"
-    role: "ADMIN",
-  },
-  {
-    id: "2",
-    email: "user@test.com",
-    name: "General User",
-    password: "$2b$12$CGPZqCI0BrwuPvRFDvu1AeYdfRcxSHK/2XIOWWlYFUWVWN91goVi.", // Hashed "user12345"
-    role: "USER",
-  },
-];
+import prisma from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +15,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user already exists
-    const existingUser = users.find((u) => u.email === email);
+    const existingUser = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    });
+
     if (existingUser) {
       return NextResponse.json(
         { error: "User already exists" },
@@ -43,16 +29,15 @@ export async function POST(request: NextRequest) {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create new user
-    const newUser = {
-      id: (users.length + 1).toString(),
-      name,
-      email,
-      password: hashedPassword,
-      role,
-    };
-
-    users.push(newUser);
+    // Create new user in the database
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email: email.toLowerCase(),
+        password: hashedPassword,
+        role,
+      },
+    });
 
     return NextResponse.json({
       message: "User created successfully",

@@ -1,16 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Shared user data - in production, this would come from a database
-const users = [
-  {
-    email: "admin@test.com",
-    role: "ADMIN",
-  },
-  {
-    email: "user@test.com",
-    role: "USER",
-  },
-];
+import prisma from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,9 +10,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    const user = users.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase(),
-    );
+    const user = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

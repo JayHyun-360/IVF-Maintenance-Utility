@@ -2,7 +2,7 @@
 
 // Login page component - Enhanced UI with Demo Accounts
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
@@ -18,6 +18,7 @@ const DEMO_ACCOUNTS = [
     password: "admin12345",
     description: "Full system access",
     icon: "🛡️",
+    gradient: "from-indigo-500 to-purple-600",
     color: "#6366f1",
   },
   {
@@ -26,6 +27,7 @@ const DEMO_ACCOUNTS = [
     password: "user12345",
     description: "Submit maintenance requests",
     icon: "👤",
+    gradient: "from-emerald-500 to-teal-600",
     color: "#10b981",
   },
 ];
@@ -39,6 +41,12 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,21 +85,31 @@ export default function LoginPage() {
     >
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient Orbs */}
+        {/* Primary Gradient Orb */}
         <div
-          className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl opacity-20 animate-pulse"
-          style={{ backgroundColor: themeConfig.colors.primary }}
+          className="absolute -top-32 -right-32 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl opacity-25 animate-pulse"
+          style={{
+            backgroundColor: themeConfig.colors.primary,
+            animationDuration: "4s",
+          }}
         />
+        {/* Secondary Gradient Orb */}
         <div
-          className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-15 animate-pulse"
+          className="absolute -bottom-32 -left-32 w-72 h-72 md:w-[28rem] md:h-[28rem] rounded-full blur-3xl opacity-20"
           style={{
             backgroundColor: themeConfig.colors.secondary,
+            animation: "pulse 5s ease-in-out infinite",
             animationDelay: "1s",
           }}
         />
+        {/* Floating accent orb */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl opacity-10"
-          style={{ backgroundColor: themeConfig.colors.accent }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-72 md:h-72 rounded-full blur-3xl opacity-15"
+          style={{
+            backgroundColor: themeConfig.colors.accent,
+            animation: "pulse 6s ease-in-out infinite",
+            animationDelay: "2s",
+          }}
         />
 
         {/* Grid Pattern */}
@@ -99,7 +117,15 @@ export default function LoginPage() {
           className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: `linear-gradient(${themeConfig.colors.text} 1px, transparent 1px), linear-gradient(90deg, ${themeConfig.colors.text} 1px, transparent 1px)`,
-            backgroundSize: "50px 50px",
+            backgroundSize: isMobile ? "30px 30px" : "50px 50px",
+          }}
+        />
+
+        {/* Radial gradient overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(circle at 50% 50%, transparent 0%, ${themeConfig.colors.background}80 100%)`,
           }}
         />
       </div>
@@ -118,49 +144,73 @@ export default function LoginPage() {
       >
         <div
           className={`w-full ${isMobile ? "max-w-sm" : "max-w-md"} relative z-10`}
+          style={{
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.6s ease-out, transform 0.6s ease-out",
+          }}
         >
           {/* Login Card */}
           <div
-            className="rounded-2xl overflow-hidden backdrop-blur-xl"
+            className="rounded-3xl overflow-hidden backdrop-blur-xl"
             style={{
-              background: `linear-gradient(145deg, ${themeConfig.colors.surface}f0 0%, ${themeConfig.colors.surface}e0 100%)`,
-              border: `1px solid ${themeConfig.colors.border}`,
-              boxShadow: `0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px ${themeConfig.colors.border}30`,
+              background: `linear-gradient(145deg, ${themeConfig.colors.surface}f8 0%, ${themeConfig.colors.surface}e8 50%, ${themeConfig.colors.background}f5 100%)`,
+              border: `1px solid ${themeConfig.colors.border}80`,
+              boxShadow: `
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px ${themeConfig.colors.border}20,
+                inset 0 1px 0 ${themeConfig.colors.surface}60
+              `,
             }}
           >
+            {/* Color accent bar */}
+            <div
+              className="h-1"
+              style={{
+                background: `linear-gradient(90deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary}, ${themeConfig.colors.accent})`,
+              }}
+            />
+
             {/* Header Section */}
             <div
-              className="px-6 py-8 text-center"
+              className={`${isMobile ? "px-6 py-6" : "px-8 py-8"} text-center`}
               style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.primary}15 0%, ${themeConfig.colors.secondary}10 100%)`,
-                borderBottom: `1px solid ${themeConfig.colors.border}50`,
+                background: `linear-gradient(180deg, ${themeConfig.colors.primary}08 0%, transparent 100%)`,
               }}
             >
-              {/* Logo */}
-              <div
-                className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-5 shadow-2xl transform hover:scale-105 transition-all duration-500"
-                style={{
-                  background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                  boxShadow: `0 10px 40px ${themeConfig.colors.primary}40`,
-                }}
-              >
-                <svg
-                  className="w-10 h-10 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {/* Logo with glow */}
+              <div className="relative inline-block mb-5">
+                <div
+                  className="absolute inset-0 rounded-2xl blur-xl opacity-50"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                    transform: "scale(1.3)",
+                  }}
+                />
+                <div
+                  className={`relative ${isMobile ? "w-16 h-16" : "w-20 h-20"} rounded-2xl flex items-center justify-center shadow-2xl transform hover:scale-105 transition-all duration-500`}
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
+                  }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                  />
-                </svg>
+                  <svg
+                    className={`${isMobile ? "w-8 h-8" : "w-10 h-10"} text-white`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+                    />
+                  </svg>
+                </div>
               </div>
 
               <h1
-                className="text-2xl font-bold mb-2 tracking-tight"
+                className={`${isMobile ? "text-xl" : "text-2xl"} font-bold mb-2 tracking-tight`}
                 style={{ color: themeConfig.colors.text }}
               >
                 IVF Maintenance Utility
@@ -174,14 +224,27 @@ export default function LoginPage() {
             </div>
 
             {/* Form Section */}
-            <div className="p-6">
+            <div className={`${isMobile ? "px-6 py-4" : "px-8 py-6"}`}>
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Email Field */}
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium mb-2"
-                    style={{ color: themeConfig.colors.text }}
+                    className={`absolute left-10 transition-all duration-200 pointer-events-none ${
+                      focusedField === "email" || email
+                        ? "-top-2.5 text-xs px-1 bg-inherit"
+                        : "top-3.5 text-sm"
+                    }`}
+                    style={{
+                      color:
+                        focusedField === "email"
+                          ? themeConfig.colors.primary
+                          : themeConfig.colors.textSecondary,
+                      backgroundColor:
+                        focusedField === "email" || email
+                          ? themeConfig.colors.surface
+                          : "transparent",
+                    }}
                   >
                     Email Address
                   </label>
@@ -189,7 +252,12 @@ export default function LoginPage() {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg
                         className="w-5 h-5"
-                        style={{ color: themeConfig.colors.textSecondary }}
+                        style={{
+                          color:
+                            focusedField === "email"
+                              ? themeConfig.colors.primary
+                              : themeConfig.colors.textSecondary,
+                        }}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -208,24 +276,46 @@ export default function LoginPage() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      onFocus={() => setFocusedField("email")}
+                      onBlur={() => setFocusedField(null)}
                       required
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border-2 transition-all duration-300 focus:ring-2 focus:ring-offset-1 focus:border-transparent outline-none"
+                      className="w-full pl-10 pr-4 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none text-base"
                       style={{
                         backgroundColor: themeConfig.colors.background,
-                        borderColor: themeConfig.colors.border,
+                        borderColor:
+                          focusedField === "email"
+                            ? themeConfig.colors.primary
+                            : themeConfig.colors.border,
                         color: themeConfig.colors.text,
+                        boxShadow:
+                          focusedField === "email"
+                            ? `0 0 0 3px ${themeConfig.colors.primary}20`
+                            : "none",
                       }}
-                      placeholder="you@example.com"
+                      placeholder=""
                     />
                   </div>
                 </div>
 
                 {/* Password Field */}
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium mb-2"
-                    style={{ color: themeConfig.colors.text }}
+                    className={`absolute left-10 transition-all duration-200 pointer-events-none ${
+                      focusedField === "password" || password
+                        ? "-top-2.5 text-xs px-1 bg-inherit"
+                        : "top-3.5 text-sm"
+                    }`}
+                    style={{
+                      color:
+                        focusedField === "password"
+                          ? themeConfig.colors.primary
+                          : themeConfig.colors.textSecondary,
+                      backgroundColor:
+                        focusedField === "password" || password
+                          ? themeConfig.colors.surface
+                          : "transparent",
+                    }}
                   >
                     Password
                   </label>
@@ -233,7 +323,12 @@ export default function LoginPage() {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg
                         className="w-5 h-5"
-                        style={{ color: themeConfig.colors.textSecondary }}
+                        style={{
+                          color:
+                            focusedField === "password"
+                              ? themeConfig.colors.primary
+                              : themeConfig.colors.textSecondary,
+                        }}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -252,19 +347,28 @@ export default function LoginPage() {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      onFocus={() => setFocusedField("password")}
+                      onBlur={() => setFocusedField(null)}
                       required
-                      className="w-full pl-10 pr-12 py-3 rounded-xl border-2 transition-all duration-300 focus:ring-2 focus:ring-offset-1 focus:border-transparent outline-none"
+                      className="w-full pl-10 pr-12 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none text-base"
                       style={{
                         backgroundColor: themeConfig.colors.background,
-                        borderColor: themeConfig.colors.border,
+                        borderColor:
+                          focusedField === "password"
+                            ? themeConfig.colors.primary
+                            : themeConfig.colors.border,
                         color: themeConfig.colors.text,
+                        boxShadow:
+                          focusedField === "password"
+                            ? `0 0 0 3px ${themeConfig.colors.primary}20`
+                            : "none",
                       }}
-                      placeholder="••••••••"
+                      placeholder=""
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center transition-colors duration-200 hover:opacity-70"
                     >
                       {showPassword ? (
                         <svg
@@ -312,13 +416,14 @@ export default function LoginPage() {
                   <div
                     className="p-3 rounded-xl text-sm text-center flex items-center justify-center gap-2"
                     style={{
-                      backgroundColor: `${themeConfig.colors.error}15`,
+                      backgroundColor: `${themeConfig.colors.error}12`,
                       color: themeConfig.colors.error,
-                      border: `1px solid ${themeConfig.colors.error}30`,
+                      border: `1px solid ${themeConfig.colors.error}25`,
+                      animation: "shake 0.5s ease-in-out",
                     }}
                   >
                     <svg
-                      className="w-4 h-4"
+                      className="w-4 h-4 flex-shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -338,10 +443,10 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3.5 px-4 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                  className="w-full py-4 px-4 rounded-xl font-semibold text-white transition-all duration-300 transform hover:translate-y-[-2px] active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 text-base"
                   style={{
                     background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
-                    boxShadow: `0 4px 15px ${themeConfig.colors.primary}40`,
+                    boxShadow: `0 8px 20px ${themeConfig.colors.primary}35`,
                   }}
                 >
                   {isLoading ? (
@@ -368,7 +473,7 @@ export default function LoginPage() {
                     <>
                       Sign In
                       <svg
-                        className="w-5 h-5"
+                        className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -388,20 +493,21 @@ export default function LoginPage() {
 
             {/* Demo Accounts Section */}
             <div
-              className="px-6 py-5"
+              className={`${isMobile ? "px-6 py-5" : "px-8 py-6"}`}
               style={{
-                background: `linear-gradient(180deg, ${themeConfig.colors.background}50 0%, ${themeConfig.colors.background}80 100%)`,
-                borderTop: `1px solid ${themeConfig.colors.border}50`,
+                background: `linear-gradient(180deg, ${themeConfig.colors.background}40 0%, ${themeConfig.colors.background}80 100%)`,
+                borderTop: `1px solid ${themeConfig.colors.border}40`,
               }}
             >
-              <div className="flex items-center gap-2 mb-4">
+              {/* Section Header */}
+              <div className="flex items-center gap-3 mb-4">
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: `${themeConfig.colors.primary}20` }}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: `${themeConfig.colors.success}15` }}
                 >
                   <svg
-                    className="w-3.5 h-3.5"
-                    style={{ color: themeConfig.colors.primary }}
+                    className="w-4 h-4"
+                    style={{ color: themeConfig.colors.success }}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -414,92 +520,101 @@ export default function LoginPage() {
                     />
                   </svg>
                 </div>
-                <span
-                  className="text-sm font-semibold"
-                  style={{ color: themeConfig.colors.text }}
-                >
-                  Demo Accounts
-                </span>
-                <span
-                  className="text-xs px-2 py-0.5 rounded-full"
-                  style={{
-                    backgroundColor: `${themeConfig.colors.success}20`,
-                    color: themeConfig.colors.success,
-                  }}
-                >
-                  Click to autofill
-                </span>
+                <div className="flex-1">
+                  <span
+                    className="text-sm font-semibold"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    Quick Access
+                  </span>
+                  <span
+                    className="block text-xs"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Tap to auto-fill demo credentials
+                  </span>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-3">
-                {DEMO_ACCOUNTS.map((account) => (
+              {/* Demo Account Cards */}
+              <div
+                className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-2"} gap-3`}
+              >
+                {DEMO_ACCOUNTS.map((account, index) => (
                   <button
                     key={account.email}
                     type="button"
                     onClick={() =>
                       fillDemoCredentials(account.email, account.password)
                     }
-                    className="w-full p-4 rounded-xl border-2 text-left transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
+                    className="group relative p-4 rounded-xl text-left transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] overflow-hidden"
                     style={{
-                      backgroundColor: themeConfig.colors.surface,
-                      borderColor:
+                      background: `linear-gradient(145deg, ${themeConfig.colors.surface} 0%, ${themeConfig.colors.background} 100%)`,
+                      border: `2px solid ${
                         email === account.email
                           ? account.color
-                          : themeConfig.colors.border,
+                          : themeConfig.colors.border
+                      }`,
                       boxShadow:
                         email === account.email
-                          ? `0 0 0 3px ${account.color}20`
-                          : "none",
+                          ? `0 8px 25px ${account.color}25, 0 0 0 1px ${account.color}30`
+                          : `0 2px 8px rgba(0,0,0,0.04)`,
                     }}
                   >
-                    <div className="flex items-center gap-3">
+                    {/* Hover glow */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{
+                        background: `linear-gradient(135deg, ${account.color}08 0%, ${account.color}04 100%)`,
+                      }}
+                    />
+
+                    <div className="relative flex items-center gap-3">
+                      {/* Icon */}
                       <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-transform group-hover:scale-110"
-                        style={{ backgroundColor: `${account.color}15` }}
+                        className="w-11 h-11 rounded-xl flex items-center justify-center text-lg transition-transform duration-300 group-hover:scale-110"
+                        style={{
+                          background: `linear-gradient(135deg, ${account.color}20 0%, ${account.color}10 100%)`,
+                        }}
                       >
                         {account.icon}
                       </div>
+
+                      {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 mb-0.5">
                           <span
-                            className="font-semibold text-sm"
+                            className="font-bold text-sm"
                             style={{ color: themeConfig.colors.text }}
                           >
                             {account.role}
                           </span>
-                          <span
-                            className="text-xs px-1.5 py-0.5 rounded"
-                            style={{
-                              backgroundColor: `${account.color}15`,
-                              color: account.color,
-                            }}
-                          >
-                            {account.description}
-                          </span>
+                          {email === account.email && (
+                            <svg
+                              className="w-4 h-4"
+                              style={{ color: account.color }}
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          )}
                         </div>
-                        <div className="flex items-center gap-3 mt-1">
-                          <code
-                            className="text-xs truncate"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            {account.email}
-                          </code>
-                          <span
-                            className="text-xs"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            •
-                          </span>
-                          <code
-                            className="text-xs"
-                            style={{ color: themeConfig.colors.textSecondary }}
-                          >
-                            {account.password}
-                          </code>
-                        </div>
+                        <p
+                          className="text-xs truncate"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          {account.description}
+                        </p>
                       </div>
+
+                      {/* Arrow indicator */}
                       <svg
-                        className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1"
                         style={{ color: account.color }}
                         fill="none"
                         stroke="currentColor"
@@ -520,17 +635,17 @@ export default function LoginPage() {
 
             {/* Footer */}
             <div
-              className="px-6 py-4 text-center"
+              className={`${isMobile ? "px-6 py-4" : "px-8 py-5"} text-center`}
               style={{ borderTop: `1px solid ${themeConfig.colors.border}30` }}
             >
               <p
-                className="text-xs"
+                className="text-sm"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
                 Need an account?{" "}
                 <button
                   onClick={() => router.push("/register")}
-                  className="font-semibold hover:underline transition-colors"
+                  className="font-semibold transition-all duration-200 hover:underline"
                   style={{ color: themeConfig.colors.primary }}
                 >
                   Register here
@@ -549,6 +664,22 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
+
+      {/* Custom animations */}
+      <style jsx>{`
+        @keyframes shake {
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-5px);
+          }
+          75% {
+            transform: translateX(5px);
+          }
+        }
+      `}</style>
     </div>
   );
 }

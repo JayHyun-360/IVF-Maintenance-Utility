@@ -136,7 +136,11 @@ export default function Home() {
                   onClick={() => {
                     const role = session?.user?.role;
                     if (role === "ADMIN") router.push("/admin/dashboard");
-                    else if (role === "USER" || role === "STUDENT")
+                    else if (
+                      role === "USER" ||
+                      role === "STUDENT" ||
+                      role === "STAFF"
+                    )
                       router.push("/student");
                     else router.push("/login");
                   }}

@@ -53,28 +53,35 @@ export default function UserPage() {
         imageBase64Array.push(base64);
       }
 
-      const newRequest = {
-        title: formData.title,
-        description: formData.description,
-        category:
-          formData.category === "OTHERS"
-            ? formData.otherCategory
-            : formData.category,
-        priority: formData.priority as "LOW" | "MEDIUM" | "HIGH",
-        status: "PENDING" as const,
-        location: formData.location,
-        requestedBy: "Current User",
-        images: imageBase64Array,
-      };
+      const response = await fetch("/api/requests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: formData.title,
+          description: formData.description,
+          category:
+            formData.category === "OTHERS"
+              ? formData.otherCategory.toUpperCase()
+              : formData.category,
+          priority: formData.priority,
+          location: formData.location,
+          images: imageBase64Array,
+        }),
+      });
 
-      addMaintenanceRequest(newRequest);
+      if (!response.ok) {
+        throw new Error("Failed to submit request");
+      }
 
       // Success state and redirect
       setTimeout(() => {
-        router.push("/student"); // Or to a success page/dashboard
+        router.push("/"); // Redirect after success
       }, 1500);
     } catch (error) {
       console.error("Error submitting request:", error);
+      alert("Failed to submit request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

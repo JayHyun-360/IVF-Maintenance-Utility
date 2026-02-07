@@ -1,30 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getMaintenanceRequests, MaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
 
 export default function EmergencyPage() {
   const router = useRouter();
   const { themeConfig } = useTheme();
-  const [urgentRequests] = useState<MaintenanceRequest[]>(() => {
-    const allRequests = getMaintenanceRequests();
-    return allRequests.filter(
-      (req) => req.priority === "URGENT" && req.status !== "COMPLETED",
-    );
+  const [urgentRequests, setUrgentRequests] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    type: "",
+    location: "",
+    description: "",
   });
+
+  const fetchUrgentRequests = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/requests?priority=URGENT");
+      if (response.ok) {
+        const data = await response.json();
+        setUrgentRequests(
+          data.filter((req: any) => req.status !== "COMPLETED"),
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching urgent requests:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUrgentRequests();
+  }, []);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEmergencySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate emergency notification
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch("/api/requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: `EMERGENCY: ${formData.type.replace("_", " ")}`,
+          description: formData.description,
+          category: formData.type === "FIRE_SAFETY" ? "OTHERS" : formData.type,
+          priority: "URGENT",
+          location: formData.location,
+        }),
+      });
 
-    alert("Emergency notification sent to all maintenance staff and security!");
-    setIsSubmitting(false);
+      if (response.ok) {
+        alert(
+          "Emergency notification sent to all maintenance staff and security!",
+        );
+        setFormData({ type: "", location: "", description: "" });
+        fetchUrgentRequests();
+      } else {
+        const error = await response.json();
+        alert(error.error || "Failed to send emergency alert");
+      }
+    } catch (error) {
+      console.error("Error submitting emergency:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -211,6 +256,10 @@ export default function EmergencyPage() {
                   </label>
                   <select
                     required
+                    value={formData.type}
+                    onChange={(e) =>
+                      setFormData({ ...formData, type: e.target.value })
+                    }
                     className="w-full px-4 py-3 rounded-xl border-2 border-red-200 focus:border-red-500"
                     style={{
                       backgroundColor: themeConfig.colors.background,
@@ -236,6 +285,10 @@ export default function EmergencyPage() {
                   <input
                     type="text"
                     required
+                    value={formData.location}
+                    onChange={(e) =>
+                      setFormData({ ...formData, location: e.target.value })
+                    }
                     placeholder="Building, floor, room..."
                     className="w-full px-4 py-3 rounded-xl border-2 border-red-200 focus:border-red-500"
                     style={{
@@ -256,6 +309,10 @@ export default function EmergencyPage() {
                 <textarea
                   required
                   rows={3}
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
                   placeholder="Describe the emergency situation in detail..."
                   className="w-full px-4 py-3 rounded-xl border-2 border-red-200 focus:border-red-500 resize-none"
                   style={{
@@ -364,7 +421,7 @@ export default function EmergencyPage() {
                             📍 {request.location}
                           </span>
                           <span style={{ color: themeConfig.colors.text }}>
-                            👤 {request.requestedBy}
+                            👤 {request.user?.name || "Unknown"}
                           </span>
                           <span
                             className="px-2 py-1 rounded-full text-xs"
