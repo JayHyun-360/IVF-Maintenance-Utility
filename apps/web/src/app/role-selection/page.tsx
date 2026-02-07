@@ -137,39 +137,6 @@ function RoleSelectionContent() {
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Primary floating orb */}
-        <div
-          className="absolute w-72 h-72 md:w-96 md:h-96 rounded-full blur-3xl opacity-20 animate-pulse"
-          style={{
-            backgroundColor: themeConfig.colors.primary,
-            top: "-10%",
-            right: "-10%",
-            animationDuration: "4s",
-          }}
-        />
-        {/* Secondary floating orb */}
-        <div
-          className="absolute w-64 h-64 md:w-80 md:h-80 rounded-full blur-3xl opacity-15"
-          style={{
-            backgroundColor: themeConfig.colors.secondary,
-            bottom: "-5%",
-            left: "-10%",
-            animation: "pulse 5s ease-in-out infinite",
-            animationDelay: "1s",
-          }}
-        />
-        {/* Accent floating orb */}
-        <div
-          className="absolute w-48 h-48 md:w-64 md:h-64 rounded-full blur-3xl opacity-10"
-          style={{
-            backgroundColor: themeConfig.colors.accent,
-            top: "40%",
-            left: "30%",
-            animation: "pulse 6s ease-in-out infinite",
-            animationDelay: "2s",
-          }}
-        />
-
         {/* Grid pattern overlay */}
         <div
           className="absolute inset-0 opacity-[0.02]"
@@ -224,7 +191,7 @@ function RoleSelectionContent() {
               }}
             />
             <div
-              className={`relative ${isMobile ? "w-16 h-16" : "w-24 h-24"} rounded-3xl flex items-center justify-center shadow-2xl transform hover:scale-105 transition-all duration-500`}
+              className={`relative ${isMobile ? "w-16 h-16" : "w-24 h-24"} rounded-3xl flex items-center justify-center shadow-2xl`}
               style={{
                 background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
               }}
@@ -273,7 +240,6 @@ function RoleSelectionContent() {
               backgroundColor: `${themeConfig.colors.error}15`,
               border: `1px solid ${themeConfig.colors.error}30`,
               color: themeConfig.colors.error,
-              animation: "shake 0.5s ease-in-out",
             }}
           >
             <svg
@@ -314,14 +280,6 @@ function RoleSelectionContent() {
                   : `0 4px 15px rgba(0, 0, 0, 0.05)`,
             }}
           >
-            {/* Hover glow effect */}
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{
-                background: `linear-gradient(135deg, ${themeConfig.colors.primary}15 0%, ${themeConfig.colors.secondary}15 100%)`,
-              }}
-            />
-
             {/* Loading spinner */}
             {isLoading && selectedRole === "admin" && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm rounded-2xl">
@@ -525,32 +483,6 @@ function RoleSelectionContent() {
       >
         © {new Date().getFullYear()} IVF Maintenance Utility
       </p>
-
-      {/* Custom animations */}
-      <style jsx>{`
-        @keyframes shake {
-          0%,
-          100% {
-            transform: translateX(0);
-          }
-          25% {
-            transform: translateX(-5px);
-          }
-          75% {
-            transform: translateX(5px);
-          }
-        }
-
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-      `}</style>
     </div>
   );
 }
