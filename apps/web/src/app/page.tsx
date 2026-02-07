@@ -25,14 +25,20 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setMounted(true);
     const loadData = () => {
       const realStats = getMaintenanceStats();
       setStats(realStats);
     };
+
+    // Set mounted after a tiny delay to avoid synchronous setState
+    const timer = setTimeout(() => setMounted(true), 0);
     loadData();
     const interval = setInterval(loadData, 30000);
-    return () => clearInterval(interval);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -45,21 +51,21 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100"
         >
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-            <div className="flex items-center justify-between h-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="flex items-center justify-between h-14 md:h-16">
               {/* Logo */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
-                className="flex items-center gap-3"
+                className="flex items-center gap-2 md:gap-3"
               >
                 <motion.div
-                  className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-lg"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-lg"
                   whileHover={{ scale: 1.05, rotate: 3 }}
                 >
                   <svg
-                    className="w-6 h-6 text-white"
+                    className="w-4 h-4 md:w-6 md:h-6 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -72,16 +78,19 @@ export default function Home() {
                     />
                   </svg>
                 </motion.div>
-                <div>
-                  <h1 className="text-xl font-bold text-gray-900">
+                <div className="hidden sm:block">
+                  <h1 className="text-lg md:text-xl font-bold text-gray-900">
                     IVF Maintenance
                   </h1>
                   <p className="text-xs text-gray-500">Facility Management</p>
                 </div>
+                <div className="sm:hidden">
+                  <h1 className="text-lg font-bold text-gray-900">IVF</h1>
+                </div>
               </motion.div>
 
-              {/* Navigation Links */}
-              <nav className="hidden md:flex items-center gap-8">
+              {/* Navigation Links - Desktop */}
+              <nav className="hidden md:flex items-center gap-6 lg:gap-8">
                 {[
                   { label: "Home", href: "/", active: true },
                   { label: "Features", href: "#features" },
@@ -109,18 +118,19 @@ export default function Home() {
               </nav>
 
               {/* Right Side Actions */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 md:gap-4">
                 {session ? (
                   <motion.button
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
                     onClick={() => router.push("/dashboard")}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-colors shadow-md"
+                    className="px-3 py-2 md:px-4 md:py-2 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-colors shadow-md"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Dashboard
+                    <span className="hidden sm:inline">Dashboard</span>
+                    <span className="sm:hidden">📊</span>
                   </motion.button>
                 ) : (
                   <motion.button
@@ -128,11 +138,12 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
                     onClick={() => router.push("/login")}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-colors shadow-md"
+                    className="px-3 py-2 md:px-4 md:py-2 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-colors shadow-md"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Sign In
+                    <span className="hidden sm:inline">Sign In</span>
+                    <span className="sm:hidden">👤</span>
                   </motion.button>
                 )}
                 <ThemeSwitcher />
@@ -142,7 +153,7 @@ export default function Home() {
         </motion.header>
 
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white pt-14 md:pt-16">
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-50">
             <svg
@@ -160,7 +171,7 @@ export default function Home() {
             </svg>
           </div>
 
-          <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -172,12 +183,12 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="mb-8"
+                className="mb-6 md:mb-8"
               >
-                <div className="inline-flex items-center gap-3 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-xl">
+                <div className="inline-flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-xl">
                     <svg
-                      className="w-10 h-10 text-white"
+                      className="w-6 h-6 md:w-10 md:h-10 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -191,18 +202,18 @@ export default function Home() {
                     </svg>
                   </div>
                   <div className="text-left">
-                    <h1 className="text-2xl font-bold text-gray-900">
+                    <h1 className="text-lg md:text-2xl font-bold text-gray-900">
                       IVF Maintenance
                     </h1>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs md:text-sm text-gray-500">
                       Professional Facility Management
                     </p>
                   </div>
                 </div>
 
-                <div className="inline-flex items-center px-4 py-2 rounded-full bg-green-50 border border-green-200 mb-8">
+                <div className="inline-flex items-center px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-green-50 border border-green-200 mb-6 md:mb-8">
                   <span className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse"></span>
-                  <span className="text-sm font-medium text-green-800">
+                  <span className="text-xs md:text-sm font-medium text-green-800">
                     Trusted by 500+ Organizations
                   </span>
                 </div>
@@ -213,7 +224,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
               >
                 Streamline Your
                 <span className="block text-green-600">
@@ -226,7 +237,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-xl sm:text-2xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto"
+                className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto px-4"
               >
                 Transform your maintenance operations with intelligent
                 automation, real-time analytics, and seamless workflow
@@ -238,17 +249,17 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 md:mb-16 px-4"
               >
                 <motion.button
                   onClick={() => router.push("/login")}
-                  className="px-8 py-4 bg-green-600 text-white rounded-xl font-semibold text-lg hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-green-600 text-white rounded-xl font-semibold text-base md:text-lg hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Get Started
                   <svg
-                    className="inline-block w-5 h-5 ml-2"
+                    className="inline-block w-4 h-4 md:w-5 md:h-5 ml-2"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -264,7 +275,7 @@ export default function Home() {
 
                 <motion.button
                   onClick={() => router.push("#features")}
-                  className="px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-green-600 hover:text-green-600 transition-all duration-300"
+                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-white text-gray-900 rounded-xl font-semibold text-base md:text-lg border-2 border-gray-200 hover:border-green-600 hover:text-green-600 transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -272,30 +283,40 @@ export default function Home() {
                 </motion.button>
               </motion.div>
 
-              {/* Trust Indicators */}
+              {/* Trust Indicators - Real Data */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="grid grid-cols-3 gap-8 max-w-2xl mx-auto"
+                className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto"
               >
                 {[
-                  { value: "99.9%", label: "Uptime" },
-                  { value: "24/7", label: "Support" },
-                  { value: "500+", label: "Clients" },
+                  {
+                    value: stats.totalRequests.toString(),
+                    label: "Total Requests",
+                  },
+                  {
+                    value: stats.completedRequests.toString(),
+                    label: "Completed",
+                  },
+                  { value: stats.pendingRequests.toString(), label: "Pending" },
+                  {
+                    value: stats.inProgressRequests.toString(),
+                    label: "In Progress",
+                  },
                 ].map((stat, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 + i * 0.1 }}
-                    whileHover={{ scale: 1.1 }}
-                    className="text-center"
+                    whileHover={{ scale: 1.05 }}
+                    className="text-center p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-gray-100 hover:shadow-lg transition-all"
                   >
-                    <div className="text-3xl font-bold text-gray-900 mb-2">
+                    <div className="text-2xl md:text-3xl font-bold text-green-600 mb-2 counter">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-gray-600 font-medium">
+                    <div className="text-xs md:text-sm text-gray-600 font-medium">
                       {stat.label}
                     </div>
                   </motion.div>
@@ -324,7 +345,7 @@ export default function Home() {
         {/* Features Section */}
         <section
           id="features"
-          className="py-20 px-6 sm:px-8 lg:px-12 bg-gray-50"
+          className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-gray-50"
         >
           <div className="max-w-7xl mx-auto">
             <motion.div
@@ -332,19 +353,19 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="text-center mb-12 md:mb-16"
             >
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Powerful Features for
                 <span className="text-green-600"> Modern Facilities</span>
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
                 Everything you need to manage, track, and optimize your
                 maintenance operations in one comprehensive platform.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
                   icon: "📊",
@@ -396,18 +417,18 @@ export default function Home() {
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow"
+                  className="bg-white rounded-xl md:rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 h-full"
                 >
                   <motion.div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white text-2xl mb-6`}
+                    className={`w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white text-xl md:text-2xl mb-4 md:mb-6`}
                     whileHover={{ scale: 1.1, rotate: 5 }}
                   >
                     {feature.icon}
                   </motion.div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed text-sm md:text-base">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -417,26 +438,26 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 px-6 sm:px-8 lg:px-12 bg-gradient-to-br from-green-600 to-green-700">
-          <div className="max-w-4xl mx-auto text-center">
+        <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-green-600 to-green-700">
+          <div className="max-w-4xl mx-auto text-center px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                 Ready to Transform Your
                 <span className="block">Maintenance Operations?</span>
               </h2>
-              <p className="text-xl text-green-100 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-green-100 mb-8 leading-relaxed">
                 Join hundreds of organizations already using our platform to
                 streamline their facility management and achieve operational
                 excellence.
               </p>
               <motion.button
                 onClick={() => router.push("/login")}
-                className="px-8 py-4 bg-white text-green-600 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors shadow-xl"
+                className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-white text-green-600 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-50 transition-colors shadow-xl"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -447,10 +468,10 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-gray-900 text-white py-12 px-6 sm:px-8 lg:px-12">
+        <footer className="bg-gray-900 text-white py-8 md:py-12 px-4 sm:px-6 lg:px-12">
           <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8">
-              <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              <div className="lg:col-span-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
                     <svg
@@ -557,7 +578,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
+            <div className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8 text-center text-gray-400 text-sm">
               <p>&copy; 2024 IVF Maintenance. All rights reserved.</p>
             </div>
           </div>
