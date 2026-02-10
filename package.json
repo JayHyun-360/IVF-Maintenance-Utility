@@ -7,11 +7,11 @@
   ],
   "scripts": {
     "dev": "npm run dev:web",
-    "dev:web": "npm run dev --workspace=ivf-maintenance-web@0.1.1",
+    "dev:web": "npm run dev --workspace=ivf-maintenance-web",
     "build": "npm run build:web",
-    "build:web": "npm run build --workspace=ivf-maintenance-web@0.1.1",
-    "test": "npm run test --workspace=ivf-maintenance-web@0.1.1",
-    "lint": "npm run lint --workspace=ivf-maintenance-web@0.1.1"
+    "build:web": "npm run build --workspace=ivf-maintenance-web",
+    "test": "npm run test --workspace=ivf-maintenance-web",
+    "lint": "npm run lint --workspace=ivf-maintenance-web"
   },
   "devDependencies": {
     "@types/node": "^20",
