@@ -212,7 +212,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="backdrop-blur-xl rounded-3xl p-20 shadow-2xl max-w-2xl mx-auto"
+                className="backdrop-blur-xl rounded-2xl p-8 shadow-2xl max-w-xl mx-auto"
                 style={{
                   background: "rgba(255, 255, 255, 0.03) !important",
                   backdropFilter: "blur(25px) !important",
@@ -220,10 +220,10 @@ export default function Home() {
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
                 }}
               >
-                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-8 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/30 flex-shrink-0">
+                <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 mb-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-teal-500/30 flex-shrink-0">
                     <svg
-                      className="w-7 h-7 md:w-10 md:h-10 text-white"
+                      className="w-6 h-6 md:w-7 md:h-7 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -237,10 +237,10 @@ export default function Home() {
                     </svg>
                   </div>
                   <div className="text-left sm:text-center lg:text-left">
-                    <h1 className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-gray-100 leading-tight">
+                    <h1 className="text-lg md:text-xl lg:text-2xl font-sans font-bold text-gray-100 leading-tight">
                       Integrated Visual Feedback
                     </h1>
-                    <p className="text-sm md:text-base text-gray-400 mt-1">
+                    <p className="text-xs md:text-sm text-gray-400 mt-1">
                       Maintenance Utility
                     </p>
                   </div>
