@@ -76,15 +76,28 @@ export const authOptions: NextAuthOptions = {
 
         // Check for demo credentials first
         if (
-          credentials.email.toLowerCase() === "demo@ivf.tech" &&
-          credentials.password === "aerospace2026"
+          credentials.email.toLowerCase() === "admin@test.com" &&
+          credentials.password === "admin123"
         ) {
-          console.log("Demo user authentication successful");
+          console.log("Admin demo user authentication successful");
           return {
-            id: "demo-user-id",
-            email: "demo@ivf.tech",
-            name: "Demo User",
+            id: "admin-demo-user-id",
+            email: "admin@test.com",
+            name: "Admin Demo",
             role: "ADMIN",
+          };
+        }
+
+        if (
+          credentials.email.toLowerCase() === "user@test.com" &&
+          credentials.password === "user123"
+        ) {
+          console.log("User demo account authentication successful");
+          return {
+            id: "user-demo-user-id",
+            email: "user@test.com",
+            name: "User Demo",
+            role: "USER",
           };
         }
 

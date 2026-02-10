@@ -25,9 +25,9 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
-  const handleDemoLogin = async () => {
-    setEmail("demo@ivf.tech");
-    setPassword("aerospace2026");
+  const handleAdminDemo = async () => {
+    setEmail("admin@test.com");
+    setPassword("admin123");
 
     // Auto-submit after a brief delay to show the filled fields
     setTimeout(async () => {
@@ -36,18 +36,47 @@ export default function LoginPage() {
 
       try {
         const result = await signIn("credentials", {
-          email: "demo@ivf.tech",
-          password: "aerospace2026",
+          email: "admin@test.com",
+          password: "admin123",
           redirect: true,
         });
 
         if (result?.error) {
-          setError("Demo login failed");
+          setError("Admin demo login failed");
         } else {
-          console.log("Demo login successful, redirecting...");
+          console.log("Admin demo login successful, redirecting...");
         }
       } catch {
-        setError("Demo login failed. Please try again.");
+        setError("Admin demo login failed. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    }, 500);
+  };
+
+  const handleUserDemo = async () => {
+    setEmail("user@test.com");
+    setPassword("user123");
+
+    // Auto-submit after a brief delay to show the filled fields
+    setTimeout(async () => {
+      setIsLoading(true);
+      setError("");
+
+      try {
+        const result = await signIn("credentials", {
+          email: "user@test.com",
+          password: "user123",
+          redirect: true,
+        });
+
+        if (result?.error) {
+          setError("User demo login failed");
+        } else {
+          console.log("User demo login successful, redirecting...");
+        }
+      } catch {
+        setError("User demo login failed. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -312,30 +341,56 @@ export default function LoginPage() {
                 )}
               </motion.button>
 
-              {/* Demo Login Button */}
-              <motion.button
-                type="button"
-                onClick={handleDemoLogin}
-                disabled={isLoading}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold text-base hover:from-amber-400 hover:to-orange-500 transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {/* Demo Login Buttons */}
+              <div className="space-y-3">
+                <motion.button
+                  type="button"
+                  onClick={handleAdminDemo}
+                  disabled={isLoading}
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold text-base hover:from-red-400 hover:to-pink-500 transition-all duration-300 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                  />
-                </svg>
-                Try Demo
-              </motion.button>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                  </svg>
+                  Admin Demo (admin@test.com)
+                </motion.button>
+
+                <motion.button
+                  type="button"
+                  onClick={handleUserDemo}
+                  disabled={isLoading}
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold text-base hover:from-amber-400 hover:to-orange-500 transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  User Demo (user@test.com)
+                </motion.button>
+              </div>
             </form>
 
             {/* Footer */}
