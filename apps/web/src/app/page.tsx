@@ -95,7 +95,7 @@ export default function Home() {
               </motion.div>
 
               {/* Navigation Links - Desktop */}
-              <nav className="hidden md:flex items-center gap-12 !important">
+              <nav className="hidden md:flex items-center gap-8 !important">
                 {[
                   { label: "Home", href: "/", active: true },
                   { label: "Features", href: "#features" },
@@ -111,33 +111,37 @@ export default function Home() {
                       type: "spring",
                       stiffness: 100,
                     }}
-                    onClick={() =>
-                      item.href.startsWith("#") ? null : router.push(item.href)
-                    }
-                    className={`relative text-sm font-medium transition-all duration-200 px-1.5 py-1 overflow-hidden ${
+                    onClick={() => {
+                      if (item.href.startsWith("#")) {
+                        const element = document.querySelector(item.href);
+                        if (element) {
+                          element.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                          });
+                        }
+                      } else {
+                        router.push(item.href);
+                      }
+                    }}
+                    className={`relative text-sm font-medium transition-all duration-300 px-3 py-2 rounded-lg overflow-hidden group ${
                       item.active
                         ? "text-teal-400 bg-white/10"
                         : "text-gray-400 hover:text-gray-100 hover:bg-white/5"
                     }`}
                     whileHover={{
-                      scale: 1.02,
+                      scale: 1.05,
                       transition: { duration: 0.2, ease: "easeOut" },
                     }}
                     whileTap={{
-                      scale: 0.98,
+                      scale: 0.95,
                       transition: { duration: 0.1 },
                     }}
                   >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0"
-                      variants={{
-                        hover: {
-                          opacity: [0, 0.3, 0],
-                          x: ["-100%", "0%", "100%"],
-                          transition: { duration: 0.4, ease: "easeInOut" },
-                        },
-                      }}
-                    />
+                    {/* Vercel-style background hover effect */}
+                    <motion.div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* Sliding underline effect */}
+                    <motion.div className="absolute bottom-0 left-0 h-0.5 bg-teal-400 w-0 group-hover:w-full transition-all duration-300 ease-out" />
                     <span className="relative z-10">{item.label}</span>
                   </motion.button>
                 ))}
