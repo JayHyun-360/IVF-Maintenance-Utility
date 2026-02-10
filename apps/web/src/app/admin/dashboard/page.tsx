@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/components/ThemeProvider";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 import BackButton from "@/components/BackButton";
 import AccountDropdown from "@/components/AccountDropdown";
 import { motion } from "framer-motion";
@@ -127,7 +125,6 @@ const defaultStats: DashboardStats[] = [
 ];
 
 export default function AdminDashboard() {
-  const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
@@ -313,26 +310,7 @@ export default function AdminDashboard() {
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
-
-    // Navigate to specific pages for different tabs
-    switch (tabId) {
-      case "requests":
-        router.push("/admin/requests");
-        break;
-      case "analytics":
-        router.push("/admin/analytics");
-        break;
-      case "users":
-        router.push("/admin/users");
-        break;
-      case "reports":
-        router.push("/admin/reports");
-        break;
-      case "settings":
-        router.push("/admin/settings");
-        break;
-      // Overview stays on current page
-    }
+    // All tabs now stay on the same dashboard page
   };
 
   const handleRequestClick = (requestId: string) => {
@@ -458,6 +436,31 @@ export default function AdminDashboard() {
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 <button
+                  onClick={() => router.push("/admin/settings")}
+                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
+                  title="Settings"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </button>
+                <button
                   onClick={fetchDashboardData}
                   disabled={loading}
                   className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -486,7 +489,6 @@ export default function AdminDashboard() {
                   </button>
                 )}
                 <BackButton fallback="/" />
-                <ThemeSwitcher />
                 <AccountDropdown />
               </div>
             </div>
@@ -511,7 +513,6 @@ export default function AdminDashboard() {
                 { id: "analytics", label: "Analytics" },
                 { id: "users", label: "Users" },
                 { id: "reports", label: "Reports" },
-                { id: "settings", label: "Settings" },
               ].map((item, i) => (
                 <motion.button
                   key={item.id}
@@ -773,45 +774,354 @@ export default function AdminDashboard() {
               </motion.div>
             )}
 
-            {/* Placeholder content for other tabs */}
-            {activeTab !== "overview" && (
+            {/* Maintenance Tab Content */}
+            {activeTab === "requests" && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-12 text-center"
+                className="space-y-8"
               >
-                <div className="max-w-md mx-auto">
-                  <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
-                    <svg
-                      className="w-8 h-8 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-100 mb-2 capitalize">
-                    {activeTab}
+                <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                  <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                    Maintenance Requests
                   </h2>
-                  <p className="text-gray-400">
-                    {activeTab === "requests" &&
-                      "Manage all maintenance requests and work orders"}
-                    {activeTab === "analytics" &&
-                      "View detailed analytics and performance metrics"}
-                    {activeTab === "users" &&
-                      "Manage user accounts and permissions"}
-                    {activeTab === "reports" &&
-                      "Generate and view system reports"}
-                    {activeTab === "settings" &&
-                      "Configure system settings and preferences"}
-                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[
+                      {
+                        title: "HVAC System",
+                        status: "In Progress",
+                        priority: "High",
+                        id: "REQ-001",
+                      },
+                      {
+                        title: "Lighting Repair",
+                        status: "Pending",
+                        priority: "Medium",
+                        id: "REQ-002",
+                      },
+                      {
+                        title: "Plumbing Maintenance",
+                        status: "Completed",
+                        priority: "Low",
+                        id: "REQ-003",
+                      },
+                    ].map((request, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 * i }}
+                        className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300"
+                      >
+                        <div className="flex items-start justify-between mb-4">
+                          <span className="text-xs font-mono text-teal-400">
+                            {request.id}
+                          </span>
+                          <span
+                            className={`text-xs px-2 py-1 rounded-full font-mono ${
+                              request.priority === "High"
+                                ? "bg-red-500/20 text-red-400"
+                                : request.priority === "Medium"
+                                  ? "bg-amber-500/20 text-amber-400"
+                                  : "bg-green-500/20 text-green-400"
+                            }`}
+                          >
+                            {request.priority}
+                          </span>
+                        </div>
+                        <h3 className="text-gray-100 font-medium mb-2">
+                          {request.title}
+                        </h3>
+                        <span
+                          className={`text-sm ${
+                            request.status === "Completed"
+                              ? "text-lime-400"
+                              : request.status === "In Progress"
+                                ? "text-cyan-400"
+                                : "text-amber-400"
+                          }`}
+                        >
+                          {request.status}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Analytics Tab Content */}
+            {activeTab === "analytics" && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                    <h3 className="text-xl font-bold text-gray-100 mb-6">
+                      Request Trends
+                    </h3>
+                    <div className="space-y-4">
+                      {[
+                        { month: "Jan", count: 45 },
+                        { month: "Feb", count: 52 },
+                        { month: "Mar", count: 38 },
+                        { month: "Apr", count: 61 },
+                      ].map((item, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="text-gray-400">{item.month}</span>
+                          <div className="flex items-center gap-3">
+                            <div className="w-32 bg-gray-700 rounded-full h-2">
+                              <div
+                                className="bg-gradient-to-r from-teal-500 to-cyan-600 h-2 rounded-full"
+                                style={{ width: `${(item.count / 61) * 100}%` }}
+                              />
+                            </div>
+                            <span className="text-gray-100 font-mono text-sm">
+                              {item.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                    <h3 className="text-xl font-bold text-gray-100 mb-6">
+                      Performance Metrics
+                    </h3>
+                    <div className="space-y-6">
+                      {[
+                        {
+                          label: "Avg Response Time",
+                          value: "2.4 hrs",
+                          trend: "-15%",
+                        },
+                        {
+                          label: "Completion Rate",
+                          value: "94%",
+                          trend: "+8%",
+                        },
+                        {
+                          label: "Satisfaction Score",
+                          value: "4.7/5",
+                          trend: "+12%",
+                        },
+                      ].map((metric, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center justify-between"
+                        >
+                          <div>
+                            <p className="text-gray-400 text-sm">
+                              {metric.label}
+                            </p>
+                            <p className="text-gray-100 font-mono text-lg">
+                              {metric.value}
+                            </p>
+                          </div>
+                          <span
+                            className={`text-sm font-mono ${
+                              metric.trend.startsWith("+")
+                                ? "text-lime-400"
+                                : "text-red-400"
+                            }`}
+                          >
+                            {metric.trend}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Users Tab Content */}
+            {activeTab === "users" && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
+              >
+                <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                  <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                    User Management
+                  </h2>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                      <thead>
+                        <tr className="border-b border-white/10">
+                          <th className="pb-4 text-gray-400 font-medium">
+                            User
+                          </th>
+                          <th className="pb-4 text-gray-400 font-medium">
+                            Role
+                          </th>
+                          <th className="pb-4 text-gray-400 font-medium">
+                            Status
+                          </th>
+                          <th className="pb-4 text-gray-400 font-medium">
+                            Last Active
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5">
+                        {[
+                          {
+                            name: "John Smith",
+                            email: "john@ivf.edu",
+                            role: "Admin",
+                            status: "Active",
+                            lastActive: "2 hours ago",
+                          },
+                          {
+                            name: "Sarah Johnson",
+                            email: "sarah@ivf.edu",
+                            role: "Staff",
+                            status: "Active",
+                            lastActive: "1 day ago",
+                          },
+                          {
+                            name: "Mike Davis",
+                            email: "mike@ivf.edu",
+                            role: "Student",
+                            status: "Inactive",
+                            lastActive: "3 days ago",
+                          },
+                        ].map((user, i) => (
+                          <tr
+                            key={i}
+                            className="hover:bg-white/5 transition-colors"
+                          >
+                            <td className="py-4">
+                              <div>
+                                <p className="text-gray-100 font-medium">
+                                  {user.name}
+                                </p>
+                                <p className="text-gray-400 text-sm">
+                                  {user.email}
+                                </p>
+                              </div>
+                            </td>
+                            <td className="py-4">
+                              <span
+                                className={`text-sm px-2 py-1 rounded-full font-mono ${
+                                  user.role === "Admin"
+                                    ? "bg-purple-500/20 text-purple-400"
+                                    : user.role === "Staff"
+                                      ? "bg-blue-500/20 text-blue-400"
+                                      : "bg-gray-500/20 text-gray-400"
+                                }`}
+                              >
+                                {user.role}
+                              </span>
+                            </td>
+                            <td className="py-4">
+                              <span
+                                className={`text-sm ${
+                                  user.status === "Active"
+                                    ? "text-lime-400"
+                                    : "text-gray-400"
+                                }`}
+                              >
+                                {user.status}
+                              </span>
+                            </td>
+                            <td className="py-4 text-gray-400 text-sm">
+                              {user.lastActive}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Reports Tab Content */}
+            {activeTab === "reports" && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
+              >
+                <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                  <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                    System Reports
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      {
+                        title: "Monthly Summary",
+                        date: "2024-02-01",
+                        type: "PDF",
+                        size: "2.4 MB",
+                      },
+                      {
+                        title: "Maintenance Analytics",
+                        date: "2024-02-01",
+                        type: "Excel",
+                        size: "1.8 MB",
+                      },
+                      {
+                        title: "User Activity Report",
+                        date: "2024-01-31",
+                        type: "PDF",
+                        size: "956 KB",
+                      },
+                      {
+                        title: "Performance Metrics",
+                        date: "2024-01-30",
+                        type: "PDF",
+                        size: "1.2 MB",
+                      },
+                    ].map((report, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 * i }}
+                        className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                      >
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="p-2 rounded-lg bg-teal-500/10">
+                            <svg
+                              className="w-5 h-5 text-teal-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                              />
+                            </svg>
+                          </div>
+                          <span className="text-xs font-mono text-gray-400">
+                            {report.type}
+                          </span>
+                        </div>
+                        <h3 className="text-gray-100 font-medium mb-2">
+                          {report.title}
+                        </h3>
+                        <div className="flex items-center justify-between text-sm text-gray-400">
+                          <span>{report.date}</span>
+                          <span>{report.size}</span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             )}
