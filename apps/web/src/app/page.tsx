@@ -324,9 +324,9 @@ export default function Home() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
-              className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center"
+              className="w-6 h-10 border-2 border-teal-400/50 rounded-full flex justify-center"
             >
-              <div className="w-1 h-3 bg-gray-400 rounded-full mt-2"></div>
+              <div className="w-1 h-3 bg-teal-400 rounded-full mt-2"></div>
             </motion.div>
           </motion.div>
         </section>
@@ -334,8 +334,24 @@ export default function Home() {
         {/* Features Section */}
         <section
           id="features"
-          className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-gray-50"
+          className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-[#0B0E11] relative"
         >
+          {/* Technical Grid Background */}
+          <div className="absolute inset-0 opacity-10">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full"
+            >
+              <g fill="none" fillRule="evenodd">
+                <g stroke="#14b8a6" strokeWidth="0.5" opacity="0.2">
+                  <path d="M0 0h40v40H0z M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40" />
+                </g>
+              </g>
+            </svg>
+          </div>
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -344,11 +360,11 @@ export default function Home() {
               viewport={{ once: true }}
               className="text-center mb-12 md:mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-sans font-bold text-gray-100 mb-4">
                 Powerful Features for
-                <span className="text-green-600"> Modern Maintenance</span>
+                <span className="text-teal-400"> Modern Maintenance</span>
               </h2>
-              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+              <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
                 Everything you need to manage, track, and optimize your
                 maintenance operations with visual feedback in one comprehensive
                 platform.
@@ -361,37 +377,37 @@ export default function Home() {
                   icon: "📊",
                   title: "Real-time Analytics",
                   description: "Live dashboards for performance insights.",
-                  color: "from-blue-500 to-blue-600",
+                  color: "from-teal-500 to-cyan-600",
                 },
                 {
                   icon: "🤖",
                   title: "Smart Automation",
                   description: "Automate tasks and prioritize by urgency.",
-                  color: "from-green-500 to-green-600",
+                  color: "from-lime-400 to-green-500",
                 },
                 {
                   icon: "📱",
                   title: "Mobile Access",
                   description: "Access your system from any device.",
-                  color: "from-purple-500 to-purple-600",
+                  color: "from-blue-400 to-indigo-500",
                 },
                 {
                   icon: "🔔",
                   title: "Instant Notifications",
                   description: "Real-time alerts for request updates.",
-                  color: "from-yellow-500 to-yellow-600",
+                  color: "from-amber-400 to-orange-500",
                 },
                 {
                   icon: "📈",
                   title: "Performance Tracking",
                   description: "Track KPIs and generate reports.",
-                  color: "from-red-500 to-red-600",
+                  color: "from-purple-400 to-pink-500",
                 },
                 {
                   icon: "🛡️",
                   title: "Secure Platform",
                   description: "Enterprise security with role access.",
-                  color: "from-indigo-500 to-indigo-600",
+                  color: "from-rose-400 to-red-500",
                 },
               ].map((feature, i) => (
                 <motion.div
@@ -401,7 +417,7 @@ export default function Home() {
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-xl md:rounded-2xl p-4 md:p-5 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 h-full"
+                  className="backdrop-blur-xl bg-black/30 border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-5 shadow-2xl shadow-black/50 hover:bg-black/40 transition-all duration-300 h-full inner-glow"
                 >
                   <motion.div
                     className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white text-lg md:text-xl mb-3 md:mb-4`}
@@ -409,10 +425,10 @@ export default function Home() {
                   >
                     {feature.icon}
                   </motion.div>
-                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2 md:mb-3">
+                  <h3 className="text-base md:text-lg font-sans font-bold text-gray-100 mb-2 md:mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed text-xs md:text-sm">
+                  <p className="text-gray-300 leading-relaxed text-xs md:text-sm">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -422,19 +438,24 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-green-600 to-green-700">
-          <div className="max-w-4xl mx-auto text-center px-4">
+        <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-[#0B0E11] relative">
+          {/* Teal Mesh Gradient Glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
+
+          <div className="max-w-4xl mx-auto text-center px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl md:text-4xl font-sans font-bold text-gray-100 mb-6">
                 Making Maintenance
-                <span className="block">Simple & Stress-Free</span>
+                <span className="block text-teal-400">
+                  Simple & Stress-Free
+                </span>
               </h2>
-              <p className="text-lg md:text-xl text-green-100 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
                 Our intuitive system helps you manage maintenance requests
                 effortlessly. Track progress, visualize workflows, and
                 coordinate with your team - all in one place. Say goodbye to
@@ -443,7 +464,7 @@ export default function Home() {
               </p>
               <motion.button
                 onClick={() => router.push("/login")}
-                className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-white text-green-600 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-50 transition-colors shadow-xl"
+                className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-lime-400 to-teal-500 text-gray-900 rounded-xl font-semibold text-base md:text-lg hover:from-lime-300 hover:to-teal-400 transition-all duration-300 shadow-lg shadow-lime-400/25 hover:shadow-lime-400/40 transform hover:-translate-y-1"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -454,11 +475,11 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-gray-900 text-white py-8 md:py-12 px-4 sm:px-6 lg:px-12">
+        <footer className="bg-[#0B0E11] text-gray-100 py-8 md:py-12 px-4 sm:px-6 lg:px-12 border-t border-white/10">
           <div className="max-w-7xl mx-auto text-center">
             <div className="flex flex-col items-center justify-center mb-8">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-teal-500/25">
                   <svg
                     className="w-6 h-6 text-white"
                     fill="none"
@@ -474,7 +495,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold">
+                  <h3 className="text-lg font-sans font-bold text-gray-100">
                     Integrated Visual Feedback
                   </h3>
                   <p className="text-xs text-gray-400">Maintenance Utility</p>
@@ -486,7 +507,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8 text-center text-gray-400 text-sm">
+            <div className="border-t border-white/10 mt-8 md:mt-12 pt-6 md:pt-8 text-center text-gray-400 text-sm">
               <p>
                 &copy; 2024 Integrated Visual Feedback & Maintenance Utility.
                 All rights reserved.
