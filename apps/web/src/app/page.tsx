@@ -212,13 +212,6 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-
-                <div className="inline-flex items-center px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-green-50 border border-green-200 mb-6 md:mb-8">
-                  <span className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse"></span>
-                  <span className="text-xs md:text-sm font-medium text-green-800">
-                    Trusted by 500+ Organizations
-                  </span>
-                </div>
               </motion.div>
 
               {/* Main Headline */}
