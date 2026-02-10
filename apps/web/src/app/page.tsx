@@ -407,18 +407,18 @@ export default function Home() {
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-xl md:rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 h-full"
+                  className="bg-white rounded-xl md:rounded-2xl p-4 md:p-5 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 h-full"
                 >
                   <motion.div
-                    className={`w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white text-xl md:text-2xl mb-4 md:mb-6`}
+                    className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white text-lg md:text-xl mb-3 md:mb-4`}
                     whileHover={{ scale: 1.1, rotate: 5 }}
                   >
                     {feature.icon}
                   </motion.div>
-                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">
+                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2 md:mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+                  <p className="text-gray-600 leading-relaxed text-xs md:text-sm">
                     {feature.description}
                   </p>
                 </motion.div>
