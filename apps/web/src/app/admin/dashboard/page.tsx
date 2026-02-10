@@ -597,7 +597,7 @@ export default function AdminDashboard() {
                     </motion.div>
                   )}
 
-                  {/* Bento Grid - Stats Overview */}
+                  {/* Enhanced Bento Grid - Stats Overview */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                     {stats.map((stat, i) => (
                       <motion.div
@@ -612,17 +612,17 @@ export default function AdminDashboard() {
                         className="group relative"
                         whileHover={{ y: -5 }}
                       >
-                        {/* Vercel-style hover spotlight */}
+                        {/* Enhanced Vercel-style hover spotlight */}
                         <div
-                          className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                          className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl"
                           style={{
                             background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
                           }}
                         />
 
-                        {/* Enhanced Glassmorphic Card */}
+                        {/* Premium Glassmorphic Card */}
                         <div
-                          className="relative backdrop-blur-xl rounded-2xl p-8 border border-white/10 shadow-2xl bg-white/5 hover:bg-white/10 transition-all duration-300"
+                          className="relative backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10 shadow-2xl bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -632,51 +632,65 @@ export default function AdminDashboard() {
                               "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
                           }}
                         >
-                          <div className="flex items-start justify-between mb-6">
-                            <div
-                              className="p-3 rounded-xl bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-                              style={{
-                                background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
-                              }}
-                            >
-                              <div className="text-white">{stat.icon}</div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <span
-                                className={`text-xs font-mono px-2 py-1 rounded-full ${stat.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400" : "bg-red-500/20 text-red-400"}`}
-                              >
-                                {loading ? "..." : stat.trend}
-                              </span>
-                            </div>
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 opacity-5">
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-2xl" />
                           </div>
 
-                          <div className="space-y-3">
-                            <h3 className="text-gray-300 text-sm font-medium uppercase tracking-wider">
-                              {stat.label}
-                            </h3>
-                            <div className="flex items-baseline gap-2">
-                              <motion.div
-                                className="text-4xl md:text-5xl font-mono font-bold"
+                          <div className="relative z-10">
+                            <div className="flex items-start justify-between mb-6">
+                              <div
+                                className="p-3 md:p-4 rounded-xl bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-lg"
                                 style={{
                                   background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
-                                  WebkitBackgroundClip: "text",
-                                  WebkitTextFillColor: "transparent",
-                                  backgroundClip: "text",
+                                  boxShadow: `0 10px 25px -5px ${stat.gradient.includes("teal") ? "rgba(20, 184, 166, 0.3)" : stat.gradient.includes("amber") ? "rgba(245, 158, 11, 0.3)" : stat.gradient.includes("blue") ? "rgba(59, 130, 246, 0.3)" : "rgba(16, 185, 129, 0.3)"}`,
                                 }}
-                                whileHover={{ scale: 1.1 }}
                               >
-                                {loading ? "..." : stat.value}
-                              </motion.div>
+                                <div className="text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+                                  {stat.icon}
+                                </div>
+                              </div>
+                              <div className="flex flex-col items-end gap-2">
+                                <span
+                                  className={`text-xs font-mono px-2 py-1 rounded-full ${stat.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400 border border-lime-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"}`}
+                                >
+                                  {loading ? "..." : stat.trend}
+                                </span>
+                              </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <div
-                                className={`w-2 h-2 rounded-full ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
-                              />
-                              <span
-                                className={`text-xs font-mono ${getStatusColor(stat.status)}`}
-                              >
-                                {stat.status}
-                              </span>
+
+                            <div className="space-y-4">
+                              <div>
+                                <h3 className="text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wider mb-2">
+                                  {stat.label}
+                                </h3>
+                                <div className="flex items-baseline gap-2">
+                                  <motion.div
+                                    className="text-3xl md:text-4xl lg:text-5xl font-mono font-bold"
+                                    style={{
+                                      background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
+                                      WebkitBackgroundClip: "text",
+                                      WebkitTextFillColor: "transparent",
+                                      backgroundClip: "text",
+                                    }}
+                                    whileHover={{ scale: 1.05 }}
+                                  >
+                                    {loading ? "..." : stat.value}
+                                  </motion.div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-3">
+                                <div
+                                  className={`w-2 h-2 rounded-full ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
+                                />
+                                <span
+                                  className={`text-xs font-mono ${getStatusColor(stat.status)}`}
+                                >
+                                  {stat.status}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -684,116 +698,153 @@ export default function AdminDashboard() {
                     ))}
                   </div>
 
-                  {/* Bento Grid - Recent Requests */}
+                  {/* Enhanced Bento Grid - Recent Requests */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.05 }}
-                    className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
+                    className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8 overflow-hidden"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.03) !important",
+                      backdropFilter: "blur(25px) !important",
+                      border: "1px solid rgba(255, 255, 255, 0.1) !important",
+                      boxShadow:
+                        "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
+                    }}
                   >
-                    <div className="flex items-center justify-between mb-6">
-                      <h2 className="text-xl font-bold text-gray-100">
-                        Recent Requests
-                      </h2>
-                      <button
-                        onClick={handleViewAllRequests}
-                        className="text-teal-400 hover:text-teal-300 text-sm font-medium transition-colors duration-200"
-                      >
-                        View All →
-                      </button>
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-2xl" />
                     </div>
 
-                    {loading ? (
-                      <div className="space-y-4">
-                        {[1, 2, 3].map((i) => (
-                          <div
-                            key={i}
-                            className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4"
-                          >
-                            <div className="animate-pulse">
-                              <div className="h-4 bg-gray-600 rounded w-1/4 mb-2"></div>
-                              <div className="h-3 bg-gray-600 rounded w-3/4 mb-1"></div>
-                              <div className="h-2 bg-gray-600 rounded w-1/2"></div>
-                            </div>
-                          </div>
-                        ))}
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-6 md:mb-8">
+                        <div>
+                          <h2 className="text-xl md:text-2xl font-bold text-gray-100 mb-2">
+                            Recent Requests
+                          </h2>
+                          <p className="text-gray-400 text-sm">
+                            Latest maintenance requests and updates
+                          </p>
+                        </div>
+                        <motion.button
+                          onClick={handleViewAllRequests}
+                          className="group relative px-4 py-2 rounded-xl bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-500/30 text-teal-400 hover:text-teal-300 hover:bg-teal-500/30 transition-all duration-300"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <span className="flex items-center gap-2">
+                            View All
+                            <svg
+                              className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M13 7l5 5m0 0l-5 5m5-5H6"
+                              />
+                            </svg>
+                          </span>
+                        </motion.button>
                       </div>
-                    ) : recentRequests.length > 0 ? (
-                      <div className="space-y-4">
-                        {recentRequests.map((request, i) => (
-                          <motion.div
-                            key={request.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{
-                              delay: 0.05 * i,
-                              duration: 0.3,
-                              ease: "easeOut",
-                            }}
-                            className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                            whileHover={{ x: 5 }}
-                            onClick={() => handleRequestClick(request.id)}
-                          >
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-3 mb-2">
-                                  <span className="text-xs font-mono text-teal-400">
-                                    {request.id}
-                                  </span>
-                                  <span
-                                    className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
-                                  >
-                                    {request.priority}
-                                  </span>
-                                  <span
-                                    className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10`}
-                                  >
-                                    {request.status}
-                                  </span>
-                                </div>
 
-                                <h3 className="text-gray-100 font-medium mb-1 truncate">
-                                  {request.title}
-                                </h3>
-
-                                <div className="flex items-center gap-4 text-xs text-gray-400">
-                                  <span className="font-mono">
-                                    {request.category}
-                                  </span>
-                                  <span>•</span>
-                                  <span>{request.requestedBy}</span>
-                                  <span>•</span>
-                                  <span className="font-mono">
-                                    {request.createdAt}
-                                  </span>
-                                </div>
+                      {loading ? (
+                        <div className="space-y-4">
+                          {[1, 2, 3].map((i) => (
+                            <div
+                              key={i}
+                              className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4"
+                            >
+                              <div className="animate-pulse">
+                                <div className="h-4 bg-gray-600 rounded w-1/4 mb-2"></div>
+                                <div className="h-3 bg-gray-600 rounded w-3/4 mb-1"></div>
+                                <div className="h-2 bg-gray-600 rounded w-1/2"></div>
                               </div>
                             </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center py-8">
-                        <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
-                          <svg
-                            className="w-6 h-6 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
-                          </svg>
+                          ))}
                         </div>
-                        <p className="text-gray-400">
-                          No maintenance requests found
-                        </p>
-                      </div>
-                    )}
+                      ) : recentRequests.length > 0 ? (
+                        <div className="space-y-4">
+                          {recentRequests.map((request, i) => (
+                            <motion.div
+                              key={request.id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                delay: 0.05 * i,
+                                duration: 0.3,
+                                ease: "easeOut",
+                              }}
+                              className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                              whileHover={{ x: 5 }}
+                              onClick={() => handleRequestClick(request.id)}
+                            >
+                              <div className="flex items-start justify-between">
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-xs font-mono text-teal-400">
+                                      {request.id}
+                                    </span>
+                                    <span
+                                      className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
+                                    >
+                                      {request.priority}
+                                    </span>
+                                    <span
+                                      className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10`}
+                                    >
+                                      {request.status}
+                                    </span>
+                                  </div>
+
+                                  <h3 className="text-gray-100 font-medium mb-1 truncate">
+                                    {request.title}
+                                  </h3>
+
+                                  <div className="flex items-center gap-4 text-xs text-gray-400">
+                                    <span className="font-mono">
+                                      {request.category}
+                                    </span>
+                                    <span>•</span>
+                                    <span>{request.requestedBy}</span>
+                                    <span>•</span>
+                                    <span className="font-mono">
+                                      {request.createdAt}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-8">
+                          <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
+                            <svg
+                              className="w-6 h-6 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                              />
+                            </svg>
+                          </div>
+                          <p className="text-gray-400">
+                            No maintenance requests found
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </motion.div>
                 </motion.div>
               )}
