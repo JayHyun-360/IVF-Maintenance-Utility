@@ -607,17 +607,18 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-sans font-bold text-gray-100 mb-6">
-                Making Maintenance
+                Making School Facility
                 <span className="block text-teal-400">
-                  Simple & Stress-Free
+                  Maintenance Effortless
                 </span>
               </h2>
               <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
-                Our intuitive system helps you manage maintenance requests
-                effortlessly. Track progress, visualize workflows, and
-                coordinate with your team - all in one place. Say goodbye to
-                paperwork and hello to streamlined operations that save you time
-                and reduce headaches.
+                Our intuitive system helps educational institutions manage
+                facility maintenance seamlessly. Track classroom repairs,
+                schedule equipment servicing, and coordinate with maintenance
+                staff - all in one platform. Say goodbye to paperwork and ensure
+                your school facilities remain in perfect condition for optimal
+                learning environments.
               </p>
               <motion.button
                 onClick={() => router.push("/login")}
@@ -625,7 +626,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Start Simplifying Today
+                Transform Your School Today
               </motion.button>
             </motion.div>
           </div>
