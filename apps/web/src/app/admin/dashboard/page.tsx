@@ -460,36 +460,86 @@ export default function AdminDashboard() {
                     />
                   </svg>
                 </button>
-                <button
-                  onClick={fetchDashboardData}
-                  disabled={loading}
-                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                  title="Refresh dashboard"
-                >
-                  <svg
-                    className={`w-5 h-5 ${loading ? "animate-spin" : ""}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                    />
-                  </svg>
-                </button>
-                {error && (
-                  <button
+                {/* Enhanced Actions */}
+                <div className="flex items-center gap-3">
+                  {/* Refresh Button */}
+                  <motion.button
                     onClick={fetchDashboardData}
-                    className="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 text-sm hover:bg-red-500/30 transition-colors"
+                    disabled={loading}
+                    className="group relative p-3 rounded-xl bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border border-white/10"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.03) !important",
+                      backdropFilter: "blur(25px) !important",
+                      border: "1px solid rgba(255, 255, 255, 0.1) !important",
+                    }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    title="Refresh dashboard"
                   >
-                    Retry
-                  </button>
-                )}
-                <BackButton fallback="/" />
-                <AccountDropdown />
+                    {/* Button Icon */}
+                    <motion.div
+                      animate={{ rotate: loading ? 360 : 0 }}
+                      transition={{
+                        duration: loading ? 1 : 0,
+                        repeat: loading ? Infinity : 0,
+                      }}
+                      className="flex items-center justify-center"
+                    >
+                      <svg
+                        className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
+                      </svg>
+                    </motion.div>
+
+                    {/* Loading State */}
+                    {loading && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl"
+                      >
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                      </motion.div>
+                    )}
+                  </motion.button>
+
+                  {/* Retry Button */}
+                  {error && (
+                    <motion.button
+                      onClick={fetchDashboardData}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="group relative px-4 py-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-400 hover:text-red-300 transition-all duration-300 border border-red-500/30"
+                      style={{
+                        background: "rgba(239, 68, 68, 0.1) !important",
+                        backdropFilter: "blur(25px) !important",
+                        border: "1px solid rgba(239, 68, 68, 0.3) !important",
+                      }}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="font-medium">Retry</span>
+                      {/* Hover Effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                    </motion.button>
+                  )}
+
+                  {/* Navigation */}
+                  <div className="flex items-center gap-3 ml-auto">
+                    <BackButton fallback="/" />
+                    <AccountDropdown />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
