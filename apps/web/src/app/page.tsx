@@ -321,21 +321,28 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto"
+                className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto"
               >
                 {[
                   {
                     value: stats.totalRequests.toString(),
                     label: "Total Requests",
+                    gradient: "from-teal-500 to-cyan-600",
                   },
                   {
                     value: stats.completedRequests.toString(),
                     label: "Completed",
+                    gradient: "from-green-500 to-emerald-600",
                   },
-                  { value: stats.pendingRequests.toString(), label: "Pending" },
+                  {
+                    value: stats.pendingRequests.toString(),
+                    label: "Pending",
+                    gradient: "from-amber-500 to-orange-600",
+                  },
                   {
                     value: stats.inProgressRequests.toString(),
                     label: "In Progress",
+                    gradient: "from-blue-500 to-indigo-600",
                   },
                 ].map((stat, i) => (
                   <motion.div
@@ -343,14 +350,36 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 + i * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                    className="text-center p-4 rounded-xl backdrop-blur-sm bg-black/20 border border-white/10 hover:bg-black/30 transition-all"
+                    whileHover={{
+                      scale: 1.02,
+                      y: -2,
+                    }}
+                    className="relative group"
                   >
-                    <div className="text-2xl md:text-3xl font-mono font-bold text-teal-400 mb-2 counter">
-                      {stat.value}
-                    </div>
-                    <div className="text-xs md:text-sm text-gray-400 font-medium">
-                      {stat.label}
+                    {/* Glassmorphic card with gradient border */}
+                    <div
+                      className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"
+                      style={{
+                        background: `linear-gradient(135deg, ${stat.gradient.replace("from-", "").replace(" to-", ", ")})`,
+                      }}
+                    />
+                    <div className="relative text-center p-6 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                      {/* Animated number display */}
+                      <motion.div
+                        className="text-3xl md:text-4xl font-mono font-bold mb-2"
+                        style={{
+                          background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("green") ? "#10b981" : stat.gradient.includes("amber") ? "#f59e0b" : "#3b82f6"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("emerald") ? "#059669" : stat.gradient.includes("orange") ? "#ea580c" : "#6366f1"})`,
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        {stat.value}
+                      </motion.div>
+                      <div className="text-xs md:text-sm text-gray-300 font-medium uppercase tracking-wider">
+                        {stat.label}
+                      </div>
                     </div>
                   </motion.div>
                 ))}
