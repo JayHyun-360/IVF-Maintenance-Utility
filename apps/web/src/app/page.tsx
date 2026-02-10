@@ -52,7 +52,10 @@ export default function Home() {
           className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="flex items-center justify-between h-14 md:h-16">
+            <div
+              className="flex items-center justify-between h-14 md:h-16"
+              style={{ maxWidth: "1400px", margin: "0 auto" }}
+            >
               {/* Logo */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -92,7 +95,7 @@ export default function Home() {
               </motion.div>
 
               {/* Navigation Links - Desktop */}
-              <nav className="hidden md:flex items-center gap-2.5 lg:gap-10">
+              <nav className="hidden md:flex items-center gap-12 !important">
                 {[
                   { label: "Home", href: "/", active: true },
                   { label: "Features", href: "#features" },
@@ -141,7 +144,7 @@ export default function Home() {
               </nav>
 
               {/* Right Side Actions */}
-              <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 {session ? (
                   <motion.button
                     initial={{ opacity: 0, x: 20 }}
@@ -176,7 +179,7 @@ export default function Home() {
         </motion.header>
 
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center bg-[#0B0E11] pt-14 md:pt-16">
+        <section className="relative min-h-screen flex items-center justify-center bg-[#0B0E11] pt-32 !important">
           {/* Technical Grid Background */}
           <div className="absolute inset-0 opacity-20">
             <svg
@@ -209,7 +212,13 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="backdrop-blur-xl bg-black/40 border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/60 inner-glow max-w-2xl mx-auto"
+                className="backdrop-blur-xl rounded-3xl p-20 shadow-2xl max-w-2xl mx-auto"
+                style={{
+                  background: "rgba(255, 255, 255, 0.03) !important",
+                  backdropFilter: "blur(25px) !important",
+                  border: "1px solid rgba(255, 255, 255, 0.1) !important",
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
+                }}
               >
                 <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-8 mb-6 md:mb-8">
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/30 flex-shrink-0">
@@ -243,7 +252,12 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-bold text-gray-100 mb-6 leading-tight"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans text-gray-100 leading-tight mb-8 !important"
+                style={{
+                  fontWeight: "800 !important",
+                  letterSpacing: "-0.05em !important",
+                  marginBottom: "2rem !important",
+                }}
               >
                 Streamline Your
                 <span className="block text-teal-400">
@@ -256,8 +270,12 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto px-4"
-                style={{ lineHeight: 1.6, letterSpacing: "-0.01em" }}
+                className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed px-4 !important"
+                style={{
+                  maxWidth: "600px !important",
+                  margin: "0 auto 4rem auto !important",
+                  lineHeight: "1.8 !important",
+                }}
               >
                 Transform your maintenance operations with intelligent
                 automation, real-time visual feedback, and seamless workflow
