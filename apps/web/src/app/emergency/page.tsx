@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
+import BackButton from "@/components/BackButton";
 
 export default function EmergencyPage() {
   const router = useRouter();
@@ -75,8 +76,13 @@ export default function EmergencyPage() {
   return (
     <div
       style={{ backgroundColor: themeConfig.colors.background }}
-      className="min-h-screen"
+      className="min-h-screen relative"
     >
+      {/* Back Button */}
+      <div className="absolute top-6 left-6 z-50">
+        <BackButton fallback="/dashboard" />
+      </div>
+
       {/* Alert Banner */}
       <div
         className="px-8 py-4"

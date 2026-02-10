@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import AuthGuard from "@/components/AuthGuard";
+import BackButton from "@/components/BackButton";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import WebHeader from "@/components/WebHeader";
 
@@ -67,13 +68,19 @@ export default function AdminRequestsPage() {
         className="min-h-screen"
         style={{ backgroundColor: themeConfig.colors.background }}
       >
-        <WebHeader
-          title="Maintenance Requests"
-          breadcrumbs={[
-            { label: "Dashboard", href: "/admin/dashboard" },
-            { label: "Requests" },
-          ]}
-        />
+        <div className="relative">
+          <BackButton
+            fallback="/admin/dashboard"
+            className="absolute top-4 left-4 z-10"
+          />
+          <WebHeader
+            title="Maintenance Requests"
+            breadcrumbs={[
+              { label: "Dashboard", href: "/admin/dashboard" },
+              { label: "Requests", href: "/admin/requests" },
+            ]}
+          />
+        </div>
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8 flex flex-col sm:flex-row gap-4 justify-between items-center">
