@@ -17,39 +17,18 @@ const themes: {
   description: string;
 }[] = [
   {
-    value: "standard",
-    label: "Aerospace Midnight",
-    icon: "🚀",
+    value: "dark",
+    label: "Cyan Accents Dark",
+    icon: "🌙",
     colors: { primary: "#0B0E11", secondary: "#14b8a6" },
-    description: "Deep space black with cyan accents",
+    description: "Deep space with cyan highlights",
   },
   {
     value: "light",
-    label: "Aerospace Dawn",
-    icon: "✨",
-    colors: { primary: "#F8FAFC", secondary: "#0891b2" },
-    description: "Light horizon with sky blue highlights",
-  },
-  {
-    value: "dark",
-    label: "Aerospace Nebula",
-    icon: "🌌",
-    colors: { primary: "#0F172A", secondary: "#8b5cf6" },
-    description: "Cosmic dark with purple nebula accents",
-  },
-  {
-    value: "ocean",
-    label: "Aerospace Ocean",
-    icon: "�",
-    colors: { primary: "#0c4a6e", secondary: "#06b6d4" },
-    description: "Deep ocean blue with cyan waves",
-  },
-  {
-    value: "sunset",
-    label: "Aerospace Sunset",
-    icon: "🌅",
-    colors: { primary: "#431407", secondary: "#f97316" },
-    description: "Warm sunset with orange glow",
+    label: "Smooth White",
+    icon: "☀️",
+    colors: { primary: "#F8FAFC", secondary: "#14b8a6" },
+    description: "Clean white with cyan accents",
   },
 ];
 

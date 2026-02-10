@@ -1,4 +1,4 @@
-export type Theme = "standard" | "light" | "dark" | "ocean" | "sunset";
+export type Theme = "dark" | "light";
 
 export interface ThemeConfig {
   name: string;
@@ -20,9 +20,9 @@ export interface ThemeConfig {
 }
 
 export const themes: Record<Theme, ThemeConfig> = {
-  standard: {
-    name: "standard",
-    displayName: "Aerospace Midnight",
+  dark: {
+    name: "dark",
+    displayName: "Cyan Accents Dark",
     colors: {
       primary: "#0B0E11", // Deep space black
       secondary: "#14b8a6", // Cyan accents
@@ -40,71 +40,17 @@ export const themes: Record<Theme, ThemeConfig> = {
   },
   light: {
     name: "light",
-    displayName: "Aerospace Dawn",
+    displayName: "Smooth White",
     colors: {
-      primary: "#F8FAFC", // Light horizon
-      secondary: "#0891b2", // Sky blue
-      accent: "#0ea5e9", // Sky blue
+      primary: "#FFFFFF", // Pure white
+      secondary: "#14b8a6", // Cyan accents
+      accent: "#06b6d4", // Light cyan
       accent_amber: "#f59e0b", // Amber
-      background: "#F8FAFC", // Light horizon
-      surface: "#FFFFFF", // Pure white
-      text: "#0c4a6e", // Deep blue
+      background: "#F8FAFC", // Smooth white
+      surface: "rgba(255, 255, 255, 0.8)", // White glass
+      text: "#1e293b", // Dark text
       textSecondary: "#64748b", // Slate
-      border: "#e2e8f0", // Light border
-      success: "#10b981", // Emerald
-      warning: "#f59e0b", // Amber
-      error: "#ef4444", // Red
-    },
-  },
-  dark: {
-    name: "dark",
-    displayName: "Aerospace Nebula",
-    colors: {
-      primary: "#0F172A", // Cosmic dark
-      secondary: "#8b5cf6", // Purple nebula
-      accent: "#a78bfa", // Light purple
-      accent_amber: "#f59e0b", // Amber
-      background: "#0F172A", // Cosmic dark
-      surface: "rgba(139, 92, 246, 0.1)", // Purple glass
-      text: "#F8FAFC", // Light text
-      textSecondary: "#cbd5e1", // Muted light text
-      border: "rgba(139, 92, 246, 0.2)", // Purple border
-      success: "#10b981", // Emerald
-      warning: "#f59e0b", // Amber
-      error: "#ef4444", // Red
-    },
-  },
-  ocean: {
-    name: "ocean",
-    displayName: "Aerospace Ocean",
-    colors: {
-      primary: "#0c4a6e", // Deep ocean blue
-      secondary: "#06b6d4", // Cyan waves
-      accent: "#0891b2", // Ocean blue
-      accent_amber: "#f59e0b", // Amber
-      background: "#0c4a6e", // Deep ocean
-      surface: "rgba(6, 182, 212, 0.1)", // Cyan glass
-      text: "#F8FAFC", // Light text
-      textSecondary: "#cbd5e1", // Muted light text
-      border: "rgba(6, 182, 212, 0.2)", // Cyan border
-      success: "#10b981", // Emerald
-      warning: "#f59e0b", // Amber
-      error: "#ef4444", // Red
-    },
-  },
-  sunset: {
-    name: "sunset",
-    displayName: "Aerospace Sunset",
-    colors: {
-      primary: "#431407", // Warm sunset
-      secondary: "#f97316", // Orange glow
-      accent: "#fb923c", // Light orange
-      accent_amber: "#fbbf24", // Yellow amber
-      background: "#431407", // Warm sunset
-      surface: "rgba(249, 115, 22, 0.1)", // Orange glass
-      text: "#F8FAFC", // Light text
-      textSecondary: "#cbd5e1", // Muted light text
-      border: "rgba(249, 115, 22, 0.2)", // Orange border
+      border: "rgba(0, 0, 0, 0.1)", // Subtle border
       success: "#10b981", // Emerald
       warning: "#f59e0b", // Amber
       error: "#ef4444", // Red
@@ -116,9 +62,9 @@ export const themes: Record<Theme, ThemeConfig> = {
 export const getStoredTheme = (): Theme => {
   if (typeof window !== "undefined") {
     const stored = localStorage.getItem("ivf-theme") as Theme;
-    return stored && themes[stored] ? stored : "standard";
+    return stored && themes[stored] ? stored : "dark";
   }
-  return "standard";
+  return "dark";
 };
 
 export const setStoredTheme = (theme: Theme): void => {
@@ -130,7 +76,7 @@ export const setStoredTheme = (theme: Theme): void => {
 // Smart theme detection based on system preferences and time
 export const getSmartTheme = (): Theme => {
   if (typeof window === "undefined") {
-    return "standard";
+    return "dark";
   }
 
   // Check for system dark/light mode preference
@@ -154,9 +100,9 @@ export const getSmartTheme = (): Theme => {
   } else if (prefersLightScheme || isMorning) {
     return "light";
   } else if (isAfternoon) {
-    return "standard"; // Nature theme for afternoon
+    return "light"; // Light theme for afternoon
   } else {
-    return "standard"; // Default to standard for evening
+    return "dark"; // Default to dark for evening
   }
 };
 
