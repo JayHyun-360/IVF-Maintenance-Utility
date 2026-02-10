@@ -43,13 +43,13 @@ export default function Home() {
 
   return (
     <MobileNavigationWrapper>
-      <div className="min-h-screen bg-white text-gray-900">
+      <div className="min-h-screen bg-[#0B0E11] text-gray-100 relative overflow-hidden">
         {/* Modern Navigation Header */}
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100"
+          className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
             <div className="flex items-center justify-between h-14 md:h-16">
@@ -61,7 +61,7 @@ export default function Home() {
                 className="flex items-center gap-2 md:gap-3"
               >
                 <motion.div
-                  className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-lg"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-teal-500/25"
                   whileHover={{ scale: 1.05, rotate: 3 }}
                 >
                   <svg
@@ -79,13 +79,13 @@ export default function Home() {
                   </svg>
                 </motion.div>
                 <div className="hidden sm:block">
-                  <h1 className="text-lg md:text-xl font-bold text-gray-900">
+                  <h1 className="text-lg md:text-xl font-bold text-gray-100">
                     Integrated Visual Feedback
                   </h1>
-                  <p className="text-xs text-gray-500">Maintenance Utility</p>
+                  <p className="text-xs text-gray-400">Maintenance Utility</p>
                 </div>
                 <div className="sm:hidden">
-                  <h1 className="text-lg font-bold text-gray-900">
+                  <h1 className="text-lg font-bold text-gray-100">
                     IVF Utility
                   </h1>
                 </div>
@@ -109,8 +109,8 @@ export default function Home() {
                     }
                     className={`text-sm font-medium transition-colors ${
                       item.active
-                        ? "text-green-600"
-                        : "text-gray-600 hover:text-gray-900"
+                        ? "text-teal-400"
+                        : "text-gray-400 hover:text-gray-100"
                     }`}
                     whileHover={{ scale: 1.05 }}
                   >
@@ -127,7 +127,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
                     onClick={() => router.push("/dashboard")}
-                    className="px-3 py-2 md:px-4 md:py-2 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-colors shadow-md"
+                    className="px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-lg font-medium text-sm hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-0.5"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -140,7 +140,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
                     onClick={() => router.push("/login")}
-                    className="px-3 py-2 md:px-4 md:py-2 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-colors shadow-md"
+                    className="px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-lg font-medium text-sm hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-0.5"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -155,23 +155,26 @@ export default function Home() {
         </motion.header>
 
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white pt-14 md:pt-16">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-50">
+        <section className="relative min-h-screen flex items-center justify-center bg-[#0B0E11] pt-14 md:pt-16">
+          {/* Technical Grid Background */}
+          <div className="absolute inset-0 opacity-20">
             <svg
-              width="60"
-              height="60"
-              viewBox="0 0 60 60"
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
               xmlns="http://www.w3.org/2000/svg"
               className="w-full h-full"
             >
               <g fill="none" fillRule="evenodd">
-                <g fill="#10b981" fillOpacity="0.03">
-                  <path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z" />
+                <g stroke="#14b8a6" strokeWidth="0.5" opacity="0.3">
+                  <path d="M0 0h40v40H0z M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40" />
                 </g>
               </g>
             </svg>
           </div>
+
+          {/* Teal Mesh Gradient Glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
             <motion.div
@@ -180,17 +183,17 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="max-w-4xl mx-auto"
             >
-              {/* Logo and Badge */}
+              {/* Glassmorphic Hero Panel */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="mb-6 md:mb-8"
+                className="backdrop-blur-xl bg-black/30 border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/50 inner-glow"
               >
-                <div className="inline-flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center shadow-xl">
+                <div className="inline-flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                  <div className="w-14 h-14 md:w-18 md:h-18 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/25">
                     <svg
-                      className="w-6 h-6 md:w-10 md:h-10 text-white"
+                      className="w-7 h-7 md:w-10 md:h-10 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -204,10 +207,10 @@ export default function Home() {
                     </svg>
                   </div>
                   <div className="text-left">
-                    <h1 className="text-lg md:text-2xl font-bold text-gray-900">
+                    <h1 className="text-xl md:text-3xl font-sans font-bold text-gray-100">
                       Integrated Visual Feedback
                     </h1>
-                    <p className="text-xs md:text-sm text-gray-500">
+                    <p className="text-sm md:text-base text-gray-400">
                       Maintenance Utility
                     </p>
                   </div>
@@ -219,10 +222,10 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-bold text-gray-100 mb-6 leading-tight"
               >
                 Streamline Your
-                <span className="block text-green-600">
+                <span className="block text-teal-400">
                   Maintenance Operations
                 </span>
               </motion.h1>
@@ -232,7 +235,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto px-4"
+                className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto px-4"
               >
                 Transform your maintenance operations with intelligent
                 automation, real-time visual feedback, and seamless workflow
@@ -248,7 +251,7 @@ export default function Home() {
               >
                 <motion.button
                   onClick={() => router.push("/login")}
-                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-green-600 text-white rounded-xl font-semibold text-base md:text-lg hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-lime-400 to-teal-500 text-gray-900 rounded-xl font-semibold text-base md:text-lg hover:from-lime-300 hover:to-teal-400 transition-all duration-300 shadow-lg shadow-lime-400/25 hover:shadow-lime-400/40 transform hover:-translate-y-1"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -270,7 +273,7 @@ export default function Home() {
 
                 <motion.button
                   onClick={() => router.push("#features")}
-                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-white text-gray-900 rounded-xl font-semibold text-base md:text-lg border-2 border-gray-200 hover:border-green-600 hover:text-green-600 transition-all duration-300"
+                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 backdrop-blur-sm bg-white/10 text-gray-100 rounded-xl font-semibold text-base md:text-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -283,7 +286,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto"
+                className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto"
               >
                 {[
                   {
@@ -306,12 +309,12 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 + i * 0.1 }}
                     whileHover={{ scale: 1.05 }}
-                    className="text-center p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-gray-100 hover:shadow-lg transition-all"
+                    className="text-center p-4 rounded-xl backdrop-blur-sm bg-black/20 border border-white/10 hover:bg-black/30 transition-all"
                   >
-                    <div className="text-2xl md:text-3xl font-bold text-green-600 mb-2 counter">
+                    <div className="text-2xl md:text-3xl font-mono font-bold text-teal-400 mb-2 counter">
                       {stat.value}
                     </div>
-                    <div className="text-xs md:text-sm text-gray-600 font-medium">
+                    <div className="text-xs md:text-sm text-gray-400 font-medium">
                       {stat.label}
                     </div>
                   </motion.div>
