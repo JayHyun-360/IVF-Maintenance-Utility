@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { addMaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import BackButton from "@/components/BackButton";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import Image from "next/image";
@@ -216,6 +217,7 @@ export default function UserPage() {
             </button>
 
             <div className="flex items-center gap-4">
+              <BackButton fallback="/dashboard" />
               <ThemeSwitcher />
               <div
                 className="w-10 h-10 rounded-full border-2 overflow-hidden"

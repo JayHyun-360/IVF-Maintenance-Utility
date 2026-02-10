@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import BackButton from "@/components/BackButton";
 import { Z_INDEX } from "@/lib/z-index";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 
@@ -137,6 +138,14 @@ export default function RegisterPage() {
         style={{ zIndex: Z_INDEX.DROPDOWN }}
       >
         <ThemeSwitcher />
+      </div>
+
+      {/* Back Button */}
+      <div
+        className={`fixed ${isMobile ? "top-4 left-4" : "top-6 left-6"}`}
+        style={{ zIndex: Z_INDEX.DROPDOWN }}
+      >
+        <BackButton fallback="/" />
       </div>
 
       {/* Main Content */}

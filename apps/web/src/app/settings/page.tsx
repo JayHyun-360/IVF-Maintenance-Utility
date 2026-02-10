@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
@@ -130,6 +131,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="flex items-center gap-3">
+              <BackButton fallback="/dashboard" />
               <ThemeSwitcher />
             </div>
           </div>

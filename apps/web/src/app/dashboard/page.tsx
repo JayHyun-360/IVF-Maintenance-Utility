@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
+import BackButton from "@/components/BackButton";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -42,9 +43,14 @@ export default function DashboardPage() {
   // Show loading state while redirecting
   return (
     <div
-      className="min-h-screen flex items-center justify-center"
+      className="min-h-screen flex items-center justify-center relative"
       style={{ backgroundColor: themeConfig.colors.background }}
     >
+      {/* Back Button */}
+      <div className="absolute top-6 left-6 z-50">
+        <BackButton fallback="/" />
+      </div>
+
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
         <p style={{ color: themeConfig.colors.text }}>

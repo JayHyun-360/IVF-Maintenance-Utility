@@ -6,6 +6,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import BackButton from "@/components/BackButton";
 import { Z_INDEX } from "@/lib/z-index";
 
 // Mock data for demonstration
@@ -313,7 +314,10 @@ export default function AdminDashboard() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <ThemeSwitcher />
+              <div className="flex items-center gap-4">
+                <BackButton fallback="/dashboard" />
+                <ThemeSwitcher />
+              </div>
             </div>
           </div>
 
