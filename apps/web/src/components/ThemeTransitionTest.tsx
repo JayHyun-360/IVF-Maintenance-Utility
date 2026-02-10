@@ -34,22 +34,22 @@ export default function ThemeTransitionTest() {
 
       <div className="grid grid-cols-3 gap-4">
         <button
-          onClick={() => testThemeTransition("standard")}
+          onClick={() => testThemeTransition("dark")}
           disabled={isTransitioning}
           className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-            theme === "standard" ? "ring-2 ring-green-500" : ""
+            theme === "dark" ? "ring-2 ring-green-500" : ""
           }`}
           style={{
             backgroundColor:
-              theme === "standard"
+              theme === "dark"
                 ? themeConfig.colors.primary
                 : themeConfig.colors.background,
-            color: theme === "standard" ? "#FFFFFF" : themeConfig.colors.text,
+            color: theme === "dark" ? "#FFFFFF" : themeConfig.colors.text,
             border: `1px solid ${themeConfig.colors.border}`,
             opacity: isTransitioning ? 0.6 : 1,
           }}
         >
-          🌿 Standard
+          � Dark
         </button>
 
         <button
