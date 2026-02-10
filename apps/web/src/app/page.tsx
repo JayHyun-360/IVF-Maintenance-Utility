@@ -211,7 +211,7 @@ export default function Home() {
                 transition={{ delay: 0.2 }}
                 className="backdrop-blur-xl bg-black/40 border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/60 inner-glow max-w-2xl mx-auto"
               >
-                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-2 md:mb-4">
+                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-1 md:mb-2">
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/30 flex-shrink-0">
                     <svg
                       className="w-7 h-7 md:w-10 md:h-10 text-white"
