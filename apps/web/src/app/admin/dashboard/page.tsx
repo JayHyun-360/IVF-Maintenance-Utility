@@ -6,7 +6,7 @@ import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
 import AccountDropdown from "@/components/AccountDropdown";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Types
 interface DashboardStats {
@@ -21,11 +21,15 @@ interface DashboardStats {
 interface MaintenanceRequest {
   id: string;
   title: string;
+  description: string;
   category: string;
   priority: string;
   status: string;
   requestedBy: string;
   createdAt: string;
+  updatedAt: string;
+  location: string;
+  images: string[];
   user?: {
     name: string;
     email: string;
@@ -137,6 +141,13 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  // Request management state
+  const [selectedRequest, setSelectedRequest] =
+    useState<MaintenanceRequest | null>(null);
+  const [showImageViewer, setShowImageViewer] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [editingStatus, setEditingStatus] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -258,43 +269,306 @@ export default function AdminDashboard() {
 
       setStats(transformedStats);
 
-      // Fetch recent requests
-      const requestsResponse = await fetch("/api/requests?limit=5");
-      if (!requestsResponse.ok) {
-        throw new Error("Failed to fetch requests");
-      }
-      const requestsData = await requestsResponse.json();
+      // Create 20 mock maintenance requests with images
+      const mockRequests: MaintenanceRequest[] = [
+        {
+          id: "REQ-001",
+          title: "Air Conditioning Unit Not Working",
+          description:
+            "AC unit in Room 203 is not cooling properly, temperature is too high.",
+          category: "HVAC",
+          priority: "High",
+          status: "Pending",
+          requestedBy: "John Smith",
+          createdAt: "02/10/2026 14:30:00",
+          updatedAt: "02/10/2026 14:30:00",
+          location: "Room 203, Building A",
+          images: [
+            "https://picsum.photos/seed/ac-unit/400/300.jpg",
+            "https://picsum.photos/seed/ac-unit2/400/300.jpg",
+          ],
+        },
+        {
+          id: "REQ-002",
+          title: "Water Leak in Bathroom",
+          description:
+            "Water leaking from ceiling in men's bathroom on 2nd floor.",
+          category: "Plumbing",
+          priority: "Critical",
+          status: "In Progress",
+          requestedBy: "Maria Garcia",
+          createdAt: "02/10/2026 12:15:00",
+          updatedAt: "02/10/2026 13:45:00",
+          location: "2nd Floor Men's Bathroom, Building B",
+          images: ["https://picsum.photos/seed/water-leak/400/300.jpg"],
+        },
+        {
+          id: "REQ-003",
+          title: "Broken Window",
+          description: "Window cracked in classroom 105 due to storm damage.",
+          category: "Structural",
+          priority: "Medium",
+          status: "Completed",
+          requestedBy: "Robert Johnson",
+          createdAt: "02/09/2026 09:00:00",
+          updatedAt: "02/10/2026 11:30:00",
+          location: "Classroom 105, Building A",
+          images: [
+            "https://picsum.photos/seed/broken-window/400/300.jpg",
+            "https://picsum.photos/seed/window-repair/400/300.jpg",
+          ],
+        },
+        {
+          id: "REQ-004",
+          title: "Electrical Outlet Not Working",
+          description: "Power outlet near teacher's desk not functioning.",
+          category: "Electrical",
+          priority: "Low",
+          status: "Pending",
+          requestedBy: "Sarah Williams",
+          createdAt: "02/10/2026 16:20:00",
+          updatedAt: "02/10/2026 16:20:00",
+          location: "Classroom 201, Building A",
+          images: ["https://picsum.photos/seed/outlet/400/300.jpg"],
+        },
+        {
+          id: "REQ-005",
+          title: "Fire Alarm System Check",
+          description:
+            "Monthly fire alarm system inspection and testing required.",
+          category: "Safety",
+          priority: "High",
+          status: "In Progress",
+          requestedBy: "David Brown",
+          createdAt: "02/10/2026 08:00:00",
+          updatedAt: "02/10/2026 10:15:00",
+          location: "Main Building, All Floors",
+          images: [
+            "https://picsum.photos/seed/fire-alarm/400/300.jpg",
+            "https://picsum.photos/seed/alarm-panel/400/300.jpg",
+          ],
+        },
+        {
+          id: "REQ-006",
+          title: "Parking Lot Lighting",
+          description:
+            "Several lights in parking lot are not working, creating safety concerns.",
+          category: "Electrical",
+          priority: "Medium",
+          status: "Pending",
+          requestedBy: "Jennifer Davis",
+          createdAt: "02/10/2026 17:45:00",
+          updatedAt: "02/10/2026 17:45:00",
+          location: "Main Parking Lot",
+          images: ["https://picsum.photos/seed/parking-lights/400/300.jpg"],
+        },
+        {
+          id: "REQ-007",
+          title: "Door Lock Replacement",
+          description:
+            "Main entrance door lock needs replacement for security reasons.",
+          category: "Security",
+          priority: "High",
+          status: "Completed",
+          requestedBy: "Michael Wilson",
+          createdAt: "02/08/2026 11:30:00",
+          updatedAt: "02/09/2026 15:00:00",
+          location: "Main Entrance, Building A",
+          images: [
+            "https://picsum.photos/seed/door-lock/400/300.jpg",
+            "https://picsum.photos/seed/new-lock/400/300.jpg",
+          ],
+        },
+        {
+          id: "REQ-008",
+          title: "Clogged Drain",
+          description:
+            "Kitchen sink drain is completely clogged and backing up.",
+          category: "Plumbing",
+          priority: "Medium",
+          status: "Dismissed",
+          requestedBy: "Linda Martinez",
+          createdAt: "02/09/2026 13:20:00",
+          updatedAt: "02/10/2026 09:30:00",
+          location: "Cafeteria Kitchen, Building B",
+          images: ["https://picsum.photos/seed/clogged-drain/400/300.jpg"],
+        },
+        {
+          id: "REQ-009",
+          title: "Roof Leak",
+          description:
+            "Water leaking through roof during rain in storage room.",
+          category: "Structural",
+          priority: "Critical",
+          status: "In Progress",
+          requestedBy: "James Anderson",
+          createdAt: "02/09/2026 20:15:00",
+          updatedAt: "02/10/2026 14:00:00",
+          location: "Storage Room, Building C",
+          images: [
+            "https://picsum.photos/seed/roof-leak/400/300.jpg",
+            "https://picsum.photos/seed/water-damage/400/300.jpg",
+          ],
+        },
+        {
+          id: "REQ-010",
+          title: "Internet Connection Issues",
+          description: "WiFi not working in computer lab, affecting classes.",
+          category: "IT",
+          priority: "High",
+          status: "Pending",
+          requestedBy: "Patricia Taylor",
+          createdAt: "02/10/2026 10:30:00",
+          updatedAt: "02/10/2026 10:30:00",
+          location: "Computer Lab, Building A",
+          images: ["https://picsum.photos/seed/wifi-issue/400/300.jpg"],
+        },
+        {
+          id: "REQ-011",
+          title: "Elevator Maintenance",
+          description: "Elevator making unusual noises and slow operation.",
+          category: "Mechanical",
+          priority: "Medium",
+          status: "In Progress",
+          requestedBy: "Christopher Lee",
+          createdAt: "02/09/2026 15:45:00",
+          updatedAt: "02/10/2026 12:00:00",
+          location: "Elevator Shaft, Building B",
+          images: ["https://picsum.photos/seed/elevator/400/300.jpg"],
+        },
+        {
+          id: "REQ-012",
+          title: "Paint Touch-ups",
+          description:
+            "Walls in hallway need painting due to scuff marks and damage.",
+          category: "Cosmetic",
+          priority: "Low",
+          status: "Pending",
+          requestedBy: "Nancy Thomas",
+          createdAt: "02/10/2026 09:15:00",
+          updatedAt: "02/10/2026 09:15:00",
+          location: "Main Hallway, Building A",
+          images: ["https://picsum.photos/seed/wall-damage/400/300.jpg"],
+        },
+        {
+          id: "REQ-013",
+          title: "Pest Control",
+          description:
+            "Signs of pest activity in kitchen area, immediate attention needed.",
+          category: "Sanitation",
+          priority: "High",
+          status: "Completed",
+          requestedBy: "Daniel Jackson",
+          createdAt: "02/08/2026 07:00:00",
+          updatedAt: "02/09/2026 16:30:00",
+          location: "Kitchen Area, Building B",
+          images: ["https://picsum.photos/seed/pest-control/400/300.jpg"],
+        },
+        {
+          id: "REQ-014",
+          title: "Floor Tile Replacement",
+          description:
+            "Broken floor tiles in main lobby creating tripping hazard.",
+          category: "Structural",
+          priority: "Medium",
+          status: "In Progress",
+          requestedBy: "Karen White",
+          createdAt: "02/09/2026 14:00:00",
+          updatedAt: "02/10/2026 11:00:00",
+          location: "Main Lobby, Building A",
+          images: [
+            "https://picsum.photos/seed/broken-tiles/400/300.jpg",
+            "https://picsum.photos/seed/floor-repair/400/300.jpg",
+          ],
+        },
+        {
+          id: "REQ-015",
+          title: "Security Camera Installation",
+          description:
+            "Install new security cameras in parking lot for improved monitoring.",
+          category: "Security",
+          priority: "Medium",
+          status: "Pending",
+          requestedBy: "Paul Harris",
+          createdAt: "02/10/2026 13:00:00",
+          updatedAt: "02/10/2026 13:00:00",
+          location: "Parking Lot, All Areas",
+          images: ["https://picsum.photos/seed/security-camera/400/300.jpg"],
+        },
+        {
+          id: "REQ-016",
+          title: "HVAC Filter Replacement",
+          description:
+            "Regular maintenance: replace HVAC filters in all buildings.",
+          category: "HVAC",
+          priority: "Low",
+          status: "Completed",
+          requestedBy: "Lisa Martin",
+          createdAt: "02/07/2026 08:30:00",
+          updatedAt: "02/08/2026 17:00:00",
+          location: "All Buildings",
+          images: ["https://picsum.photos/seed/hvac-filter/400/300.jpg"],
+        },
+        {
+          id: "REQ-017",
+          title: "Emergency Exit Sign",
+          description:
+            "Emergency exit sign not illuminated, needs immediate repair.",
+          category: "Safety",
+          priority: "Critical",
+          status: "In Progress",
+          requestedBy: "Anthony Thompson",
+          createdAt: "02/10/2026 06:30:00",
+          updatedAt: "02/10/2026 08:00:00",
+          location: "Emergency Exit, Building C",
+          images: ["https://picsum.photos/seed/exit-sign/400/300.jpg"],
+        },
+        {
+          id: "REQ-018",
+          title: "Computer Lab Equipment",
+          description: "Several computers not booting up properly in lab.",
+          category: "IT",
+          priority: "Medium",
+          status: "Pending",
+          requestedBy: "Michelle Garcia",
+          createdAt: "02/10/2026 15:00:00",
+          updatedAt: "02/10/2026 15:00:00",
+          location: "Computer Lab, Building B",
+          images: ["https://picsum.photos/seed/computer-issue/400/300.jpg"],
+        },
+        {
+          id: "REQ-019",
+          title: "Gym Equipment Maintenance",
+          description: "Treadmill making grinding noise, needs inspection.",
+          category: "Mechanical",
+          priority: "Low",
+          status: "Dismissed",
+          requestedBy: "Kevin Rodriguez",
+          createdAt: "02/08/2026 12:00:00",
+          updatedAt: "02/09/2026 14:15:00",
+          location: "Gym, Building D",
+          images: ["https://picsum.photos/seed/treadmill/400/300.jpg"],
+        },
+        {
+          id: "REQ-020",
+          title: "Handicap Access Ramp",
+          description:
+            "Ramp needs repair for wheelchair accessibility compliance.",
+          category: "Structural",
+          priority: "High",
+          status: "Pending",
+          requestedBy: "Ashley Martinez",
+          createdAt: "02/10/2026 11:45:00",
+          updatedAt: "02/10/2026 11:45:00",
+          location: "Main Entrance, Building A",
+          images: [
+            "https://picsum.photos/seed/access-ramp/400/300.jpg",
+            "https://picsum.photos/seed/ramp-repair/400/300.jpg",
+          ],
+        },
+      ];
 
-      // Transform and format requests data
-      const transformedRequests: MaintenanceRequest[] = requestsData.map(
-        (req: any) => ({
-          id: `REQ-${String(req.id).padStart(3, "0")}`,
-          title: req.title,
-          category: req.category,
-          priority: req.priority,
-          status: req.status
-            .toLowerCase()
-            .replace("_", " ")
-            .replace("pending", "Pending")
-            .replace("in progress", "In Progress")
-            .replace("completed", "Completed")
-            .replace("cancelled", "Cancelled"),
-          requestedBy: req.user?.name || "Unknown User",
-          createdAt: new Date(req.createdAt)
-            .toLocaleString("en-US", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false,
-            })
-            .replace(",", ""),
-        }),
-      );
-
-      setRecentRequests(transformedRequests);
+      setRecentRequests(mockRequests.slice(0, 5)); // Show first 5 in overview
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
       setError("Failed to load dashboard data. Please try again.");
@@ -319,6 +593,62 @@ export default function AdminDashboard() {
 
   const handleViewAllRequests = () => {
     router.push("/admin/requests");
+  };
+
+  // Request management functions
+  const handleViewImages = (
+    request: MaintenanceRequest,
+    imageIndex: number = 0,
+  ) => {
+    setSelectedRequest(request);
+    setSelectedImageIndex(imageIndex);
+    setShowImageViewer(true);
+  };
+
+  const handleCloseImageViewer = () => {
+    setShowImageViewer(false);
+    setSelectedRequest(null);
+    setSelectedImageIndex(0);
+  };
+
+  const handleStatusChange = (requestId: string, newStatus: string) => {
+    setRecentRequests((prev) =>
+      prev.map((req) =>
+        req.id === requestId
+          ? {
+              ...req,
+              status: newStatus,
+              updatedAt: new Date()
+                .toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: false,
+                })
+                .replace(",", ""),
+            }
+          : req,
+      ),
+    );
+    setEditingStatus(null);
+  };
+
+  const handlePreviousImage = () => {
+    if (selectedRequest && selectedImageIndex > 0) {
+      setSelectedImageIndex(selectedImageIndex - 1);
+    }
+  };
+
+  const handleNextImage = () => {
+    if (
+      selectedRequest &&
+      selectedImageIndex < selectedRequest.images.length - 1
+    ) {
+      setSelectedImageIndex(selectedImageIndex + 1);
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -780,9 +1110,7 @@ export default function AdminDashboard() {
                                 duration: 0.3,
                                 ease: "easeOut",
                               }}
-                              className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                              whileHover={{ x: 5 }}
-                              onClick={() => handleRequestClick(request.id)}
+                              className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300"
                             >
                               <div className="flex items-start justify-between">
                                 <div className="flex-1 min-w-0">
@@ -795,18 +1123,54 @@ export default function AdminDashboard() {
                                     >
                                       {request.priority}
                                     </span>
-                                    <span
-                                      className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10`}
-                                    >
-                                      {request.status}
-                                    </span>
+
+                                    {/* Status Edit Dropdown */}
+                                    <div className="relative">
+                                      {editingStatus === request.id ? (
+                                        <select
+                                          value={request.status}
+                                          onChange={(e) =>
+                                            handleStatusChange(
+                                              request.id,
+                                              e.target.value,
+                                            )
+                                          }
+                                          onBlur={() => setEditingStatus(null)}
+                                          className="text-xs px-2 py-1 rounded-full font-mono bg-gray-800/50 border border-gray-600/50 text-gray-300 focus:outline-none focus:border-teal-500/50"
+                                          autoFocus
+                                        >
+                                          <option value="Pending">
+                                            Pending
+                                          </option>
+                                          <option value="In Progress">
+                                            In Progress
+                                          </option>
+                                          <option value="Completed">
+                                            Completed
+                                          </option>
+                                          <option value="Dismissed">
+                                            Dismissed
+                                          </option>
+                                        </select>
+                                      ) : (
+                                        <button
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            setEditingStatus(request.id);
+                                          }}
+                                          className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10 hover:bg-current/20 transition-colors duration-200`}
+                                        >
+                                          {request.status}
+                                        </button>
+                                      )}
+                                    </div>
                                   </div>
 
                                   <h3 className="text-gray-100 font-medium mb-1 truncate">
                                     {request.title}
                                   </h3>
 
-                                  <div className="flex items-center gap-4 text-xs text-gray-400">
+                                  <div className="flex items-center gap-4 text-xs text-gray-400 mb-2">
                                     <span className="font-mono">
                                       {request.category}
                                     </span>
@@ -817,6 +1181,86 @@ export default function AdminDashboard() {
                                       {request.createdAt}
                                     </span>
                                   </div>
+
+                                  {/* Images Display */}
+                                  {request.images.length > 0 && (
+                                    <div className="flex items-center gap-2">
+                                      <div className="flex gap-1">
+                                        {request.images
+                                          .slice(0, 3)
+                                          .map((image, index) => (
+                                            <button
+                                              key={index}
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleViewImages(
+                                                  request,
+                                                  index,
+                                                );
+                                              }}
+                                              className="relative w-12 h-12 rounded-lg overflow-hidden border border-white/10 hover:border-teal-500/50 transition-colors duration-200"
+                                            >
+                                              <img
+                                                src={image}
+                                                alt={`Request image ${index + 1}`}
+                                                className="w-full h-full object-cover"
+                                              />
+                                              {index === 2 &&
+                                                request.images.length > 3 && (
+                                                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                                    <span className="text-white text-xs font-bold">
+                                                      +
+                                                      {request.images.length -
+                                                        3}
+                                                    </span>
+                                                  </div>
+                                                )}
+                                            </button>
+                                          ))}
+                                      </div>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleViewImages(request, 0);
+                                        }}
+                                        className="text-xs text-teal-400 hover:text-teal-300 transition-colors duration-200"
+                                      >
+                                        View All ({request.images.length})
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-col gap-2 ml-4">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleRequestClick(request.id);
+                                    }}
+                                    className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
+                                    title="View Details"
+                                  >
+                                    <svg
+                                      className="w-4 h-4"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                      />
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                      />
+                                    </svg>
+                                  </button>
                                 </div>
                               </div>
                             </motion.div>
@@ -1342,6 +1786,144 @@ export default function AdminDashboard() {
             </div>
           </div>
         </main>
+
+        {/* Image Viewer Modal */}
+        <AnimatePresence>
+          {showImageViewer && selectedRequest && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+              onClick={handleCloseImageViewer}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring", bounce: 0.3 }}
+                className="relative max-w-6xl max-h-[90vh] w-full mx-4"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-b from-black/80 to-transparent p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-white">
+                      <h3 className="text-lg font-bold">
+                        {selectedRequest.title}
+                      </h3>
+                      <p className="text-sm text-gray-300">
+                        {selectedRequest.id} • {selectedRequest.location}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleCloseImageViewer}
+                      className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-200"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Image Container */}
+                <div className="relative bg-black rounded-lg overflow-hidden">
+                  <img
+                    src={selectedRequest.images[selectedImageIndex]}
+                    alt={`${selectedRequest.title} - Image ${selectedImageIndex + 1}`}
+                    className="w-full h-auto max-h-[70vh] object-contain"
+                  />
+
+                  {/* Navigation Arrows */}
+                  {selectedRequest.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={handlePreviousImage}
+                        disabled={selectedImageIndex === 0}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 19l-7-7 7-7"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={handleNextImage}
+                        disabled={
+                          selectedImageIndex ===
+                          selectedRequest.images.length - 1
+                        }
+                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {/* Footer */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <div className="flex items-center justify-between text-white">
+                    <div className="text-sm">
+                      <span className="font-medium">
+                        {selectedImageIndex + 1}
+                      </span>
+                      <span className="text-gray-300">
+                        {" "}
+                        / {selectedRequest.images.length}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      {selectedRequest.images.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setSelectedImageIndex(index)}
+                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                            index === selectedImageIndex
+                              ? "bg-white w-8"
+                              : "bg-white/50 hover:bg-white/70"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </AuthGuard>
   );
