@@ -1,4 +1,4 @@
-export type Theme = "standard" | "light" | "dark";
+export type Theme = "standard" | "light" | "dark" | "ocean" | "sunset";
 
 export interface ThemeConfig {
   name: string;
@@ -22,56 +22,92 @@ export interface ThemeConfig {
 export const themes: Record<Theme, ThemeConfig> = {
   standard: {
     name: "standard",
-    displayName: "Academic Minimalist",
+    displayName: "Aerospace Midnight",
     colors: {
-      primary: "#0F766E", // Modern teal green
-      secondary: "#FFFFFF", // Pure white
-      accent: "#6366F1", // Professional indigo
-      accent_amber: "#F59E0B", // Amber accent
-      background: "#F8FAFC", // Soft light gray
-      surface: "#FFFFFF", // Pure white
-      text: "#1E293B", // Dark slate
-      textSecondary: "#64748B", // Slate
-      border: "#E2E8F0", // Light gray border
-      success: "#10B981", // Emerald green
-      warning: "#F59E0B", // Amber
-      error: "#EF4444", // Red
+      primary: "#0B0E11", // Deep space black
+      secondary: "#14b8a6", // Cyan accents
+      accent: "#06b6d4", // Light cyan
+      accent_amber: "#f59e0b", // Amber
+      background: "#0B0E11", // Deep space black
+      surface: "rgba(255, 255, 255, 0.03)", // Glassmorphism surface
+      text: "#F8FAFC", // Light text
+      textSecondary: "#94a3b8", // Muted light text
+      border: "rgba(255, 255, 255, 0.1)", // Glass border
+      success: "#10b981", // Emerald
+      warning: "#f59e0b", // Amber
+      error: "#ef4444", // Red
     },
   },
   light: {
     name: "light",
-    displayName: "Academic Light",
+    displayName: "Aerospace Dawn",
     colors: {
-      primary: "#0891B2", // Cyan blue
-      secondary: "#FFFFFF", // Pure white
-      accent: "#0EA5E9", // Sky blue
-      accent_amber: "#F59E0B", // Amber accent
-      background: "#F0F9FF", // Very light blue tint
+      primary: "#F8FAFC", // Light horizon
+      secondary: "#0891b2", // Sky blue
+      accent: "#0ea5e9", // Sky blue
+      accent_amber: "#f59e0b", // Amber
+      background: "#F8FAFC", // Light horizon
       surface: "#FFFFFF", // Pure white
-      text: "#0C4A6E", // Deep blue
-      textSecondary: "#64748B", // Slate
-      border: "#BAE6FD", // Light blue border
-      success: "#10B981", // Emerald green
-      warning: "#F59E0B", // Amber
-      error: "#EF4444", // Red
+      text: "#0c4a6e", // Deep blue
+      textSecondary: "#64748b", // Slate
+      border: "#e2e8f0", // Light border
+      success: "#10b981", // Emerald
+      warning: "#f59e0b", // Amber
+      error: "#ef4444", // Red
     },
   },
   dark: {
     name: "dark",
-    displayName: "Academic Dark",
+    displayName: "Aerospace Nebula",
     colors: {
-      primary: "#1B4332", // Deep forest green
-      secondary: "#FFFFFF", // Pure white
-      accent: "#64748B", // Slate
-      accent_amber: "#F59E0B", // Amber accent
-      background: "#0F172A", // Dark slate
-      surface: "#1E293B", // Darker surface
+      primary: "#0F172A", // Cosmic dark
+      secondary: "#8b5cf6", // Purple nebula
+      accent: "#a78bfa", // Light purple
+      accent_amber: "#f59e0b", // Amber
+      background: "#0F172A", // Cosmic dark
+      surface: "rgba(139, 92, 246, 0.1)", // Purple glass
       text: "#F8FAFC", // Light text
-      textSecondary: "#CBD5E1", // Muted light text
-      border: "#334155", // Dark border
-      success: "#1B4332", // Primary green
-      warning: "#F59E0B", // Amber
-      error: "#EF4444", // Red
+      textSecondary: "#cbd5e1", // Muted light text
+      border: "rgba(139, 92, 246, 0.2)", // Purple border
+      success: "#10b981", // Emerald
+      warning: "#f59e0b", // Amber
+      error: "#ef4444", // Red
+    },
+  },
+  ocean: {
+    name: "ocean",
+    displayName: "Aerospace Ocean",
+    colors: {
+      primary: "#0c4a6e", // Deep ocean blue
+      secondary: "#06b6d4", // Cyan waves
+      accent: "#0891b2", // Ocean blue
+      accent_amber: "#f59e0b", // Amber
+      background: "#0c4a6e", // Deep ocean
+      surface: "rgba(6, 182, 212, 0.1)", // Cyan glass
+      text: "#F8FAFC", // Light text
+      textSecondary: "#cbd5e1", // Muted light text
+      border: "rgba(6, 182, 212, 0.2)", // Cyan border
+      success: "#10b981", // Emerald
+      warning: "#f59e0b", // Amber
+      error: "#ef4444", // Red
+    },
+  },
+  sunset: {
+    name: "sunset",
+    displayName: "Aerospace Sunset",
+    colors: {
+      primary: "#431407", // Warm sunset
+      secondary: "#f97316", // Orange glow
+      accent: "#fb923c", // Light orange
+      accent_amber: "#fbbf24", // Yellow amber
+      background: "#431407", // Warm sunset
+      surface: "rgba(249, 115, 22, 0.1)", // Orange glass
+      text: "#F8FAFC", // Light text
+      textSecondary: "#cbd5e1", // Muted light text
+      border: "rgba(249, 115, 22, 0.2)", // Orange border
+      success: "#10b981", // Emerald
+      warning: "#f59e0b", // Amber
+      error: "#ef4444", // Red
     },
   },
 };
