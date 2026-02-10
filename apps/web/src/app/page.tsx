@@ -188,10 +188,10 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="backdrop-blur-xl bg-black/30 border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/50 inner-glow"
+                className="backdrop-blur-xl bg-black/40 border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/60 inner-glow max-w-2xl mx-auto"
               >
-                <div className="inline-flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-14 h-14 md:w-18 md:h-18 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/25">
+                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-6 md:mb-8">
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/30 flex-shrink-0">
                     <svg
                       className="w-7 h-7 md:w-10 md:h-10 text-white"
                       fill="none"
@@ -206,11 +206,11 @@ export default function Home() {
                       />
                     </svg>
                   </div>
-                  <div className="text-left">
-                    <h1 className="text-xl md:text-3xl font-sans font-bold text-gray-100">
+                  <div className="text-left sm:text-center lg:text-left">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-gray-100 leading-tight">
                       Integrated Visual Feedback
                     </h1>
-                    <p className="text-sm md:text-base text-gray-400">
+                    <p className="text-sm md:text-base text-gray-400 mt-1">
                       Maintenance Utility
                     </p>
                   </div>
