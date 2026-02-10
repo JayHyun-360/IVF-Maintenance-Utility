@@ -107,12 +107,17 @@ export default function Home() {
                     onClick={() =>
                       item.href.startsWith("#") ? null : router.push(item.href)
                     }
-                    className={`text-sm font-medium transition-colors ${
+                    className={`relative text-sm font-medium transition-all duration-200 rounded-md px-3 py-2 ${
                       item.active
-                        ? "text-teal-400"
-                        : "text-gray-400 hover:text-gray-100"
+                        ? "text-teal-400 bg-white/10"
+                        : "text-gray-400 hover:text-gray-100 hover:bg-white/5"
                     }`}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{
+                      backgroundColor: item.active
+                        ? "rgba(255, 255, 255, 0.15)"
+                        : "rgba(255, 255, 255, 0.08)",
+                      transition: { duration: 0.15 },
+                    }}
                   >
                     {item.label}
                   </motion.button>
