@@ -396,11 +396,8 @@ export default function AdminDashboard() {
           transition={{ duration: 0.6 }}
           className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-            <div
-              className="flex items-center justify-between h-14 md:h-16"
-              style={{ maxWidth: "1400px", margin: "0 auto" }}
-            >
+          <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <div className="flex items-center justify-between h-14 md:h-16 w-full">
               {/* Logo */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -475,11 +472,8 @@ export default function AdminDashboard() {
           </div>
           {/* Connected Tab Navigation */}
           <div className="border-t border-white/5 bg-black/10 backdrop-blur-lg">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-              <div
-                className="flex items-center gap-2 md:gap-4 py-4"
-                style={{ maxWidth: "1400px", margin: "0 auto" }}
-              >
+            <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+              <div className="flex items-center gap-2 md:gap-4 py-4 w-full">
                 {[
                   { id: "overview", label: "Overview" },
                   { id: "requests", label: "Maintenance" },
@@ -493,7 +487,7 @@ export default function AdminDashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + i * 0.05 }}
                     onClick={() => handleTabClick(item.id)}
-                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    className={`relative px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                       activeTab === item.id
                         ? "bg-teal-500/20 text-teal-400 border border-teal-500/30"
                         : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent"
@@ -576,16 +570,16 @@ export default function AdminDashboard() {
         </motion.div>
 
         {/* Main Content */}
-        <main className="pt-40 md:pt-44 px-4 sm:px-6 lg:px-12 pb-12">
-          <div className="max-w-7xl mx-auto" style={{ maxWidth: "1400px" }}>
+        <main className="pt-40 md:pt-44 px-4 sm:px-6 lg:px-8 xl:px-12 pb-12">
+          <div className="w-full max-w-screen-2xl mx-auto">
             {/* Content Container with stable layout */}
-            <div className="min-h-[600px] relative">
+            <div className="min-h-[600px] relative w-full">
               {activeTab === "overview" && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-12"
+                  className="space-y-8 md:space-y-12"
                 >
                   {/* Error Popup Notification */}
                   <AnimatePresence>
@@ -721,7 +715,7 @@ export default function AdminDashboard() {
                   )}
 
                   {/* Bento Grid - Stats Overview */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                     {stats.map((stat, i) => (
                       <motion.div
                         key={i}
@@ -952,7 +946,7 @@ export default function AdminDashboard() {
                       Maintenance
                       <span className="text-teal-400"> Requests</span>
                     </motion.h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                       {[
                         {
                           title: "HVAC System",
@@ -1061,7 +1055,7 @@ export default function AdminDashboard() {
                   >
                     Analytics &<span className="text-teal-400"> Insights</span>
                   </motion.h2>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     <div
                       className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
                       style={{
@@ -1340,7 +1334,7 @@ export default function AdminDashboard() {
                     <h2 className="text-2xl font-bold text-gray-100 mb-6">
                       System Reports
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                       {[
                         {
                           title: "Monthly Summary",
