@@ -9,6 +9,7 @@ import {
 } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import BackButton from "@/components/BackButton";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
@@ -107,7 +108,10 @@ export default function AdminReportsPage() {
                   </button>
                 ))}
               </div>
-              <ThemeSwitcher />
+              <div className="flex items-center gap-3">
+                <BackButton fallback="/admin/dashboard" />
+                <ThemeSwitcher />
+              </div>
             </div>
           </div>
         </header>

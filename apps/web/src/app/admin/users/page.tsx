@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import Button from "@/components/Button";
+import BackButton from "@/components/BackButton";
 import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
@@ -269,18 +270,24 @@ export default function AdminUsersPage() {
       >
         {/* Header - Conditional based on device */}
         {isMobile ? (
-          <WebHeader
-            title="User Management"
-            breadcrumbs={[
-              { label: "Admin Dashboard", href: "/admin/dashboard" },
-              { label: "User Management" },
-            ]}
-            actions={
-              <Button onClick={() => setShowAddModal(true)} size="sm">
-                Add User
-              </Button>
-            }
-          />
+          <div className="relative">
+            <BackButton
+              fallback="/admin/dashboard"
+              className="absolute top-4 left-4 z-10"
+            />
+            <WebHeader
+              title="User Management"
+              breadcrumbs={[
+                { label: "Admin Dashboard", href: "/admin/dashboard" },
+                { label: "User Management" },
+              ]}
+              actions={
+                <Button onClick={() => setShowAddModal(true)} size="sm">
+                  Add User
+                </Button>
+              }
+            />
+          </div>
         ) : (
           /* Original Desktop Header */
           <header
@@ -289,6 +296,7 @@ export default function AdminUsersPage() {
           >
             <div className="max-w-6xl mx-auto flex items-center justify-between">
               <div className="flex items-center">
+                <BackButton fallback="/admin/dashboard" className="mr-4" />
                 <button
                   onClick={() => router.push("/admin/dashboard")}
                   className="p-3 rounded-xl mr-4"
