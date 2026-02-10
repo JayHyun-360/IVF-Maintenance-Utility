@@ -168,19 +168,12 @@ export default function AdminDashboard() {
       setLoading(true);
       setError(null);
 
-      // Fetch stats
-      const statsResponse = await fetch("/api/admin/stats");
-      if (!statsResponse.ok) {
-        throw new Error("Failed to fetch stats");
-      }
-      const statsData = await statsResponse.json();
-
-      // Transform API data to match our interface
+      // Use mock data directly for development
       const transformedStats: DashboardStats[] = [
         {
           label: "Total Requests",
-          value: statsData[0]?.value || 0,
-          trend: statsData[0]?.trend || "+0%",
+          value: 20,
+          trend: "+12%",
           status: "Active",
           icon: (
             <svg
@@ -193,17 +186,17 @@ export default function AdminDashboard() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
           ),
-          gradient: "from-teal-500 to-cyan-600",
+          gradient: "from-blue-500 to-cyan-600",
         },
         {
           label: "Pending",
-          value: statsData[1]?.value || 0,
-          trend: statsData[1]?.trend || "+0%",
-          status: "Stable",
+          value: 8,
+          trend: "+3%",
+          status: "Pending",
           icon: (
             <svg
               className="w-5 h-5"
@@ -223,8 +216,8 @@ export default function AdminDashboard() {
         },
         {
           label: "In Progress",
-          value: statsData[2]?.value || 0,
-          trend: statsData[2]?.trend || "+0%",
+          value: 5,
+          trend: "-2%",
           status: "Processing",
           icon: (
             <svg
@@ -237,17 +230,17 @@ export default function AdminDashboard() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
               />
             </svg>
           ),
-          gradient: "from-blue-500 to-indigo-600",
+          gradient: "from-purple-500 to-pink-600",
         },
         {
           label: "Completed",
-          value: statsData[3]?.value || 0,
-          trend: statsData[3]?.trend || "+0%",
-          status: "Online",
+          value: 7,
+          trend: "+8%",
+          status: "Completed",
           icon: (
             <svg
               className="w-5 h-5"
