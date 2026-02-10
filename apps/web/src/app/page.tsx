@@ -465,115 +465,35 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="bg-gray-900 text-white py-8 md:py-12 px-4 sm:px-6 lg:px-12">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-              <div className="lg:col-span-1">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold">
-                      Integrated Visual Feedback
-                    </h3>
-                    <p className="text-xs text-gray-400">Maintenance Utility</p>
-                  </div>
+          <div className="max-w-7xl mx-auto text-center">
+            <div className="flex flex-col items-center justify-center mb-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
                 </div>
-                <p className="text-gray-400 text-sm">
-                  Modern maintenance solution with visual feedback for
-                  organizations of all sizes.
-                </p>
+                <div>
+                  <h3 className="text-lg font-bold">
+                    Integrated Visual Feedback
+                  </h3>
+                  <p className="text-xs text-gray-400">Maintenance Utility</p>
+                </div>
               </div>
-
-              <div>
-                <h4 className="font-semibold text-white mb-4">Product</h4>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Features
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Pricing
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Security
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Roadmap
-                    </button>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-white mb-4">Company</h4>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      About
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Blog
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Careers
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Contact
-                    </button>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-white mb-4">Support</h4>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Help Center
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Documentation
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      API Reference
-                    </button>
-                  </li>
-                  <li>
-                    <button className="hover:text-white transition-colors">
-                      Status
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              <p className="text-gray-400 text-sm">
+                Modern maintenance solution with visual feedback for
+                organizations of all sizes.
+              </p>
             </div>
 
             <div className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8 text-center text-gray-400 text-sm">
