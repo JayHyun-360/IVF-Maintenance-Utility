@@ -151,8 +151,8 @@ export default function WebHeader({
                         onClick={() => handleBreadcrumbClick(crumb.href)}
                         className={`truncate ${
                           crumb.href
-                            ? "hover:text-blue-600 transition-colors"
-                            : "text-gray-500 font-medium"
+                            ? "hover:text-blue-400 transition-colors"
+                            : "text-gray-300 font-medium"
                         }`}
                         style={{
                           color: crumb.href

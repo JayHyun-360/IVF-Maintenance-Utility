@@ -37,13 +37,13 @@
 
   --accent-plum: #5a4b8a; /* Dusk Violet */
 
-  /* Typography Colors */
+  /* Typography Colors - Dark theme optimized */
 
-  --text-primary: #141414; /* Ink */
+  --text-primary: #f8fafc; /* Light text for dark backgrounds */
 
-  --text-secondary: #6b7280;
+  --text-secondary: #e2e8f0; /* Lighter secondary text */
 
-  --text-muted: #9ca3af;
+  --text-muted: #94a3b8; /* Muted but still visible */
 
   /* Border and Interactive */
 

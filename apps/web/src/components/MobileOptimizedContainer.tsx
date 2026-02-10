@@ -1,7 +1,7 @@
 "use client";
 
-import React, { ReactNode } from 'react';
-import { useMobileOptimizations } from '@/hooks/useMobileOptimizations';
+import React, { ReactNode } from "react";
+import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 
 interface MobileOptimizedContainerProps {
   children: ReactNode;
@@ -17,7 +17,7 @@ interface MobileOptimizedContainerProps {
 
 export default function MobileOptimizedContainer({
   children,
-  className = '',
+  className = "",
   enablePullToRefresh = false,
   onRefresh,
   enableSwipeGestures = false,
@@ -75,8 +75,8 @@ export function MobilePullToRefresh({
       <div
         className="bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center transition-all duration-200"
         style={{
-          width: '40px',
-          height: '40px',
+          width: "40px",
+          height: "40px",
           opacity: pullProgress,
         }}
       >
@@ -106,37 +106,44 @@ export function MobilePullToRefresh({
 }
 
 interface MobileGestureHintProps {
-  type: 'swipe' | 'tap' | 'long-press';
-  direction?: 'left' | 'right' | 'up' | 'down';
+  type: "swipe" | "tap" | "long-press";
+  direction?: "left" | "right" | "up" | "down";
   visible?: boolean;
   className?: string;
 }
 
 export function MobileGestureHint({
   type,
-  direction = 'right',
+  direction = "right",
   visible = true,
-  className = '',
+  className = "",
 }: MobileGestureHintProps) {
   if (!visible) return null;
 
   const getHintContent = () => {
     switch (type) {
-      case 'swipe':
-        const arrow = direction === 'left' ? '←' : direction === 'right' ? '→' : direction === 'up' ? '↑' : '↓';
+      case "swipe":
+        const arrow =
+          direction === "left"
+            ? "←"
+            : direction === "right"
+              ? "→"
+              : direction === "up"
+                ? "↑"
+                : "↓";
         return `${arrow} Swipe ${direction}`;
-      case 'tap':
-        return 'Tap to interact';
-      case 'long-press':
-        return 'Long press for options';
+      case "tap":
+        return "Tap to interact";
+      case "long-press":
+        return "Long press for options";
       default:
-        return '';
+        return "";
     }
   };
 
   return (
     <div
-      className={`mobile-gesture-hint fixed bottom-4 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 dark:text-gray-400 animate-pulse ${className}`}
+      className={`mobile-gesture-hint fixed bottom-4 left-1/2 transform -translate-x-1/2 text-xs text-gray-300 dark:text-gray-200 animate-pulse ${className}`}
     >
       {getHintContent()}
     </div>
