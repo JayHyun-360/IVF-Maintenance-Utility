@@ -556,7 +556,7 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-8"
+                  className="space-y-12"
                 >
                   {/* Error Display */}
                   {error && (
@@ -615,11 +615,11 @@ export default function AdminDashboard() {
                   )}
 
                   {/* Bento Grid - Stats Overview */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                     {stats.map((stat, i) => (
                       <motion.div
                         key={i}
-                        initial={{ opacity: 0, y: 30 }}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
                           delay: 0.05 * i,
@@ -630,15 +630,30 @@ export default function AdminDashboard() {
                         whileHover={{ y: -5 }}
                       >
                         {/* Vercel-style hover spotlight */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                        <div
+                          className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                          style={{
+                            background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
+                          }}
+                        />
 
-                        {/* Glassmorphic Card */}
-                        <div className="relative backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-2xl bg-white/5 hover:bg-white/10 transition-all duration-300">
-                          <div className="flex items-start justify-between mb-4">
+                        {/* Enhanced Glassmorphic Card */}
+                        <div
+                          className="relative backdrop-blur-xl rounded-2xl p-8 border border-white/10 shadow-2xl bg-white/5 hover:bg-white/10 transition-all duration-300"
+                          style={{
+                            background: "rgba(255, 255, 255, 0.03) !important",
+                            backdropFilter: "blur(25px) !important",
+                            border:
+                              "1px solid rgba(255, 255, 255, 0.1) !important",
+                            boxShadow:
+                              "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
+                          }}
+                        >
+                          <div className="flex items-start justify-between mb-6">
                             <div
                               className="p-3 rounded-xl bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-opacity duration-300"
                               style={{
-                                background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : stat.gradient.includes("indigo") ? "#6366f1" : "#059669"})`,
+                                background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
                               }}
                             >
                               <div className="text-white">{stat.icon}</div>
@@ -652,14 +667,23 @@ export default function AdminDashboard() {
                             </div>
                           </div>
 
-                          <div className="space-y-2">
+                          <div className="space-y-3">
                             <h3 className="text-gray-300 text-sm font-medium uppercase tracking-wider">
                               {stat.label}
                             </h3>
                             <div className="flex items-baseline gap-2">
-                              <span className="text-3xl font-mono font-bold text-gray-100">
+                              <motion.div
+                                className="text-4xl md:text-5xl font-mono font-bold"
+                                style={{
+                                  background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
+                                  WebkitBackgroundClip: "text",
+                                  WebkitTextFillColor: "transparent",
+                                  backgroundClip: "text",
+                                }}
+                                whileHover={{ scale: 1.1 }}
+                              >
                                 {loading ? "..." : stat.value}
-                              </span>
+                              </motion.div>
                             </div>
                             <div className="flex items-center gap-2">
                               <div
@@ -797,13 +821,32 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-8"
+                  className="space-y-12"
                 >
-                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
-                      Maintenance Requests
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div
+                    className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.03) !important",
+                      backdropFilter: "blur(25px) !important",
+                      border: "1px solid rgba(255, 255, 255, 0.1) !important",
+                      boxShadow:
+                        "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
+                    }}
+                  >
+                    <motion.h2
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="text-3xl md:text-4xl font-sans text-gray-100 leading-tight mb-8"
+                      style={{
+                        fontWeight: "800 !important",
+                        letterSpacing: "-0.05em !important",
+                      }}
+                    >
+                      Maintenance
+                      <span className="text-teal-400"> Requests</span>
+                    </motion.h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                       {[
                         {
                           title: "HVAC System",
@@ -833,38 +876,58 @@ export default function AdminDashboard() {
                             duration: 0.3,
                             ease: "easeOut",
                           }}
-                          className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300"
+                          className="group relative"
+                          whileHover={{ y: -5 }}
                         >
-                          <div className="flex items-start justify-between mb-4">
-                            <span className="text-xs font-mono text-teal-400">
-                              {request.id}
-                            </span>
-                            <span
-                              className={`text-xs px-2 py-1 rounded-full font-mono ${
-                                request.priority === "High"
-                                  ? "bg-red-500/20 text-red-400"
-                                  : request.priority === "Medium"
-                                    ? "bg-amber-500/20 text-amber-400"
-                                    : "bg-green-500/20 text-green-400"
-                              }`}
-                            >
-                              {request.priority}
-                            </span>
-                          </div>
-                          <h3 className="text-gray-100 font-medium mb-2">
-                            {request.title}
-                          </h3>
-                          <span
-                            className={`text-sm ${
-                              request.status === "Completed"
-                                ? "text-lime-400"
-                                : request.status === "In Progress"
-                                  ? "text-cyan-400"
-                                  : "text-amber-400"
-                            }`}
+                          {/* Hover spotlight */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+
+                          {/* Enhanced card */}
+                          <div
+                            className="relative backdrop-blur-md rounded-2xl border border-white/10 bg-white/5 p-8 hover:bg-white/10 transition-all duration-300"
+                            style={{
+                              background:
+                                "rgba(255, 255, 255, 0.03) !important",
+                              backdropFilter: "blur(25px) !important",
+                              border:
+                                "1px solid rgba(255, 255, 255, 0.1) !important",
+                            }}
                           >
-                            {request.status}
-                          </span>
+                            <div className="flex items-start justify-between mb-6">
+                              <span className="text-sm font-mono text-teal-400 font-bold">
+                                {request.id}
+                              </span>
+                              <span
+                                className={`text-sm px-3 py-1 rounded-full font-mono font-bold ${
+                                  request.priority === "High"
+                                    ? "bg-red-500/20 text-red-400"
+                                    : request.priority === "Medium"
+                                      ? "bg-amber-500/20 text-amber-400"
+                                      : "bg-green-500/20 text-green-400"
+                                }`}
+                              >
+                                {request.priority}
+                              </span>
+                            </div>
+                            <motion.h3
+                              className="text-xl font-bold text-gray-100 mb-4"
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              {request.title}
+                            </motion.h3>
+                            <motion.span
+                              className={`inline-block text-lg font-medium ${
+                                request.status === "Completed"
+                                  ? "text-lime-400"
+                                  : request.status === "In Progress"
+                                    ? "text-cyan-400"
+                                    : "text-amber-400"
+                              }`}
+                              whileHover={{ scale: 1.1 }}
+                            >
+                              {request.status}
+                            </motion.span>
+                          </div>
                         </motion.div>
                       ))}
                     </div>
@@ -878,14 +941,41 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-8"
+                  className="space-y-12"
                 >
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="text-3xl md:text-4xl font-sans text-gray-100 leading-tight mb-8"
+                    style={{
+                      fontWeight: "800 !important",
+                      letterSpacing: "-0.05em !important",
+                    }}
+                  >
+                    Analytics &<span className="text-teal-400"> Insights</span>
+                  </motion.h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                      <h3 className="text-xl font-bold text-gray-100 mb-6">
-                        Request Trends
-                      </h3>
-                      <div className="space-y-4">
+                    <div
+                      className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                      style={{
+                        background: "rgba(255, 255, 255, 0.03) !important",
+                        backdropFilter: "blur(25px) !important",
+                        border: "1px solid rgba(255, 255, 255, 0.1) !important",
+                        boxShadow:
+                          "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
+                      }}
+                    >
+                      <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-2xl font-bold text-gray-100 mb-8"
+                      >
+                        Request
+                        <span className="text-teal-400"> Trends</span>
+                      </motion.h3>
+                      <div className="space-y-6">
                         {[
                           { month: "Jan", count: 45 },
                           { month: "Feb", count: 52 },
@@ -903,29 +993,66 @@ export default function AdminDashboard() {
                             }}
                             className="flex items-center justify-between"
                           >
-                            <span className="text-gray-400">{item.month}</span>
-                            <div className="flex items-center gap-3">
-                              <div className="w-32 bg-gray-700 rounded-full h-2">
-                                <div
-                                  className="bg-gradient-to-r from-teal-500 to-cyan-600 h-2 rounded-full"
+                            <span className="text-gray-300 font-medium">
+                              {item.month}
+                            </span>
+                            <div className="flex items-center gap-4">
+                              <div className="w-40 bg-gray-700 rounded-full h-3">
+                                <motion.div
+                                  className="bg-gradient-to-r from-teal-500 to-cyan-600 h-3 rounded-full"
                                   style={{
                                     width: `${(item.count / 61) * 100}%`,
                                   }}
+                                  initial={{ width: 0 }}
+                                  animate={{
+                                    width: `${(item.count / 61) * 100}%`,
+                                  }}
+                                  transition={{
+                                    delay: 0.3 + i * 0.1,
+                                    duration: 0.8,
+                                  }}
                                 />
                               </div>
-                              <span className="text-gray-100 font-mono text-sm">
+                              <motion.span
+                                className="text-xl font-mono font-bold text-gray-100"
+                                style={{
+                                  background:
+                                    "linear-gradient(135deg, #14b8a6, #06b6d4)",
+                                  WebkitBackgroundClip: "text",
+                                  WebkitTextFillColor: "transparent",
+                                  backgroundClip: "text",
+                                }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.4 + i * 0.1 }}
+                              >
                                 {item.count}
-                              </span>
+                              </motion.span>
                             </div>
                           </motion.div>
                         ))}
                       </div>
                     </div>
-                    <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                      <h3 className="text-xl font-bold text-gray-100 mb-6">
-                        Performance Metrics
-                      </h3>
-                      <div className="space-y-6">
+                    <div
+                      className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                      style={{
+                        background: "rgba(255, 255, 255, 0.03) !important",
+                        backdropFilter: "blur(25px) !important",
+                        border: "1px solid rgba(255, 255, 255, 0.1) !important",
+                        boxShadow:
+                          "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
+                      }}
+                    >
+                      <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-2xl font-bold text-gray-100 mb-8"
+                      >
+                        Performance
+                        <span className="text-teal-400"> Metrics</span>
+                      </motion.h3>
+                      <div className="space-y-8">
                         {[
                           {
                             label: "Avg Response Time",
@@ -952,25 +1079,31 @@ export default function AdminDashboard() {
                               duration: 0.3,
                               ease: "easeOut",
                             }}
-                            className="flex items-center justify-between"
+                            className="flex items-center justify-between p-4 rounded-xl hover:bg-white/10 transition-colors"
                           >
                             <div>
-                              <p className="text-gray-400 text-sm">
+                              <p className="text-gray-400 text-sm font-medium">
                                 {metric.label}
                               </p>
-                              <p className="text-gray-100 font-mono text-lg">
+                              <motion.p
+                                className="text-2xl font-mono font-bold text-gray-100"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.3 + i * 0.1 }}
+                              >
                                 {metric.value}
-                              </p>
+                              </motion.p>
                             </div>
-                            <span
-                              className={`text-sm font-mono ${
+                            <motion.span
+                              className={`text-lg font-mono font-bold ${
                                 metric.trend.startsWith("+")
                                   ? "text-lime-400"
                                   : "text-red-400"
                               }`}
+                              whileHover={{ scale: 1.2 }}
                             >
                               {metric.trend}
-                            </span>
+                            </motion.span>
                           </motion.div>
                         ))}
                       </div>
