@@ -95,7 +95,7 @@ export default function Home() {
               </motion.div>
 
               {/* Navigation Links - Desktop */}
-              <nav className="hidden md:flex items-center gap-8 !important">
+              <nav className="hidden md:flex items-center justify-center gap-4 !important flex-1">
                 {[
                   { label: "Home", href: "/", active: true },
                   { label: "Features", href: "#features" },
@@ -124,7 +124,7 @@ export default function Home() {
                         router.push(item.href);
                       }
                     }}
-                    className={`relative text-sm font-medium transition-all duration-300 px-3 py-2 rounded-lg overflow-hidden group ${
+                    className={`relative text-sm font-medium transition-all duration-300 px-2 py-2 rounded-lg overflow-hidden group ${
                       item.active
                         ? "text-teal-400 bg-white/10"
                         : "text-gray-400 hover:text-gray-100 hover:bg-white/5"
