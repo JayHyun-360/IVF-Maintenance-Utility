@@ -39,7 +39,7 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(() => {
     // Return a simple default theme first to avoid blocking render
-    return "standard";
+    return "dark";
   });
   const [isInitialized, setIsInitialized] = useState(false);
 
