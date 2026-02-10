@@ -103,23 +103,39 @@ export default function Home() {
                     key={i}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + i * 0.05 }}
+                    transition={{
+                      delay: 0.1 + i * 0.05,
+                      type: "spring",
+                      stiffness: 100,
+                    }}
                     onClick={() =>
                       item.href.startsWith("#") ? null : router.push(item.href)
                     }
-                    className={`relative text-sm font-medium transition-all duration-200 px-1.5 py-1 ${
+                    className={`relative text-sm font-medium transition-all duration-200 px-1.5 py-1 overflow-hidden ${
                       item.active
                         ? "text-teal-400 bg-white/10"
                         : "text-gray-400 hover:text-gray-100 hover:bg-white/5"
                     }`}
                     whileHover={{
-                      backgroundColor: item.active
-                        ? "rgba(255, 255, 255, 0.15)"
-                        : "rgba(255, 255, 255, 0.08)",
-                      transition: { duration: 0.15 },
+                      scale: 1.02,
+                      transition: { duration: 0.2, ease: "easeOut" },
+                    }}
+                    whileTap={{
+                      scale: 0.98,
+                      transition: { duration: 0.1 },
                     }}
                   >
-                    {item.label}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0"
+                      variants={{
+                        hover: {
+                          opacity: [0, 0.3, 0],
+                          x: ["-100%", "0%", "100%"],
+                          transition: { duration: 0.4, ease: "easeInOut" },
+                        },
+                      }}
+                    />
+                    <span className="relative z-10">{item.label}</span>
                   </motion.button>
                 ))}
               </nav>
