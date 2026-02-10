@@ -1052,7 +1052,7 @@ export default function AdminDashboard() {
                       <div className="flex items-center justify-between mb-6 md:mb-8">
                         <div>
                           <h2 className="text-xl md:text-2xl font-bold text-gray-100 mb-2">
-                            Recent Requests
+                            Recent Requests Today
                           </h2>
                           <p className="text-gray-400 text-sm">
                             Latest maintenance requests and updates
