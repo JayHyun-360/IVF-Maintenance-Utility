@@ -549,582 +549,630 @@ export default function AdminDashboard() {
         {/* Main Content */}
         <main className="pt-32 md:pt-36 px-4 sm:px-6 lg:px-12 pb-12">
           <div className="max-w-7xl mx-auto" style={{ maxWidth: "1400px" }}>
-            {activeTab === "overview" && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="space-y-8"
-              >
-                {/* Error Display */}
-                {error && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="backdrop-blur-xl rounded-2xl border border-red-500/20 bg-red-500/5 p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <svg
-                          className="w-5 h-5 text-red-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                        <span className="text-red-400">{error}</span>
-                      </div>
-                      <button
-                        onClick={fetchDashboardData}
-                        className="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 text-sm hover:bg-red-500/30 transition-colors"
-                      >
-                        Retry
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Last Updated Indicator */}
-                {lastUpdated && !error && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center justify-end text-xs text-gray-500"
-                  >
-                    <span>
-                      Last updated: {lastUpdated.toLocaleTimeString()}
-                    </span>
-                    <span className="mx-2">•</span>
-                    <span>Auto-refresh every 30s</span>
-                  </motion.div>
-                )}
-
-                {/* Bento Grid - Stats Overview */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                  {stats.map((stat, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 + i * 0.1 }}
-                      className="group relative"
-                      whileHover={{ y: -5 }}
-                    >
-                      {/* Vercel-style hover spotlight */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-
-                      {/* Glassmorphic Card */}
-                      <div className="relative backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-2xl bg-white/5 hover:bg-white/10 transition-all duration-300">
-                        <div className="flex items-start justify-between mb-4">
-                          <div
-                            className="p-3 rounded-xl bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-                            style={{
-                              background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : stat.gradient.includes("indigo") ? "#6366f1" : "#059669"})`,
-                            }}
-                          >
-                            <div className="text-white">{stat.icon}</div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`text-xs font-mono px-2 py-1 rounded-full ${stat.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400" : "bg-red-500/20 text-red-400"}`}
-                            >
-                              {loading ? "..." : stat.trend}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <h3 className="text-gray-300 text-sm font-medium uppercase tracking-wider">
-                            {stat.label}
-                          </h3>
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-mono font-bold text-gray-100">
-                              {loading ? "..." : stat.value}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div
-                              className={`w-2 h-2 rounded-full ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
-                            />
-                            <span
-                              className={`text-xs font-mono ${getStatusColor(stat.status)}`}
-                            >
-                              {stat.status}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* Bento Grid - Recent Requests */}
+            {/* Content Container with stable layout */}
+            <div className="min-h-[600px] relative">
+              {activeTab === "overview" && (
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                  className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="space-y-8"
                 >
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-bold text-gray-100">
-                      Recent Requests
-                    </h2>
-                    <button
-                      onClick={handleViewAllRequests}
-                      className="text-teal-400 hover:text-teal-300 text-sm font-medium transition-colors duration-200"
+                  {/* Error Display */}
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 }}
+                      className="backdrop-blur-xl rounded-2xl border border-red-500/20 bg-red-500/5 p-4"
                     >
-                      View All →
-                    </button>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3">
+                          <svg
+                            className="w-5 h-5 text-red-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          <span className="text-red-400">{error}</span>
+                        </div>
+                        <button
+                          onClick={fetchDashboardData}
+                          className="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 text-sm hover:bg-red-500/30 transition-colors"
+                        >
+                          Retry
+                        </button>
+                      </motion.div>
+                    </motion.div>
+                  )}
+
+                  {/* Last Updated Indicator */}
+                  {lastUpdated && !error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 }}
+                      className="flex items-center justify-end text-xs text-gray-500"
+                    >
+                      <span>
+                        Last updated: {lastUpdated.toLocaleTimeString()}
+                      </span>
+                      <span className="mx-2">•</span>
+                      <span>Auto-refresh every 30s</span>
+                    </motion.div>
+                  )}
+
+                  {/* Bento Grid - Stats Overview */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                    {stats.map((stat, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: 0.05 * i,
+                          duration: 0.3,
+                          ease: "easeOut",
+                        }}
+                        className="group relative"
+                        whileHover={{ y: -5 }}
+                      >
+                        {/* Vercel-style hover spotlight */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+
+                        {/* Glassmorphic Card */}
+                        <div className="relative backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-2xl bg-white/5 hover:bg-white/10 transition-all duration-300">
+                          <div className="flex items-start justify-between mb-4">
+                            <div
+                              className="p-3 rounded-xl bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                              style={{
+                                background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : stat.gradient.includes("indigo") ? "#6366f1" : "#059669"})`,
+                              }}
+                            >
+                              <div className="text-white">{stat.icon}</div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`text-xs font-mono px-2 py-1 rounded-full ${stat.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400" : "bg-red-500/20 text-red-400"}`}
+                              >
+                                {loading ? "..." : stat.trend}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <h3 className="text-gray-300 text-sm font-medium uppercase tracking-wider">
+                              {stat.label}
+                            </h3>
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-3xl font-mono font-bold text-gray-100">
+                                {loading ? "..." : stat.value}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div
+                                className={`w-2 h-2 rounded-full ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
+                              />
+                              <span
+                                className={`text-xs font-mono ${getStatusColor(stat.status)}`}
+                              >
+                                {stat.status}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
 
-                  {loading ? (
-                    <div className="space-y-4">
-                      {[1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4"
-                        >
-                          <div className="animate-pulse">
-                            <div className="h-4 bg-gray-600 rounded w-1/4 mb-2"></div>
-                            <div className="h-3 bg-gray-600 rounded w-3/4 mb-1"></div>
-                            <div className="h-2 bg-gray-600 rounded w-1/2"></div>
-                          </div>
-                        </div>
-                      ))}
+                  {/* Bento Grid - Recent Requests */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 }}
+                    className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
+                  >
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-xl font-bold text-gray-100">
+                        Recent Requests
+                      </h2>
+                      <button
+                        onClick={handleViewAllRequests}
+                        className="text-teal-400 hover:text-teal-300 text-sm font-medium transition-colors duration-200"
+                      >
+                        View All →
+                      </button>
                     </div>
-                  ) : recentRequests.length > 0 ? (
-                    <div className="space-y-4">
-                      {recentRequests.map((request, i) => (
-                        <motion.div
-                          key={request.id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.9 + i * 0.1 }}
-                          className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                          whileHover={{ x: 5 }}
-                          onClick={() => handleRequestClick(request.id)}
-                        >
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-3 mb-2">
-                                <span className="text-xs font-mono text-teal-400">
-                                  {request.id}
-                                </span>
-                                <span
-                                  className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
-                                >
-                                  {request.priority}
-                                </span>
-                                <span
-                                  className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10`}
-                                >
-                                  {request.status}
-                                </span>
-                              </div>
 
-                              <h3 className="text-gray-100 font-medium mb-1 truncate">
-                                {request.title}
-                              </h3>
+                    {loading ? (
+                      <div className="space-y-4">
+                        {[1, 2, 3].map((i) => (
+                          <div
+                            key={i}
+                            className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4"
+                          >
+                            <div className="animate-pulse">
+                              <div className="h-4 bg-gray-600 rounded w-1/4 mb-2"></div>
+                              <div className="h-3 bg-gray-600 rounded w-3/4 mb-1"></div>
+                              <div className="h-2 bg-gray-600 rounded w-1/2"></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : recentRequests.length > 0 ? (
+                      <div className="space-y-4">
+                        {recentRequests.map((request, i) => (
+                          <motion.div
+                            key={request.id}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              delay: 0.05 * i,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            }}
+                            className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                            whileHover={{ x: 5 }}
+                            onClick={() => handleRequestClick(request.id)}
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-3 mb-2">
+                                  <span className="text-xs font-mono text-teal-400">
+                                    {request.id}
+                                  </span>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
+                                  >
+                                    {request.priority}
+                                  </span>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10`}
+                                  >
+                                    {request.status}
+                                  </span>
+                                </div>
 
-                              <div className="flex items-center gap-4 text-xs text-gray-400">
-                                <span className="font-mono">
-                                  {request.category}
-                                </span>
-                                <span>•</span>
-                                <span>{request.requestedBy}</span>
-                                <span>•</span>
-                                <span className="font-mono">
-                                  {request.createdAt}
-                                </span>
+                                <h3 className="text-gray-100 font-medium mb-1 truncate">
+                                  {request.title}
+                                </h3>
+
+                                <div className="flex items-center gap-4 text-xs text-gray-400">
+                                  <span className="font-mono">
+                                    {request.category}
+                                  </span>
+                                  <span>•</span>
+                                  <span>{request.requestedBy}</span>
+                                  <span>•</span>
+                                  <span className="font-mono">
+                                    {request.createdAt}
+                                  </span>
+                                </div>
                               </div>
                             </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
+                          <svg
+                            className="w-6 h-6 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
+                          </svg>
+                        </div>
+                        <p className="text-gray-400">
+                          No maintenance requests found
+                        </p>
+                      </div>
+                    )}
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {/* Maintenance Tab Content */}
+              {activeTab === "requests" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="space-y-8"
+                >
+                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                      Maintenance Requests
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {[
+                        {
+                          title: "HVAC System",
+                          status: "In Progress",
+                          priority: "High",
+                          id: "REQ-001",
+                        },
+                        {
+                          title: "Lighting Repair",
+                          status: "Pending",
+                          priority: "Medium",
+                          id: "REQ-002",
+                        },
+                        {
+                          title: "Plumbing Maintenance",
+                          status: "Completed",
+                          priority: "Low",
+                          id: "REQ-003",
+                        },
+                      ].map((request, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            delay: 0.05 * i,
+                            duration: 0.3,
+                            ease: "easeOut",
+                          }}
+                          className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300"
+                        >
+                          <div className="flex items-start justify-between mb-4">
+                            <span className="text-xs font-mono text-teal-400">
+                              {request.id}
+                            </span>
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full font-mono ${
+                                request.priority === "High"
+                                  ? "bg-red-500/20 text-red-400"
+                                  : request.priority === "Medium"
+                                    ? "bg-amber-500/20 text-amber-400"
+                                    : "bg-green-500/20 text-green-400"
+                              }`}
+                            >
+                              {request.priority}
+                            </span>
+                          </div>
+                          <h3 className="text-gray-100 font-medium mb-2">
+                            {request.title}
+                          </h3>
+                          <span
+                            className={`text-sm ${
+                              request.status === "Completed"
+                                ? "text-lime-400"
+                                : request.status === "In Progress"
+                                  ? "text-cyan-400"
+                                  : "text-amber-400"
+                            }`}
+                          >
+                            {request.status}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Analytics Tab Content */}
+              {activeTab === "analytics" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="space-y-8"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                      <h3 className="text-xl font-bold text-gray-100 mb-6">
+                        Request Trends
+                      </h3>
+                      <div className="space-y-4">
+                        {[
+                          { month: "Jan", count: 45 },
+                          { month: "Feb", count: 52 },
+                          { month: "Mar", count: 38 },
+                          { month: "Apr", count: 61 },
+                        ].map((item, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              delay: 0.05 * i,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            }}
+                            className="flex items-center justify-between"
+                          >
+                            <span className="text-gray-400">{item.month}</span>
+                            <div className="flex items-center gap-3">
+                              <div className="w-32 bg-gray-700 rounded-full h-2">
+                                <div
+                                  className="bg-gradient-to-r from-teal-500 to-cyan-600 h-2 rounded-full"
+                                  style={{
+                                    width: `${(item.count / 61) * 100}%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="text-gray-100 font-mono text-sm">
+                                {item.count}
+                              </span>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                      <h3 className="text-xl font-bold text-gray-100 mb-6">
+                        Performance Metrics
+                      </h3>
+                      <div className="space-y-6">
+                        {[
+                          {
+                            label: "Avg Response Time",
+                            value: "2.4 hrs",
+                            trend: "-15%",
+                          },
+                          {
+                            label: "Completion Rate",
+                            value: "94%",
+                            trend: "+8%",
+                          },
+                          {
+                            label: "Satisfaction Score",
+                            value: "4.7/5",
+                            trend: "+12%",
+                          },
+                        ].map((metric, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                              delay: 0.05 * i,
+                              duration: 0.3,
+                              ease: "easeOut",
+                            }}
+                            className="flex items-center justify-between"
+                          >
+                            <div>
+                              <p className="text-gray-400 text-sm">
+                                {metric.label}
+                              </p>
+                              <p className="text-gray-100 font-mono text-lg">
+                                {metric.value}
+                              </p>
+                            </div>
+                            <span
+                              className={`text-sm font-mono ${
+                                metric.trend.startsWith("+")
+                                  ? "text-lime-400"
+                                  : "text-red-400"
+                              }`}
+                            >
+                              {metric.trend}
+                            </span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Users Tab Content */}
+              {activeTab === "users" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="space-y-8"
+                >
+                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                      User Management
+                    </h2>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-white/10">
+                            <th className="pb-4 text-gray-400 font-medium">
+                              User
+                            </th>
+                            <th className="pb-4 text-gray-400 font-medium">
+                              Role
+                            </th>
+                            <th className="pb-4 text-gray-400 font-medium">
+                              Status
+                            </th>
+                            <th className="pb-4 text-gray-400 font-medium">
+                              Last Active
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                          {[
+                            {
+                              name: "John Smith",
+                              email: "john@ivf.edu",
+                              role: "Admin",
+                              status: "Active",
+                              lastActive: "2 hours ago",
+                            },
+                            {
+                              name: "Sarah Johnson",
+                              email: "sarah@ivf.edu",
+                              role: "Staff",
+                              status: "Active",
+                              lastActive: "1 day ago",
+                            },
+                            {
+                              name: "Mike Davis",
+                              email: "mike@ivf.edu",
+                              role: "Student",
+                              status: "Inactive",
+                              lastActive: "3 days ago",
+                            },
+                          ].map((user, i) => (
+                            <tr
+                              key={i}
+                              className="hover:bg-white/5 transition-colors"
+                            >
+                              <td className="py-4">
+                                <motion.div
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  transition={{ delay: 0.1 * i, duration: 0.3 }}
+                                >
+                                  <div>
+                                    <p className="text-gray-100 font-medium">
+                                      {user.name}
+                                    </p>
+                                    <p className="text-gray-400 text-sm">
+                                      {user.email}
+                                    </p>
+                                  </div>
+                                </motion.div>
+                              </td>
+                              <td className="py-4">
+                                <span
+                                  className={`text-sm px-2 py-1 rounded-full font-mono ${
+                                    user.role === "Admin"
+                                      ? "bg-purple-500/20 text-purple-400"
+                                      : user.role === "Staff"
+                                        ? "bg-blue-500/20 text-blue-400"
+                                        : "bg-gray-500/20 text-gray-400"
+                                  }`}
+                                >
+                                  {user.role}
+                                </span>
+                              </td>
+                              <td className="py-4">
+                                <span
+                                  className={`text-sm ${
+                                    user.status === "Active"
+                                      ? "text-lime-400"
+                                      : "text-gray-400"
+                                  }`}
+                                >
+                                  {user.status}
+                                </span>
+                              </td>
+                              <td className="py-4 text-gray-400 text-sm">
+                                {user.lastActive}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Reports Tab Content */}
+              {activeTab === "reports" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="space-y-8"
+                >
+                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                      System Reports
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {[
+                        {
+                          title: "Monthly Summary",
+                          date: "2024-02-01",
+                          type: "PDF",
+                          size: "2.4 MB",
+                        },
+                        {
+                          title: "Maintenance Analytics",
+                          date: "2024-02-01",
+                          type: "Excel",
+                          size: "1.8 MB",
+                        },
+                        {
+                          title: "User Activity Report",
+                          date: "2024-01-31",
+                          type: "PDF",
+                          size: "956 KB",
+                        },
+                        {
+                          title: "Performance Metrics",
+                          date: "2024-01-30",
+                          type: "PDF",
+                          size: "1.2 MB",
+                        },
+                      ].map((report, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            delay: 0.05 * i,
+                            duration: 0.3,
+                            ease: "easeOut",
+                          }}
+                          className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                        >
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="p-2 rounded-lg bg-teal-500/10">
+                              <svg
+                                className="w-5 h-5 text-teal-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
+                              </svg>
+                            </div>
+                            <span className="text-xs font-mono text-gray-400">
+                              {report.type}
+                            </span>
+                          </div>
+                          <h3 className="text-gray-100 font-medium mb-2">
+                            {report.title}
+                          </h3>
+                          <div className="flex items-center justify-between text-sm text-gray-400">
+                            <span>{report.date}</span>
+                            <span>{report.size}</span>
                           </div>
                         </motion.div>
                       ))}
                     </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
-                        <svg
-                          className="w-6 h-6 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                          />
-                        </svg>
-                      </div>
-                      <p className="text-gray-400">
-                        No maintenance requests found
-                      </p>
-                    </div>
-                  )}
+                  </div>
                 </motion.div>
-              </motion.div>
-            )}
-
-            {/* Maintenance Tab Content */}
-            {activeTab === "requests" && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="space-y-8"
-              >
-                <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                  <h2 className="text-2xl font-bold text-gray-100 mb-6">
-                    Maintenance Requests
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[
-                      {
-                        title: "HVAC System",
-                        status: "In Progress",
-                        priority: "High",
-                        id: "REQ-001",
-                      },
-                      {
-                        title: "Lighting Repair",
-                        status: "Pending",
-                        priority: "Medium",
-                        id: "REQ-002",
-                      },
-                      {
-                        title: "Plumbing Maintenance",
-                        status: "Completed",
-                        priority: "Low",
-                        id: "REQ-003",
-                      },
-                    ].map((request, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 * i }}
-                        className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300"
-                      >
-                        <div className="flex items-start justify-between mb-4">
-                          <span className="text-xs font-mono text-teal-400">
-                            {request.id}
-                          </span>
-                          <span
-                            className={`text-xs px-2 py-1 rounded-full font-mono ${
-                              request.priority === "High"
-                                ? "bg-red-500/20 text-red-400"
-                                : request.priority === "Medium"
-                                  ? "bg-amber-500/20 text-amber-400"
-                                  : "bg-green-500/20 text-green-400"
-                            }`}
-                          >
-                            {request.priority}
-                          </span>
-                        </div>
-                        <h3 className="text-gray-100 font-medium mb-2">
-                          {request.title}
-                        </h3>
-                        <span
-                          className={`text-sm ${
-                            request.status === "Completed"
-                              ? "text-lime-400"
-                              : request.status === "In Progress"
-                                ? "text-cyan-400"
-                                : "text-amber-400"
-                          }`}
-                        >
-                          {request.status}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Analytics Tab Content */}
-            {activeTab === "analytics" && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="space-y-8"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                    <h3 className="text-xl font-bold text-gray-100 mb-6">
-                      Request Trends
-                    </h3>
-                    <div className="space-y-4">
-                      {[
-                        { month: "Jan", count: 45 },
-                        { month: "Feb", count: 52 },
-                        { month: "Mar", count: 38 },
-                        { month: "Apr", count: 61 },
-                      ].map((item, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center justify-between"
-                        >
-                          <span className="text-gray-400">{item.month}</span>
-                          <div className="flex items-center gap-3">
-                            <div className="w-32 bg-gray-700 rounded-full h-2">
-                              <div
-                                className="bg-gradient-to-r from-teal-500 to-cyan-600 h-2 rounded-full"
-                                style={{ width: `${(item.count / 61) * 100}%` }}
-                              />
-                            </div>
-                            <span className="text-gray-100 font-mono text-sm">
-                              {item.count}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                    <h3 className="text-xl font-bold text-gray-100 mb-6">
-                      Performance Metrics
-                    </h3>
-                    <div className="space-y-6">
-                      {[
-                        {
-                          label: "Avg Response Time",
-                          value: "2.4 hrs",
-                          trend: "-15%",
-                        },
-                        {
-                          label: "Completion Rate",
-                          value: "94%",
-                          trend: "+8%",
-                        },
-                        {
-                          label: "Satisfaction Score",
-                          value: "4.7/5",
-                          trend: "+12%",
-                        },
-                      ].map((metric, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center justify-between"
-                        >
-                          <div>
-                            <p className="text-gray-400 text-sm">
-                              {metric.label}
-                            </p>
-                            <p className="text-gray-100 font-mono text-lg">
-                              {metric.value}
-                            </p>
-                          </div>
-                          <span
-                            className={`text-sm font-mono ${
-                              metric.trend.startsWith("+")
-                                ? "text-lime-400"
-                                : "text-red-400"
-                            }`}
-                          >
-                            {metric.trend}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Users Tab Content */}
-            {activeTab === "users" && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="space-y-8"
-              >
-                <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                  <h2 className="text-2xl font-bold text-gray-100 mb-6">
-                    User Management
-                  </h2>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                      <thead>
-                        <tr className="border-b border-white/10">
-                          <th className="pb-4 text-gray-400 font-medium">
-                            User
-                          </th>
-                          <th className="pb-4 text-gray-400 font-medium">
-                            Role
-                          </th>
-                          <th className="pb-4 text-gray-400 font-medium">
-                            Status
-                          </th>
-                          <th className="pb-4 text-gray-400 font-medium">
-                            Last Active
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {[
-                          {
-                            name: "John Smith",
-                            email: "john@ivf.edu",
-                            role: "Admin",
-                            status: "Active",
-                            lastActive: "2 hours ago",
-                          },
-                          {
-                            name: "Sarah Johnson",
-                            email: "sarah@ivf.edu",
-                            role: "Staff",
-                            status: "Active",
-                            lastActive: "1 day ago",
-                          },
-                          {
-                            name: "Mike Davis",
-                            email: "mike@ivf.edu",
-                            role: "Student",
-                            status: "Inactive",
-                            lastActive: "3 days ago",
-                          },
-                        ].map((user, i) => (
-                          <tr
-                            key={i}
-                            className="hover:bg-white/5 transition-colors"
-                          >
-                            <td className="py-4">
-                              <div>
-                                <p className="text-gray-100 font-medium">
-                                  {user.name}
-                                </p>
-                                <p className="text-gray-400 text-sm">
-                                  {user.email}
-                                </p>
-                              </div>
-                            </td>
-                            <td className="py-4">
-                              <span
-                                className={`text-sm px-2 py-1 rounded-full font-mono ${
-                                  user.role === "Admin"
-                                    ? "bg-purple-500/20 text-purple-400"
-                                    : user.role === "Staff"
-                                      ? "bg-blue-500/20 text-blue-400"
-                                      : "bg-gray-500/20 text-gray-400"
-                                }`}
-                              >
-                                {user.role}
-                              </span>
-                            </td>
-                            <td className="py-4">
-                              <span
-                                className={`text-sm ${
-                                  user.status === "Active"
-                                    ? "text-lime-400"
-                                    : "text-gray-400"
-                                }`}
-                              >
-                                {user.status}
-                              </span>
-                            </td>
-                            <td className="py-4 text-gray-400 text-sm">
-                              {user.lastActive}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Reports Tab Content */}
-            {activeTab === "reports" && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="space-y-8"
-              >
-                <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
-                  <h2 className="text-2xl font-bold text-gray-100 mb-6">
-                    System Reports
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {[
-                      {
-                        title: "Monthly Summary",
-                        date: "2024-02-01",
-                        type: "PDF",
-                        size: "2.4 MB",
-                      },
-                      {
-                        title: "Maintenance Analytics",
-                        date: "2024-02-01",
-                        type: "Excel",
-                        size: "1.8 MB",
-                      },
-                      {
-                        title: "User Activity Report",
-                        date: "2024-01-31",
-                        type: "PDF",
-                        size: "956 KB",
-                      },
-                      {
-                        title: "Performance Metrics",
-                        date: "2024-01-30",
-                        type: "PDF",
-                        size: "1.2 MB",
-                      },
-                    ].map((report, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 * i }}
-                        className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                      >
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="p-2 rounded-lg bg-teal-500/10">
-                            <svg
-                              className="w-5 h-5 text-teal-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                          </div>
-                          <span className="text-xs font-mono text-gray-400">
-                            {report.type}
-                          </span>
-                        </div>
-                        <h3 className="text-gray-100 font-medium mb-2">
-                          {report.title}
-                        </h3>
-                        <div className="flex items-center justify-between text-sm text-gray-400">
-                          <span>{report.date}</span>
-                          <span>{report.size}</span>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
+              )}
+            </div>
           </div>
         </main>
       </div>
