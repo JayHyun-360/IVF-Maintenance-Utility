@@ -1329,174 +1329,218 @@ export default function AdminDashboard() {
                         </div>
                       </div>
 
-                      {/* Requests Grid */}
-                      <div className="space-y-4">
+                      {/* Requests Grid - Horizontal Cards */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {recentRequests.map((request, i) => (
                           <motion.div
                             key={request.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{
                               delay: 0.05 * i,
                               duration: 0.3,
                               ease: "easeOut",
                             }}
-                            className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300"
+                            className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:border-teal-500/30"
                           >
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-3 mb-2">
-                                  <span className="text-xs font-mono text-teal-400">
-                                    {request.id}
-                                  </span>
-                                  <span
-                                    className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
-                                  >
-                                    {request.priority}
-                                  </span>
+                            {/* Header with ID and Priority */}
+                            <div className="flex items-center justify-between mb-3">
+                              <span className="text-xs font-mono text-teal-400 font-bold">
+                                {request.id}
+                              </span>
+                              <span
+                                className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
+                              >
+                                {request.priority}
+                              </span>
+                            </div>
 
-                                  {/* Status Edit Dropdown */}
-                                  <div className="relative">
-                                    {editingStatus === request.id ? (
-                                      <select
-                                        value={request.status}
-                                        onChange={(e) =>
-                                          handleStatusChange(
-                                            request.id,
-                                            e.target.value,
-                                          )
-                                        }
-                                        onBlur={() => setEditingStatus(null)}
-                                        className="text-xs px-2 py-1 rounded-full font-mono bg-gray-800/50 border border-gray-600/50 text-gray-300 focus:outline-none focus:border-teal-500/50"
-                                        autoFocus
-                                      >
-                                        <option value="Pending">Pending</option>
-                                        <option value="In Progress">
-                                          In Progress
-                                        </option>
-                                        <option value="Completed">
-                                          Completed
-                                        </option>
-                                        <option value="Dismissed">
-                                          Dismissed
-                                        </option>
-                                      </select>
-                                    ) : (
+                            {/* Title */}
+                            <h3 className="text-gray-100 font-semibold text-sm mb-2 line-clamp-2 group-hover:text-teal-400 transition-colors">
+                              {request.title}
+                            </h3>
+
+                            {/* Description */}
+                            <p className="text-gray-400 text-xs mb-3 line-clamp-2">
+                              {request.description}
+                            </p>
+
+                            {/* Meta Information */}
+                            <div className="space-y-2 mb-3">
+                              <div className="flex items-center gap-2 text-xs text-gray-400">
+                                <svg
+                                  className="w-3 h-3"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                  />
+                                </svg>
+                                <span className="font-mono truncate">
+                                  {request.category}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-gray-400">
+                                <svg
+                                  className="w-3 h-3"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                  />
+                                </svg>
+                                <span className="truncate">
+                                  {request.location}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-gray-400">
+                                <svg
+                                  className="w-3 h-3"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                  />
+                                </svg>
+                                <span className="truncate">
+                                  {request.requestedBy}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Status and Actions */}
+                            <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                              {/* Status Edit Dropdown */}
+                              <div className="relative">
+                                {editingStatus === request.id ? (
+                                  <select
+                                    value={request.status}
+                                    onChange={(e) =>
+                                      handleStatusChange(
+                                        request.id,
+                                        e.target.value,
+                                      )
+                                    }
+                                    onBlur={() => setEditingStatus(null)}
+                                    className="text-xs px-2 py-1 rounded-full font-mono bg-gray-800/50 border border-gray-600/50 text-gray-300 focus:outline-none focus:border-teal-500/50"
+                                    autoFocus
+                                  >
+                                    <option value="Pending">Pending</option>
+                                    <option value="In Progress">
+                                      In Progress
+                                    </option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Dismissed">Dismissed</option>
+                                  </select>
+                                ) : (
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setEditingStatus(request.id);
+                                    }}
+                                    className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10 hover:bg-current/20 transition-colors duration-200`}
+                                  >
+                                    {request.status}
+                                  </button>
+                                )}
+                              </div>
+
+                              {/* Action Button */}
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleRequestClick(request.id);
+                                }}
+                                className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200 hover:scale-110"
+                                title="View Details"
+                              >
+                                <svg
+                                  className="w-3 h-3"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+
+                            {/* Images Preview */}
+                            {request.images.length > 0 && (
+                              <div className="mt-3 pt-3 border-t border-white/10">
+                                <div className="flex items-center gap-1">
+                                  {request.images
+                                    .slice(0, 3)
+                                    .map((image, index) => (
                                       <button
+                                        key={index}
                                         onClick={(e) => {
                                           e.stopPropagation();
-                                          setEditingStatus(request.id);
+                                          handleViewImages(request, index);
                                         }}
-                                        className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10 hover:bg-current/20 transition-colors duration-200`}
+                                        className="relative w-8 h-8 rounded overflow-hidden border border-white/10 hover:border-teal-500/50 transition-colors duration-200"
                                       >
-                                        {request.status}
+                                        <img
+                                          src={image}
+                                          alt={`Request image ${index + 1}`}
+                                          className="w-full h-full object-cover"
+                                        />
+                                        {index === 2 &&
+                                          request.images.length > 3 && (
+                                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                              <span className="text-white text-xs font-bold">
+                                                +{request.images.length - 3}
+                                              </span>
+                                            </div>
+                                          )}
                                       </button>
-                                    )}
-                                  </div>
-                                </div>
-
-                                <h3 className="text-gray-100 font-medium mb-1 truncate">
-                                  {request.title}
-                                </h3>
-
-                                <p className="text-gray-400 text-sm mb-2 line-clamp-2">
-                                  {request.description}
-                                </p>
-
-                                <div className="flex items-center gap-4 text-xs text-gray-400 mb-2">
-                                  <span className="font-mono">
-                                    {request.category}
-                                  </span>
-                                  <span>•</span>
-                                  <span>{request.requestedBy}</span>
-                                  <span>•</span>
-                                  <span className="font-mono">
-                                    {request.location}
-                                  </span>
-                                </div>
-
-                                <div className="flex items-center gap-4 text-xs text-gray-400">
-                                  <span>Created: {request.createdAt}</span>
-                                  <span>•</span>
-                                  <span>Updated: {request.updatedAt}</span>
-                                </div>
-
-                                {/* Images Display */}
-                                {request.images.length > 0 && (
-                                  <div className="flex items-center gap-2 mt-3">
-                                    <div className="flex gap-1">
-                                      {request.images
-                                        .slice(0, 3)
-                                        .map((image, index) => (
-                                          <button
-                                            key={index}
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              handleViewImages(request, index);
-                                            }}
-                                            className="relative w-12 h-12 rounded-lg overflow-hidden border border-white/10 hover:border-teal-500/50 transition-colors duration-200"
-                                          >
-                                            <img
-                                              src={image}
-                                              alt={`Request image ${index + 1}`}
-                                              className="w-full h-full object-cover"
-                                            />
-                                            {index === 2 &&
-                                              request.images.length > 3 && (
-                                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                                                  <span className="text-white text-xs font-bold">
-                                                    +{request.images.length - 3}
-                                                  </span>
-                                                </div>
-                                              )}
-                                          </button>
-                                        ))}
-                                    </div>
+                                    ))}
+                                  {request.images.length > 3 && (
                                     <button
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         handleViewImages(request, 0);
                                       }}
-                                      className="text-xs text-teal-400 hover:text-teal-300 transition-colors duration-200"
+                                      className="text-xs text-teal-400 hover:text-teal-300 transition-colors duration-200 ml-1"
                                     >
-                                      View All ({request.images.length})
+                                      View All
                                     </button>
-                                  </div>
-                                )}
+                                  )}
+                                </div>
                               </div>
-
-                              {/* Action Buttons */}
-                              <div className="flex flex-col gap-2 ml-4">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleRequestClick(request.id);
-                                  }}
-                                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
-                                  title="View Details"
-                                >
-                                  <svg
-                                    className="w-4 h-4"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                    />
-                                  </svg>
-                                </button>
-                              </div>
-                            </div>
+                            )}
                           </motion.div>
                         ))}
                       </div>
