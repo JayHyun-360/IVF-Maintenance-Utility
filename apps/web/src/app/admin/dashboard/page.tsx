@@ -964,7 +964,7 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-8 md:space-y-12"
+                  className="space-y-6 md:space-y-8"
                 >
                   {/* Last Updated Indicator */}
                   {lastUpdated && (
@@ -1045,7 +1045,7 @@ export default function AdminDashboard() {
                               </div>
                             </div>
 
-                            <div className="space-y-4">
+                            <div className="space-y-3">
                               <div>
                                 <h3 className="text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wider mb-2">
                                   {stat.label}
@@ -1139,7 +1139,7 @@ export default function AdminDashboard() {
                       </div>
 
                       {loading ? (
-                        <div className="space-y-4">
+                        <div className="space-y-3">
                           {[1, 2, 3].map((i) => (
                             <div
                               key={i}
@@ -1154,7 +1154,7 @@ export default function AdminDashboard() {
                           ))}
                         </div>
                       ) : recentRequests.length > 0 ? (
-                        <div className="space-y-4">
+                        <div className="space-y-3">
                           {recentRequests.map((request, i) => (
                             <motion.div
                               key={request.id}
@@ -1671,7 +1671,7 @@ export default function AdminDashboard() {
                       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
                         {/* Request Trends */}
                         <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -1685,7 +1685,7 @@ export default function AdminDashboard() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-8"
+                            className="text-2xl font-bold text-gray-100 mb-4"
                           >
                             Request
                             <span className="text-teal-400"> Trends</span>
@@ -1746,7 +1746,7 @@ export default function AdminDashboard() {
 
                         {/* Performance Metrics */}
                         <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -1760,12 +1760,12 @@ export default function AdminDashboard() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-8"
+                            className="text-2xl font-bold text-gray-100 mb-4"
                           >
                             Performance
                             <span className="text-teal-400"> Metrics</span>
                           </motion.h3>
-                          <div className="space-y-8">
+                          <div className="space-y-6">
                             {[
                               {
                                 label: "Total Requests",
@@ -1830,7 +1830,7 @@ export default function AdminDashboard() {
 
                         {/* Priority Distribution */}
                         <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -1844,7 +1844,7 @@ export default function AdminDashboard() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-8"
+                            className="text-2xl font-bold text-gray-100 mb-4"
                           >
                             Priority
                             <span className="text-teal-400"> Distribution</span>
@@ -1918,7 +1918,7 @@ export default function AdminDashboard() {
 
                         {/* Category Distribution */}
                         <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -1932,12 +1932,12 @@ export default function AdminDashboard() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-8"
+                            className="text-2xl font-bold text-gray-100 mb-4"
                           >
                             Category
                             <span className="text-teal-400"> Breakdown</span>
                           </motion.h3>
-                          <div className="space-y-4">
+                          <div className="space-y-3">
                             {Object.entries(analytics.categoryDistribution)
                               .sort(([, a], [, b]) => b - a)
                               .slice(0, 6)
@@ -1984,7 +1984,7 @@ export default function AdminDashboard() {
 
                         {/* Status Distribution */}
                         <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -1998,7 +1998,7 @@ export default function AdminDashboard() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-8"
+                            className="text-2xl font-bold text-gray-100 mb-4"
                           >
                             Status
                             <span className="text-teal-400"> Overview</span>
@@ -2058,9 +2058,9 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-8"
+                  className="space-y-6"
                 >
-                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6">
                     <h2 className="text-2xl font-bold text-gray-100 mb-6">
                       User Management
                     </h2>
@@ -2168,9 +2168,9 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-8"
+                  className="space-y-6"
                 >
-                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8">
+                  <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6">
                     <h2 className="text-2xl font-bold text-gray-100 mb-6">
                       System Reports
                     </h2>
