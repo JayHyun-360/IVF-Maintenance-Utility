@@ -235,7 +235,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto px-4"
+                className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto px-4"
               >
                 Transform your maintenance operations with intelligent
                 automation, real-time visual feedback, and seamless workflow
