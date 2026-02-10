@@ -443,13 +443,15 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Ready to Transform Your
-                <span className="block">Maintenance Operations?</span>
+                Making Maintenance
+                <span className="block">Simple & Stress-Free</span>
               </h2>
               <p className="text-lg md:text-xl text-green-100 mb-8 leading-relaxed">
-                Join hundreds of organizations already using our platform to
-                streamline their maintenance operations and achieve operational
-                excellence with visual feedback.
+                Our intuitive system helps you manage maintenance requests
+                effortlessly. Track progress, visualize workflows, and
+                coordinate with your team - all in one place. Say goodbye to
+                paperwork and hello to streamlined operations that save you time
+                and reduce headaches.
               </p>
               <motion.button
                 onClick={() => router.push("/login")}
@@ -457,7 +459,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Started Free
+                Start Simplifying Today
               </motion.button>
             </motion.div>
           </div>
