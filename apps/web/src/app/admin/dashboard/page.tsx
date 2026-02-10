@@ -658,7 +658,7 @@ export default function AdminDashboard() {
                                 transition={{ delay: 0.2 }}
                                 className="text-lg font-bold text-red-300 mb-2"
                               >
-                                Connection Error
+                                Dashboard Error
                               </motion.h3>
                               <motion.p
                                 initial={{ opacity: 0 }}
@@ -680,7 +680,7 @@ export default function AdminDashboard() {
                                   whileHover={{ scale: 1.05 }}
                                   whileTap={{ scale: 0.95 }}
                                 >
-                                  Try Again
+                                  Refresh Dashboard
                                 </motion.button>
                               </motion.div>
                             </div>
