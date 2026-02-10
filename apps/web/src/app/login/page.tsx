@@ -7,6 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { Z_INDEX } from "@/lib/z-index";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -49,102 +50,94 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Simple Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="h-full w-full"
-          style={{
-            backgroundImage: `radial-gradient(${themeConfig.colors.primary} 1px, transparent 1px)`,
-            backgroundSize: "40px 40px",
-          }}
-        />
+    <div className="min-h-screen bg-[#0B0E11] relative overflow-hidden">
+      {/* Technical Grid Background */}
+      <div className="absolute inset-0 opacity-20">
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 40 40"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full"
+        >
+          <g fill="none" fillRule="evenodd">
+            <g stroke="#14b8a6" strokeWidth="0.5" opacity="0.3">
+              <path d="M0 0h40v40H0z M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40" />
+            </g>
+          </g>
+        </svg>
       </div>
 
+      {/* Teal Mesh Gradient Glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
+
       {/* Theme Switcher */}
-      <div
-        className={`fixed ${isMobile ? "top-4 right-4" : "top-6 right-6"}`}
-        style={{ zIndex: Z_INDEX.DROPDOWN }}
-      >
+      <div className="fixed top-6 right-6 z-50">
         <ThemeSwitcher />
       </div>
 
       {/* Main Content */}
-      <div
-        className={`min-h-screen flex items-center justify-center ${isMobile ? "px-4 py-8" : "px-6 py-12"}`}
-      >
-        <div
-          className={`w-full ${isMobile ? "max-w-sm" : "max-w-md"} relative z-10`}
-          style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 0.6s ease-out, transform 0.6s ease-out",
-          }}
+      <div className="min-h-screen flex items-center justify-center px-4 py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="w-full max-w-md"
         >
-          {/* Login Card */}
-          <div
-            className="rounded-lg border bg-white shadow-sm"
+          {/* Glassmorphic Login Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="backdrop-blur-xl rounded-2xl p-8 shadow-2xl max-w-md mx-auto"
             style={{
-              borderColor: themeConfig.colors.border,
+              background: "rgba(255, 255, 255, 0.03) !important",
+              backdropFilter: "blur(25px) !important",
+              border: "1px solid rgba(255, 255, 255, 0.1) !important",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
             }}
           >
-            {/* Header Section */}
-            <div
-              className={`${isMobile ? "px-6 py-6" : "px-8 py-8"} text-center border-b`}
-              style={{
-                borderColor: themeConfig.colors.border,
-              }}
-            >
-              {/* Logo */}
-              <div className="inline-block mb-4">
-                <div
-                  className={`${isMobile ? "w-12 h-12" : "w-16 h-16"} rounded-lg flex items-center justify-center`}
-                  style={{
-                    backgroundColor: themeConfig.colors.primary,
-                  }}
+            {/* Logo Section */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/30 flex-shrink-0">
+                <svg
+                  className="w-6 h-6 sm:w-8 sm:h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <svg
-                    className={`${isMobile ? "w-6 h-6" : "w-8 h-8"} text-white`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                    />
-                  </svg>
-                </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
               </div>
-
-              <h1
-                className={`${isMobile ? "text-lg" : "text-xl"} font-semibold mb-2`}
-                style={{ color: themeConfig.colors.text }}
-              >
-                IVF Maintenance Utility
-              </h1>
-              <p
-                className="text-sm"
-                style={{ color: themeConfig.colors.textSecondary }}
-              >
-                Integrated Visual Feedback & Maintenance System
-              </p>
+              <div className="text-left sm:text-center">
+                <h1 className="text-xl sm:text-2xl font-sans font-bold text-gray-100 leading-tight">
+                  IVF Maintenance
+                  <span className="block text-teal-400">
+                    Utility
+                  </span>
+                </h1>
+                <p className="text-sm text-gray-400 mt-1">
+                  School Facility Management System
+                </p>
+              </div>
             </div>
 
-            {/* Form Section */}
-            <div className={`${isMobile ? "px-6 py-4" : "px-8 py-6"}`}>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Email Field */}
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium mb-2"
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    Email Address
-                  </label>
+            {/* Login Form */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Email Field */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-100 mb-2"
+                >
+                  Email Address
+                </label>
+                <div className="relative">
                   <input
                     id="email"
                     name="email"
@@ -152,99 +145,92 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full px-3 py-2 rounded-md border transition-colors duration-200 outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                     style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: themeConfig.colors.border,
-                      color: themeConfig.colors.text,
+                      backdropFilter: "blur(10px)",
                     }}
                     placeholder="Enter your email"
                   />
                 </div>
+              </div>
 
-                {/* Password Field */}
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium mb-2"
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="password"
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="w-full px-3 py-2 pr-10 rounded-md border transition-colors duration-200 outline-none"
-                      style={{
-                        backgroundColor: themeConfig.colors.background,
-                        borderColor: themeConfig.colors.border,
-                        color: themeConfig.colors.text,
-                      }}
-                      placeholder="Enter your password"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      {showPassword ? (
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                          />
-                        </svg>
-                      ) : (
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                          />
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Error Display */}
-                {error && (
-                  <div
-                    className="p-3 rounded-md text-sm text-center"
+              {/* Password Field */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-100 mb-2"
+                >
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 pr-12 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                     style={{
-                      backgroundColor: `${themeConfig.colors.error}10`,
-                      color: themeConfig.colors.error,
-                      border: `1px solid ${themeConfig.colors.error}30`,
+                      backdropFilter: "blur(10px)",
                     }}
+                    placeholder="Enter your password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-200"
                   >
-                    {error}
-                  </div>
+                    {showPassword ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 19.428a2 2 0 00-1.806.547l-2.387-.477a6 6 0 009.421 6.009.421 0 1.806.547l2.387.477a6 6 0 009.421 6.009.421 0 1.806.547z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3.414a6 6 0 009.421 6.009.421 0 1.806.547l2.387-.477a6 6 0 009.421 6.009.421 0 1.806.547z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Error Display */}
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-100 text-sm"
+                >
+                  {error}
+                </motion.div>
+              )}
+
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                disabled={isLoading}
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 text-gray-900 font-semibold text-base hover:from-teal-400 hover:to-cyan-500 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 11-6 0 3.414a6 6 0 009.421 6.009.421 0 1.806.547l2.387-.477a6 6 0 009.421 6.009.421 0 1.806.547z" />
+                    </svg>
+                    <span>Authenticating...</span>
+                  </>
+                ) : (
+                  <>
+                    Sign In
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </>
                 )}
+              </motion.button>
+            </form>
 
                 {/* Submit Button */}
                 <button
@@ -283,36 +269,171 @@ export default function LoginPage() {
             </div>
 
             {/* Footer */}
-            <div
-              className={`${isMobile ? "px-6 py-4" : "px-8 py-5"} text-center border-t`}
-              style={{ borderColor: themeConfig.colors.border }}
             >
-              <p
-                className="text-sm"
-                style={{ color: themeConfig.colors.textSecondary }}
-              >
-                Need an account?{" "}
-                <button
-                  onClick={() => router.push("/register")}
-                  className="font-semibold transition-colors duration-200 hover:underline"
-                  style={{ color: themeConfig.colors.primary }}
-                >
-                  Register here
-                </button>
-              </p>
-            </div>
+              {showPassword ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 19.428a2 2 0 00-1.806.547l-2.387-.477a6 6 0 009.421 6.009.421 0 1.806.547l2.387.477a6 6 0 009.421 6.009.421 0 1.806.547z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3.414a6 6 0 009.421 6.009.421 0 1.806.547l2.387-.477a6 6 0 009.421 6.009.421 0 1.806.547z" />
+                </svg>
+              )}
+            </button>
           </div>
-
-          {/* Bottom Branding */}
-          <p
-            className="text-center text-xs mt-6"
-            style={{ color: themeConfig.colors.textSecondary }}
-          >
-            © {new Date().getFullYear()} IVF Maintenance Utility. All rights
-            reserved.
-          </p>
         </div>
-      </div>
-    </div>
-  );
-}
+
+        {/* Error Display */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-100 text-sm"
+          >
+            {error}
+          </motion.div>
+        )}
+
+        {/* Submit Button */}
+        <motion.button
+          type="submit"
+          disabled={isLoading}
+          className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 text-gray-900 font-semibold text-base hover:from-teal-400 hover:to-cyan-500 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          whileHover={{ scale: 1.02, y: -2 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {isLoading ? (
+            <>
+              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              <span>Authenticating...</span>
+            </>
+          ) : (
+            <>
+              Sign In
+              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </>
+          )}
+        </motion.button>
+      </form>
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="w-full py-3 px-4 rounded-md font-medium text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        style={{
+          backgroundColor: themeConfig.colors.primary,
+        }}
+      >
+        {isLoading ? (
+          <>
+            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+  </motion.div>
+)}
+
+{/* Submit Button */}
+<motion.button
+  type="submit"
+  disabled={isLoading}
+  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 text-gray-900 font-semibold text-base hover:from-teal-400 hover:to-cyan-500 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+  whileHover={{ scale: 1.02, y: -2 }}
+  whileTap={{ scale: 0.95 }}
+>
+  {isLoading ? (
+    <>
+      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+      </svg>
+      <span>Authenticating...</span>
+    </>
+  ) : (
+    <>
+      Sign In
+      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    </>
+  )}
+</motion.button>
+</form>
+
+{/* Submit Button */}
+<button
+  type="submit"
+  disabled={isLoading}
+  className="w-full py-3 px-4 rounded-md font-medium text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+  style={{
+    backgroundColor: themeConfig.colors.primary,
+  }}
+>
+  {isLoading ? (
+    <>
+      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+          fill="none"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        />
+      </svg>
+      Signing in...
+    </>
+  ) : (
+    "Sign In"
+  )}
+</button>
+</form>
+</div>
+
+{/* Footer */}
+<div
+  className={`${isMobile ? "px-6 py-4" : "px-8 py-5"} text-center border-t`}
+  style={{ borderColor: themeConfig.colors.border }}
+>
+  {/* Register Link */}
+  <div className="text-center mt-6">
+    <p className="text-sm text-gray-400">
+      Don't have an account?{" "}
+    </p>
+    <motion.a
+      href="/register"
+      className="text-teal-400 hover:text-teal-300 font-medium transition-colors duration-200"
+      whileHover={{ scale: 1.05 }}
+    >
+      Register here
+    </motion.a>
+  </div>
+</div>
+</motion.div>
+</div>
+</div>
+</div>
