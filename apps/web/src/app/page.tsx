@@ -632,6 +632,145 @@ export default function Home() {
           </div>
         </section>
 
+        {/* About Section */}
+        <section
+          id="about"
+          className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-[#0B0E11] relative"
+        >
+          {/* Technical Grid Background */}
+          <div className="absolute inset-0 opacity-10">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full"
+            >
+              <g fill="none" fillRule="evenodd">
+                <g stroke="#14b8a6" strokeWidth="0.5" opacity="0.2">
+                  <path d="M0 0h40v40H0z M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40" />
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <div className="max-w-4xl mx-auto text-center px-4 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-sans font-bold text-gray-100 mb-6">
+                About IVF
+                <span className="block text-teal-400">Maintenance Utility</span>
+              </h2>
+              <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto">
+                Integrated Visual Feedback Maintenance Utility is a
+                comprehensive solution designed specifically for educational
+                institutions. Our platform combines cutting-edge technology with
+                intuitive design to streamline facility management, enhance
+                operational efficiency, and create optimal learning environments
+                for students and staff alike.
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 rounded-xl backdrop-blur-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-100 mb-2">
+                    Mission
+                  </h3>
+                  <p className="text-gray-300 text-sm">
+                    Empowering educational institutions with intelligent
+                    maintenance solutions
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 rounded-xl backdrop-blur-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m6 0a9 9 0 019 0 9 9 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-100 mb-2">
+                    Vision
+                  </h3>
+                  <p className="text-gray-300 text-sm">
+                    Creating seamless, efficient maintenance experiences for
+                    schools
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 rounded-xl backdrop-blur-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 6.253v1m0 0-6.037c0-1.758 1.425-3.203 3.203-3.203 0 1.758 1.425 3.203 3.203 0 1.758-1.425L12 6.253z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-100 mb-2">
+                    Values
+                  </h3>
+                  <p className="text-gray-300 text-sm">
+                    Innovation, reliability, and educational excellence
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Footer */}
         <footer className="bg-[#0B0E11] text-gray-100 py-8 md:py-12 px-4 sm:px-6 lg:px-12 border-t border-white/10">
           <div className="max-w-7xl mx-auto text-center">
