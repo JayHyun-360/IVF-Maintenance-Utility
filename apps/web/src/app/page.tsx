@@ -92,7 +92,7 @@ export default function Home() {
               </motion.div>
 
               {/* Navigation Links - Desktop */}
-              <nav className="hidden md:flex items-center gap-3 lg:gap-4">
+              <nav className="hidden md:flex items-center gap-1 lg:gap-2">
                 {[
                   { label: "Home", href: "/", active: true },
                   { label: "Features", href: "#features" },
@@ -107,7 +107,7 @@ export default function Home() {
                     onClick={() =>
                       item.href.startsWith("#") ? null : router.push(item.href)
                     }
-                    className={`relative text-sm font-medium transition-all duration-200 px-2 py-1.5 ${
+                    className={`relative text-sm font-medium transition-all duration-200 px-1.5 py-1 ${
                       item.active
                         ? "text-teal-400 bg-white/10"
                         : "text-gray-400 hover:text-gray-100 hover:bg-white/5"
