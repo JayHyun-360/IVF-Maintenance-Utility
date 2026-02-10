@@ -366,43 +366,37 @@ export default function Home() {
                 {
                   icon: "📊",
                   title: "Real-time Analytics",
-                  description:
-                    "Monitor performance metrics and get insights into your maintenance operations with live dashboards.",
+                  description: "Live dashboards for performance insights.",
                   color: "from-blue-500 to-blue-600",
                 },
                 {
                   icon: "🤖",
                   title: "Smart Automation",
-                  description:
-                    "Automate routine tasks and prioritize requests based on urgency and resource availability.",
+                  description: "Automate tasks and prioritize by urgency.",
                   color: "from-green-500 to-green-600",
                 },
                 {
                   icon: "📱",
                   title: "Mobile Access",
-                  description:
-                    "Access your maintenance system from anywhere with our responsive mobile-first design.",
+                  description: "Access your system from any device.",
                   color: "from-purple-500 to-purple-600",
                 },
                 {
                   icon: "🔔",
                   title: "Instant Notifications",
-                  description:
-                    "Stay informed with real-time alerts and updates on maintenance requests and status changes.",
+                  description: "Real-time alerts for request updates.",
                   color: "from-yellow-500 to-yellow-600",
                 },
                 {
                   icon: "📈",
                   title: "Performance Tracking",
-                  description:
-                    "Track KPIs and generate detailed reports to optimize your maintenance strategies.",
+                  description: "Track KPIs and generate reports.",
                   color: "from-red-500 to-red-600",
                 },
                 {
                   icon: "🛡️",
                   title: "Secure Platform",
-                  description:
-                    "Enterprise-grade security with role-based access control and data encryption.",
+                  description: "Enterprise security with role access.",
                   color: "from-indigo-500 to-indigo-600",
                 },
               ].map((feature, i) => (
