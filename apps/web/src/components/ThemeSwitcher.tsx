@@ -19,14 +19,14 @@ const themes: {
   {
     value: "dark",
     label: "Cyan Accents Dark",
-    icon: "🌙",
+    icon: "◈",
     colors: { primary: "#0B0E11", secondary: "#14b8a6" },
     description: "Deep space with cyan highlights",
   },
   {
     value: "light",
     label: "Smooth White",
-    icon: "☀️",
+    icon: "◉",
     colors: { primary: "#F8FAFC", secondary: "#14b8a6" },
     description: "Clean white with cyan accents",
   },
