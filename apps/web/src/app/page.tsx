@@ -270,15 +270,6 @@ export default function Home() {
                     />
                   </svg>
                 </motion.button>
-
-                <motion.button
-                  onClick={() => router.push("#features")}
-                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 backdrop-blur-sm bg-white/10 text-gray-100 rounded-xl font-semibold text-base md:text-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  View Demo
-                </motion.button>
               </motion.div>
 
               {/* Trust Indicators - Real Data */}
