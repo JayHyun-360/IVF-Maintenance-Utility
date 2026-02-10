@@ -25,6 +25,35 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
+  const handleDemoLogin = async () => {
+    setEmail("demo@ivf.tech");
+    setPassword("aerospace2026");
+
+    // Auto-submit after a brief delay to show the filled fields
+    setTimeout(async () => {
+      setIsLoading(true);
+      setError("");
+
+      try {
+        const result = await signIn("credentials", {
+          email: "demo@ivf.tech",
+          password: "aerospace2026",
+          redirect: true,
+        });
+
+        if (result?.error) {
+          setError("Demo login failed");
+        } else {
+          console.log("Demo login successful, redirecting...");
+        }
+      } catch {
+        setError("Demo login failed. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    }, 500);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -281,6 +310,31 @@ export default function LoginPage() {
                     </svg>
                   </>
                 )}
+              </motion.button>
+
+              {/* Demo Login Button */}
+              <motion.button
+                type="button"
+                onClick={handleDemoLogin}
+                disabled={isLoading}
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold text-base hover:from-amber-400 hover:to-orange-500 transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                  />
+                </svg>
+                Try Demo
               </motion.button>
             </form>
 

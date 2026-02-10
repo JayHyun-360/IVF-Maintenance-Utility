@@ -74,6 +74,20 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
+        // Check for demo credentials first
+        if (
+          credentials.email.toLowerCase() === "demo@ivf.tech" &&
+          credentials.password === "aerospace2026"
+        ) {
+          console.log("Demo user authentication successful");
+          return {
+            id: "demo-user-id",
+            email: "demo@ivf.tech",
+            name: "Demo User",
+            role: "ADMIN",
+          };
+        }
+
         const user = await findUserByEmail(credentials.email);
         console.log("Found user:", user ? user.email : "Not found");
 

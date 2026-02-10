@@ -1,44 +1,30 @@
 "use client";
 
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
 import BackButton from "@/components/BackButton";
+import AuthGuard from "@/components/AuthGuard";
 
-export default function DashboardPage() {
+function DashboardContent() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const { themeConfig } = useTheme();
 
-  useEffect(() => {
-    if (status === "loading") return;
-
-    console.log("Dashboard page - Session status:", status);
-    console.log("Dashboard page - Session data:", session);
-    console.log("Dashboard page - User role:", session?.user?.role);
-
-    if (!session) {
-      console.log("No session found, redirecting to login");
-      router.push("/login");
-      return;
-    }
-
-    // Redirect based on user role
-    if (session.user?.role === "ADMIN") {
-      console.log("Admin role detected, redirecting to admin dashboard");
-      router.push("/admin/dashboard");
-    } else if (
-      session.user?.role === "USER" ||
-      session.user?.role === "STUDENT"
-    ) {
-      console.log("User role detected, redirecting to user page");
-      router.push("/student");
-    } else {
-      console.log("Unknown role, defaulting to user page");
-      router.push("/student");
-    }
-  }, [session, status, router]);
+  // Redirect based on user role
+  if (session?.user?.role === "ADMIN") {
+    console.log("Admin role detected, redirecting to admin dashboard");
+    router.push("/admin/dashboard");
+  } else if (
+    session?.user?.role === "USER" ||
+    session?.user?.role === "STUDENT"
+  ) {
+    console.log("User role detected, redirecting to user page");
+    router.push("/student");
+  } else {
+    console.log("Unknown role, defaulting to user page");
+    router.push("/student");
+  }
 
   // Show loading state while redirecting
   return (
@@ -58,5 +44,13 @@ export default function DashboardPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <AuthGuard redirectTo="/login">
+      <DashboardContent />
+    </AuthGuard>
   );
 }
