@@ -22,12 +22,36 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/admin/requests/[id]",
+      "regex": "^/admin/requests/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/requests/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/admin/users/[id]",
+      "regex": "^/api/admin/users/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/users/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/api/auth/[...nextauth]",
       "regex": "^/api/auth/(.+?)(?:/)?$",
       "routeKeys": {
         "nxtPnextauth": "nxtPnextauth"
       },
       "namedRegex": "^/api/auth/(?<nxtPnextauth>.+?)(?:/)?$"
+    },
+    {
+      "page": "/api/requests/[id]",
+      "regex": "^/api/requests/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/requests/(?<nxtPid>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [
@@ -50,6 +74,12 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/admin/analytics",
+      "regex": "^/admin/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/analytics(?:/)?$"
+    },
+    {
       "page": "/admin/dashboard",
       "regex": "^/admin/dashboard(?:/)?$",
       "routeKeys": {},
@@ -68,10 +98,16 @@
       "namedRegex": "^/admin/reports(?:/)?$"
     },
     {
-      "page": "/admin/summary-request",
-      "regex": "^/admin/summary\\-request(?:/)?$",
+      "page": "/admin/requests",
+      "regex": "^/admin/requests(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/admin/summary\\-request(?:/)?$"
+      "namedRegex": "^/admin/requests(?:/)?$"
+    },
+    {
+      "page": "/admin/settings",
+      "regex": "^/admin/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/settings(?:/)?$"
     },
     {
       "page": "/admin/users",
@@ -84,6 +120,18 @@
       "regex": "^/admin\\-pin\\-verification(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin\\-pin\\-verification(?:/)?$"
+    },
+    {
+      "page": "/api/admin/stats",
+      "regex": "^/api/admin/stats(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/stats(?:/)?$"
+    },
+    {
+      "page": "/api/admin/users",
+      "regex": "^/api/admin/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/users(?:/)?$"
     },
     {
       "page": "/api/auth/check-role",
@@ -102,6 +150,12 @@
       "regex": "^/api/auth/register(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/auth/register(?:/)?$"
+    },
+    {
+      "page": "/api/requests",
+      "regex": "^/api/requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/requests(?:/)?$"
     },
     {
       "page": "/dashboard",

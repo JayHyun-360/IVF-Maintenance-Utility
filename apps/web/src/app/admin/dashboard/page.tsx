@@ -568,7 +568,7 @@ export default function AdminDashboard() {
         },
       ];
 
-      setRecentRequests(mockRequests.slice(0, 5)); // Show first 5 in overview
+      setRecentRequests(mockRequests); // Show all 20 requests
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
       setError("Failed to load dashboard data. Please try again.");
@@ -1302,7 +1302,7 @@ export default function AdminDashboard() {
                   className="space-y-12"
                 >
                   <div
-                    className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-8"
+                    className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8 overflow-hidden"
                     style={{
                       background: "rgba(255, 255, 255, 0.03) !important",
                       backdropFilter: "blur(25px) !important",
@@ -1311,103 +1311,229 @@ export default function AdminDashboard() {
                         "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
                     }}
                   >
-                    <motion.h2
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
-                      className="text-3xl md:text-4xl font-sans text-gray-100 leading-tight mb-8"
-                      style={{
-                        fontWeight: "800 !important",
-                        letterSpacing: "-0.05em !important",
-                      }}
-                    >
-                      Maintenance
-                      <span className="text-teal-400"> Requests</span>
-                    </motion.h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-                      {[
-                        {
-                          title: "HVAC System",
-                          status: "In Progress",
-                          priority: "High",
-                          id: "REQ-001",
-                        },
-                        {
-                          title: "Lighting Repair",
-                          status: "Pending",
-                          priority: "Medium",
-                          id: "REQ-002",
-                        },
-                        {
-                          title: "Plumbing Maintenance",
-                          status: "Completed",
-                          priority: "Low",
-                          id: "REQ-003",
-                        },
-                      ].map((request, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            delay: 0.05 * i,
-                            duration: 0.3,
-                            ease: "easeOut",
-                          }}
-                          className="group relative"
-                          whileHover={{ y: -5 }}
-                        >
-                          {/* Hover spotlight */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-2xl" />
+                    </div>
 
-                          {/* Enhanced card */}
-                          <div
-                            className="relative backdrop-blur-md rounded-2xl border border-white/10 bg-white/5 p-8 hover:bg-white/10 transition-all duration-300"
-                            style={{
-                              background:
-                                "rgba(255, 255, 255, 0.03) !important",
-                              backdropFilter: "blur(25px) !important",
-                              border:
-                                "1px solid rgba(255, 255, 255, 0.1) !important",
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-6 md:mb-8">
+                        <div>
+                          <h2 className="text-xl md:text-2xl font-bold text-gray-100 mb-2">
+                            All Maintenance Requests
+                          </h2>
+                          <p className="text-gray-400 text-sm">
+                            Manage and track all maintenance requests across the
+                            facility
+                          </p>
+                        </div>
+                        <div className="text-sm text-gray-400">
+                          <span className="font-mono text-teal-400">
+                            {recentRequests.length}
+                          </span>{" "}
+                          total requests
+                        </div>
+                      </div>
+
+                      {/* Requests Grid */}
+                      <div className="space-y-4">
+                        {recentRequests.map((request, i) => (
+                          <motion.div
+                            key={request.id}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              delay: 0.05 * i,
+                              duration: 0.3,
+                              ease: "easeOut",
                             }}
+                            className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300"
                           >
-                            <div className="flex items-start justify-between mb-6">
-                              <span className="text-sm font-mono text-teal-400 font-bold">
-                                {request.id}
-                              </span>
-                              <span
-                                className={`text-sm px-3 py-1 rounded-full font-mono font-bold ${
-                                  request.priority === "High"
-                                    ? "bg-red-500/20 text-red-400"
-                                    : request.priority === "Medium"
-                                      ? "bg-amber-500/20 text-amber-400"
-                                      : "bg-green-500/20 text-green-400"
-                                }`}
-                              >
-                                {request.priority}
-                              </span>
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-3 mb-2">
+                                  <span className="text-xs font-mono text-teal-400">
+                                    {request.id}
+                                  </span>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
+                                  >
+                                    {request.priority}
+                                  </span>
+
+                                  {/* Status Edit Dropdown */}
+                                  <div className="relative">
+                                    {editingStatus === request.id ? (
+                                      <select
+                                        value={request.status}
+                                        onChange={(e) =>
+                                          handleStatusChange(
+                                            request.id,
+                                            e.target.value,
+                                          )
+                                        }
+                                        onBlur={() => setEditingStatus(null)}
+                                        className="text-xs px-2 py-1 rounded-full font-mono bg-gray-800/50 border border-gray-600/50 text-gray-300 focus:outline-none focus:border-teal-500/50"
+                                        autoFocus
+                                      >
+                                        <option value="Pending">Pending</option>
+                                        <option value="In Progress">
+                                          In Progress
+                                        </option>
+                                        <option value="Completed">
+                                          Completed
+                                        </option>
+                                        <option value="Dismissed">
+                                          Dismissed
+                                        </option>
+                                      </select>
+                                    ) : (
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setEditingStatus(request.id);
+                                        }}
+                                        className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10 hover:bg-current/20 transition-colors duration-200`}
+                                      >
+                                        {request.status}
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+
+                                <h3 className="text-gray-100 font-medium mb-1 truncate">
+                                  {request.title}
+                                </h3>
+
+                                <p className="text-gray-400 text-sm mb-2 line-clamp-2">
+                                  {request.description}
+                                </p>
+
+                                <div className="flex items-center gap-4 text-xs text-gray-400 mb-2">
+                                  <span className="font-mono">
+                                    {request.category}
+                                  </span>
+                                  <span>•</span>
+                                  <span>{request.requestedBy}</span>
+                                  <span>•</span>
+                                  <span className="font-mono">
+                                    {request.location}
+                                  </span>
+                                </div>
+
+                                <div className="flex items-center gap-4 text-xs text-gray-400">
+                                  <span>Created: {request.createdAt}</span>
+                                  <span>•</span>
+                                  <span>Updated: {request.updatedAt}</span>
+                                </div>
+
+                                {/* Images Display */}
+                                {request.images.length > 0 && (
+                                  <div className="flex items-center gap-2 mt-3">
+                                    <div className="flex gap-1">
+                                      {request.images
+                                        .slice(0, 3)
+                                        .map((image, index) => (
+                                          <button
+                                            key={index}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleViewImages(request, index);
+                                            }}
+                                            className="relative w-12 h-12 rounded-lg overflow-hidden border border-white/10 hover:border-teal-500/50 transition-colors duration-200"
+                                          >
+                                            <img
+                                              src={image}
+                                              alt={`Request image ${index + 1}`}
+                                              className="w-full h-full object-cover"
+                                            />
+                                            {index === 2 &&
+                                              request.images.length > 3 && (
+                                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                                  <span className="text-white text-xs font-bold">
+                                                    +{request.images.length - 3}
+                                                  </span>
+                                                </div>
+                                              )}
+                                          </button>
+                                        ))}
+                                    </div>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleViewImages(request, 0);
+                                      }}
+                                      className="text-xs text-teal-400 hover:text-teal-300 transition-colors duration-200"
+                                    >
+                                      View All ({request.images.length})
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Action Buttons */}
+                              <div className="flex flex-col gap-2 ml-4">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleRequestClick(request.id);
+                                  }}
+                                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
+                                  title="View Details"
+                                >
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                    />
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
                             </div>
-                            <motion.h3
-                              className="text-xl font-bold text-gray-100 mb-4"
-                              whileHover={{ scale: 1.05 }}
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      {recentRequests.length === 0 && (
+                        <div className="text-center py-12">
+                          <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
+                            <svg
+                              className="w-8 h-8 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
                             >
-                              {request.title}
-                            </motion.h3>
-                            <motion.span
-                              className={`inline-block text-lg font-medium ${
-                                request.status === "Completed"
-                                  ? "text-lime-400"
-                                  : request.status === "In Progress"
-                                    ? "text-cyan-400"
-                                    : "text-amber-400"
-                              }`}
-                              whileHover={{ scale: 1.1 }}
-                            >
-                              {request.status}
-                            </motion.span>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                              />
+                            </svg>
                           </div>
-                        </motion.div>
-                      ))}
+                          <h3 className="text-xl font-semibold text-gray-100 mb-2">
+                            No Maintenance Requests
+                          </h3>
+                          <p className="text-gray-400">
+                            All maintenance requests are currently resolved or
+                            none have been submitted.
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.div>

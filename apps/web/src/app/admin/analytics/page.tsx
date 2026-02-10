@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/components/ThemeProvider";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 import BackButton from "@/components/BackButton";
 import AccountDropdown from "@/components/AccountDropdown";
 import { motion } from "framer-motion";
 
 export default function AdminAnalytics() {
-  const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
@@ -104,7 +101,6 @@ export default function AdminAnalytics() {
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 <BackButton fallback="/admin/dashboard" />
-                <ThemeSwitcher />
                 <AccountDropdown />
               </div>
             </div>
@@ -139,11 +135,23 @@ export default function AdminAnalytics() {
                   transition={{ delay: 0.2 }}
                   className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
-                  <h2 className="text-xl font-bold text-gray-100 mb-4">Request Trends</h2>
+                  <h2 className="text-xl font-bold text-gray-100 mb-4">
+                    Request Trends
+                  </h2>
                   <div className="h-64 flex items-center justify-center text-gray-400">
                     <div className="text-center">
-                      <svg className="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      <svg
+                        className="w-16 h-16 mx-auto mb-4 opacity-50"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                        />
                       </svg>
                       <p>Chart visualization coming soon</p>
                     </div>
@@ -157,19 +165,36 @@ export default function AdminAnalytics() {
                   transition={{ delay: 0.3 }}
                   className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
-                  <h2 className="text-xl font-bold text-gray-100 mb-4">Performance Metrics</h2>
+                  <h2 className="text-xl font-bold text-gray-100 mb-4">
+                    Performance Metrics
+                  </h2>
                   <div className="space-y-4">
                     {[
-                      { label: "Average Response Time", value: "2.4 hours", trend: "-15%" },
+                      {
+                        label: "Average Response Time",
+                        value: "2.4 hours",
+                        trend: "-15%",
+                      },
                       { label: "Resolution Rate", value: "87%", trend: "+5%" },
-                      { label: "User Satisfaction", value: "4.6/5", trend: "+8%" },
+                      {
+                        label: "User Satisfaction",
+                        value: "4.6/5",
+                        trend: "+8%",
+                      },
                       { label: "System Uptime", value: "99.9%", trend: "0%" },
                     ].map((metric, i) => (
-                      <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                      <div
+                        key={i}
+                        className="flex items-center justify-between p-3 rounded-lg bg-white/5"
+                      >
                         <span className="text-gray-300">{metric.label}</span>
                         <div className="flex items-center gap-2">
-                          <span className="text-gray-100 font-mono">{metric.value}</span>
-                          <span className={`text-xs font-mono px-2 py-1 rounded-full ${metric.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400" : "bg-red-500/20 text-red-400"}`}>
+                          <span className="text-gray-100 font-mono">
+                            {metric.value}
+                          </span>
+                          <span
+                            className={`text-xs font-mono px-2 py-1 rounded-full ${metric.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400" : "bg-red-500/20 text-red-400"}`}
+                          >
                             {metric.trend}
                           </span>
                         </div>

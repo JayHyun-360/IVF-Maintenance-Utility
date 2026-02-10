@@ -6,6 +6,9 @@
     "[project]/apps/web/src/app/admin-pin-verification/page": [
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
+    "[project]/apps/web/src/app/admin/analytics/page": [
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
+    ],
     "[project]/apps/web/src/app/admin/dashboard/page": [
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
@@ -15,7 +18,13 @@
     "[project]/apps/web/src/app/admin/reports/page": [
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
-    "[project]/apps/web/src/app/admin/summary-request/page": [
+    "[project]/apps/web/src/app/admin/requests/[id]/page": [
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
+    ],
+    "[project]/apps/web/src/app/admin/requests/page": [
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
+    ],
+    "[project]/apps/web/src/app/admin/settings/page": [
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
     "[project]/apps/web/src/app/admin/users/page": [

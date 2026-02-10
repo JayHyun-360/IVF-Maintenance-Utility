@@ -2,14 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/components/ThemeProvider";
-import Button from "@/components/Button";
-import BackButton from "@/components/BackButton";
-import { Z_INDEX } from "@/lib/z-index";
-import AuthGuard from "@/components/AuthGuard";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
-import WebHeader from "@/components/WebHeader";
-import { WebListGroup, WebListGroupItem } from "@/components/WebListGroup";
+import AuthGuard from "@/components/AuthGuard";
+import BackButton from "@/components/BackButton";
+import AccountDropdown from "@/components/AccountDropdown";
+import { motion } from "framer-motion";
 
 interface User {
   id: string;
@@ -18,15 +15,15 @@ interface User {
   role: "ADMIN" | "STAFF" | "STUDENT";
   department: string;
   status: "ACTIVE" | "INACTIVE";
-  lastLogin: Date;
+  createdAt: string;
 }
 
 export default function AdminUsersPage() {
   const router = useRouter();
-  const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchUsers = async () => {
     try {
@@ -34,14 +31,7 @@ export default function AdminUsersPage() {
       const response = await fetch("/api/admin/users");
       if (response.ok) {
         const data = await response.json();
-        // Map Prisma data to local User interface
-        const mappedUsers = data.map((u: any) => ({
-          ...u,
-          department: "Facilities", // Prisma model doesn't have department, defaulting for UI
-          status: "ACTIVE", // Prisma model doesn't have status, defaulting for UI
-          lastLogin: new Date(u.createdAt), // Using createdAt as mock for lastLogin
-        }));
-        setUsers(mappedUsers);
+        setUsers(data);
       }
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -54,925 +44,217 @@ export default function AdminUsersPage() {
     fetchUsers();
   }, []);
 
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    role: "STUDENT" as "ADMIN" | "STAFF" | "STUDENT",
-    department: "",
-    status: "ACTIVE" as "ACTIVE" | "INACTIVE",
-  });
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterRole, setFilterRole] = useState<string>("ALL");
-  const [filterStatus, setFilterStatus] = useState<string>("ALL");
-
-  const getRoleColor = (role: string, themeConfig: any) => {
+  const getRoleColor = (role: string) => {
     switch (role) {
       case "ADMIN":
-        return {
-          backgroundColor: `${themeConfig.colors.primary}20`,
-          color: themeConfig.colors.primary,
-        };
+        return "text-red-400";
       case "STAFF":
-        return {
-          backgroundColor: `${themeConfig.colors.secondary}20`,
-          color: themeConfig.colors.secondary,
-        };
+        return "text-amber-400";
       case "STUDENT":
-        return {
-          backgroundColor: `${themeConfig.colors.success}20`,
-          color: themeConfig.colors.success,
-        };
+        return "text-teal-400";
       default:
-        return {
-          backgroundColor: `${themeConfig.colors.textSecondary}20`,
-          color: themeConfig.colors.textSecondary,
-        };
+        return "text-gray-400";
     }
   };
 
-  const getStatusColor = (status: string, themeConfig: any) => {
-    return status === "ACTIVE"
-      ? {
-          backgroundColor: `${themeConfig.colors.success}20`,
-          color: themeConfig.colors.success,
-        }
-      : {
-          backgroundColor: `${themeConfig.colors.error}20`,
-          color: themeConfig.colors.error,
-        };
-  };
-
-  const handleAddUser = async () => {
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/admin/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          password: "password123", // Default password for new users
-        }),
-      });
-
-      if (response.ok) {
-        await fetchUsers();
-        setShowAddModal(false);
-        setFormData({
-          name: "",
-          email: "",
-          role: "STUDENT",
-          department: "",
-          status: "ACTIVE",
-        });
-        setFormErrors({});
-      } else {
-        const error = await response.json();
-        alert(error.error || "Failed to add user");
-      }
-    } catch (error) {
-      console.error("Error adding user:", error);
-    } finally {
-      setIsLoading(false);
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "ACTIVE":
+        return "text-lime-400";
+      case "INACTIVE":
+        return "text-gray-400";
+      default:
+        return "text-gray-400";
     }
   };
 
-  const handleEditUser = async () => {
-    if (!validateForm()) return;
-
-    if (!selectedUser) return;
-
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          role: formData.role,
-        }),
-      });
-
-      if (response.ok) {
-        await fetchUsers();
-        setShowEditModal(false);
-        setSelectedUser(null);
-        setFormData({
-          name: "",
-          email: "",
-          role: "STUDENT",
-          department: "",
-          status: "ACTIVE",
-        });
-        setFormErrors({});
-      } else {
-        const error = await response.json();
-        alert(error.error || "Failed to update user");
-      }
-    } catch (error) {
-      console.error("Error updating user:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDeleteUser = async () => {
-    if (!selectedUser) return;
-
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        await fetchUsers();
-        setShowDeleteModal(false);
-        setSelectedUser(null);
-      } else {
-        const error = await response.json();
-        alert(error.error || "Failed to delete user");
-      }
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const openEditModal = (user: User) => {
-    setSelectedUser(user);
-    setFormData({
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      department: user.department,
-      status: user.status,
-    });
-    setShowEditModal(true);
-  };
-
-  const openDeleteModal = (user: User) => {
-    setSelectedUser(user);
-    setShowDeleteModal(true);
-  };
-
-  const validateForm = () => {
-    const errors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      errors.name = "Name is required";
-    }
-
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Email is invalid";
-    }
-
-    if (!formData.department.trim()) {
-      errors.department = "Department is required";
-    }
-
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.department.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesRole = filterRole === "ALL" || user.role === filterRole;
-    const matchesStatus =
-      filterStatus === "ALL" || user.status === filterStatus;
-
-    return matchesSearch && matchesRole && matchesStatus;
-  });
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    user.department.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <AuthGuard requiredRole="ADMIN">
-      <div
-        className="min-h-screen"
-        style={{ backgroundColor: themeConfig.colors.background }}
-      >
-        {/* Header - Conditional based on device */}
-        {isMobile ? (
-          <div className="relative">
-            <BackButton
-              fallback="/admin/dashboard"
-              className="absolute top-4 left-4 z-10"
-            />
-            <WebHeader
-              title="User Management"
-              breadcrumbs={[
-                { label: "Admin Dashboard", href: "/admin/dashboard" },
-                { label: "User Management" },
-              ]}
-              actions={
-                <Button onClick={() => setShowAddModal(true)} size="sm">
-                  Add User
-                </Button>
-              }
-            />
-          </div>
-        ) : (
-          /* Original Desktop Header */
-          <header
-            className="px-8 py-6 border-b"
-            style={{ borderColor: themeConfig.colors.border }}
+      <div className="min-h-screen bg-[#0B0E11] relative overflow-hidden">
+        {/* Technical Grid Background */}
+        <div className="absolute inset-0 opacity-20">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 40 40"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full"
           >
-            <div className="max-w-6xl mx-auto flex items-center justify-between">
-              <div className="flex items-center">
-                <BackButton fallback="/admin/dashboard" className="mr-4" />
-                <button
-                  onClick={() => router.push("/admin/dashboard")}
-                  className="p-3 rounded-xl mr-4"
-                  style={{
-                    backgroundColor: themeConfig.colors.surface,
-                    color: themeConfig.colors.text,
-                    border: `1px solid ${themeConfig.colors.border}`,
-                  }}
-                >
-                  ←
-                </button>
-                <div>
-                  <h1
-                    className="text-2xl font-bold"
-                    style={{ color: themeConfig.colors.text }}
-                  >
-                    User Management
-                  </h1>
-                </div>
-              </div>
-              <Button onClick={() => setShowAddModal(true)}>Add User</Button>
-            </div>
-          </header>
-        )}
+            <g fill="none" fillRule="evenodd">
+              <g stroke="#14b8a6" strokeWidth="0.5" opacity="0.3">
+                <path d="M0 0h40v40H0z M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40" />
+              </g>
+            </g>
+          </svg>
+        </div>
 
-        {/* Main Content - Conditional based on device */}
-        {isMobile ? (
-          <div className="px-4 py-4">
-            <div className="max-w-4xl mx-auto space-y-4">
-              {/* Mobile Search and Filter */}
-              <div
-                className="bg-white rounded-lg border p-3"
-                style={{ borderColor: "#E5E7EB" }}
+        {/* Teal Mesh Gradient Glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
+
+        {/* Main Header */}
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+            <div
+              className="flex items-center justify-between h-14 md:h-16"
+              style={{ maxWidth: "1400px", margin: "0 auto" }}
+            >
+              {/* Logo */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                className="flex items-center gap-2 md:gap-3"
+              >
+                <motion.div
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-teal-500/25"
+                  whileHover={{ scale: 1.05, rotate: 3 }}
+                >
+                  <svg
+                    className="w-4 h-4 md:w-6 md:h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </motion.div>
+                <div className="hidden sm:block">
+                  <h1 className="text-lg md:text-xl font-bold text-gray-100">
+                    IVF Admin
+                  </h1>
+                  <p className="text-xs text-gray-400">User Management</p>
+                </div>
+              </motion.div>
+
+              {/* Right Side Actions */}
+              <div className="flex items-center gap-2 md:gap-4 ml-auto">
+                <BackButton fallback="/admin/dashboard" />
+                <AccountDropdown />
+              </div>
+            </div>
+          </div>
+        </motion.header>
+
+        {/* Main Content */}
+        <main className="pt-24 md:pt-28 px-4 sm:px-6 lg:px-12 pb-12">
+          <div className="max-w-7xl mx-auto" style={{ maxWidth: "1400px" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
+            >
+              {/* Header */}
+              <div className="text-center">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
+                  User Management
+                </h1>
+                <p className="text-gray-400 text-lg">
+                  Manage user accounts and permissions
+                </p>
+              </div>
+
+              {/* Search */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
               >
                 <input
                   type="text"
-                  placeholder="Search users..."
+                  placeholder="Search users by name, email, or department..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg text-sm mb-3"
-                  style={{
-                    backgroundColor: "#F9FAFB",
-                    borderColor: "#E5E7EB",
-                    color: themeConfig.colors.text,
-                    border: "1px solid",
-                  }}
+                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-gray-100 placeholder-gray-400 focus:border-teal-500 focus:outline-none"
                 />
-                <div className="grid grid-cols-2 gap-2">
-                  <select
-                    value={filterRole}
-                    onChange={(e) => setFilterRole(e.target.value)}
-                    className="px-3 py-2 rounded-lg border text-sm"
-                    style={{
-                      backgroundColor: "#F9FAFB",
-                      borderColor: "#E5E7EB",
-                      color: themeConfig.colors.text,
-                    }}
-                  >
-                    <option value="ALL">All Roles</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="STAFF">Staff</option>
-                    <option value="STUDENT">Student</option>
-                  </select>
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="px-3 py-2 rounded-lg border text-sm"
-                    style={{
-                      backgroundColor: "#F9FAFB",
-                      borderColor: "#E5E7EB",
-                      color: themeConfig.colors.text,
-                    }}
-                  >
-                    <option value="ALL">All Status</option>
-                    <option value="ACTIVE">Active</option>
-                    <option value="INACTIVE">Inactive</option>
-                  </select>
-                </div>
-              </div>
+              </motion.div>
 
-              {/* Mobile User List */}
-              <WebListGroup title="Users">
-                {filteredUsers.map((user) => (
-                  <WebListGroupItem
-                    key={user.id}
-                    title={user.name}
-                    subtitle={`${user.email} • ${user.department}`}
-                    rightElement={
-                      <div className="flex flex-col items-end space-y-1">
-                        <span
-                          className="px-2 py-1 rounded-full text-xs font-medium"
-                          style={{
-                            backgroundColor:
-                              user.role === "ADMIN"
-                                ? `${themeConfig.colors.primary}20`
-                                : user.role === "STAFF"
-                                  ? `${themeConfig.colors.secondary}20`
-                                  : `${themeConfig.colors.success}20`,
-                            color:
-                              user.role === "ADMIN"
-                                ? themeConfig.colors.primary
-                                : user.role === "STAFF"
-                                  ? themeConfig.colors.secondary
-                                  : themeConfig.colors.success,
-                          }}
-                        >
-                          {user.role}
-                        </span>
-                        <span
-                          className="px-2 py-1 rounded-full text-xs font-medium"
-                          style={{
-                            backgroundColor:
-                              user.status === "ACTIVE"
-                                ? `${themeConfig.colors.success}20`
-                                : `${themeConfig.colors.error}20`,
-                            color:
-                              user.status === "ACTIVE"
-                                ? themeConfig.colors.success
-                                : themeConfig.colors.error,
-                          }}
-                        >
-                          {user.status}
-                        </span>
+              {/* Users List */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
+              >
+                {loading ? (
+                  <div className="space-y-4">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <div key={i} className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4">
+                        <div className="animate-pulse">
+                          <div className="h-4 bg-gray-600 rounded w-1/4 mb-2"></div>
+                          <div className="h-3 bg-gray-600 rounded w-3/4 mb-1"></div>
+                          <div className="h-2 bg-gray-600 rounded w-1/2"></div>
+                        </div>
                       </div>
-                    }
-                    onClick={() => {
-                      setSelectedUser(user);
-                      setShowEditModal(true);
-                    }}
-                  />
-                ))}
-              </WebListGroup>
-            </div>
-          </div>
-        ) : (
-          /* Original Desktop Layout */
-          <main className="px-8 py-8">
-            <div className="max-w-6xl mx-auto">
-              {/* Search and Filter Controls */}
-              <div
-                className="rounded-2xl p-6 mb-6"
-                style={{
-                  backgroundColor: themeConfig.colors.surface,
-                  border: `1px solid ${themeConfig.colors.border}`,
-                }}
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-4">
-                  <div className="lg:col-span-2">
-                    <input
-                      type="text"
-                      placeholder="Search by name, email, or department..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full px-4 py-2 rounded-lg border"
-                      style={{
-                        backgroundColor: themeConfig.colors.background,
-                        borderColor: themeConfig.colors.border,
-                        color: themeConfig.colors.text,
-                      }}
-                    />
+                    ))}
                   </div>
-                  <select
-                    value={filterRole}
-                    onChange={(e) => setFilterRole(e.target.value)}
-                    className="px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  >
-                    <option value="ALL">All Roles</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="STAFF">Staff</option>
-                    <option value="STUDENT">Student</option>
-                  </select>
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  >
-                    <option value="ALL">All Status</option>
-                    <option value="ACTIVE">Active</option>
-                    <option value="INACTIVE">Inactive</option>
-                  </select>
-                </div>
-              </div>
-
-              <div
-                className="rounded-xl overflow-hidden"
-                style={{
-                  backgroundColor: themeConfig.colors.surface,
-                  borderColor: themeConfig.colors.border,
-                  border: "1px solid",
-                }}
-              >
-                <div className="overflow-x-auto">
-                  <table className="w-full min-w-[600px]">
-                    <thead
-                      style={{
-                        backgroundColor: themeConfig.colors.background,
-                        borderBottom: "1px solid",
-                      }}
-                    >
-                      <tr>
-                        <th
-                          className="px-6 py-4 text-left text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          User
-                        </th>
-                        <th
-                          className="px-6 py-4 text-left text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Role
-                        </th>
-                        <th
-                          className="px-6 py-4 text-left text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Department
-                        </th>
-                        <th
-                          className="px-6 py-4 text-left text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Status
-                        </th>
-                        <th
-                          className="px-6 py-4 text-left text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Last Login
-                        </th>
-                        <th
-                          className="px-6 py-4 text-left text-sm"
-                          style={{ color: themeConfig.colors.textSecondary }}
-                        >
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredUsers.map((user) => (
-                        <tr
-                          key={user.id}
-                          style={{
-                            borderBottom: `1px solid ${themeConfig.colors.border}`,
-                          }}
-                        >
-                          <td className="px-6 py-4">
-                            <div>
-                              <div
-                                className="font-medium"
-                                style={{ color: themeConfig.colors.text }}
-                              >
-                                {user.name}
-                              </div>
-                              <div
-                                className="text-sm mt-1"
-                                style={{
-                                  color: themeConfig.colors.textSecondary,
-                                }}
-                              >
-                                {user.email}
-                              </div>
+                ) : filteredUsers.length > 0 ? (
+                  <div className="space-y-4">
+                    {filteredUsers.map((user, i) => (
+                      <motion.div
+                        key={user.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 + i * 0.05 }}
+                        className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300"
+                        whileHover={{ x: 5 }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white font-bold">
+                              {user.name.charAt(0).toUpperCase()}
                             </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span
-                              className="px-2 py-1 rounded-full text-xs"
-                              style={getRoleColor(user.role, themeConfig)}
-                            >
+                            <div>
+                              <h3 className="text-gray-100 font-medium">{user.name}</h3>
+                              <p className="text-gray-400 text-sm">{user.email}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className={`text-xs px-2 py-1 rounded-full font-mono ${getRoleColor(user.role)} bg-current/10`}>
                               {user.role}
                             </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div
-                              className="text-sm"
-                              style={{ color: themeConfig.colors.text }}
-                            >
-                              {user.department}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span
-                              className="px-2 py-1 rounded-full text-xs"
-                              style={getStatusColor(user.status, themeConfig)}
-                            >
+                            <span className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(user.status)} bg-current/10`}>
                               {user.status}
                             </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div
-                              className="text-sm"
-                              style={{ color: themeConfig.colors.text }}
-                            >
-                              {user.lastLogin.toLocaleDateString()}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex space-x-2">
-                              <button
-                                onClick={() => openEditModal(user)}
-                                className="text-sm px-3 py-1 rounded-xl transition-all duration-200 hover:scale-105"
-                                style={{
-                                  backgroundColor: `${themeConfig.colors.primary}20`,
-                                  color: themeConfig.colors.primary,
-                                  border: `1px solid ${themeConfig.colors.primary}30`,
-                                }}
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => openDeleteModal(user)}
-                                className="text-sm px-3 py-1 rounded-xl transition-all duration-200 hover:scale-105"
-                                style={{
-                                  backgroundColor: `${themeConfig.colors.error}20`,
-                                  color: themeConfig.colors.error,
-                                  border: `1px solid ${themeConfig.colors.error}30`,
-                                }}
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </main>
-        )}
-
-        {/* Add User Modal */}
-        {showAddModal && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-            style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
-          >
-            <div
-              className="rounded-2xl p-6 w-full max-w-md"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                border: `1px solid ${themeConfig.colors.border}`,
-                zIndex: Z_INDEX.MODAL,
-              }}
-            >
-              <h2
-                className="text-xl font-bold mb-4"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Add New User
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: formErrors.name
-                        ? "#EF4444"
-                        : themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  />
-                  {formErrors.name && (
-                    <p
-                      className="text-xs mt-1"
-                      style={{ color: themeConfig.colors.error }}
-                    >
-                      {formErrors.name}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: formErrors.email
-                        ? "#EF4444"
-                        : themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  />
-                  {formErrors.email && (
-                    <p
-                      className="text-xs mt-1"
-                      style={{ color: themeConfig.colors.error }}
-                    >
-                      {formErrors.email}
-                    </p>
-                  )}
-                </div>
-                <select
-                  value={formData.role}
-                  onChange={(e) =>
-                    setFormData({ ...formData, role: e.target.value as any })
-                  }
-                  className="w-full px-4 py-2 rounded-lg border"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  <option value="STUDENT">Student</option>
-                  <option value="STAFF">Staff</option>
-                  <option value="ADMIN">Admin</option>
-                </select>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Department"
-                    value={formData.department}
-                    onChange={(e) =>
-                      setFormData({ ...formData, department: e.target.value })
-                    }
-                    className="w-full px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: formErrors.department
-                        ? "#EF4444"
-                        : themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  />
-                  {formErrors.department && (
-                    <p
-                      className="text-xs mt-1"
-                      style={{ color: themeConfig.colors.error }}
-                    >
-                      {formErrors.department}
-                    </p>
-                  )}
-                </div>
-                <select
-                  value={formData.status}
-                  onChange={(e) =>
-                    setFormData({ ...formData, status: e.target.value as any })
-                  }
-                  className="w-full px-4 py-2 rounded-lg border"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
-              <div className="flex justify-end space-x-3 mt-6">
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowAddModal(false)}
-                >
-                  Cancel
-                </Button>
-                <Button onClick={handleAddUser} loading={isLoading}>
-                  Add User
-                </Button>
-              </div>
-            </div>
+                            <span className="text-xs text-gray-400">
+                              {user.department}
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-400">No users found</p>
+                  </div>
+                )}
+              </motion.div>
+            </motion.div>
           </div>
-        )}
-
-        {/* Edit User Modal */}
-        {showEditModal && selectedUser && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-            style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
-          >
-            <div
-              className="rounded-2xl p-6 w-full max-w-md"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                border: `1px solid ${themeConfig.colors.border}`,
-                zIndex: Z_INDEX.MODAL,
-              }}
-            >
-              <h2
-                className="text-xl font-bold mb-4"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Edit User
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: formErrors.name
-                        ? "#EF4444"
-                        : themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  />
-                  {formErrors.name && (
-                    <p
-                      className="text-xs mt-1"
-                      style={{ color: themeConfig.colors.error }}
-                    >
-                      {formErrors.name}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: formErrors.email
-                        ? "#EF4444"
-                        : themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  />
-                  {formErrors.email && (
-                    <p
-                      className="text-xs mt-1"
-                      style={{ color: themeConfig.colors.error }}
-                    >
-                      {formErrors.email}
-                    </p>
-                  )}
-                </div>
-                <select
-                  value={formData.role}
-                  onChange={(e) =>
-                    setFormData({ ...formData, role: e.target.value as any })
-                  }
-                  className="w-full px-4 py-2 rounded-lg border"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  <option value="STUDENT">Student</option>
-                  <option value="STAFF">Staff</option>
-                  <option value="ADMIN">Admin</option>
-                </select>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Department"
-                    value={formData.department}
-                    onChange={(e) =>
-                      setFormData({ ...formData, department: e.target.value })
-                    }
-                    className="w-full px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: themeConfig.colors.background,
-                      borderColor: formErrors.department
-                        ? "#EF4444"
-                        : themeConfig.colors.border,
-                      color: themeConfig.colors.text,
-                    }}
-                  />
-                  {formErrors.department && (
-                    <p
-                      className="text-xs mt-1"
-                      style={{ color: themeConfig.colors.error }}
-                    >
-                      {formErrors.department}
-                    </p>
-                  )}
-                </div>
-                <select
-                  value={formData.status}
-                  onChange={(e) =>
-                    setFormData({ ...formData, status: e.target.value as any })
-                  }
-                  className="w-full px-4 py-2 rounded-lg border"
-                  style={{
-                    backgroundColor: themeConfig.colors.background,
-                    borderColor: themeConfig.colors.border,
-                    color: themeConfig.colors.text,
-                  }}
-                >
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
-              <div className="flex justify-end space-x-3 mt-6">
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowEditModal(false)}
-                >
-                  Cancel
-                </Button>
-                <Button onClick={handleEditUser} loading={isLoading}>
-                  Save Changes
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Delete User Modal */}
-        {showDeleteModal && selectedUser && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-            style={{ zIndex: Z_INDEX.MODAL_BACKDROP }}
-          >
-            <div
-              className="rounded-2xl p-6 w-full max-w-md"
-              style={{
-                backgroundColor: themeConfig.colors.surface,
-                border: `1px solid ${themeConfig.colors.border}`,
-                zIndex: Z_INDEX.MODAL,
-              }}
-            >
-              <h2
-                className="text-xl font-bold mb-4"
-                style={{ color: themeConfig.colors.text }}
-              >
-                Delete User
-              </h2>
-              <p style={{ color: themeConfig.colors.textSecondary }}>
-                Are you sure you want to delete {selectedUser.name}? This action
-                cannot be undone.
-              </p>
-              <div className="flex justify-end space-x-3 mt-6">
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowDeleteModal(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={handleDeleteUser}
-                  loading={isLoading}
-                >
-                  Delete User
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
+        </main>
       </div>
     </AuthGuard>
   );

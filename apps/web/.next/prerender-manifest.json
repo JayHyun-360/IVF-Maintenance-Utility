@@ -74,6 +74,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/admin/analytics": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/admin/analytics",
+      "dataRoute": "/admin/analytics.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/admin/dashboard": {
       "experimentalBypassFor": [
         {
@@ -146,7 +170,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/admin/summary-request": {
+    "/admin/requests": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -159,8 +183,32 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/admin/summary-request",
-      "dataRoute": "/admin/summary-request.rsc",
+      "srcRoute": "/admin/requests",
+      "dataRoute": "/admin/requests.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/admin/settings": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/admin/settings",
+      "dataRoute": "/admin/settings.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -515,8 +563,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "9702aa2f1880ae57c421f2075f4f554f",
-    "previewModeSigningKey": "33cc3697e19ea1d5f9c9a321c58248bd75b493b4da6e5df304ad2202ab1fcb61",
-    "previewModeEncryptionKey": "32fd62c80d33226adc2cee433e07865dc8800d04f4b25e8fa1658d2540e36737"
+    "previewModeId": "f6b84d7d8f8efe132e06ba7194680f41",
+    "previewModeSigningKey": "8cae39611054c4ed4bb3f76623c22cf21ab996f2c856f36f32d4d6a6c0660298",
+    "previewModeEncryptionKey": "4634e1618fa33cf9a9ea92b257a5f63b03e6535089814c351c35280698bd76e8"
   }
 }

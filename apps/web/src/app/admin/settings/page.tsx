@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/components/ThemeProvider";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 import BackButton from "@/components/BackButton";
 import AccountDropdown from "@/components/AccountDropdown";
 import { motion } from "framer-motion";
 
 export default function AdminSettings() {
-  const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
@@ -32,7 +29,7 @@ export default function AdminSettings() {
   }, []);
 
   const handleSettingChange = (key: string, value: any) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
+    setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSaveSettings = async () => {
@@ -122,7 +119,6 @@ export default function AdminSettings() {
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 <BackButton fallback="/admin/dashboard" />
-                <ThemeSwitcher />
                 <AccountDropdown />
               </div>
             </div>
@@ -157,39 +153,71 @@ export default function AdminSettings() {
                   transition={{ delay: 0.2 }}
                   className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
-                  <h2 className="text-xl font-bold text-gray-100 mb-6">Notifications</h2>
+                  <h2 className="text-xl font-bold text-gray-100 mb-6">
+                    Notifications
+                  </h2>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <label className="text-gray-100 font-medium">Email Notifications</label>
-                        <p className="text-gray-400 text-sm">Receive email alerts for new requests</p>
+                        <label className="text-gray-100 font-medium">
+                          Email Notifications
+                        </label>
+                        <p className="text-gray-400 text-sm">
+                          Receive email alerts for new requests
+                        </p>
                       </div>
                       <button
-                        onClick={() => handleSettingChange('emailNotifications', !settings.emailNotifications)}
+                        onClick={() =>
+                          handleSettingChange(
+                            "emailNotifications",
+                            !settings.emailNotifications,
+                          )
+                        }
                         className={`w-12 h-6 rounded-full transition-colors duration-200 ${
-                          settings.emailNotifications ? 'bg-teal-500' : 'bg-gray-600'
+                          settings.emailNotifications
+                            ? "bg-teal-500"
+                            : "bg-gray-600"
                         }`}
                       >
-                        <div className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
-                          settings.emailNotifications ? 'translate-x-6' : 'translate-x-0.5'
-                        }`} />
+                        <div
+                          className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
+                            settings.emailNotifications
+                              ? "translate-x-6"
+                              : "translate-x-0.5"
+                          }`}
+                        />
                       </button>
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div>
-                        <label className="text-gray-100 font-medium">Push Notifications</label>
-                        <p className="text-gray-400 text-sm">Receive browser push notifications</p>
+                        <label className="text-gray-100 font-medium">
+                          Push Notifications
+                        </label>
+                        <p className="text-gray-400 text-sm">
+                          Receive browser push notifications
+                        </p>
                       </div>
                       <button
-                        onClick={() => handleSettingChange('pushNotifications', !settings.pushNotifications)}
+                        onClick={() =>
+                          handleSettingChange(
+                            "pushNotifications",
+                            !settings.pushNotifications,
+                          )
+                        }
                         className={`w-12 h-6 rounded-full transition-colors duration-200 ${
-                          settings.pushNotifications ? 'bg-teal-500' : 'bg-gray-600'
+                          settings.pushNotifications
+                            ? "bg-teal-500"
+                            : "bg-gray-600"
                         }`}
                       >
-                        <div className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
-                          settings.pushNotifications ? 'translate-x-6' : 'translate-x-0.5'
-                        }`} />
+                        <div
+                          className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
+                            settings.pushNotifications
+                              ? "translate-x-6"
+                              : "translate-x-0.5"
+                          }`}
+                        />
                       </button>
                     </div>
                   </div>
@@ -202,47 +230,78 @@ export default function AdminSettings() {
                   transition={{ delay: 0.3 }}
                   className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
-                  <h2 className="text-xl font-bold text-gray-100 mb-6">System Configuration</h2>
+                  <h2 className="text-xl font-bold text-gray-100 mb-6">
+                    System Configuration
+                  </h2>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <label className="text-gray-100 font-medium">Maintenance Mode</label>
-                        <p className="text-gray-400 text-sm">Temporarily disable user access</p>
+                        <label className="text-gray-100 font-medium">
+                          Maintenance Mode
+                        </label>
+                        <p className="text-gray-400 text-sm">
+                          Temporarily disable user access
+                        </p>
                       </div>
                       <button
-                        onClick={() => handleSettingChange('maintenanceMode', !settings.maintenanceMode)}
+                        onClick={() =>
+                          handleSettingChange(
+                            "maintenanceMode",
+                            !settings.maintenanceMode,
+                          )
+                        }
                         className={`w-12 h-6 rounded-full transition-colors duration-200 ${
-                          settings.maintenanceMode ? 'bg-red-500' : 'bg-gray-600'
+                          settings.maintenanceMode
+                            ? "bg-red-500"
+                            : "bg-gray-600"
                         }`}
                       >
-                        <div className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
-                          settings.maintenanceMode ? 'translate-x-6' : 'translate-x-0.5'
-                        }`} />
+                        <div
+                          className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
+                            settings.maintenanceMode
+                              ? "translate-x-6"
+                              : "translate-x-0.5"
+                          }`}
+                        />
                       </button>
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div>
-                        <label className="text-gray-100 font-medium">Debug Mode</label>
-                        <p className="text-gray-400 text-sm">Enable detailed logging</p>
+                        <label className="text-gray-100 font-medium">
+                          Debug Mode
+                        </label>
+                        <p className="text-gray-400 text-sm">
+                          Enable detailed logging
+                        </p>
                       </div>
                       <button
-                        onClick={() => handleSettingChange('debugMode', !settings.debugMode)}
+                        onClick={() =>
+                          handleSettingChange("debugMode", !settings.debugMode)
+                        }
                         className={`w-12 h-6 rounded-full transition-colors duration-200 ${
-                          settings.debugMode ? 'bg-amber-500' : 'bg-gray-600'
+                          settings.debugMode ? "bg-amber-500" : "bg-gray-600"
                         }`}
                       >
-                        <div className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
-                          settings.debugMode ? 'translate-x-6' : 'translate-x-0.5'
-                        }`} />
+                        <div
+                          className={`w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
+                            settings.debugMode
+                              ? "translate-x-6"
+                              : "translate-x-0.5"
+                          }`}
+                        />
                       </button>
                     </div>
 
                     <div>
-                      <label className="text-gray-100 font-medium block mb-2">Log Level</label>
+                      <label className="text-gray-100 font-medium block mb-2">
+                        Log Level
+                      </label>
                       <select
                         value={settings.logLevel}
-                        onChange={(e) => handleSettingChange('logLevel', e.target.value)}
+                        onChange={(e) =>
+                          handleSettingChange("logLevel", e.target.value)
+                        }
                         className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-gray-100 focus:border-teal-500 focus:outline-none"
                       >
                         <option value="error">Error</option>
@@ -253,11 +312,15 @@ export default function AdminSettings() {
                     </div>
 
                     <div>
-                      <label className="text-gray-100 font-medium block mb-2">Session Timeout (hours)</label>
+                      <label className="text-gray-100 font-medium block mb-2">
+                        Session Timeout (hours)
+                      </label>
                       <input
                         type="number"
                         value={settings.sessionTimeout}
-                        onChange={(e) => handleSettingChange('sessionTimeout', e.target.value)}
+                        onChange={(e) =>
+                          handleSettingChange("sessionTimeout", e.target.value)
+                        }
                         className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-gray-100 focus:border-teal-500 focus:outline-none"
                         min="1"
                         max="168"
