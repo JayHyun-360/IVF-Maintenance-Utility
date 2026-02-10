@@ -389,6 +389,7 @@ export default function AdminDashboard() {
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
 
         {/* Main Header */}
+        {/* Unified Header with Connected Navigation */}
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -472,58 +473,52 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
-        </motion.header>
-
-        {/* Secondary Navigation - Horizontal */}
-        <motion.nav
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="fixed top-16 md:top-20 left-0 right-0 z-40 bg-black/10 backdrop-blur-lg border-b border-white/5"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-            <div
-              className="flex items-center justify-center gap-2 md:gap-4 py-4"
-              style={{ maxWidth: "1400px", margin: "0 auto" }}
-            >
-              {[
-                { id: "overview", label: "Overview" },
-                { id: "requests", label: "Maintenance" },
-                { id: "analytics", label: "Analytics" },
-                { id: "users", label: "Users" },
-                { id: "reports", label: "Reports" },
-              ].map((item, i) => (
-                <motion.button
-                  key={item.id}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + i * 0.05 }}
-                  onClick={() => handleTabClick(item.id)}
-                  className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeTab === item.id
-                      ? "bg-teal-500/20 text-teal-400 border border-teal-500/30"
-                      : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {item.label}
-                  {activeTab === item.id && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute inset-0 rounded-full bg-teal-500/10 border border-teal-500/30"
-                      transition={{
-                        type: "spring",
-                        bounce: 0.2,
-                        duration: 0.6,
-                      }}
-                    />
-                  )}
-                </motion.button>
-              ))}
+          {/* Connected Tab Navigation */}
+          <div className="border-t border-white/5 bg-black/10 backdrop-blur-lg">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+              <div
+                className="flex items-center gap-2 md:gap-4 py-4"
+                style={{ maxWidth: "1400px", margin: "0 auto" }}
+              >
+                {[
+                  { id: "overview", label: "Overview" },
+                  { id: "requests", label: "Maintenance" },
+                  { id: "analytics", label: "Analytics" },
+                  { id: "users", label: "Users" },
+                  { id: "reports", label: "Reports" },
+                ].map((item, i) => (
+                  <motion.button
+                    key={item.id}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + i * 0.05 }}
+                    onClick={() => handleTabClick(item.id)}
+                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      activeTab === item.id
+                        ? "bg-teal-500/20 text-teal-400 border border-teal-500/30"
+                        : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item.label}
+                    {activeTab === item.id && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 rounded-full bg-teal-500/10 border border-teal-500/30"
+                        transition={{
+                          type: "spring",
+                          bounce: 0.2,
+                          duration: 0.6,
+                        }}
+                      />
+                    )}
+                  </motion.button>
+                ))}
+              </div>
             </div>
           </div>
-        </motion.nav>
+        </motion.header>
 
         {/* Floating Refresh Button */}
         <motion.div
@@ -581,7 +576,7 @@ export default function AdminDashboard() {
         </motion.div>
 
         {/* Main Content */}
-        <main className="pt-32 md:pt-36 px-4 sm:px-6 lg:px-12 pb-12">
+        <main className="pt-40 md:pt-44 px-4 sm:px-6 lg:px-12 pb-12">
           <div className="max-w-7xl mx-auto" style={{ maxWidth: "1400px" }}>
             {/* Content Container with stable layout */}
             <div className="min-h-[600px] relative">
