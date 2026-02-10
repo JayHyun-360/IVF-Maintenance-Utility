@@ -6,7 +6,7 @@ import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
 import AccountDropdown from "@/components/AccountDropdown";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 // Types
 interface DashboardStats {
@@ -581,125 +581,8 @@ export default function AdminDashboard() {
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="space-y-8 md:space-y-12"
                 >
-                  {/* Error Popup Notification */}
-                  <AnimatePresence>
-                    {error && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -100, scale: 0.8 }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                          scale: 1,
-                          transition: {
-                            type: "spring",
-                            bounce: 0.4,
-                            duration: 0.8,
-                          },
-                        }}
-                        exit={{
-                          opacity: 0,
-                          y: -100,
-                          scale: 0.8,
-                          transition: {
-                            type: "spring",
-                            bounce: 0.6,
-                            duration: 0.6,
-                          },
-                        }}
-                        className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50"
-                      >
-                        <motion.div
-                          className="relative backdrop-blur-xl rounded-2xl border border-red-500/30 bg-gradient-to-r from-red-500/10 to-pink-500/10 p-6 shadow-2xl shadow-red-500/25 min-w-[320px] max-w-md"
-                          style={{
-                            background: "rgba(239, 68, 68, 0.1) !important",
-                            backdropFilter: "blur(25px) !important",
-                            border:
-                              "1px solid rgba(239, 68, 68, 0.3) !important",
-                            boxShadow:
-                              "0 25px 50px -12px rgba(239, 68, 68, 0.5) !important",
-                          }}
-                          whileHover={{ scale: 1.02 }}
-                        >
-                          {/* Glow Effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-2xl blur-xl" />
-
-                          {/* Content */}
-                          <div className="relative flex items-start gap-4">
-                            <motion.div
-                              initial={{ rotate: 0 }}
-                              animate={{ rotate: [0, -10, 10, 0] }}
-                              transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                repeatDelay: 3,
-                                ease: "easeInOut",
-                              }}
-                              className="flex-shrink-0"
-                            >
-                              <svg
-                                className="w-6 h-6 text-red-400"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                            </motion.div>
-
-                            <div className="flex-1">
-                              <motion.h3
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.2 }}
-                                className="text-lg font-bold text-red-300 mb-2"
-                              >
-                                Dashboard Error
-                              </motion.h3>
-                              <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-red-400 text-sm leading-relaxed"
-                              >
-                                {error}
-                              </motion.p>
-                              <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                className="mt-4"
-                              >
-                                <motion.button
-                                  onClick={fetchDashboardData}
-                                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 text-white font-medium shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all duration-300"
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  Refresh Dashboard
-                                </motion.button>
-                              </motion.div>
-                            </div>
-                          </div>
-
-                          {/* Auto-dismiss indicator */}
-                          <motion.div
-                            initial={{ width: "100%" }}
-                            animate={{ width: "0%" }}
-                            transition={{ duration: 5, ease: "linear" }}
-                            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full"
-                          />
-                        </motion.div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
                   {/* Last Updated Indicator */}
-                  {lastUpdated && !error && (
+                  {lastUpdated && (
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
