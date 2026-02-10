@@ -92,7 +92,7 @@ export default function Home() {
               </motion.div>
 
               {/* Navigation Links - Desktop */}
-              <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+              <nav className="hidden md:flex items-center gap-2.5 lg:gap-10">
                 {[
                   { label: "Home", href: "/", active: true },
                   { label: "Features", href: "#features" },
@@ -211,7 +211,7 @@ export default function Home() {
                 transition={{ delay: 0.2 }}
                 className="backdrop-blur-xl bg-black/40 border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/60 inner-glow max-w-2xl mx-auto"
               >
-                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
+                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-8 mb-6 md:mb-8">
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/30 flex-shrink-0">
                     <svg
                       className="w-7 h-7 md:w-10 md:h-10 text-white"
@@ -243,7 +243,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-bold text-gray-100 mb-8 leading-tight"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-bold text-gray-100 mb-6 leading-tight"
               >
                 Streamline Your
                 <span className="block text-teal-400">
@@ -256,7 +256,8 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-14 leading-relaxed max-w-3xl mx-auto px-4"
+                className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto px-4"
+                style={{ lineHeight: 1.6, letterSpacing: "-0.01em" }}
               >
                 Transform your maintenance operations with intelligent
                 automation, real-time visual feedback, and seamless workflow
@@ -268,7 +269,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 md:mb-20 px-4"
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 md:mb-24 px-4"
               >
                 <motion.button
                   onClick={() => router.push("/login")}
