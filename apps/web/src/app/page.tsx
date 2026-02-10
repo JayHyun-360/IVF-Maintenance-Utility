@@ -243,7 +243,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-bold text-gray-100 mb-6 leading-tight"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-bold text-gray-100 mb-8 leading-tight"
               >
                 Streamline Your
                 <span className="block text-teal-400">
@@ -256,7 +256,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 md:mb-12 leading-relaxed max-w-3xl mx-auto px-4"
+                className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-14 leading-relaxed max-w-3xl mx-auto px-4"
               >
                 Transform your maintenance operations with intelligent
                 automation, real-time visual feedback, and seamless workflow
@@ -268,7 +268,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 md:mb-16 px-4"
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 md:mb-20 px-4"
               >
                 <motion.button
                   onClick={() => router.push("/login")}
