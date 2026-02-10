@@ -70,7 +70,7 @@ export default function AccountDropdown() {
       const viewportHeight = window.innerHeight;
       const viewportWidth = window.innerWidth;
       const dropdownHeight = 300; // Estimated dropdown height with safety margin
-      const dropdownWidth = 224; // w-56 = 14rem = 224px
+      const dropdownWidth = 256; // w-64 = 16rem = 256px
       const safetyMargin = 20; // 20px safety margin from viewport edges
 
       if (buttonRect) {
@@ -187,13 +187,15 @@ export default function AccountDropdown() {
 
       {isOpen && (
         <div
-          className={`absolute w-56 rounded-xl shadow-lg border max-h-64 overflow-y-auto ${
+          className={`absolute w-64 rounded-2xl shadow-2xl border max-h-80 overflow-y-auto backdrop-blur-xl ${
             dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
           } ${dropdownAlignment === "left" ? "left-0" : "right-0"}`}
           style={{
-            backgroundColor: themeConfig.colors.surface,
+            backgroundColor: `${themeConfig.colors.surface}CC`,
             borderColor: themeConfig.colors.border,
             zIndex: Z_INDEX.MAX,
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
           }}
         >
           <div className="p-2">
