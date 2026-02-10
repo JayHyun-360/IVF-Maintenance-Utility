@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, feature/aerospace-redesign]
   pull_request:
     branches: [main]
 
@@ -108,7 +108,7 @@ jobs:
   deploy:
     needs: [test, build]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/aerospace-redesign'
 
     steps:
       - uses: actions/checkout@v4
