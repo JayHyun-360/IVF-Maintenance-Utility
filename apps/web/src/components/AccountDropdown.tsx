@@ -70,7 +70,7 @@ export default function AccountDropdown() {
       const viewportHeight = window.innerHeight;
       const viewportWidth = window.innerWidth;
       const dropdownHeight = 300; // Estimated dropdown height with safety margin
-      const dropdownWidth = 256; // w-64 = 16rem = 256px
+      const dropdownWidth = 192; // w-48 = 12rem = 192px
       const safetyMargin = 20; // 20px safety margin from viewport edges
 
       if (buttonRect) {
@@ -139,16 +139,16 @@ export default function AccountDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 hover:scale-105"
+        className="flex items-center space-x-2 p-2 rounded-lg transition-all duration-300 hover:scale-105"
         style={{
           backgroundColor: themeConfig.colors.surface,
           color: themeConfig.colors.text,
           border: `1px solid ${themeConfig.colors.border}`,
         }}
       >
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold"
             style={{
               background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
             }}
@@ -187,7 +187,7 @@ export default function AccountDropdown() {
 
       {isOpen && (
         <div
-          className={`absolute w-64 rounded-2xl shadow-2xl border max-h-80 overflow-y-auto backdrop-blur-xl ${
+          className={`absolute w-48 rounded-xl shadow-xl border max-h-60 overflow-y-auto backdrop-blur-xl ${
             dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
           } ${dropdownAlignment === "left" ? "left-0" : "right-0"}`}
           style={{
