@@ -1668,48 +1668,72 @@ export default function AdminDashboard() {
                     );
 
                     return (
-                      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                        {/* Request Trends */}
-                        <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
-                          style={{
-                            background: "rgba(255, 255, 255, 0.03) !important",
-                            backdropFilter: "blur(25px) !important",
-                            border:
-                              "1px solid rgba(255, 255, 255, 0.1) !important",
-                            boxShadow:
-                              "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
-                          }}
-                        >
-                          <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-4"
-                          >
-                            Request
-                            <span className="text-teal-400"> Trends</span>
-                          </motion.h3>
-                          <div className="space-y-6">
-                            {analytics.monthlyData.map((item, i) => (
-                              <motion.div
-                                key={i}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{
-                                  delay: 0.05 * i,
-                                  duration: 0.3,
-                                  ease: "easeOut",
-                                }}
-                                className="flex items-center justify-between"
+                      <div className="space-y-4">
+                        {/* Key Metrics Row - Compact */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                          {[
+                            {
+                              label: "Total",
+                              value: analytics.totalRequests.toString(),
+                              color: "text-blue-400",
+                            },
+                            {
+                              label: "Complete",
+                              value: `${analytics.completionRate}%`,
+                              color: "text-green-400",
+                            },
+                            {
+                              label: "Active",
+                              value: (
+                                analytics.statusDistribution["Pending"] +
+                                analytics.statusDistribution["In Progress"]
+                              ).toString(),
+                              color: "text-amber-400",
+                            },
+                            {
+                              label: "Response",
+                              value: analytics.avgResponseTime,
+                              color: "text-purple-400",
+                            },
+                          ].map((metric, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.05 * i }}
+                              className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center"
+                            >
+                              <div
+                                className={`text-lg font-bold ${metric.color}`}
                               >
-                                <span className="text-gray-300 font-medium">
-                                  {item.month}
-                                </span>
-                                <div className="flex items-center gap-4">
-                                  <div className="w-40 bg-gray-700 rounded-full h-3">
+                                {metric.value}
+                              </div>
+                              <div className="text-xs text-gray-400">
+                                {metric.label}
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+
+                        {/* Charts Row - Compact */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {/* Request Trends */}
+                          <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                            <h3 className="text-sm font-semibold text-gray-100 mb-3">
+                              Monthly Trends
+                            </h3>
+                            <div className="space-y-2">
+                              {analytics.monthlyData.map((item, i) => (
+                                <div
+                                  key={i}
+                                  className="flex items-center justify-between"
+                                >
+                                  <span className="text-xs text-gray-400 w-8">
+                                    {item.month}
+                                  </span>
+                                  <div className="flex-1 mx-2 bg-gray-700 rounded-full h-2">
                                     <motion.div
-                                      className="bg-gradient-to-r from-teal-500 to-cyan-600 h-3 rounded-full"
+                                      className="bg-teal-500 h-2 rounded-full"
                                       style={{
                                         width: `${(item.count / maxMonthlyCount) * 100}%`,
                                       }}
@@ -1717,333 +1741,114 @@ export default function AdminDashboard() {
                                       animate={{
                                         width: `${(item.count / maxMonthlyCount) * 100}%`,
                                       }}
-                                      transition={{
-                                        delay: 0.3 + i * 0.1,
-                                        duration: 0.8,
-                                      }}
+                                      transition={{ delay: 0.1 * i }}
                                     />
                                   </div>
-                                  <motion.span
-                                    className="text-xl font-mono font-bold text-gray-100"
-                                    style={{
-                                      background:
-                                        "linear-gradient(135deg, #14b8a6, #06b6d4)",
-                                      WebkitBackgroundClip: "text",
-                                      WebkitTextFillColor: "transparent",
-                                      backgroundClip: "text",
-                                    }}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.4 + i * 0.1 }}
-                                  >
+                                  <span className="text-xs font-mono text-gray-300 w-6 text-right">
                                     {item.count}
-                                  </motion.span>
+                                  </span>
                                 </div>
-                              </motion.div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
-                        </div>
 
-                        {/* Performance Metrics */}
-                        <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
-                          style={{
-                            background: "rgba(255, 255, 255, 0.03) !important",
-                            backdropFilter: "blur(25px) !important",
-                            border:
-                              "1px solid rgba(255, 255, 255, 0.1) !important",
-                            boxShadow:
-                              "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
-                          }}
-                        >
-                          <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-4"
-                          >
-                            Performance
-                            <span className="text-teal-400"> Metrics</span>
-                          </motion.h3>
-                          <div className="space-y-6">
-                            {[
-                              {
-                                label: "Total Requests",
-                                value: analytics.totalRequests.toString(),
-                                trend: "+12%",
-                              },
-                              {
-                                label: "Completion Rate",
-                                value: `${analytics.completionRate}%`,
-                                trend:
-                                  analytics.completionRate > 80 ? "+8%" : "-2%",
-                              },
-                              {
-                                label: "Avg Response Time",
-                                value: analytics.avgResponseTime,
-                                trend: "-15%",
-                              },
-                              {
-                                label: "Satisfaction Score",
-                                value: analytics.satisfactionScore,
-                                trend: "+12%",
-                              },
-                            ].map((metric, i) => (
-                              <motion.div
-                                key={i}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{
-                                  delay: 0.05 * i,
-                                  duration: 0.3,
-                                  ease: "easeOut",
-                                }}
-                                className="flex items-center justify-between p-4 rounded-xl hover:bg-white/10 transition-colors"
-                              >
-                                <div>
-                                  <p className="text-gray-400 text-sm font-medium">
-                                    {metric.label}
-                                  </p>
-                                  <motion.p
-                                    className="text-2xl font-mono font-bold text-gray-100"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.3 + i * 0.1 }}
-                                  >
-                                    {metric.value}
-                                  </motion.p>
-                                </div>
-                                <motion.span
-                                  className={`text-lg font-mono font-bold ${
-                                    metric.trend.startsWith("+")
-                                      ? "text-lime-400"
-                                      : "text-red-400"
-                                  }`}
-                                  whileHover={{ scale: 1.2 }}
-                                >
-                                  {metric.trend}
-                                </motion.span>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Priority Distribution */}
-                        <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
-                          style={{
-                            background: "rgba(255, 255, 255, 0.03) !important",
-                            backdropFilter: "blur(25px) !important",
-                            border:
-                              "1px solid rgba(255, 255, 255, 0.1) !important",
-                            boxShadow:
-                              "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
-                          }}
-                        >
-                          <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-4"
-                          >
-                            Priority
-                            <span className="text-teal-400"> Distribution</span>
-                          </motion.h3>
-                          <div className="space-y-6">
-                            {Object.entries(analytics.priorityDistribution).map(
-                              ([priority, count], i) => (
-                                <motion.div
+                          {/* Priority Distribution */}
+                          <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                            <h3 className="text-sm font-semibold text-gray-100 mb-3">
+                              Priority Breakdown
+                            </h3>
+                            <div className="space-y-2">
+                              {Object.entries(
+                                analytics.priorityDistribution,
+                              ).map(([priority, count], i) => (
+                                <div
                                   key={priority}
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{
-                                    delay: 0.05 * i,
-                                    duration: 0.3,
-                                    ease: "easeOut",
-                                  }}
                                   className="flex items-center justify-between"
                                 >
-                                  <span
-                                    className={`text-gray-300 font-medium ${
-                                      priority === "Critical"
-                                        ? "text-red-400"
-                                        : priority === "High"
-                                          ? "text-amber-400"
-                                          : priority === "Medium"
-                                            ? "text-yellow-400"
-                                            : "text-green-400"
-                                    }`}
-                                  >
-                                    {priority}
-                                  </span>
-                                  <div className="flex items-center gap-4">
-                                    <div className="w-32 bg-gray-700 rounded-full h-3">
-                                      <motion.div
-                                        className={`h-3 rounded-full ${
-                                          priority === "Critical"
-                                            ? "bg-red-500"
-                                            : priority === "High"
-                                              ? "bg-amber-500"
-                                              : priority === "Medium"
-                                                ? "bg-yellow-500"
-                                                : "bg-green-500"
-                                        }`}
-                                        style={{
-                                          width: `${(count / analytics.totalRequests) * 100}%`,
-                                        }}
-                                        initial={{ width: 0 }}
-                                        animate={{
-                                          width: `${(count / analytics.totalRequests) * 100}%`,
-                                        }}
-                                        transition={{
-                                          delay: 0.3 + i * 0.1,
-                                          duration: 0.8,
-                                        }}
-                                      />
-                                    </div>
-                                    <motion.span
-                                      className="text-xl font-mono font-bold text-gray-100"
-                                      initial={{ opacity: 0 }}
-                                      animate={{ opacity: 1 }}
-                                      transition={{ delay: 0.4 + i * 0.1 }}
-                                    >
-                                      {count}
-                                    </motion.span>
+                                  <div className="flex items-center gap-2">
+                                    <div
+                                      className={`w-2 h-2 rounded-full ${
+                                        priority === "Critical"
+                                          ? "bg-red-500"
+                                          : priority === "High"
+                                            ? "bg-amber-500"
+                                            : priority === "Medium"
+                                              ? "bg-yellow-500"
+                                              : "bg-green-500"
+                                      }`}
+                                    />
+                                    <span className="text-xs text-gray-400">
+                                      {priority}
+                                    </span>
                                   </div>
-                                </motion.div>
-                              ),
-                            )}
+                                  <span className="text-xs font-mono text-gray-300">
+                                    {count}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
 
-                        {/* Category Distribution */}
-                        <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
-                          style={{
-                            background: "rgba(255, 255, 255, 0.03) !important",
-                            backdropFilter: "blur(25px) !important",
-                            border:
-                              "1px solid rgba(255, 255, 255, 0.1) !important",
-                            boxShadow:
-                              "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
-                          }}
-                        >
-                          <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-4"
-                          >
-                            Category
-                            <span className="text-teal-400"> Breakdown</span>
-                          </motion.h3>
-                          <div className="space-y-3">
-                            {Object.entries(analytics.categoryDistribution)
-                              .sort(([, a], [, b]) => b - a)
-                              .slice(0, 6)
-                              .map(([category, count], i) => (
-                                <motion.div
-                                  key={category}
-                                  initial={{ opacity: 0, scale: 0.95 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  transition={{
-                                    delay: 0.05 * i,
-                                    duration: 0.3,
-                                    ease: "easeOut",
-                                  }}
-                                  className="flex items-center justify-between p-3 rounded-xl hover:bg-white/10 transition-colors"
-                                >
-                                  <span className="text-gray-300 font-medium text-sm">
-                                    {category}
-                                  </span>
-                                  <div className="flex items-center gap-3">
-                                    <div className="w-24 bg-gray-700 rounded-full h-2">
-                                      <motion.div
-                                        className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full"
-                                        style={{
-                                          width: `${(count / analytics.totalRequests) * 100}%`,
-                                        }}
-                                        initial={{ width: 0 }}
-                                        animate={{
-                                          width: `${(count / analytics.totalRequests) * 100}%`,
-                                        }}
-                                        transition={{
-                                          delay: 0.3 + i * 0.1,
-                                          duration: 0.8,
-                                        }}
-                                      />
+                        {/* Bottom Row - Status & Categories */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {/* Status Overview */}
+                          <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                            <h3 className="text-sm font-semibold text-gray-100 mb-3">
+                              Status Overview
+                            </h3>
+                            <div className="grid grid-cols-2 gap-2">
+                              {Object.entries(analytics.statusDistribution).map(
+                                ([status, count], i) => (
+                                  <div
+                                    key={status}
+                                    className="text-center p-2 bg-gray-700/50 rounded"
+                                  >
+                                    <div
+                                      className={`text-sm font-bold ${
+                                        status === "Completed"
+                                          ? "text-green-400"
+                                          : status === "In Progress"
+                                            ? "text-blue-400"
+                                            : status === "Pending"
+                                              ? "text-amber-400"
+                                              : "text-gray-400"
+                                      }`}
+                                    >
+                                      {count}
                                     </div>
-                                    <span className="text-sm font-mono font-bold text-gray-100">
+                                    <div className="text-xs text-gray-500">
+                                      {status}
+                                    </div>
+                                  </div>
+                                ),
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Category Distribution */}
+                          <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                            <h3 className="text-sm font-semibold text-gray-100 mb-3">
+                              Top Categories
+                            </h3>
+                            <div className="space-y-1">
+                              {Object.entries(analytics.categoryDistribution)
+                                .sort(([, a], [, b]) => b - a)
+                                .slice(0, 4)
+                                .map(([category, count], i) => (
+                                  <div
+                                    key={category}
+                                    className="flex justify-between"
+                                  >
+                                    <span className="text-xs text-gray-400 truncate">
+                                      {category}
+                                    </span>
+                                    <span className="text-xs font-mono text-gray-300">
                                       {count}
                                     </span>
                                   </div>
-                                </motion.div>
-                              ))}
-                          </div>
-                        </div>
-
-                        {/* Status Distribution */}
-                        <div
-                          className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
-                          style={{
-                            background: "rgba(255, 255, 255, 0.03) !important",
-                            backdropFilter: "blur(25px) !important",
-                            border:
-                              "1px solid rgba(255, 255, 255, 0.1) !important",
-                            boxShadow:
-                              "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
-                          }}
-                        >
-                          <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-2xl font-bold text-gray-100 mb-4"
-                          >
-                            Status
-                            <span className="text-teal-400"> Overview</span>
-                          </motion.h3>
-                          <div className="grid grid-cols-2 gap-4">
-                            {Object.entries(analytics.statusDistribution).map(
-                              ([status, count], i) => (
-                                <motion.div
-                                  key={status}
-                                  initial={{ opacity: 0, scale: 0.95 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  transition={{
-                                    delay: 0.05 * i,
-                                    duration: 0.3,
-                                    ease: "easeOut",
-                                  }}
-                                  className={`p-4 rounded-xl text-center ${
-                                    status === "Completed"
-                                      ? "bg-green-500/10 border border-green-500/30"
-                                      : status === "In Progress"
-                                        ? "bg-blue-500/10 border border-blue-500/30"
-                                        : status === "Pending"
-                                          ? "bg-amber-500/10 border border-amber-500/30"
-                                          : "bg-gray-500/10 border border-gray-500/30"
-                                  }`}
-                                >
-                                  <div
-                                    className={`text-2xl font-bold mb-1 ${
-                                      status === "Completed"
-                                        ? "text-green-400"
-                                        : status === "In Progress"
-                                          ? "text-blue-400"
-                                          : status === "Pending"
-                                            ? "text-amber-400"
-                                            : "text-gray-400"
-                                    }`}
-                                  >
-                                    {count}
-                                  </div>
-                                  <div className="text-xs text-gray-400">
-                                    {status}
-                                  </div>
-                                </motion.div>
-                              ),
-                            )}
+                                ))}
+                            </div>
                           </div>
                         </div>
                       </div>
