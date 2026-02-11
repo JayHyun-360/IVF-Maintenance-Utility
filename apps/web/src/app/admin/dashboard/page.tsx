@@ -1883,83 +1883,133 @@ export default function AdminDashboard() {
                               Status
                             </th>
                             <th className="pb-4 text-gray-400 font-medium">
+                              Requests
+                            </th>
+                            <th className="pb-4 text-gray-400 font-medium">
                               Last Active
                             </th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                          {[
-                            {
-                              name: "John Smith",
-                              email: "john@ivf.edu",
-                              role: "Admin",
-                              status: "Active",
-                              lastActive: "2 hours ago",
-                            },
-                            {
-                              name: "Sarah Johnson",
-                              email: "sarah@ivf.edu",
-                              role: "Staff",
-                              status: "Active",
-                              lastActive: "1 day ago",
-                            },
-                            {
-                              name: "Mike Davis",
-                              email: "mike@ivf.edu",
-                              role: "Student",
-                              status: "Inactive",
-                              lastActive: "3 days ago",
-                            },
-                          ].map((user, i) => (
-                            <tr
-                              key={i}
-                              className="hover:bg-white/5 transition-colors"
-                            >
-                              <td className="py-4">
-                                <motion.div
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                  transition={{ delay: 0.1 * i, duration: 0.3 }}
-                                >
-                                  <div>
-                                    <p className="text-gray-100 font-medium">
-                                      {user.name}
-                                    </p>
-                                    <p className="text-gray-400 text-sm">
-                                      {user.email}
-                                    </p>
+                          {(() => {
+                            // Generate user data from maintenance requests
+                            const userData = [
+                              {
+                                name: "John Smith",
+                                email: "john@ivf.edu",
+                                role: "Admin",
+                                status: "Active",
+                                requests: recentRequests.filter(
+                                  (r) => r.requestedBy === "John Smith",
+                                ).length,
+                                lastActive: "2 hours ago",
+                              },
+                              {
+                                name: "Sarah Johnson",
+                                email: "sarah@ivf.edu",
+                                role: "Staff",
+                                status: "Active",
+                                requests: recentRequests.filter(
+                                  (r) => r.requestedBy === "Sarah Johnson",
+                                ).length,
+                                lastActive: "1 day ago",
+                              },
+                              {
+                                name: "Mike Davis",
+                                email: "mike@ivf.edu",
+                                role: "Student",
+                                status: "Active",
+                                requests: recentRequests.filter(
+                                  (r) => r.requestedBy === "Mike Davis",
+                                ).length,
+                                lastActive: "3 days ago",
+                              },
+                              {
+                                name: "Emily Chen",
+                                email: "emily@ivf.edu",
+                                role: "Student",
+                                status: "Active",
+                                requests: recentRequests.filter(
+                                  (r) => r.requestedBy === "Emily Chen",
+                                ).length,
+                                lastActive: "5 hours ago",
+                              },
+                              {
+                                name: "Robert Wilson",
+                                email: "robert@ivf.edu",
+                                role: "Staff",
+                                status: "Active",
+                                requests: recentRequests.filter(
+                                  (r) => r.requestedBy === "Robert Wilson",
+                                ).length,
+                                lastActive: "1 week ago",
+                              },
+                            ];
+
+                            return userData.map((user, i) => (
+                              <tr
+                                key={i}
+                                className="hover:bg-white/5 transition-colors"
+                              >
+                                <td className="py-4">
+                                  <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{
+                                      delay: 0.1 * i,
+                                      duration: 0.3,
+                                    }}
+                                  >
+                                    <div>
+                                      <p className="text-gray-100 font-medium">
+                                        {user.name}
+                                      </p>
+                                      <p className="text-gray-400 text-sm">
+                                        {user.email}
+                                      </p>
+                                    </div>
+                                  </motion.div>
+                                </td>
+                                <td className="py-4">
+                                  <span
+                                    className={`text-sm px-2 py-1 rounded-full font-mono ${
+                                      user.role === "Admin"
+                                        ? "bg-purple-500/20 text-purple-400"
+                                        : user.role === "Staff"
+                                          ? "bg-blue-500/20 text-blue-400"
+                                          : "bg-gray-500/20 text-gray-400"
+                                    }`}
+                                  >
+                                    {user.role}
+                                  </span>
+                                </td>
+                                <td className="py-4">
+                                  <span
+                                    className={`text-sm ${
+                                      user.status === "Active"
+                                        ? "text-lime-400"
+                                        : "text-gray-400"
+                                    }`}
+                                  >
+                                    {user.status}
+                                  </span>
+                                </td>
+                                <td className="py-4">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-mono text-gray-300">
+                                      {user.requests}
+                                    </span>
+                                    <span className="text-xs text-gray-500">
+                                      requests
+                                    </span>
                                   </div>
-                                </motion.div>
-                              </td>
-                              <td className="py-4">
-                                <span
-                                  className={`text-sm px-2 py-1 rounded-full font-mono ${
-                                    user.role === "Admin"
-                                      ? "bg-purple-500/20 text-purple-400"
-                                      : user.role === "Staff"
-                                        ? "bg-blue-500/20 text-blue-400"
-                                        : "bg-gray-500/20 text-gray-400"
-                                  }`}
-                                >
-                                  {user.role}
-                                </span>
-                              </td>
-                              <td className="py-4">
-                                <span
-                                  className={`text-sm ${
-                                    user.status === "Active"
-                                      ? "text-lime-400"
-                                      : "text-gray-400"
-                                  }`}
-                                >
-                                  {user.status}
-                                </span>
-                              </td>
-                              <td className="py-4 text-gray-400 text-sm">
-                                {user.lastActive}
-                              </td>
-                            </tr>
-                          ))}
+                                </td>
+                                <td className="py-4 text-gray-400 text-sm">
+                                  {user.lastActive}
+                                </td>
+                              </tr>
+                            ));
+                          })()}
                         </tbody>
                       </table>
                     </div>
