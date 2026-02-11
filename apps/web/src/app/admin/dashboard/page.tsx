@@ -1892,61 +1892,63 @@ export default function AdminDashboard() {
                         </thead>
                         <tbody className="divide-y divide-white/5">
                           {(() => {
-                            // Generate user data from maintenance requests
-                            const userData = [
-                              {
-                                name: "John Smith",
-                                email: "john@ivf.edu",
-                                role: "Admin",
-                                status: "Active",
-                                requests: recentRequests.filter(
-                                  (r) => r.requestedBy === "John Smith",
-                                ).length,
-                                lastActive: "2 hours ago",
-                              },
-                              {
-                                name: "Sarah Johnson",
-                                email: "sarah@ivf.edu",
-                                role: "Staff",
-                                status: "Active",
-                                requests: recentRequests.filter(
-                                  (r) => r.requestedBy === "Sarah Johnson",
-                                ).length,
-                                lastActive: "1 day ago",
-                              },
-                              {
-                                name: "Mike Davis",
-                                email: "mike@ivf.edu",
-                                role: "Student",
-                                status: "Active",
-                                requests: recentRequests.filter(
-                                  (r) => r.requestedBy === "Mike Davis",
-                                ).length,
-                                lastActive: "3 days ago",
-                              },
-                              {
-                                name: "Emily Chen",
-                                email: "emily@ivf.edu",
-                                role: "Student",
-                                status: "Active",
-                                requests: recentRequests.filter(
-                                  (r) => r.requestedBy === "Emily Chen",
-                                ).length,
-                                lastActive: "5 hours ago",
-                              },
-                              {
-                                name: "Robert Wilson",
-                                email: "robert@ivf.edu",
-                                role: "Staff",
-                                status: "Active",
-                                requests: recentRequests.filter(
-                                  (r) => r.requestedBy === "Robert Wilson",
-                                ).length,
-                                lastActive: "1 week ago",
-                              },
-                            ];
+                            // Extract all unique users from maintenance requests
+                            const uniqueUsers = Array.from(
+                              new Set(recentRequests.map((r) => r.requestedBy)),
+                            ).map((userName) => {
+                              const userRequests = recentRequests.filter(
+                                (r) => r.requestedBy === userName,
+                              );
+                              const requestCount = userRequests.length;
+                              const lastRequest = userRequests.sort(
+                                (a, b) =>
+                                  new Date(b.updatedAt).getTime() -
+                                  new Date(a.updatedAt).getTime(),
+                              )[0];
 
-                            return userData.map((user, i) => (
+                              // Determine role based on name patterns
+                              let role = "Student";
+                              if (
+                                userName.includes("Admin") ||
+                                userName === "John Smith"
+                              ) {
+                                role = "Admin";
+                              } else if (
+                                userName.includes("Staff") ||
+                                userName.includes("Garcia") ||
+                                userName.includes("Martinez") ||
+                                userName.includes("Anderson") ||
+                                userName.includes("Taylor") ||
+                                userName.includes("Lee") ||
+                                userName.includes("White") ||
+                                userName.includes("Harris")
+                              ) {
+                                role = "Staff";
+                              }
+
+                              return {
+                                name: userName,
+                                email:
+                                  userName.toLowerCase().replace(" ", ".") +
+                                  "@ivf.edu",
+                                role: role,
+                                status: "Active",
+                                requests: requestCount,
+                                lastActive: lastRequest
+                                  ? Math.floor(
+                                      (Date.now() -
+                                        new Date(
+                                          lastRequest.updatedAt,
+                                        ).getTime()) /
+                                        (1000 * 60 * 60),
+                                    ) <= 24
+                                    ? `${Math.floor((Date.now() - new Date(lastRequest.updatedAt).getTime()) / (1000 * 60 * 60))} hours ago`
+                                    : `${Math.floor((Date.now() - new Date(lastRequest.updatedAt).getTime()) / (1000 * 60 * 60 * 24))} days ago`
+                                  : "Unknown",
+                              };
+                            });
+
+                            return uniqueUsers.map((user, i) => (
                               <tr
                                 key={i}
                                 className="hover:bg-white/5 transition-colors"
