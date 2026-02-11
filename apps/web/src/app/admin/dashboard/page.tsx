@@ -983,7 +983,7 @@ export default function AdminDashboard() {
                   )}
 
                   {/* Enhanced Bento Grid - Stats Overview */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     {stats.map((stat, i) => (
                       <motion.div
                         key={i}
@@ -995,7 +995,7 @@ export default function AdminDashboard() {
                           ease: "easeOut",
                         }}
                         className="group relative"
-                        whileHover={{ y: -5 }}
+                        whileHover={{ y: -2 }}
                       >
                         {/* Enhanced Vercel-style hover spotlight */}
                         <div
@@ -1007,7 +1007,7 @@ export default function AdminDashboard() {
 
                         {/* Premium Glassmorphic Card */}
                         <div
-                          className="relative backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10 shadow-2xl bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                          className="relative bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:bg-gray-700/50 transition-all duration-300 overflow-hidden"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -1017,22 +1017,15 @@ export default function AdminDashboard() {
                               "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
                           }}
                         >
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-5">
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-2xl" />
-                          </div>
-
                           <div className="relative z-10">
-                            <div className="flex items-start justify-between mb-6">
+                            <div className="flex items-start justify-between mb-3">
                               <div
-                                className="p-3 md:p-4 rounded-xl bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-lg"
+                                className="p-2 rounded-lg bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-all duration-300"
                                 style={{
                                   background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
-                                  boxShadow: `0 10px 25px -5px ${stat.gradient.includes("teal") ? "rgba(20, 184, 166, 0.3)" : stat.gradient.includes("amber") ? "rgba(245, 158, 11, 0.3)" : stat.gradient.includes("blue") ? "rgba(59, 130, 246, 0.3)" : "rgba(16, 185, 129, 0.3)"}`,
                                 }}
                               >
-                                <div className="text-white scale-100 group-hover:scale-110 transition-transform duration-300">
+                                <div className="text-lg font-bold text-white group-hover:text-white transition-colors duration-300">
                                   {stat.icon}
                                 </div>
                               </div>
@@ -1052,14 +1045,14 @@ export default function AdminDashboard() {
                                 </h3>
                                 <div className="flex items-baseline gap-2">
                                   <motion.div
-                                    className="text-3xl md:text-4xl lg:text-5xl font-mono font-bold"
+                                    className="text-2xl font-mono font-bold"
                                     style={{
                                       background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
                                       WebkitBackgroundClip: "text",
                                       WebkitTextFillColor: "transparent",
                                       backgroundClip: "text",
                                     }}
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.02 }}
                                   >
                                     {loading ? "..." : stat.value}
                                   </motion.div>
