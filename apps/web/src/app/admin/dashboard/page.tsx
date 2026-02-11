@@ -1354,7 +1354,7 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-12"
+                  className="space-y-6"
                 >
                   <div
                     className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8 overflow-hidden"
@@ -1644,7 +1644,7 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="space-y-12"
+                  className="space-y-6"
                 >
                   <motion.h2
                     initial={{ opacity: 0, y: 20 }}
@@ -1668,7 +1668,7 @@ export default function AdminDashboard() {
                     );
 
                     return (
-                      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                         {/* Request Trends */}
                         <div
                           className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6"
