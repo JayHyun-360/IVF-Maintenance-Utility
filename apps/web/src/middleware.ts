@@ -21,8 +21,18 @@ export default withAuth(
           return token?.role === "ADMIN";
         }
 
+        // Protect staff routes (admin and staff roles)
+        if (req.nextUrl.pathname.startsWith("/staff")) {
+          return token?.role === "ADMIN" || token?.role === "STAFF";
+        }
+
         // Protect user routes
         if (req.nextUrl.pathname.startsWith("/student")) {
+          return !!token;
+        }
+
+        // Protect dashboard (role-based redirect handled by component)
+        if (req.nextUrl.pathname.startsWith("/dashboard")) {
           return !!token;
         }
 
@@ -46,7 +56,11 @@ export const config = {
   matcher: [
     "/admin/:path*",
     "/student/:path*",
+    "/staff/:path*",
     "/settings/:path*",
     "/emergency/:path*",
+    "/dashboard/:path*",
+    "/api/admin/:path*",
+    "/api/requests/:path*",
   ],
 };

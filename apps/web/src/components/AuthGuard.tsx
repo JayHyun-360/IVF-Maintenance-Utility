@@ -7,7 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 
 interface AuthGuardProps {
   children: React.ReactNode;
-  requiredRole?: "ADMIN" | "USER";
+  requiredRole?: "ADMIN" | "USER" | "STAFF";
   redirectTo?: string;
 }
 
@@ -62,7 +62,18 @@ export default function AuthGuard({
 
       // If user is logged in but doesn't have required role
       if (requiredRole === "ADMIN" && session.user?.role !== "ADMIN") {
-        router.push("/student"); // Redirect non-admin users to user dashboard
+        // Redirect non-admin users based on their current role
+        if (session.user?.role === "STAFF") {
+          router.push("/staff");
+        } else {
+          router.push("/student");
+        }
+      } else if (
+        requiredRole === "STAFF" &&
+        !["ADMIN", "STAFF"].includes(session.user?.role || "")
+      ) {
+        // Only admin and staff can access staff routes
+        router.push("/student");
       } else if (requiredRole === "USER" && session.user?.role === "ADMIN") {
         // Allow admins to access user pages but don't redirect them away
         // They can choose to go back to homepage if needed

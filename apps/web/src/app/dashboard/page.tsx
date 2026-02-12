@@ -15,6 +15,9 @@ function DashboardContent() {
   if (session?.user?.role === "ADMIN") {
     console.log("Admin role detected, redirecting to admin dashboard");
     router.push("/admin/dashboard");
+  } else if (session?.user?.role === "STAFF") {
+    console.log("Staff role detected, redirecting to staff dashboard");
+    router.push("/staff");
   } else if (session?.user?.role === "USER") {
     console.log("User role detected, redirecting to user page");
     router.push("/student");
