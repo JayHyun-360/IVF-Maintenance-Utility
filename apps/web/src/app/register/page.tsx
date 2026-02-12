@@ -17,7 +17,7 @@ export default function RegisterPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "STUDENT" as "STUDENT" | "STAFF" | "TEACHER" | "OTHERS",
+    role: "USER" as "USER" | "STAFF" | "TEACHER" | "OTHERS",
     otherRole: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -326,7 +326,7 @@ export default function RegisterPage() {
                   Account Role
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {["STUDENT", "STAFF", "TEACHER", "OTHERS"].map((role) => (
+                  {["USER", "STAFF", "TEACHER", "OTHERS"].map((role) => (
                     <button
                       key={role}
                       type="button"

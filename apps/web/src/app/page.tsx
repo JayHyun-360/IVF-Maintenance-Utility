@@ -678,7 +678,7 @@ export default function Home() {
                 institutions. Our platform combines cutting-edge technology with
                 intuitive design to streamline facility management, enhance
                 operational efficiency, and create optimal learning environments
-                for students and staff alike.
+                for users and staff alike.
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">

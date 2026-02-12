@@ -21,7 +21,7 @@ export default withAuth(
           return token?.role === "ADMIN";
         }
 
-        // Protect student routes
+        // Protect user routes
         if (req.nextUrl.pathname.startsWith("/student")) {
           return !!token;
         }

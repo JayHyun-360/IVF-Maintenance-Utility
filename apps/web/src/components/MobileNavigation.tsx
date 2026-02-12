@@ -69,7 +69,7 @@ export default function MobileNavigation() {
     },
     {
       id: "requests",
-      label: "Requests",
+      label: "User Requests",
       icon: (
         <svg
           className="w-5 h-5"
@@ -91,7 +91,7 @@ export default function MobileNavigation() {
     },
     {
       id: "history",
-      label: "History",
+      label: "User History",
       icon: (
         <svg
           className="w-5 h-5"

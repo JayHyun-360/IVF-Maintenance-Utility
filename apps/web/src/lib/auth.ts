@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
             role: existingUser.role,
           };
         } else {
-          // For Google users not in our system, create a default STUDENT role
+          // For Google users not in our system, create a default USER role
           // In production, you might want to redirect them to registration first
           return {
             id: profile.sub,

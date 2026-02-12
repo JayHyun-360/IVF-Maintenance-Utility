@@ -57,8 +57,8 @@ export default function WebHeader({
   const menuItems = [
     { href: "/", label: "Home", icon: "🏠" },
     { href: "/dashboard", label: "Dashboard", icon: "📊" },
-    { href: "/student", label: "Requests", icon: "📝" },
-    { href: "/student/history", label: "History", icon: "📚" },
+    { href: "/student", label: "User Requests", icon: "📝" },
+    { href: "/student/history", label: "User History", icon: "📚" },
     { href: "/settings", label: "Settings", icon: "⚙️" },
   ];
 

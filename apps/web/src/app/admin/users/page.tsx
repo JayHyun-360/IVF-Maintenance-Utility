@@ -12,7 +12,7 @@ interface User {
   id: string;
   name: string;
   email: string;
-  role: "ADMIN" | "STAFF" | "STUDENT";
+  role: "ADMIN" | "STAFF" | "USER";
   department: string;
   status: "ACTIVE" | "INACTIVE";
   createdAt: string;
@@ -50,7 +50,7 @@ export default function AdminUsersPage() {
         return "text-red-400";
       case "STAFF":
         return "text-amber-400";
-      case "STUDENT":
+      case "USER":
         return "text-teal-400";
       default:
         return "text-gray-400";
@@ -68,10 +68,11 @@ export default function AdminUsersPage() {
     }
   };
 
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.department.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.department.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -196,7 +197,10 @@ export default function AdminUsersPage() {
                 {loading ? (
                   <div className="space-y-4">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <div key={i} className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4">
+                      <div
+                        key={i}
+                        className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4"
+                      >
                         <div className="animate-pulse">
                           <div className="h-4 bg-gray-600 rounded w-1/4 mb-2"></div>
                           <div className="h-3 bg-gray-600 rounded w-3/4 mb-1"></div>
@@ -222,15 +226,23 @@ export default function AdminUsersPage() {
                               {user.name.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                              <h3 className="text-gray-100 font-medium">{user.name}</h3>
-                              <p className="text-gray-400 text-sm">{user.email}</p>
+                              <h3 className="text-gray-100 font-medium">
+                                {user.name}
+                              </h3>
+                              <p className="text-gray-400 text-sm">
+                                {user.email}
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className={`text-xs px-2 py-1 rounded-full font-mono ${getRoleColor(user.role)} bg-current/10`}>
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full font-mono ${getRoleColor(user.role)} bg-current/10`}
+                            >
                               {user.role}
                             </span>
-                            <span className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(user.status)} bg-current/10`}>
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(user.status)} bg-current/10`}
+                            >
                               {user.status}
                             </span>
                             <span className="text-xs text-gray-400">
@@ -244,8 +256,18 @@ export default function AdminUsersPage() {
                 ) : (
                   <div className="text-center py-8">
                     <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                        />
                       </svg>
                     </div>
                     <p className="text-gray-400">No users found</p>
