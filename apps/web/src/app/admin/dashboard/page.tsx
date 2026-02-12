@@ -1017,6 +1017,14 @@ export default function AdminDashboard() {
                               "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
                           }}
                         >
+                          {/* Dynamic border overlay for hover effect */}
+                          <div
+                            className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                            style={{
+                              border: `2px solid ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}`,
+                              boxShadow: `0 0 20px ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}40`,
+                            }}
+                          />
                           <div className="relative z-10">
                             <div className="flex items-start justify-between mb-3">
                               <div
