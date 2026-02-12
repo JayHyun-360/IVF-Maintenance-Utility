@@ -5,7 +5,13 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { Z_INDEX } from "@/lib/z-index";
-import { DEFAULT_CONFIG, clearSessionStorage, getUserDisplayName, getUserInitial, Icons } from "./utils";
+import {
+  DEFAULT_CONFIG,
+  clearSessionStorage,
+  getUserDisplayName,
+  getUserInitial,
+  Icons,
+} from "./utils";
 import type { AccountDropdownConfig } from "./types";
 
 // MenuItem type for internal use
@@ -27,11 +33,11 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { themeConfig } = useTheme();
-  
+
   // State - minimal and focused
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -42,7 +48,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current && 
+        dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node) &&
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
@@ -54,7 +60,8 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
     // Add event listener only when dropdown is open
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen]);
 
@@ -85,32 +92,42 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
       clearSessionStorage();
 
       // Sign out with explicit redirect: false
-      const result = await signOut({ 
+      const result = await signOut({
         redirect: false,
-        callbackUrl: undefined
+        callbackUrl: undefined,
       });
       console.log("✅ SignOut successful:", result);
+
+      // Force immediate session invalidation
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       // Handle post-logout with minimal delay
       setTimeout(() => {
         if (finalConfig.redirectOnLogout) {
+          console.log("🔄 Redirecting to login...");
           router.push("/login");
         } else {
-          // Force UI update
+          console.log("🏠 Staying on current page...");
+          // Force multiple refresh attempts to ensure UI updates
           router.refresh();
-          // Fallback if refresh doesn't work
-          setTimeout(() => window.location.reload(), 300);
+          setTimeout(() => router.refresh(), 200);
+          setTimeout(() => {
+            console.log("🔄 Forcing page reload as last resort...");
+            window.location.reload();
+          }, 800);
         }
 
-        setIsLoggingOut(false);
+        // Reset loading state after a delay
+        setTimeout(() => setIsLoggingOut(false), 100);
+
+        // Custom callback
         finalConfig.onLogoutComplete?.();
       }, 200);
-      
     } catch (error) {
       console.error("❌ Logout error:", error);
       setIsLoggingOut(false);
-      
-      // Fallback
+
+      // Fallback: force clear everything and reload
       clearSessionStorage();
       if (finalConfig.redirectOnLogout) {
         window.location.href = "/login";
@@ -121,17 +138,20 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   }, [finalConfig, router, isLoggingOut]);
 
   // Optimized navigation handler
-  const handleNavigation = useCallback((path: string) => {
-    setIsOpen(false);
-    router.push(path);
-  }, [router]);
+  const handleNavigation = useCallback(
+    (path: string) => {
+      setIsOpen(false);
+      router.push(path);
+    },
+    [router],
+  );
 
   // Toggle dropdown with focus management
   const toggleDropdown = useCallback(() => {
     if (isLoggingOut) return;
-    
-    setIsOpen(prev => !prev);
-    
+
+    setIsOpen((prev) => !prev);
+
     // Focus management
     if (!isOpen) {
       setTimeout(() => {
@@ -143,13 +163,15 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   // Remove account handler
   const handleRemoveAccount = useCallback(async () => {
     if (isLoggingOut) return;
-    
-    const confirmed = confirm("Are you sure you want to remove your account? This action cannot be undone.");
+
+    const confirmed = confirm(
+      "Are you sure you want to remove your account? This action cannot be undone.",
+    );
     if (!confirmed) return;
 
     console.log("🗑️ Removing account...");
     setIsOpen(false);
-    
+
     // In real app: Call API to delete account
     // For now: Just logout
     await handleLogout();
@@ -157,7 +179,11 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
 
   // Loading state
   if (status === "loading") {
-    return <div className={`${finalConfig.avatarSize} rounded-full bg-gray-200 animate-pulse`} />;
+    return (
+      <div
+        className={`${finalConfig.avatarSize} rounded-full bg-gray-200 animate-pulse`}
+      />
+    );
   }
 
   // Not logged in state - clean Sign In button
@@ -233,7 +259,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
       >
         {/* Avatar */}
         <div
-          className={`${finalConfig.avatarSize} rounded-full flex items-center justify-center text-white font-semibold transition-transform duration-200 ${isOpen ? 'scale-110' : ''}`}
+          className={`${finalConfig.avatarSize} rounded-full flex items-center justify-center text-white font-semibold transition-transform duration-200 ${isOpen ? "scale-110" : ""}`}
           style={{
             background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
           }}
@@ -243,10 +269,16 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
 
         {/* User Info */}
         <div className="text-left">
-          <div className="text-sm font-medium" style={{ color: themeConfig.colors.text }}>
+          <div
+            className="text-sm font-medium"
+            style={{ color: themeConfig.colors.text }}
+          >
             {getUserDisplayName(session)}
           </div>
-          <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+          <div
+            className="text-xs"
+            style={{ color: themeConfig.colors.textSecondary }}
+          >
             {session.user?.role || "User"}
             {finalConfig.showDebugInfo && (
               <span className="ml-2 opacity-50">({session.user?.email})</span>
@@ -285,8 +317,8 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
           <div className="p-2">
             {/* Menu Items */}
             {menuItems
-              .filter(item => item.show)
-              .map(item => (
+              .filter((item) => item.show)
+              .map((item) => (
                 <button
                   key={item.id}
                   onClick={item.action}
@@ -296,7 +328,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                   {item.icon}
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium">{item.label}</div>
-                    <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
                       {item.description}
                     </div>
                   </div>
@@ -304,7 +339,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
               ))}
 
             {/* Separator */}
-            <div className="border-t my-1" style={{ borderColor: themeConfig.colors.border }} />
+            <div
+              className="border-t my-1"
+              style={{ borderColor: themeConfig.colors.border }}
+            />
 
             {/* Remove Account */}
             {finalConfig.showRemoveAccount && (
@@ -319,7 +357,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                     <Icons.LoadingSpinner />
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium">Removing...</div>
-                      <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+                      <div
+                        className="text-xs"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
                         Please wait
                       </div>
                     </div>
@@ -329,7 +370,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                     <Icons.RemoveAccount />
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium">Remove Account</div>
-                      <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+                      <div
+                        className="text-xs"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
                         Delete your account
                       </div>
                     </div>
@@ -350,7 +394,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                   <Icons.LoadingSpinner />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium">Signing out...</div>
-                    <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
                       Please wait
                     </div>
                   </div>
@@ -360,7 +407,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                   <Icons.Logout />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium">Log Out</div>
-                    <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
                       Sign out of your account
                     </div>
                   </div>
