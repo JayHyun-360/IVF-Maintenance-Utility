@@ -1,4 +1,2 @@
-[00:00:01.841] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:02.129] Server  LOG     ✓ Ready in 1546ms
-[00:08:29.438] Server  WARN    [next-auth][warn][NEXTAUTH_URL] "\nhttps://next-auth.js.org/warnings#nextauth_url"
-[00:08:29.441] Server  WARN    [next-auth][warn][DEBUG_ENABLED] "\nhttps://next-auth.js.org/warnings#debug_enabled"
+[00:00:01.373] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:01.614] Server  LOG     ✓ Ready in 1162ms

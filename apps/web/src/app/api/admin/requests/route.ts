@@ -26,13 +26,6 @@ export async function GET(request: NextRequest) {
     const requests = await prisma.maintenanceRequest.findMany({
       where,
       include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
         comments: {
           include: {
             user: {
@@ -59,42 +52,64 @@ export async function GET(request: NextRequest) {
       take: limit,
     });
 
+    // Fetch user data separately to avoid relation issues
+    const userIds = [...new Set(requests.map((req) => req.requestedBy))];
+    const users = await prisma.user.findMany({
+      where: { id: { in: userIds } },
+      select: { id: true, name: true, email: true },
+    });
+
+    const userMap = users.reduce(
+      (acc, user) => {
+        acc[user.id] = user;
+        return acc;
+      },
+      {} as Record<string, (typeof users)[0]>,
+    );
+
     // Transform the data to match the frontend interface
-    const transformedRequests = requests.map((request) => ({
-      id: request.id,
-      title: request.title,
-      description: request.description,
-      category: request.category,
-      priority: request.priority,
-      status: request.status,
-      location: request.location,
-      images: request.images ? JSON.parse(request.images) : [],
-      documents: request.documents ? JSON.parse(request.documents) : [],
-      requestedBy: request.user.name,
-      requestedByEmail: request.user.email,
-      assignedTo: request.assignedTo,
-      createdAt: request.createdAt.toISOString(),
-      updatedAt: request.updatedAt.toISOString(),
-      completedAt: request.completedAt?.toISOString() || null,
-      user: request.user,
-      comments: request.comments.map((comment) => ({
-        id: comment.id,
-        content: comment.content,
-        userId: comment.userId,
-        userName: comment.user.name,
-        userEmail: comment.user.email,
-        createdAt: comment.createdAt.toISOString(),
-        updatedAt: comment.updatedAt.toISOString(),
-      })),
-      commentCount: request._count.comments,
-    }));
+    const transformedRequests = requests.map((request) => {
+      const user = userMap[request.requestedBy];
+      return {
+        id: request.id,
+        title: request.title,
+        description: request.description,
+        category: request.category,
+        priority: request.priority,
+        status: request.status,
+        location: request.location,
+        images: request.images ? JSON.parse(request.images) : [],
+        documents: request.documents ? JSON.parse(request.documents) : [],
+        requestedBy: user?.name || "Unknown User",
+        requestedByEmail: user?.email || "unknown@example.com",
+        assignedTo: request.assignedTo,
+        createdAt: request.createdAt.toISOString(),
+        updatedAt: request.updatedAt.toISOString(),
+        completedAt: request.completedAt?.toISOString() || null,
+        user: user || {
+          id: request.requestedBy,
+          name: "Unknown User",
+          email: "unknown@example.com",
+        },
+        comments: request.comments.map((comment) => ({
+          id: comment.id,
+          content: comment.content,
+          userId: comment.userId,
+          userName: comment.user?.name || "Unknown User",
+          userEmail: comment.user?.email || "unknown@example.com",
+          createdAt: comment.createdAt.toISOString(),
+          updatedAt: comment.updatedAt.toISOString(),
+        })),
+        commentCount: request._count.comments,
+      };
+    });
 
     return NextResponse.json(transformedRequests);
   } catch (error) {
     console.error("Error fetching admin requests:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
