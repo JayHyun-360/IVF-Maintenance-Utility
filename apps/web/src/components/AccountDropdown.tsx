@@ -17,6 +17,7 @@ export default function AccountDropdown() {
   const [dropdownAlignment, setDropdownAlignment] = useState<"left" | "right">(
     "right",
   );
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Debug session data
@@ -51,14 +52,20 @@ export default function AccountDropdown() {
   }, []);
 
   const handleLogout = async () => {
+    if (isLoggingOut) return; // Prevent multiple logout attempts
+
     console.log("Logging out...");
     setIsOpen(false); // Close dropdown immediately
+    setIsLoggingOut(true); // Set loading state
 
     try {
       // Clear any potential session storage first
       if (typeof window !== "undefined") {
         localStorage.removeItem("next-auth.session-token");
         sessionStorage.removeItem("next-auth.session-token");
+        // Clear any additional auth-related storage
+        localStorage.removeItem("next-auth.callback-url");
+        sessionStorage.removeItem("next-auth.callback-url");
       }
 
       // Sign out with redirect false to handle manually
@@ -72,9 +79,10 @@ export default function AccountDropdown() {
       // Force a small delay to ensure session is cleared
       setTimeout(() => {
         router.push("/login");
-      }, 100);
+      }, 200);
     } catch (error) {
       console.error("Logout error:", error);
+      setIsLoggingOut(false); // Reset loading state on error
       // Fallback redirect
       window.location.href = "/login";
     }
@@ -82,23 +90,33 @@ export default function AccountDropdown() {
 
   const handleSwitchAccount = () => {
     console.log("Switching account...");
+    setIsOpen(false); // Close dropdown before redirect
     // For demo purposes, we'll just redirect to login
     // In a real app, you might show a modal to select different accounts
     router.push("/login");
-    setIsOpen(false);
   };
 
-  const handleRemoveAccount = () => {
-    // For demo purposes, we'll just logout
+  const handleRemoveAccount = async () => {
+    // Prevent multiple attempts
+    if (isLoggingOut) return;
+
+    // For demo purposes, we'll just logout after confirmation
     if (
       confirm(
         "Are you sure you want to remove your account? This action cannot be undone.",
       )
     ) {
       console.log("Removing account...");
-      handleLogout();
+      setIsOpen(false); // Close dropdown immediately
+
+      // In a real application, you would:
+      // 1. Call an API to delete the user account from the database
+      // 2. Handle any cleanup (files, data, etc.)
+      // 3. Then logout
+
+      // For now, we'll just logout
+      await handleLogout();
     }
-    setIsOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -181,7 +199,8 @@ export default function AccountDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center space-x-2 p-2 rounded-lg transition-all duration-300 hover:scale-105"
+        disabled={isLoggingOut}
+        className="flex items-center space-x-2 p-2 rounded-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
         style={{
           backgroundColor: themeConfig.colors.surface,
           color: themeConfig.colors.text,
@@ -392,33 +411,66 @@ export default function AccountDropdown() {
 
             <button
               onClick={handleRemoveAccount}
-              className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
+              disabled={isLoggingOut}
+              className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 color: themeConfig.colors.error,
               }}
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6"
-                />
-              </svg>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium">Remove Account</div>
-                <div
-                  className="text-xs"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Delete your account
-                </div>
-              </div>
+              {isLoggingOut ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24">
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium">Removing...</div>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Please wait
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6"
+                    />
+                  </svg>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium">Remove Account</div>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Delete your account
+                    </div>
+                  </div>
+                </>
+              )}
             </button>
 
             <div
@@ -428,33 +480,66 @@ export default function AccountDropdown() {
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
+              disabled={isLoggingOut}
+              className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 color: themeConfig.colors.text,
               }}
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M17 16l4-4m0 0l-4 4m4-4H3m4 4v-4m0 0v4"
-                />
-              </svg>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium">Log Out</div>
-                <div
-                  className="text-xs"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Sign out of your account
-                </div>
-              </div>
+              {isLoggingOut ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24">
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium">Signing out...</div>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Please wait
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M17 16l4-4m0 0l-4 4m4-4H3m4 4v-4m0 0v4"
+                    />
+                  </svg>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium">Log Out</div>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Sign out of your account
+                    </div>
+                  </div>
+                </>
+              )}
             </button>
           </div>
         </div>
