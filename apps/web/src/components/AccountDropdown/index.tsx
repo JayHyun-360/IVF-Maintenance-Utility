@@ -5,6 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { Z_INDEX } from "@/lib/z-index";
+import { useSessionDebug } from "@/hooks/useSessionDebug";
 import {
   DEFAULT_CONFIG,
   clearSessionStorage,
@@ -33,6 +34,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { themeConfig } = useTheme();
+  const sessionDebug = useSessionDebug();
 
   // State - minimal and focused
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +45,17 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
 
   // Merged configuration
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
+
+  // Log session issues in development
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "development" &&
+      sessionDebug.isReady &&
+      sessionDebug.issues.length > 0
+    ) {
+      console.warn("⚠️ AccountDropdown Session Issues:", sessionDebug.issues);
+    }
+  }, [sessionDebug]);
 
   // Close dropdown when clicking outside
   useEffect(() => {

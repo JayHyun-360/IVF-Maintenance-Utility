@@ -409,14 +409,29 @@ export default function AccountDropdown({
               background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
             }}
           >
-            {(
-              session.user?.name ||
-              session.user?.email?.split("@")[0] ||
-              "User"
-            )
+            {(() => {
+              // Enhanced user display logic with debugging
+              console.log("🔍 AccountDropdown - User data check:", {
+                session: session,
+                user: session?.user,
+                name: session?.user?.name,
+                email: session?.user?.email,
+                role: session?.user?.role,
+              });
 
+              const displayName =
+                session?.user?.name ||
+                (session?.user?.email && session.user.email.includes("@")
+                  ? session.user.email.split("@")[0]
+                  : null) ||
+                (session?.user?.id || session?.user?.sub
+                  ? `User ${(session.user.id || session.user.sub).toString().slice(0, 8)}`
+                  : "User");
+
+              console.log("✅ Final display name:", displayName);
+              return displayName;
+            })()
               .charAt(0)
-
               .toUpperCase()}
           </div>
 
@@ -425,9 +440,17 @@ export default function AccountDropdown({
               className="text-sm font-medium"
               style={{ color: themeConfig.colors.text }}
             >
-              {session.user?.name ||
-                session.user?.email?.split("@")[0] ||
-                "User"}
+              {(() => {
+                const displayName =
+                  session?.user?.name ||
+                  (session?.user?.email && session.user.email.includes("@")
+                    ? session.user.email.split("@")[0]
+                    : null) ||
+                  (session?.user?.id || session?.user?.sub
+                    ? `User ${(session.user.id || session.user.sub).toString().slice(0, 8)}`
+                    : "User");
+                return displayName;
+              })()}
             </div>
 
             <div

@@ -12,7 +12,8 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 import { useSession } from "next-auth/react";
 
-import AccountDropdown from "@/components/AccountDropdown";
+import AccountDropdown from "@/components/AccountDropdown/index";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 import { MobileNavigationWrapper } from "@/components/MobileNavigation";
 
@@ -223,39 +224,41 @@ export default function Home() {
                       </motion.button>
                     )}
 
-                    <AccountDropdown
-                      config={{
-                        showAccountSettings: true,
+                    <ErrorBoundary>
+                      <AccountDropdown
+                        config={{
+                          showAccountSettings: true,
 
-                        showAdminDashboard: true,
+                          showAdminDashboard: true,
 
-                        showUserPortal: true,
+                          showUserPortal: true,
 
-                        showSwitchAccount: true,
+                          showSwitchAccount: true,
 
-                        showRemoveAccount: true,
+                          showRemoveAccount: true,
 
-                        dropdownWidth: "w-56",
+                          dropdownWidth: "w-56",
 
-                        dropdownMaxHeight: "max-h-72",
+                          dropdownMaxHeight: "max-h-72",
 
-                        avatarSize: "w-10 h-10",
+                          avatarSize: "w-10 h-10",
 
-                        position: "bottom",
+                          position: "bottom",
 
-                        alignment: "right",
+                          alignment: "right",
 
-                        showDebugInfo: false,
+                          showDebugInfo: false,
 
-                        redirectOnLogout: false, // Stay on current page after logout
+                          redirectOnLogout: false, // Stay on current page after logout
 
-                        onLogoutComplete: () => {
-                          console.log(
-                            "Logout completed - custom callback triggered",
-                          );
-                        },
-                      }}
-                    />
+                          onLogoutComplete: () => {
+                            console.log(
+                              "Logout completed - custom callback triggered",
+                            );
+                          },
+                        }}
+                      />
+                    </ErrorBoundary>
                   </>
                 ) : (
                   <motion.button

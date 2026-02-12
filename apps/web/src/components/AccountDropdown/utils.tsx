@@ -75,7 +75,54 @@ export const clearSessionStorage = (): void => {
 };
 
 export const getUserDisplayName = (session: any): string => {
-  return session?.user?.name || session?.user?.email?.split("@")[0] || "User";
+  // Debug logging to identify the issue
+  console.log("🔍 getUserDisplayName - Session data:", {
+    session: session,
+    user: session?.user,
+    name: session?.user?.name,
+    email: session?.user?.email,
+    emailType: typeof session?.user?.email,
+  });
+
+  // Check if session and user exist
+  if (!session || !session.user) {
+    console.warn("⚠️ No session or user data found");
+    return "User";
+  }
+
+  // Try to get name first
+  if (
+    session.user.name &&
+    typeof session.user.name === "string" &&
+    session.user.name.trim()
+  ) {
+    console.log("✅ Using user name:", session.user.name);
+    return session.user.name.trim();
+  }
+
+  // Try to get email and extract username
+  if (
+    session.user.email &&
+    typeof session.user.email === "string" &&
+    session.user.email.includes("@")
+  ) {
+    const emailUsername = session.user.email.split("@")[0];
+    if (emailUsername && emailUsername.trim()) {
+      console.log("✅ Using email username:", emailUsername);
+      return emailUsername.trim();
+    }
+  }
+
+  // Last resort - check if there's any other identifier
+  if (session.user.id || session.user.sub) {
+    const identifier = session.user.id || session.user.sub;
+    const shortId = identifier.toString().slice(0, 8);
+    console.log("✅ Using user ID as fallback:", shortId);
+    return `User ${shortId}`;
+  }
+
+  console.warn("⚠️ No valid user identifier found, defaulting to 'User'");
+  return "User";
 };
 
 export const getUserInitial = (session: any): string => {
