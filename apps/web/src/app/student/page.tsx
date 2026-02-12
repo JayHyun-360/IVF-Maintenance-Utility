@@ -20,8 +20,13 @@ export default function UserPage() {
     description: "",
     category: "PLUMBING",
     priority: "MEDIUM",
+    building: "",
+    roomNumber: "",
+    floor: "",
     location: "",
     otherCategory: "",
+    contactPhone: "",
+    department: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [attachedImages, setAttachedImages] = useState<File[]>([]);
@@ -67,7 +72,14 @@ export default function UserPage() {
               ? formData.otherCategory.toUpperCase()
               : formData.category,
           priority: formData.priority,
-          location: formData.location,
+          building: formData.building,
+          roomNumber: formData.roomNumber,
+          floor: formData.floor,
+          location:
+            formData.location ||
+            `${formData.building} - Room ${formData.roomNumber}${formData.floor ? `, Floor ${formData.floor}` : ""}`,
+          contactPhone: formData.contactPhone,
+          department: formData.department,
           images: imageBase64Array,
         }),
       });
@@ -305,13 +317,104 @@ export default function UserPage() {
                         />
                       </div>
 
-                      {/* Location */}
+                      {/* Location Information - Structured */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Building */}
+                        <div className="relative">
+                          <label
+                            className="absolute left-4 top-3.5 transition-all duration-200 pointer-events-none text-sm z-10 px-1"
+                            style={labelStyles("building", formData.building)}
+                          >
+                            Building *
+                          </label>
+                          <select
+                            name="building"
+                            value={formData.building}
+                            onChange={handleChange}
+                            onFocus={() => setFocusedField("building")}
+                            onBlur={() => setFocusedField(null)}
+                            required
+                            className="w-full px-4 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none font-medium appearance-none cursor-pointer"
+                            style={inputStyles("building")}
+                          >
+                            <option value="">Select Building</option>
+                            <option value="Main Building">Main Building</option>
+                            <option value="Science Building">
+                              Science Building
+                            </option>
+                            <option value="Library">Library</option>
+                            <option value="Cafeteria">Cafeteria</option>
+                            <option value="Gymnasium">Gymnasium</option>
+                            <option value="Admin Building">
+                              Admin Building
+                            </option>
+                            <option value="Dormitory">Dormitory</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+
+                        {/* Room Number */}
+                        <div className="relative">
+                          <label
+                            className="absolute left-4 top-3.5 transition-all duration-200 pointer-events-none text-sm z-10 px-1"
+                            style={labelStyles(
+                              "roomNumber",
+                              formData.roomNumber,
+                            )}
+                          >
+                            Room Number *
+                          </label>
+                          <input
+                            type="text"
+                            name="roomNumber"
+                            value={formData.roomNumber}
+                            onChange={handleChange}
+                            onFocus={() => setFocusedField("roomNumber")}
+                            onBlur={() => setFocusedField(null)}
+                            required
+                            className="w-full px-4 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none font-medium"
+                            style={inputStyles("roomNumber")}
+                            placeholder="e.g., 101, A-205"
+                          />
+                        </div>
+
+                        {/* Floor */}
+                        <div className="relative">
+                          <label
+                            className="absolute left-4 top-3.5 transition-all duration-200 pointer-events-none text-sm z-10 px-1"
+                            style={labelStyles("floor", formData.floor)}
+                          >
+                            Floor
+                          </label>
+                          <select
+                            name="floor"
+                            value={formData.floor}
+                            onChange={handleChange}
+                            onFocus={() => setFocusedField("floor")}
+                            onBlur={() => setFocusedField(null)}
+                            className="w-full px-4 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none font-medium appearance-none cursor-pointer"
+                            style={inputStyles("floor")}
+                          >
+                            <option value="">Select Floor</option>
+                            <option value="Ground Floor">Ground Floor</option>
+                            <option value="1st Floor">1st Floor</option>
+                            <option value="2nd Floor">2nd Floor</option>
+                            <option value="3rd Floor">3rd Floor</option>
+                            <option value="4th Floor">4th Floor</option>
+                            <option value="5th Floor">5th Floor</option>
+                            <option value="Basement">Basement</option>
+                            <option value="Rooftop">Rooftop</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Additional Location Details */}
                       <div className="relative">
                         <label
                           className="absolute left-4 top-3.5 transition-all duration-200 pointer-events-none text-sm z-10 px-1"
                           style={labelStyles("location", formData.location)}
                         >
-                          Location
+                          Additional Location Details
                         </label>
                         <input
                           type="text"
@@ -320,10 +423,9 @@ export default function UserPage() {
                           onChange={handleChange}
                           onFocus={() => setFocusedField("location")}
                           onBlur={() => setFocusedField(null)}
-                          required
                           className="w-full px-4 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none font-medium"
                           style={inputStyles("location")}
-                          placeholder="e.g., Room 101, Lobby, Cafeteria"
+                          placeholder="e.g., Near main entrance, Back corner, etc."
                         />
                       </div>
 
@@ -350,6 +452,70 @@ export default function UserPage() {
                           style={inputStyles("description")}
                           placeholder=""
                         />
+                      </div>
+
+                      {/* Contact Information */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Contact Phone */}
+                        <div className="relative">
+                          <label
+                            className="absolute left-4 top-3.5 transition-all duration-200 pointer-events-none text-sm z-10 px-1"
+                            style={labelStyles(
+                              "contactPhone",
+                              formData.contactPhone,
+                            )}
+                          >
+                            Contact Phone
+                          </label>
+                          <input
+                            type="tel"
+                            name="contactPhone"
+                            value={formData.contactPhone}
+                            onChange={handleChange}
+                            onFocus={() => setFocusedField("contactPhone")}
+                            onBlur={() => setFocusedField(null)}
+                            className="w-full px-4 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none font-medium"
+                            style={inputStyles("contactPhone")}
+                            placeholder="e.g., 0912-345-6789"
+                          />
+                        </div>
+
+                        {/* Department */}
+                        <div className="relative">
+                          <label
+                            className="absolute left-4 top-3.5 transition-all duration-200 pointer-events-none text-sm z-10 px-1"
+                            style={labelStyles(
+                              "department",
+                              formData.department,
+                            )}
+                          >
+                            Department
+                          </label>
+                          <select
+                            name="department"
+                            value={formData.department}
+                            onChange={handleChange}
+                            onFocus={() => setFocusedField("department")}
+                            onBlur={() => setFocusedField(null)}
+                            className="w-full px-4 py-3.5 rounded-xl border-2 transition-all duration-300 outline-none font-medium appearance-none cursor-pointer"
+                            style={inputStyles("department")}
+                          >
+                            <option value="">Select Department</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Administrative">
+                              Administrative
+                            </option>
+                            <option value="IT Department">IT Department</option>
+                            <option value="Library">Library</option>
+                            <option value="Cafeteria">Cafeteria</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Security">Security</option>
+                            <option value="Student Affairs">
+                              Student Affairs
+                            </option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -388,15 +554,47 @@ export default function UserPage() {
                         </label>
                         <div className="grid grid-cols-1 gap-2">
                           {[
-                            { id: "PLUMBING", label: "Plumbing", icon: "🔧" },
+                            {
+                              id: "PLUMBING",
+                              label: "Plumbing Issues",
+                              icon: "🔧",
+                            },
                             {
                               id: "ELECTRICAL",
-                              label: "Electrical",
+                              label: "Electrical Issues",
                               icon: "⚡",
                             },
-                            { id: "CARPENTRY", label: "Carpentry", icon: "🔨" },
-                            { id: "PERSONNEL", label: "Personnel", icon: "👥" },
-                            { id: "OTHERS", label: "Others", icon: "📝" },
+                            {
+                              id: "HVAC",
+                              label: "HVAC/Air Conditioning",
+                              icon: "❄️",
+                            },
+                            {
+                              id: "CARPENTRY",
+                              label: "Carpentry/Woodwork",
+                              icon: "🔨",
+                            },
+                            {
+                              id: "CLEANING",
+                              label: "Cleaning Services",
+                              icon: "🧹",
+                            },
+                            {
+                              id: "PEST_CONTROL",
+                              label: "Pest Control",
+                              icon: "🐛",
+                            },
+                            {
+                              id: "SECURITY",
+                              label: "Security Issues",
+                              icon: "�",
+                            },
+                            {
+                              id: "IT_EQUIPMENT",
+                              label: "IT/Equipment",
+                              icon: "�",
+                            },
+                            { id: "OTHERS", label: "Other Issues", icon: "📝" },
                           ].map((cat) => (
                             <button
                               key={cat.id}
@@ -441,18 +639,28 @@ export default function UserPage() {
                           {[
                             {
                               id: "LOW",
-                              label: "Low",
+                              label: "Low Priority",
+                              description: "Non-urgent, can be scheduled",
                               color: themeConfig.colors.success,
                             },
                             {
                               id: "MEDIUM",
-                              label: "Medium",
+                              label: "Medium Priority",
+                              description:
+                                "Should be addressed within 3-5 days",
                               color: themeConfig.colors.warning || "#f59e0b",
                             },
                             {
                               id: "HIGH",
-                              label: "High",
+                              label: "High Priority",
+                              description: "Requires attention within 24 hours",
                               color: themeConfig.colors.error,
+                            },
+                            {
+                              id: "URGENT",
+                              label: "Urgent - Emergency",
+                              description: "Immediate attention required",
+                              color: "#dc2626",
                             },
                           ].map((prio) => (
                             <button
@@ -464,7 +672,7 @@ export default function UserPage() {
                                   priority: prio.id as any,
                                 })
                               }
-                              className="flex items-center justify-between p-3 rounded-xl border-2 transition-all duration-200 text-sm font-bold"
+                              className="flex flex-col items-start p-3 rounded-xl border-2 transition-all duration-200 text-sm font-bold"
                               style={{
                                 backgroundColor:
                                   formData.priority === prio.id
@@ -480,13 +688,26 @@ export default function UserPage() {
                                     : themeConfig.colors.text,
                               }}
                             >
-                              {prio.label}
-                              {formData.priority === prio.id && (
-                                <div
-                                  className="w-2 h-2 rounded-full animate-pulse"
-                                  style={{ backgroundColor: prio.color }}
-                                />
-                              )}
+                              <div className="flex items-center justify-between w-full">
+                                {prio.label}
+                                {formData.priority === prio.id && (
+                                  <div
+                                    className="w-2 h-2 rounded-full animate-pulse"
+                                    style={{ backgroundColor: prio.color }}
+                                  />
+                                )}
+                              </div>
+                              <div
+                                className="text-xs mt-1 font-normal opacity-75"
+                                style={{
+                                  color:
+                                    formData.priority === prio.id
+                                      ? prio.color
+                                      : themeConfig.colors.textSecondary,
+                                }}
+                              >
+                                {prio.description}
+                              </div>
                             </button>
                           ))}
                         </div>
