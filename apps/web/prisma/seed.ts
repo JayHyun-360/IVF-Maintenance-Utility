@@ -7,43 +7,6 @@ config();
 
 const prisma = new PrismaClient();
 
-// Define enums locally to avoid import issues
-enum Role {
-  ADMIN = "ADMIN",
-  STUDENT = "STUDENT",
-  STAFF = "STAFF",
-}
-
-enum Category {
-  PLUMBING = "PLUMBING",
-  ELECTRICAL = "ELECTRICAL",
-  CARPENTRY = "CARPENTRY",
-  PERSONNEL = "PERSONNEL",
-}
-
-enum Priority {
-  LOW = "LOW",
-  MEDIUM = "MEDIUM",
-  HIGH = "HIGH",
-  URGENT = "URGENT",
-}
-
-enum Status {
-  PENDING = "PENDING",
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
-  CANCELLED = "CANCELLED",
-}
-
-enum NotificationType {
-  REQUEST_CREATED = "REQUEST_CREATED",
-  REQUEST_UPDATED = "REQUEST_UPDATED",
-  REQUEST_ASSIGNED = "REQUEST_ASSIGNED",
-  REQUEST_COMPLETED = "REQUEST_COMPLETED",
-  COMMENT_ADDED = "COMMENT_ADDED",
-  SYSTEM_ANNOUNCEMENT = "SYSTEM_ANNOUNCEMENT",
-}
-
 async function main() {
   console.log("Start seeding...");
 
@@ -56,7 +19,7 @@ async function main() {
       email: "admin@ivf.edu",
       name: "Admin User",
       password: adminPassword,
-      role: Role.ADMIN,
+      role: "ADMIN",
     },
   });
 
@@ -69,7 +32,7 @@ async function main() {
       email: "student@ivf.edu",
       name: "John Student",
       password: studentPassword,
-      role: Role.STUDENT,
+      role: "STUDENT",
     },
   });
 
@@ -82,7 +45,7 @@ async function main() {
       email: "staff@ivf.edu",
       name: "Maintenance Staff",
       password: staffPassword,
-      role: Role.STAFF,
+      role: "STAFF",
     },
   });
 
@@ -92,32 +55,32 @@ async function main() {
       title: "Leaky Faucet in Room 201",
       description:
         "The faucet in the men's restroom on the second floor is constantly dripping. This is wasting water and creating a puddle on the floor.",
-      category: Category.PLUMBING,
-      priority: Priority.MEDIUM,
+      category: "PLUMBING",
+      priority: "MEDIUM",
       location: "Building A, Room 201",
       requestedBy: student.id,
-      status: Status.PENDING,
+      status: "PENDING",
     },
     {
       title: "Broken Light Fixture",
       description:
         "The overhead light fixture in the main hallway is flickering and sometimes goes out completely. This is a safety concern.",
-      category: Category.ELECTRICAL,
-      priority: Priority.HIGH,
+      category: "ELECTRICAL",
+      priority: "HIGH",
       location: "Building B, Main Hallway",
       requestedBy: student.id,
-      status: Status.IN_PROGRESS,
+      status: "IN_PROGRESS",
       assignedTo: staff.id,
     },
     {
       title: "Broken Door Handle",
       description:
         "The door handle to the conference room is broken and the door cannot be opened from the outside.",
-      category: Category.CARPENTRY,
-      priority: Priority.MEDIUM,
+      category: "CARPENTRY",
+      priority: "MEDIUM",
       location: "Building C, Conference Room 301",
       requestedBy: student.id,
-      status: Status.COMPLETED,
+      status: "COMPLETED",
       assignedTo: staff.id,
       completedAt: new Date(),
     },
@@ -125,21 +88,21 @@ async function main() {
       title: "Staff Shortage in Cafeteria",
       description:
         "The cafeteria is understaffed during lunch hours, causing long wait times for students.",
-      category: Category.PERSONNEL,
-      priority: Priority.HIGH,
+      category: "PERSONNEL",
+      priority: "HIGH",
       location: "Cafeteria Building",
       requestedBy: student.id,
-      status: Status.PENDING,
+      status: "PENDING",
     },
     {
       title: "Clogged Drain in Kitchen",
       description:
         "The kitchen sink drain is completely clogged, preventing proper dishwashing.",
-      category: Category.PLUMBING,
-      priority: Priority.URGENT,
+      category: "PLUMBING",
+      priority: "URGENT",
       location: "Cafeteria Kitchen",
       requestedBy: student.id,
-      status: Status.IN_PROGRESS,
+      status: "IN_PROGRESS",
       assignedTo: staff.id,
     },
   ];

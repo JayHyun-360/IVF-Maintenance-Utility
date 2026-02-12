@@ -76,28 +76,41 @@ export const authOptions: NextAuthOptions = {
 
         // Check for demo credentials first
         if (
-          credentials.email.toLowerCase() === "admin@test.com" &&
+          credentials.email.toLowerCase() === "admin@ivf.edu" &&
           credentials.password === "admin123"
         ) {
           console.log("Admin demo user authentication successful");
           return {
             id: "admin-demo-user-id",
-            email: "admin@test.com",
-            name: "Admin Demo",
+            email: "admin@ivf.edu",
+            name: "Admin User",
             role: "ADMIN",
           };
         }
 
         if (
-          credentials.email.toLowerCase() === "user@test.com" &&
-          credentials.password === "user123"
+          credentials.email.toLowerCase() === "student@ivf.edu" &&
+          credentials.password === "student123"
         ) {
-          console.log("User demo account authentication successful");
+          console.log("Student demo user authentication successful");
           return {
-            id: "user-demo-user-id",
-            email: "user@test.com",
-            name: "User Demo",
-            role: "USER",
+            id: "student-demo-user-id",
+            email: "student@ivf.edu",
+            name: "John Student",
+            role: "STUDENT",
+          };
+        }
+
+        if (
+          credentials.email.toLowerCase() === "staff@ivf.edu" &&
+          credentials.password === "staff123"
+        ) {
+          console.log("Staff demo user authentication successful");
+          return {
+            id: "staff-demo-user-id",
+            email: "staff@ivf.edu",
+            name: "Maintenance Staff",
+            role: "STAFF",
           };
         }
 
