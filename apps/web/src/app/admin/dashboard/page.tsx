@@ -821,7 +821,7 @@ export default function AdminDashboard() {
                 {/* Settings Button - Standalone */}
                 <motion.button
                   onClick={() => router.push("/admin/settings")}
-                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
+                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200 transform hover:-translate-y-1"
                   title="Settings"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -909,9 +909,9 @@ export default function AdminDashboard() {
           <motion.button
             onClick={fetchDashboardData}
             disabled={loading}
-            className="group relative p-4 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-2xl shadow-teal-500/25 hover:shadow-teal-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            whileHover={{ scale: 1.1, y: -5 }}
-            whileTap={{ scale: 0.9 }}
+            className="group relative p-4 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-2xl shadow-teal-500/25 hover:shadow-teal-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             title="Refresh dashboard"
           >
             {/* Button Icon */}
@@ -1108,7 +1108,7 @@ export default function AdminDashboard() {
                         </div>
                         <motion.button
                           onClick={handleViewAllRequests}
-                          className="group relative px-4 py-2 rounded-xl bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-500/30 text-teal-400 hover:text-teal-300 hover:bg-teal-500/30 transition-all duration-300"
+                          className="group relative px-4 py-2 rounded-xl bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-500/30 text-teal-400 hover:text-teal-300 hover:bg-teal-500/30 transition-all duration-300 transform hover:-translate-y-1"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >

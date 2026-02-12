@@ -670,7 +670,7 @@ export default function UserPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-4 rounded-3xl font-bold text-white transition-all transform hover:translate-y-[-2px] active:translate-y-0 disabled:opacity-50 disabled:transform-none shadow-2xl"
+                    className="w-full py-4 rounded-3xl font-bold text-white transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:transform-none shadow-2xl"
                     style={{
                       background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
                       boxShadow: `0 12px 24px ${themeConfig.colors.primary}40`,
