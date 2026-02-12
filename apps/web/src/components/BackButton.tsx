@@ -9,16 +9,16 @@ interface BackButtonProps {
   label?: string;
 }
 
-export default function BackButton({ 
-  className = "", 
+export default function BackButton({
+  className = "",
   fallback = "/",
-  label = "Back" 
+  label = "Back",
 }: BackButtonProps) {
   const router = useRouter();
 
   const handleBack = () => {
-    // Try to go back in history first
-    if (window.history.length > 1) {
+    // Check if we came from the same domain and have history
+    if (typeof window !== "undefined" && window.history.length > 2) {
       router.back();
     } else {
       // Fallback to provided route

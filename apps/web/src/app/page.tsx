@@ -280,13 +280,13 @@ export default function Home() {
                 className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed px-4 !important"
                 style={{
                   maxWidth: "550px !important",
-                  margin: "0 auto 4rem auto !important",
+                  margin: "0 auto 3rem auto !important",
                   lineHeight: "2 !important",
                 }}
               >
-                Transform your maintenance operations with intelligent
-                automation, real-time visual feedback, and seamless workflow
-                management designed for modern facilities.
+                Simplify your maintenance work with smart tools and easy
+                workflows. Track, manage, and complete tasks efficiently - all
+                in one place.
               </motion.p>
 
               {/* CTA Buttons */}
