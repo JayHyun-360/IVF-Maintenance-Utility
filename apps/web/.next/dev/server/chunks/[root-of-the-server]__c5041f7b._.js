@@ -1835,7 +1835,7 @@ function any_hmac_sha1(k, d, e) {
  * Convert a raw string to an arbitrary string encoding
  */ function rstr2any(input, encoding) {
     var divisor = encoding.length;
-    var remainders = Array();
+    var remainders = [];
     var i, q, x, quotient;
     /* Convert to an array of 16-bit big-endian values, forming the dividend */ var dividend = Array(Math.ceil(input.length / 2));
     for(i = 0; i < dividend.length; i++){
@@ -1847,7 +1847,7 @@ function any_hmac_sha1(k, d, e) {
    * forms the dividend for the next step. We stop when the dividend is zero.
    * All remainders are stored for later use.
    */ while(dividend.length > 0){
-        quotient = Array();
+        quotient = [];
         x = 0;
         for(i = 0; i < dividend.length; i++){
             x = (x << 16) + dividend[i];
@@ -1946,7 +1946,7 @@ function str2rstr_utf16be(input) {
         d = safe_add(d, oldd);
         e = safe_add(e, olde);
     }
-    return Array(a, b, c, d, e);
+    return [a, b, c, d, e];
 }
 /*
  * Perform the appropriate triplet combination function for the current
@@ -3099,7 +3099,7 @@ function __TURBOPACK__default__export__(name, version, hashfunc) {
         return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$uuid$2f$dist$2f$esm$2d$node$2f$stringify$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"])(bytes);
     } // Function#name is not settable on some platforms (#270)
     try {
-        generateUUID.name = name; // eslint-disable-next-line no-empty
+        generateUUID.name = name;  
     } catch (err) {} // For CommonJS default export support
     generateUUID.DNS = DNS;
     generateUUID.URL = URL;

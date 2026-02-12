@@ -23,11 +23,29 @@ const findUserByEmail = async (email: string) => {
   });
 };
 
+// Get the base URL with fallbacks for different environments
+const getBaseUrl = () => {
+  if (process.env.NODE_ENV === "production") {
+    return (
+      process.env.NEXTAUTH_URL ||
+      "https://ivf-maintenance-utility-web.vercel.app"
+    );
+  }
+  if (process.env.VERCEL_URL) {
+    return process.env.VERCEL_URL;
+  }
+  return process.env.NEXTAUTH_URL || "http://localhost:3000";
+};
+
 export const authOptions: NextAuthOptions = {
   secret:
     process.env.NEXTAUTH_SECRET ||
     "ivf-maintenance-secret-key-2024-secure-production-auth",
   debug: process.env.NODE_ENV === "development", // Enable debug in development
+  // Use the computed base URL
+  ...(process.env.NODE_ENV === "production" && {
+    url: getBaseUrl(),
+  }),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "missing-google-client-id",
@@ -162,16 +180,40 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // If the URL is relative, prepend the base URL
-      if (url && url.startsWith("/")) {
-        return `${baseUrl}${url}`;
+      // Use the same base URL logic as above
+      const actualBaseUrl = getBaseUrl();
+
+      console.log("NextAuth redirect callback:", {
+        url,
+        baseUrl,
+        actualBaseUrl,
+        nodeEnv: process.env.NODE_ENV,
+        nextAuthUrl: process.env.NEXTAUTH_URL,
+        vercelUrl: process.env.VERCEL_URL,
+      });
+
+      // Handle the callback URL properly to prevent double encoding
+      if (!url) {
+        return `${actualBaseUrl}/dashboard`;
       }
-      // If the URL is on the same site, allow it
-      if (url && new URL(url).origin === baseUrl) {
-        return url;
+
+      // If the URL is already absolute, return it as-is
+      try {
+        const urlObj = new URL(url);
+        // If it's an absolute URL with the same origin, allow it
+        if (urlObj.origin === actualBaseUrl) {
+          return url;
+        }
+        // If it's an absolute URL with different origin, redirect to base
+        return `${actualBaseUrl}/dashboard`;
+      } catch {
+        // If URL parsing fails, treat it as relative
+        if (url.startsWith("/")) {
+          return `${actualBaseUrl}${url}`;
+        }
+        // Default fallback
+        return `${actualBaseUrl}/dashboard`;
       }
-      // Default redirect to dashboard
-      return `${baseUrl}/dashboard`;
     },
   },
   pages: {

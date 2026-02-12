@@ -2,11 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { addMaintenanceRequest } from "@/lib/data";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import BackButton from "@/components/BackButton";
-import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import Image from "next/image";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
@@ -32,12 +30,7 @@ export default function UserPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [attachedImages, setAttachedImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [mounted, setMounted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -425,7 +418,15 @@ export default function UserPage() {
                             onClick={() =>
                               setFormData({
                                 ...formData,
-                                category: cat.id as any,
+                                category: cat.id as
+                                  | "PLUMBING"
+                                  | "ELECTRICAL"
+                                  | "HVAC"
+                                  | "CARPENTRY"
+                                  | "PAINTING"
+                                  | "CLEANING"
+                                  | "SECURITY"
+                                  | "OTHER",
                               })
                             }
                             className="flex items-center gap-2 p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium"
@@ -471,7 +472,11 @@ export default function UserPage() {
                             onClick={() =>
                               setFormData({
                                 ...formData,
-                                priority: prio.id as any,
+                                priority: prio.id as
+                                  | "LOW"
+                                  | "MEDIUM"
+                                  | "HIGH"
+                                  | "URGENT",
                               })
                             }
                             className="w-full flex items-center justify-between p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium"

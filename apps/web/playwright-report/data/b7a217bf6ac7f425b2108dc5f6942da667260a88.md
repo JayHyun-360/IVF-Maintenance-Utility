@@ -1,0 +1,120 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - banner [ref=e6]:
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - img [ref=e11]
+          - generic [ref=e13]:
+            - heading "Integrated Visual Feedback" [level=1] [ref=e14]
+            - paragraph [ref=e15]: Maintenance Utility
+        - navigation [ref=e16]:
+          - button "Home" [ref=e17]: Home
+          - button "Features" [ref=e19]: Features
+          - button "Dashboard" [ref=e21]: Dashboard
+          - button "About" [ref=e23]: About
+        - generic [ref=e25]:
+          - button "Sign In" [ref=e26]
+          - button "◈ Cyan Accents Dark" [ref=e28]:
+            - generic [ref=e29]: ◈
+            - generic [ref=e30]: Cyan Accents Dark
+            - img [ref=e31]
+    - generic [ref=e33]:
+      - img [ref=e35]
+      - generic [ref=e41]:
+        - generic [ref=e43]:
+          - img [ref=e45]
+          - generic [ref=e47]:
+            - heading "Integrated Visual Feedback" [level=1] [ref=e48]
+            - paragraph [ref=e49]: Maintenance Utility
+        - heading "Streamline Your Maintenance Operations" [level=1] [ref=e50]:
+          - text: Streamline Your
+          - generic [ref=e51]: Maintenance Operations
+        - paragraph [ref=e52]: Simplify your maintenance work with smart tools and easy workflows. Track, manage, and complete tasks efficiently - all in one place.
+        - button "Get Started" [ref=e54]:
+          - text: Get Started
+          - img [ref=e55]
+        - generic [ref=e57]:
+          - generic [ref=e60]:
+            - generic [ref=e61]: "38"
+            - generic [ref=e62]: Total Requests
+          - generic [ref=e65]:
+            - generic [ref=e66]: "22"
+            - generic [ref=e67]: Completed
+          - generic [ref=e70]:
+            - generic [ref=e71]: "9"
+            - generic [ref=e72]: Pending
+          - generic [ref=e75]:
+            - generic [ref=e76]: "7"
+            - generic [ref=e77]: In Progress
+    - generic [ref=e81]:
+      - img [ref=e83]
+      - generic [ref=e87]:
+        - generic [ref=e88]:
+          - heading "Powerful Features for Modern Maintenance" [level=2] [ref=e89]
+          - paragraph [ref=e90]: Everything you need to manage, track, and optimize your maintenance operations with visual feedback in one comprehensive platform.
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - img [ref=e94]
+            - heading "Real-time Analytics" [level=3] [ref=e96]
+            - paragraph [ref=e97]: Live dashboards for performance insights.
+          - generic [ref=e98]:
+            - img [ref=e100]
+            - heading "Smart Automation" [level=3] [ref=e102]
+            - paragraph [ref=e103]: Automate tasks and prioritize by urgency.
+          - generic [ref=e104]:
+            - img [ref=e106]
+            - heading "Mobile Access" [level=3] [ref=e108]
+            - paragraph [ref=e109]: Access your system from any device.
+          - generic [ref=e110]:
+            - img [ref=e112]
+            - heading "Instant Notifications" [level=3] [ref=e114]
+            - paragraph [ref=e115]: Real-time alerts for request updates.
+          - generic [ref=e116]:
+            - img [ref=e118]
+            - heading "Performance Tracking" [level=3] [ref=e120]
+            - paragraph [ref=e121]: Track KPIs and generate reports.
+          - generic [ref=e122]:
+            - img [ref=e124]
+            - heading "Secure Platform" [level=3] [ref=e126]
+            - paragraph [ref=e127]: Enterprise security with role access.
+    - generic [ref=e131]:
+      - heading "Streamline Facility Management Today" [level=2] [ref=e132]:
+        - text: Streamline Facility
+        - generic [ref=e133]: Management Today
+      - paragraph [ref=e134]: Our system makes maintenance management simple and efficient. Easily track repairs, schedule work orders, and coordinate with your team. Reduce paperwork and keep your facilities running smoothly with our easy-to-use platform.
+      - button "Get Started Now" [ref=e136]
+    - generic [ref=e137]:
+      - img [ref=e139]
+      - generic [ref=e144]:
+        - heading "About IVF Maintenance Utility" [level=2] [ref=e145]:
+          - text: About IVF
+          - generic [ref=e146]: Maintenance Utility
+        - paragraph [ref=e147]: Integrated Visual Feedback Maintenance Utility is a comprehensive solution designed specifically for educational institutions. Our platform combines cutting-edge technology with intuitive design to streamline facility management, enhance operational efficiency, and create optimal learning environments for users and staff alike.
+        - generic [ref=e148]:
+          - generic [ref=e149]:
+            - img [ref=e151]
+            - heading "Mission" [level=3] [ref=e153]
+            - paragraph [ref=e154]: Empowering educational institutions with intelligent maintenance solutions
+          - generic [ref=e155]:
+            - img [ref=e157]
+            - heading "Vision" [level=3] [ref=e159]
+            - paragraph [ref=e160]: Creating seamless, efficient maintenance experiences for schools
+          - generic [ref=e161]:
+            - img [ref=e163]
+            - heading "Values" [level=3] [ref=e164]
+            - paragraph [ref=e165]: Innovation, reliability, and educational excellence
+    - contentinfo [ref=e166]:
+      - generic [ref=e167]:
+        - generic [ref=e168]:
+          - generic [ref=e169]:
+            - img [ref=e171]
+            - generic [ref=e173]:
+              - heading "Integrated Visual Feedback" [level=3] [ref=e174]
+              - paragraph [ref=e175]: Maintenance Utility
+          - paragraph [ref=e176]: Modern maintenance solution with visual feedback for organizations of all sizes.
+        - paragraph [ref=e178]: © 2024 Integrated Visual Feedback & Maintenance Utility. All rights reserved.
+  - alert [ref=e179]
+```

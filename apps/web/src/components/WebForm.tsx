@@ -128,7 +128,9 @@ export function WebForm({
                   [childProps.name]: value,
                 }));
               },
-            } as Partial<React.ComponentProps<any>>);
+            } as Partial<
+              React.ComponentProps<"input" | "select" | "textarea">
+            >);
           }
           return child;
         })}

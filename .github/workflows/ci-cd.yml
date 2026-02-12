@@ -10,20 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test_db
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
     steps:
       - uses: actions/checkout@v4
 
@@ -38,7 +24,7 @@ jobs:
 
       - name: Setup environment variables
         run: |
-          echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/test_db" >> .env
+          echo "DATABASE_URL=file:./dev.db" >> .env
           echo "NEXTAUTH_SECRET=test-secret" >> .env
           echo "JWT_SECRET=test-jwt-secret" >> .env
 
@@ -48,12 +34,12 @@ jobs:
       - name: Run database migrations
         run: npx prisma migrate deploy
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+          DATABASE_URL: file:./dev.db
 
       - name: Seed database
         run: npx prisma db seed
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+          DATABASE_URL: file:./dev.db
 
       - name: Run linting
         run: npm run lint

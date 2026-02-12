@@ -1,5 +1,21 @@
 [
   {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\!\\/api\\/auth(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "!/api/auth/:path*"
+  },
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\!\\/_next(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "!/_next/:path*"
+  },
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\!\\/favicon\\.ico(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "!/favicon.ico"
+  },
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\!\\/robots\\.txt(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "!/robots.txt"
+  },
+  {
     "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/admin(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
     "originalSource": "/admin/:path*"
   },
@@ -24,11 +40,11 @@
     "originalSource": "/dashboard/:path*"
   },
   {
-    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/api\\/admin(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
-    "originalSource": "/api/admin/:path*"
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/role-selection(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "/role-selection"
   },
   {
-    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/api\\/requests(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
-    "originalSource": "/api/requests/:path*"
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/admin-pin-verification(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "/admin-pin-verification"
   }
 ]

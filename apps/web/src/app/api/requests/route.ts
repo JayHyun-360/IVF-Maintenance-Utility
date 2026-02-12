@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Mock data storage (in a real app, this would be a database)
-let mockRequests: any[] = [];
+const mockRequests: any[] = [];
 let requestIdCounter = 1;
 
 export async function GET(request: NextRequest) {
