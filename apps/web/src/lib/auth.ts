@@ -147,13 +147,17 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.id = user.id;
+        token.sub = user.id; // Set sub to user ID for session compatibility
       }
       return token;
     },
     async session({ session, token }) {
+      console.log("Session callback - token:", token);
+      console.log("Session callback - session:", session);
       if (token && session.user) {
         session.user.id = token.sub!;
         session.user.role = token.role as string;
+        console.log("Session updated:", session.user);
       }
       return session;
     },
