@@ -486,85 +486,13 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
-    },
-    "/test-auth": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/test-auth",
-      "dataRoute": "/test-auth.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/test-env": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/test-env",
-      "dataRoute": "/test-env.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/test-ui": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/test-ui",
-      "dataRoute": "/test-ui.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "f6b84d7d8f8efe132e06ba7194680f41",
-    "previewModeSigningKey": "8cae39611054c4ed4bb3f76623c22cf21ab996f2c856f36f32d4d6a6c0660298",
-    "previewModeEncryptionKey": "4634e1618fa33cf9a9ea92b257a5f63b03e6535089814c351c35280698bd76e8"
+    "previewModeId": "1df366779b3cd4e112d1869ac55c431f",
+    "previewModeSigningKey": "131043c0a238e36760e7a43d1e5438fc6c950f6279d16b3acd3722e2a211b4d9",
+    "previewModeEncryptionKey": "797598015e64b6426aebd097a2d66d40a508d1543eebe3220c8e8487993355c9"
   }
 }

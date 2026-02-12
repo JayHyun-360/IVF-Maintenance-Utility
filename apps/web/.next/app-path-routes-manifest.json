@@ -28,8 +28,5 @@
   "/role-selection/page": "/role-selection",
   "/settings/page": "/settings",
   "/student/history/page": "/student/history",
-  "/student/page": "/student",
-  "/test-auth/page": "/test-auth",
-  "/test-env/page": "/test-env",
-  "/test-ui/page": "/test-ui"
+  "/student/page": "/student"
 }
