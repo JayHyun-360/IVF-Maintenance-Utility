@@ -156,7 +156,7 @@ export default function Home() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 }}
                       onClick={() => router.push("/dashboard")}
-                      className="px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-lg font-medium text-sm hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-0.5"
+                      className="px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-lg font-medium text-sm hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-1"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -171,7 +171,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
                     onClick={() => router.push("/login")}
-                    className="px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-lg font-medium text-sm hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-0.5"
+                    className="px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-lg font-medium text-sm hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-1"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -294,7 +294,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 md:mb-24 px-4"
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 px-4"
               >
                 <motion.button
                   onClick={() => router.push("/login")}
@@ -619,14 +619,22 @@ export default function Home() {
                 your team. Reduce paperwork and keep your facilities running
                 smoothly with our easy-to-use platform.
               </p>
-              <motion.button
-                onClick={() => router.push("/login")}
-                className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-lime-400 to-teal-500 text-gray-900 rounded-xl font-semibold text-base md:text-lg hover:from-lime-300 hover:to-teal-400 transition-all duration-300 shadow-lg shadow-lime-400/25 hover:shadow-lime-400/40 transform hover:-translate-y-1"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: true }}
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 px-4"
               >
-                Get Started Now
-              </motion.button>
+                <motion.button
+                  onClick={() => router.push("/login")}
+                  className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-lime-400 to-teal-500 text-gray-900 rounded-xl font-semibold text-base md:text-lg hover:from-lime-300 hover:to-teal-400 transition-all duration-300 shadow-lg shadow-lime-400/25 hover:shadow-lime-400/40 transform hover:-translate-y-1"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Get Started Now
+                </motion.button>
+              </motion.div>
             </motion.div>
           </div>
         </section>
