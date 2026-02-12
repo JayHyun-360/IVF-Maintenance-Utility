@@ -74,18 +74,22 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // Check for demo credentials first
+        // Check for demo credentials first (but use real database users)
         if (
           credentials.email.toLowerCase() === "admin@test.com" &&
           credentials.password === "admin123"
         ) {
           console.log("Admin demo user authentication successful");
-          return {
-            id: "admin-demo-user-id",
-            email: "admin@test.com",
-            name: "Admin User",
-            role: "ADMIN",
-          };
+          // Find the real admin user in database
+          const adminUser = await findUserByEmail("admin@ivf.edu");
+          if (adminUser) {
+            return {
+              id: adminUser.id,
+              email: adminUser.email,
+              name: adminUser.name,
+              role: adminUser.role,
+            };
+          }
         }
 
         if (
@@ -93,12 +97,16 @@ export const authOptions: NextAuthOptions = {
           credentials.password === "user123"
         ) {
           console.log("Student demo user authentication successful");
-          return {
-            id: "student-demo-user-id",
-            email: "user@test.com",
-            name: "John Student",
-            role: "STUDENT",
-          };
+          // Find the real student user in database
+          const studentUser = await findUserByEmail("student@ivf.edu");
+          if (studentUser) {
+            return {
+              id: studentUser.id,
+              email: studentUser.email,
+              name: studentUser.name,
+              role: studentUser.role,
+            };
+          }
         }
 
         const user = await findUserByEmail(credentials.email);
