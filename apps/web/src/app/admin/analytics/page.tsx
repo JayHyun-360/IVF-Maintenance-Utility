@@ -491,36 +491,72 @@ export default function AdminAnalytics() {
                   {notifications.length === 0 ? (
                     <div className="p-8 text-center">
                       <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800/50 flex items-center justify-center">
-                        <svg
-                          className="w-6 h-6 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12h6m-6 0a6 6 0 016 6m0 6M6 6v6a2 2 0 002-2h2a2 2 0 002-2m0 0V8a2 2 0 012-2h2a2 2 0 012-2z"
-                          />
-                        </svg>
+                        {/* Recent Activity */}
+                        <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                          <h3 className="text-sm font-semibold text-gray-100 mb-3">
+                            Recent Activity (Last 7 Days)
+                          </h3>
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                              <span className="text-gray-300">
+                                Total Requests
+                              </span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-100 font-mono">
+                                  {recentRequests.length}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  total requests
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                              <span className="text-gray-300">
+                                Active Requests
+                              </span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-100 font-mono">
+                                  {
+                                    recentRequests.filter(
+                                      (r) => r.status === "Active",
+                                    ).length
+                                  }
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  currently active
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                              <span className="text-gray-300">
+                                Completed Today
+                              </span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-100 font-mono">
+                                  {
+                                    recentRequests.filter(
+                                      (r) => r.status === "Completed",
+                                    ).length
+                                  }
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  completed today
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-gray-400 text-sm">No notifications</p>
                     </div>
                   ) : (
                     <div className="p-2">
                       {notifications.map((notification) => (
                         <motion.div
                           key={notification.id}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.2 }}
+                          className="p-3 rounded-lg cursor-pointer transition-all duration-200 mb-2 hover:bg-white/10"
                           onClick={() => handleNotificationClick(notification)}
-                          className={`p-3 rounded-lg cursor-pointer transition-all duration-200 mb-2 ${
-                            notification.read
-                              ? "bg-gray-800/30 hover:bg-gray-800/50"
-                              : "bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/20"
-                          }`}
                         >
                           <div className="flex items-start gap-3">
                             <div
