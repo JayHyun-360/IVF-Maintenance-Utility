@@ -153,6 +153,7 @@ export default function AdminDashboard() {
   const [showImageViewer, setShowImageViewer] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [editingStatus, setEditingStatus] = useState<string | null>(null);
+  const [showRequestDetails, setShowRequestDetails] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -596,7 +597,11 @@ export default function AdminDashboard() {
   };
 
   const handleRequestClick = (requestId: string) => {
-    router.push(`/admin/requests/${requestId.replace("REQ-", "")}`);
+    const request = recentRequests.find((r) => r.id === requestId);
+    if (request) {
+      setSelectedRequest(request);
+      setShowRequestDetails(true);
+    }
   };
 
   const handleViewAllRequests = () => {
@@ -658,6 +663,11 @@ export default function AdminDashboard() {
     setShowImageViewer(false);
     setSelectedRequest(null);
     setSelectedImageIndex(0);
+  };
+
+  const handleCloseRequestDetails = () => {
+    setShowRequestDetails(false);
+    setSelectedRequest(null);
   };
 
   const handleStatusChange = (requestId: string, newStatus: string) => {
@@ -2519,6 +2529,305 @@ export default function AdminDashboard() {
                         />
                       ))}
                     </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Request Details Modal */}
+        <AnimatePresence>
+          {showRequestDetails && selectedRequest && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+              onClick={handleCloseRequestDetails}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring", bounce: 0.3 }}
+                className="relative max-w-4xl max-h-[90vh] w-full mx-4 bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border-b border-white/10 p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-xl bg-teal-500/20 border border-teal-500/30">
+                        <svg
+                          className="w-6 h-6 text-teal-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-100">
+                          {selectedRequest.title}
+                        </h3>
+                        <p className="text-sm text-gray-400">
+                          {selectedRequest.id} • {selectedRequest.createdAt}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleCloseRequestDetails}
+                      className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 overflow-y-auto max-h-[60vh]">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Left Column */}
+                    <div className="space-y-4">
+                      {/* Request Details */}
+                      <div className="bg-gray-800/50 rounded-xl p-4 border border-white/5">
+                        <h4 className="text-sm font-semibold text-gray-100 mb-3">
+                          Request Details
+                        </h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Category
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.category}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Priority
+                            </span>
+                            <span
+                              className={`text-sm font-medium ${getPriorityColor(selectedRequest.priority)}`}
+                            >
+                              {selectedRequest.priority}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Status
+                            </span>
+                            <span
+                              className={`text-sm font-medium ${getStatusColor(selectedRequest.status)}`}
+                            >
+                              {selectedRequest.status}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Location Information */}
+                      <div className="bg-gray-800/50 rounded-xl p-4 border border-white/5">
+                        <h4 className="text-sm font-semibold text-gray-100 mb-3">
+                          Location
+                        </h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Building
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.building || "N/A"}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">Room</span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.roomNumber || "N/A"}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">Floor</span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.floor || "N/A"}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Location
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.location || "N/A"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="space-y-4">
+                      {/* Contact Information */}
+                      <div className="bg-gray-800/50 rounded-xl p-4 border border-white/5">
+                        <h4 className="text-sm font-semibold text-gray-100 mb-3">
+                          Contact Information
+                        </h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Requested By
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.requestedBy}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Department
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.department || "N/A"}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Contact Phone
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.contactPhone || "N/A"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Timeline */}
+                      <div className="bg-gray-800/50 rounded-xl p-4 border border-white/5">
+                        <h4 className="text-sm font-semibold text-gray-100 mb-3">
+                          Timeline
+                        </h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Created
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.createdAt}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-sm text-gray-400">
+                              Last Updated
+                            </span>
+                            <span className="text-sm text-gray-200">
+                              {selectedRequest.updatedAt}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div className="mt-6 bg-gray-800/50 rounded-xl p-4 border border-white/5">
+                    <h4 className="text-sm font-semibold text-gray-100 mb-3">
+                      Description
+                    </h4>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      {selectedRequest.description}
+                    </p>
+                  </div>
+
+                  {/* Images */}
+                  {selectedRequest.images &&
+                    selectedRequest.images.length > 0 && (
+                      <div className="mt-6 bg-gray-800/50 rounded-xl p-4 border border-white/5">
+                        <h4 className="text-sm font-semibold text-gray-100 mb-3">
+                          Attached Images
+                        </h4>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                          {selectedRequest.images.map((image, index) => (
+                            <button
+                              key={index}
+                              onClick={() =>
+                                handleViewImages(selectedRequest, index)
+                              }
+                              className="relative group rounded-lg overflow-hidden border border-white/10 hover:border-teal-500/50 transition-all duration-200"
+                            >
+                              <img
+                                src={image}
+                                alt={`Request image ${index + 1}`}
+                                className="w-full h-24 object-cover"
+                              />
+                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                                <svg
+                                  className="w-6 h-6 text-white"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                </div>
+
+                {/* Footer Actions */}
+                <div className="bg-gray-800/50 border-t border-white/10 p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-gray-400">Status:</span>
+                      <select
+                        value={selectedRequest.status}
+                        onChange={(e) =>
+                          handleStatusChange(selectedRequest.id, e.target.value)
+                        }
+                        className="px-3 py-1 rounded-lg bg-gray-700/50 border border-white/10 text-sm text-gray-200 focus:outline-none focus:border-teal-500/50"
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Dismissed">Dismissed</option>
+                      </select>
+                    </div>
+                    <button
+                      onClick={handleCloseRequestDetails}
+                      className="px-4 py-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white transition-all duration-200"
+                    >
+                      Close
+                    </button>
                   </div>
                 </div>
               </motion.div>
