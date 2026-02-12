@@ -8,6 +8,29 @@ import BackButton from "@/components/BackButton";
 import AccountDropdown from "@/components/AccountDropdown";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface MaintenanceRequest {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  priority: string;
+  status: string;
+  requestedBy: string;
+  createdAt: string;
+  updatedAt: string;
+  building?: string;
+  roomNumber?: string;
+  floor?: string;
+  location?: string;
+  contactPhone?: string;
+  department?: string;
+  images: string[];
+  user?: {
+    name: string;
+    email: string;
+  };
+}
+
 export default function AdminAnalytics() {
   const { isMobile } = useMobileOptimizations();
   const router = useRouter();
@@ -23,33 +46,52 @@ export default function AdminAnalytics() {
       message: "Weekly analytics report has been generated successfully",
       type: "success",
       time: "2 minutes ago",
-      read: false,
-      requestId: null,
-    },
-    {
-      id: 2,
-      title: "Performance Alert",
-      message: "System performance has degraded by 15% this week",
-      type: "high",
-      time: "1 hour ago",
-      read: false,
-      requestId: null,
-    },
-    {
-      id: 3,
-      title: "Data Sync Complete",
-      message: "Analytics data has been synchronized with latest metrics",
-      type: "info",
-      time: "3 hours ago",
       read: true,
       requestId: null,
     },
   ]);
 
+  // Fetch real data from API
+  const [recentRequests, setRecentRequests] = useState<MaintenanceRequest[]>(
+    [],
+  );
+
   useEffect(() => {
     setMounted(true);
-    // Simulate loading analytics data
-    setTimeout(() => setLoading(false), 1000);
+
+    // Fetch real recent requests data
+    const fetchRecentRequests = async () => {
+      try {
+        const response = await fetch("/api/requests");
+        if (response.ok) {
+          const userRequests = await response.json();
+          return userRequests;
+        } else {
+          // Return empty array if API fails
+          return [];
+        }
+      } catch (error) {
+        console.error("Error fetching recent requests:", error);
+        return [];
+      }
+    };
+
+    const initializeData = async () => {
+      setLoading(true);
+
+      try {
+        const requests = await fetchRecentRequests();
+        setRecentRequests(requests);
+
+        // Simulate loading analytics data
+        setTimeout(() => setLoading(false), 1000);
+      } catch (error) {
+        console.error("Error initializing analytics data:", error);
+        setLoading(false);
+      }
+    };
+
+    initializeData();
   }, []);
 
   if (!mounted) {
