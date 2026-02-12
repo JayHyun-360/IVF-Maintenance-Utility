@@ -122,15 +122,23 @@ export function WebForm({
             const childProps = child.props as WebFormFieldProps;
             return React.cloneElement(child, {
               value: formData[childProps.name] || "",
-              onChange: (value: string | number) => {
+              onChange: (
+                event: React.ChangeEvent<
+                  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+                >,
+              ) => {
+                const value = (
+                  event.target as
+                    | HTMLInputElement
+                    | HTMLSelectElement
+                    | HTMLTextAreaElement
+                ).value;
                 setFormData((prev) => ({
                   ...prev,
                   [childProps.name]: value,
                 }));
               },
-            } as Partial<
-              React.ComponentProps<"input" | "select" | "textarea">
-            >);
+            } as any);
           }
           return child;
         })}
