@@ -277,11 +277,11 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed px-4 !important"
+                className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed px-4 !important"
                 style={{
-                  maxWidth: "600px !important",
-                  margin: "0 auto 6rem auto !important",
-                  lineHeight: "1.8 !important",
+                  maxWidth: "550px !important",
+                  margin: "0 auto 4rem auto !important",
+                  lineHeight: "2 !important",
                 }}
               >
                 Transform your maintenance operations with intelligent
