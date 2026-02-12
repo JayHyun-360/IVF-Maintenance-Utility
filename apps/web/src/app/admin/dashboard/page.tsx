@@ -329,8 +329,8 @@ export default function AdminDashboard() {
           contactPhone: "0912-345-6789",
           department: "Academic",
           images: [
-            "https://images.unsplash.com/photo-1581885480583-32c1e5496472?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1578963016352-6c0306b6fcd8?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1532187863246-bf5ecb5c5b1c?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1581092798368-9bc9e0e1b3c6?w=400&h=300&fit=crop",
           ],
         },
         {
@@ -351,7 +351,7 @@ export default function AdminDashboard() {
           contactPhone: "0917-234-5678",
           department: "Administrative",
           images: [
-            "https://images.unsplash.com/photo-1584297585098-5cf93242ee9b?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
             "https://images.unsplash.com/photo-1571064792597-89b8126c8975?w=400&h=300&fit=crop",
           ],
         },
@@ -393,7 +393,7 @@ export default function AdminDashboard() {
           contactPhone: "0919-456-7890",
           department: "Academic",
           images: [
-            "https://images.unsplash.com/photo-1593696148823-7545eb49b8fb?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
             "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
           ],
         },
@@ -436,7 +436,7 @@ export default function AdminDashboard() {
           contactPhone: "0921-678-9012",
           department: "Student Services",
           images: [
-            "https://images.unsplash.com/photo-1581091226825-a6a1a2e2b5f9?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
           ],
         },
         {
@@ -457,8 +457,8 @@ export default function AdminDashboard() {
           contactPhone: "0922-789-0123",
           department: "Academic",
           images: [
-            "https://images.unsplash.com/photo-1558953449-1b6e2e5c0c4c?w=400&h=300&fit=crop",
             "https://images.unsplash.com/photo-1560440021-33e82a849b8b?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
           ],
         },
         {
@@ -500,7 +500,7 @@ export default function AdminDashboard() {
           contactPhone: "0924-901-2345",
           department: "Food Services",
           images: [
-            "https://images.unsplash.com/photo-1581091226825-a6a1a2e2b5f9?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
             "https://images.unsplash.com/photo-1571064792597-89b8126c8975?w=400&h=300&fit=crop",
           ],
         },
@@ -521,8 +521,8 @@ export default function AdminDashboard() {
           contactPhone: "0925-012-3456",
           department: "IT Services",
           images: [
-            "https://images.unsplash.com/photo-1517048676737-a831677282c8?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1555949968-0698e7603b3a?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1558494949-ef010cbff31e?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
           ],
         },
         {
@@ -1615,30 +1615,30 @@ export default function AdminDashboard() {
                                 </h3>
 
                                 {/* Details Grid */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                                  <div className="flex items-center gap-2 text-xs text-gray-400">
-                                    <div className="w-2 h-2 bg-gray-500 rounded-full" />
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
+                                  <div className="flex items-center gap-2 text-xs text-gray-400 min-w-0">
+                                    <div className="w-2 h-2 bg-gray-500 rounded-full flex-shrink-0" />
                                     <span className="font-mono truncate">
                                       {request.category}
                                     </span>
                                   </div>
 
-                                  <div className="flex items-center gap-2 text-xs text-gray-400">
-                                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                                  <div className="flex items-center gap-2 text-xs text-gray-400 min-w-0">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
                                     <span className="truncate">
                                       {request.requestedBy}
                                     </span>
                                   </div>
 
-                                  <div className="flex items-center gap-2 text-xs text-gray-400">
-                                    <div className="w-2 h-2 bg-teal-500 rounded-full" />
+                                  <div className="flex items-center gap-2 text-xs text-gray-400 min-w-0">
+                                    <div className="w-2 h-2 bg-teal-500 rounded-full flex-shrink-0" />
                                     <span className="font-mono truncate">
-                                      {request.createdAt}
+                                      {request.createdAt.split(' ')[0]}
                                     </span>
                                   </div>
 
-                                  <div className="flex items-center gap-2 text-xs text-gray-400">
-                                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                                  <div className="flex items-center gap-2 text-xs text-gray-400 min-w-0">
+                                    <div className="w-2 h-2 bg-purple-500 rounded-full flex-shrink-0" />
                                     <span className="truncate">
                                       {request.building} - {request.roomNumber}
                                     </span>
@@ -1646,7 +1646,46 @@ export default function AdminDashboard() {
                                 </div>
 
                                 {/* Location and Contact Row */}
-                                <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-500 mb-3">
+                                  <div className="flex items-center gap-2 truncate">
+                                    <svg
+                                      className="w-3 h-3 flex-shrink-0"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                      />
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                      />
+                                    </svg>
+                                    <span className="truncate">{request.location}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 truncate">
+                                    <svg
+                                      className="w-3 h-3 flex-shrink-0"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                      />
+                                    </svg>
+                                    <span className="truncate">{request.contactPhone}</span>
+                                  </div>
+                                </div>
                                   <div className="flex items-center gap-4">
                                     {request.floor && (
                                       <span className="flex items-center gap-1">
@@ -2835,7 +2874,7 @@ export default function AdminDashboard() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ type: "spring", bounce: 0.3 }}
-                className="relative max-w-4xl max-h-[90vh] w-full mx-4 bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden"
+                className="relative max-w-4xl max-h-[90vh] w-full mx-4 bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden flex flex-col"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Header */}
@@ -3138,7 +3177,7 @@ export default function AdminDashboard() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -10 }}
                 transition={{ type: "spring", bounce: 0.3, duration: 0.3 }}
-                className="fixed top-16 right-4 md:right-8 z-50 w-80 max-h-[500px] bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
+                className="fixed top-16 right-4 md:right-8 z-50 w-80 max-h-[500px] bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col"
               >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border-b border-white/10 p-4">
@@ -3180,7 +3219,7 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Notifications List */}
-                <div className="max-h-[400px] overflow-y-auto">
+                <div className="flex-1 overflow-y-auto">
                   {notifications.length === 0 ? (
                     <div className="p-8 text-center">
                       <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800/50 flex items-center justify-center">
@@ -3207,50 +3246,41 @@ export default function AdminDashboard() {
                           key={notification.id}
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.05 * notification.id }}
-                          className={`p-3 rounded-xl border transition-all duration-200 cursor-pointer mb-2 ${
-                            !notification.read
-                              ? "bg-white/5 border-white/20 hover:bg-white/10"
-                              : "bg-gray-800/30 border-white/5 hover:bg-gray-800/50"
-                          }`}
+                          transition={{ duration: 0.2 }}
                           onClick={() => handleNotificationClick(notification)}
+                          className={`p-3 rounded-lg cursor-pointer transition-all duration-200 mb-2 ${
+                            notification.read
+                              ? "bg-gray-800/30 hover:bg-gray-800/50"
+                              : "bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/20"
+                          }`}
                         >
                           <div className="flex items-start gap-3">
                             <div
-                              className={`p-2 rounded-lg border ${getNotificationColor(notification.type)}`}
+                              className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                                getNotificationColor(notification.type)
+                              }`}
                             >
-                              <span className="text-lg">
-                                {getNotificationIcon(notification.type)}
-                              </span>
+                              {getNotificationIcon(notification.type)}
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between mb-1">
-                                <h4
+                                <p
                                   className={`text-sm font-medium truncate ${
-                                    !notification.read
-                                      ? "text-gray-100"
-                                      : "text-gray-400"
+                                    notification.read ? "text-gray-300" : "text-gray-100"
                                   }`}
                                 >
                                   {notification.title}
-                                </h4>
+                                </p>
                                 {!notification.read && (
-                                  <div className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0 ml-2" />
+                                  <div className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0" />
                                 )}
                               </div>
-                              <p className="text-xs text-gray-400 line-clamp-2 mb-2">
+                              <p className="text-xs text-gray-400 line-clamp-2">
                                 {notification.message}
                               </p>
-                              <div className="flex items-center justify-between">
-                                <span className="text-xs text-gray-500">
-                                  {notification.time}
-                                </span>
-                                {notification.requestId && (
-                                  <span className="text-xs text-teal-400 hover:text-teal-300">
-                                    View Request →
-                                  </span>
-                                )}
-                              </div>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {notification.time}
+                              </p>
                             </div>
                           </div>
                         </motion.div>
