@@ -1362,17 +1362,34 @@ export default function AdminDashboard() {
                                 duration: 0.3,
                                 ease: "easeOut",
                               }}
-                              className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300"
+                              className="group relative bg-white/5 border border-white/10 rounded-lg overflow-hidden hover:border-white/20 transition-all duration-200 hover:shadow-lg hover:shadow-white/5"
                             >
-                              <div className="flex items-start justify-between">
-                                {/* Left Column - Main Information */}
-                                <div className="flex-1 min-w-0 pr-4">
-                                  <div className="flex items-center gap-3 mb-2">
-                                    <span className="text-xs font-mono text-teal-400">
+                              {/* Top Border Accent */}
+                              <div
+                                className={`h-1 w-full ${
+                                  request.priority.includes("Urgent")
+                                    ? "bg-red-500"
+                                    : request.priority.includes("High")
+                                      ? "bg-amber-500"
+                                      : "bg-teal-500"
+                                }`}
+                              />
+
+                              <div className="p-4">
+                                {/* Header Row */}
+                                <div className="flex items-center justify-between mb-3">
+                                  <div className="flex items-center gap-3">
+                                    <span className="text-xs font-mono text-gray-400 bg-gray-800/50 px-2 py-1 rounded">
                                       {request.id}
                                     </span>
                                     <span
-                                      className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
+                                      className={`text-xs px-2 py-1 rounded-md font-medium ${
+                                        request.priority.includes("Urgent")
+                                          ? "bg-red-500/10 text-red-400 border border-red-500/20"
+                                          : request.priority.includes("High")
+                                            ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                                            : "bg-teal-500/10 text-teal-400 border border-teal-500/20"
+                                      }`}
                                     >
                                       {request.priority}
                                     </span>
@@ -1389,7 +1406,7 @@ export default function AdminDashboard() {
                                             )
                                           }
                                           onBlur={() => setEditingStatus(null)}
-                                          className="text-xs px-2 py-1 rounded-full font-mono bg-gray-800/50 border border-gray-600/50 text-gray-300 focus:outline-none focus:border-teal-500/50"
+                                          className="text-xs px-2 py-1 rounded-md bg-gray-800/50 border border-gray-600/50 text-gray-300 focus:outline-none focus:border-teal-500/50"
                                           autoFocus
                                         >
                                           <option value="Pending">
@@ -1411,7 +1428,15 @@ export default function AdminDashboard() {
                                             e.stopPropagation();
                                             setEditingStatus(request.id);
                                           }}
-                                          className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10 hover:bg-current/20 transition-colors duration-200`}
+                                          className={`text-xs px-2 py-1 rounded-md font-medium ${
+                                            request.status === "Completed"
+                                              ? "bg-green-500/10 text-green-400 border border-green-500/20"
+                                              : request.status === "In Progress"
+                                                ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                                                : request.status === "Pending"
+                                                  ? "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+                                                  : "bg-gray-500/10 text-gray-400 border border-gray-500/20"
+                                          }`}
                                         >
                                           {request.status}
                                         </button>
@@ -1419,195 +1444,13 @@ export default function AdminDashboard() {
                                     </div>
                                   </div>
 
-                                  <h3 className="text-gray-100 font-medium mb-2 truncate">
-                                    {request.title}
-                                  </h3>
-
-                                  {/* Two-Column Layout for Details */}
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {/* Left Details Column */}
-                                    <div className="space-y-1">
-                                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                                        <svg
-                                          className="w-3 h-3"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-                                          />
-                                        </svg>
-                                        <span className="font-mono">
-                                          {request.category}
-                                        </span>
-                                      </div>
-
-                                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                                        <svg
-                                          className="w-3 h-3"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                          />
-                                        </svg>
-                                        <span>{request.requestedBy}</span>
-                                      </div>
-
-                                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                                        <svg
-                                          className="w-3 h-3"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                          />
-                                        </svg>
-                                        <span className="font-mono">
-                                          {request.createdAt}
-                                        </span>
-                                      </div>
-                                    </div>
-
-                                    {/* Right Details Column */}
-                                    <div className="space-y-1">
-                                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                                        <svg
-                                          className="w-3 h-3"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                          />
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                          />
-                                        </svg>
-                                        <span>
-                                          {request.building} -{" "}
-                                          {request.roomNumber}
-                                        </span>
-                                      </div>
-
-                                      {request.floor && (
-                                        <div className="flex items-center gap-2 text-xs text-gray-400">
-                                          <svg
-                                            className="w-3 h-3"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                          >
-                                            <path
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                              strokeWidth={2}
-                                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                                            />
-                                          </svg>
-                                          <span>{request.floor}</span>
-                                        </div>
-                                      )}
-
-                                      {request.department && (
-                                        <div className="flex items-center gap-2 text-xs text-gray-400">
-                                          <svg
-                                            className="w-3 h-3"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                          >
-                                            <path
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                              strokeWidth={2}
-                                              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                            />
-                                          </svg>
-                                          <span>{request.department}</span>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-
-                                  {/* Images Display - Full Width */}
-                                  {request.images.length > 0 && (
-                                    <div className="mt-3 flex items-center gap-2">
-                                      <div className="flex gap-1">
-                                        {request.images
-                                          .slice(0, 3)
-                                          .map((image, index) => (
-                                            <button
-                                              key={index}
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleViewImages(
-                                                  request,
-                                                  index,
-                                                );
-                                              }}
-                                              className="relative w-10 h-10 rounded-lg overflow-hidden border border-white/10 hover:border-teal-500/50 transition-colors duration-200"
-                                            >
-                                              <img
-                                                src={image}
-                                                alt={`Request image ${index + 1}`}
-                                                className="w-full h-full object-cover"
-                                              />
-                                              {index === 2 &&
-                                                request.images.length > 3 && (
-                                                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                                                    <span className="text-white text-xs font-bold">
-                                                      +
-                                                      {request.images.length -
-                                                        3}
-                                                    </span>
-                                                  </div>
-                                                )}
-                                            </button>
-                                          ))}
-                                      </div>
-                                      <button
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleViewImages(request, 0);
-                                        }}
-                                        className="text-xs text-teal-400 hover:text-teal-300 transition-colors duration-200"
-                                      >
-                                        View All ({request.images.length})
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* Right Column - Actions */}
-                                <div className="flex flex-col gap-2 items-end">
+                                  {/* Action Button */}
                                   <button
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       handleRequestClick(request.id);
                                     }}
-                                    className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
+                                    className="p-1.5 rounded-md bg-gray-800/50 hover:bg-gray-700/50 text-gray-400 hover:text-white transition-all duration-200 border border-gray-700/50 hover:border-gray-600/50"
                                     title="View Details"
                                   >
                                     <svg
@@ -1630,10 +1473,49 @@ export default function AdminDashboard() {
                                       />
                                     </svg>
                                   </button>
+                                </div>
 
-                                  {request.contactPhone && (
-                                    <div className="text-xs text-gray-400 text-right">
-                                      <div className="flex items-center gap-1">
+                                {/* Title */}
+                                <h3 className="text-gray-100 font-medium mb-3 leading-tight">
+                                  {request.title}
+                                </h3>
+
+                                {/* Details Grid */}
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                                    <div className="w-2 h-2 bg-gray-500 rounded-full" />
+                                    <span className="font-mono truncate">
+                                      {request.category}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                                    <span className="truncate">
+                                      {request.requestedBy}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                                    <div className="w-2 h-2 bg-teal-500 rounded-full" />
+                                    <span className="font-mono truncate">
+                                      {request.createdAt}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                                    <span className="truncate">
+                                      {request.building} - {request.roomNumber}
+                                    </span>
+                                  </div>
+                                </div>
+
+                                {/* Location and Contact Row */}
+                                <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+                                  <div className="flex items-center gap-4">
+                                    {request.floor && (
+                                      <span className="flex items-center gap-1">
                                         <svg
                                           className="w-3 h-3"
                                           fill="none"
@@ -1644,14 +1526,94 @@ export default function AdminDashboard() {
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
                                             strokeWidth={2}
-                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                                           />
                                         </svg>
-                                        <span>{request.contactPhone}</span>
-                                      </div>
-                                    </div>
+                                        {request.floor}
+                                      </span>
+                                    )}
+                                    {request.department && (
+                                      <span className="flex items-center gap-1">
+                                        <svg
+                                          className="w-3 h-3"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                          />
+                                        </svg>
+                                        {request.department}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  {request.contactPhone && (
+                                    <span className="flex items-center gap-1">
+                                      <svg
+                                        className="w-3 h-3"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth={2}
+                                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"
+                                        />
+                                      </svg>
+                                      {request.contactPhone}
+                                    </span>
                                   )}
                                 </div>
+
+                                {/* Images */}
+                                {request.images.length > 0 && (
+                                  <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+                                    <div className="flex gap-1">
+                                      {request.images
+                                        .slice(0, 3)
+                                        .map((image, index) => (
+                                          <button
+                                            key={index}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleViewImages(request, index);
+                                            }}
+                                            className="relative w-8 h-8 rounded overflow-hidden border border-gray-700/50 hover:border-teal-500/50 transition-colors duration-200"
+                                          >
+                                            <img
+                                              src={image}
+                                              alt={`Request image ${index + 1}`}
+                                              className="w-full h-full object-cover"
+                                            />
+                                            {index === 2 &&
+                                              request.images.length > 3 && (
+                                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                                  <span className="text-white text-xs font-bold">
+                                                    +{request.images.length - 3}
+                                                  </span>
+                                                </div>
+                                              )}
+                                          </button>
+                                        ))}
+                                    </div>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleViewImages(request, 0);
+                                      }}
+                                      className="text-xs text-teal-400 hover:text-teal-300 transition-colors duration-200"
+                                    >
+                                      View All ({request.images.length})
+                                    </button>
+                                  </div>
+                                )}
                               </div>
                             </motion.div>
                           ))}
