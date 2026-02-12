@@ -211,6 +211,11 @@ export const authOptions: NextAuthOptions = {
     },
     async signOut({ session }) {
       console.log("User signed out:", { session });
+      // Clear any client-side storage
+      if (typeof window !== "undefined") {
+        localStorage.clear();
+        sessionStorage.clear();
+      }
     },
   },
 };

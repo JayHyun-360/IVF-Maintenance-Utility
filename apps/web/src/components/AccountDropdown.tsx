@@ -40,11 +40,27 @@ export default function AccountDropdown() {
 
   const handleLogout = async () => {
     console.log("Logging out...");
+    setIsOpen(false); // Close dropdown immediately
+
     try {
-      await signOut({ redirect: false });
-      console.log("SignOut successful, redirecting to login");
-      router.push("/login");
-      setIsOpen(false);
+      // Clear any potential session storage first
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("next-auth.session-token");
+        sessionStorage.removeItem("next-auth.session-token");
+      }
+
+      // Sign out with redirect false to handle manually
+      const result = await signOut({
+        redirect: false,
+        callbackUrl: window.location.origin + "/login",
+      });
+
+      console.log("SignOut successful:", result);
+
+      // Force a small delay to ensure session is cleared
+      setTimeout(() => {
+        router.push("/login");
+      }, 100);
     } catch (error) {
       console.error("Logout error:", error);
       // Fallback redirect
