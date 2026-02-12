@@ -1,42 +1,64 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import { useRouter } from "next/navigation";
+
 import { useTheme } from "@/components/ThemeProvider";
+
 import { getMaintenanceStats } from "@/lib/data";
+
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+
 import { useSession } from "next-auth/react";
+
 import AccountDropdown from "@/components/AccountDropdown";
+
 import { MobileNavigationWrapper } from "@/components/MobileNavigation";
+
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
+
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const router = useRouter();
+
   const { themeConfig } = useTheme();
+
   const { data: session, status } = useSession();
+
   const { isMobile } = useMobileOptimizations();
+
   const [mounted, setMounted] = useState(false);
+
   const [stats, setStats] = useState({
     totalRequests: 0,
+
     pendingRequests: 0,
+
     inProgressRequests: 0,
+
     completedRequests: 0,
   });
 
   useEffect(() => {
     const loadData = () => {
       const realStats = getMaintenanceStats();
+
       setStats(realStats);
     };
 
     // Set mounted after a tiny delay to avoid synchronous setState
+
     const timer = setTimeout(() => setMounted(true), 0);
+
     loadData();
+
     const interval = setInterval(loadData, 30000);
 
     return () => {
       clearTimeout(timer);
+
       clearInterval(interval);
     };
   }, []);
@@ -45,6 +67,7 @@ export default function Home() {
     <MobileNavigationWrapper>
       <div className="min-h-screen bg-[#0B0E11] text-gray-100 relative overflow-hidden">
         {/* Modern Navigation Header */}
+
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -57,6 +80,7 @@ export default function Home() {
               style={{ maxWidth: "1400px", margin: "0 auto" }}
             >
               {/* Logo */}
+
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -81,12 +105,15 @@ export default function Home() {
                     />
                   </svg>
                 </motion.div>
+
                 <div className="hidden sm:block">
                   <h1 className="text-lg md:text-xl font-bold text-gray-100">
                     Integrated Visual Feedback
                   </h1>
+
                   <p className="text-xs text-gray-400">Maintenance Utility</p>
                 </div>
+
                 <div className="sm:hidden">
                   <h1 className="text-lg font-bold text-gray-100">
                     IVF Utility
@@ -95,11 +122,15 @@ export default function Home() {
               </motion.div>
 
               {/* Navigation Links - Desktop */}
+
               <nav className="hidden md:flex items-center justify-center gap-4 !important flex-1">
                 {[
                   { label: "Home", href: "/", active: true },
+
                   { label: "Features", href: "#features" },
+
                   { label: "Dashboard", href: "/dashboard" },
+
                   { label: "About", href: "#about" },
                 ].map((item, i) => (
                   <motion.button
@@ -108,15 +139,19 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
                       delay: 0.1 + i * 0.05,
+
                       type: "spring",
+
                       stiffness: 100,
                     }}
                     onClick={() => {
                       if (item.href.startsWith("#")) {
                         const element = document.querySelector(item.href);
+
                         if (element) {
                           element.scrollIntoView({
                             behavior: "smooth",
+
                             block: "start",
                           });
                         }
@@ -131,23 +166,30 @@ export default function Home() {
                     }`}
                     whileHover={{
                       scale: 1.05,
+
                       transition: { duration: 0.2, ease: "easeOut" },
                     }}
                     whileTap={{
                       scale: 0.95,
+
                       transition: { duration: 0.1 },
                     }}
                   >
                     {/* Vercel-style background hover effect */}
+
                     <motion.div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                     {/* Sliding underline effect */}
+
                     <motion.div className="absolute bottom-0 left-0 h-0.5 bg-teal-400 w-0 group-hover:w-full transition-all duration-300 ease-out" />
+
                     <span className="relative z-10">{item.label}</span>
                   </motion.button>
                 ))}
               </nav>
 
               {/* Right Side Actions */}
+
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 {session ? (
                   <>
@@ -162,6 +204,7 @@ export default function Home() {
                         whileTap={{ scale: 0.95 }}
                       >
                         <span className="hidden sm:inline">Dashboard</span>
+
                         <span className="sm:hidden">📊</span>
                       </motion.button>
                     ) : (
@@ -175,32 +218,48 @@ export default function Home() {
                         whileTap={{ scale: 0.95 }}
                       >
                         <span className="hidden sm:inline">User Portal</span>
+
                         <span className="sm:hidden">👤</span>
                       </motion.button>
                     )}
+
                     <AccountDropdown
                       config={{
                         showAccountSettings: true,
+
                         showAdminDashboard: true,
+
                         showUserPortal: true,
+
                         showSwitchAccount: true,
+
                         showRemoveAccount: true,
+
                         dropdownWidth: "w-56",
+
                         dropdownMaxHeight: "max-h-72",
+
                         avatarSize: "w-10 h-10",
+
                         position: "bottom",
+
                         alignment: "right",
+
                         showDebugInfo: false,
+
                         redirectOnLogout: false, // Stay on current page after logout
+
                         onLogoutComplete: () => {
-                          console.log("✅ Logout completed successfully");
+                          console.log(
+                            "Logout completed - custom callback triggered",
+                          );
                         },
                       }}
                     />
                   </>
                 ) : (
                   <motion.button
-                    initial={{ opacity: 0, x: 20 }}
+                    initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
                     onClick={() => router.push("/login")}
@@ -209,9 +268,11 @@ export default function Home() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <span className="hidden sm:inline">Sign In</span>
+
                     <span className="sm:hidden">👤</span>
                   </motion.button>
                 )}
+
                 <ThemeSwitcher />
               </div>
             </div>
@@ -219,8 +280,10 @@ export default function Home() {
         </motion.header>
 
         {/* Hero Section */}
+
         <section className="relative min-h-screen flex items-center justify-center bg-[#0B0E11] pt-32 !important">
           {/* Technical Grid Background */}
+
           <div className="absolute inset-0 opacity-20">
             <svg
               width="40"
@@ -238,6 +301,7 @@ export default function Home() {
           </div>
 
           {/* Teal Mesh Gradient Glow */}
+
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
@@ -248,6 +312,7 @@ export default function Home() {
               className="max-w-4xl mx-auto"
             >
               {/* Glassmorphic Hero Panel */}
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -255,8 +320,11 @@ export default function Home() {
                 className="backdrop-blur-xl rounded-2xl p-8 shadow-2xl max-w-xl mx-auto"
                 style={{
                   background: "rgba(255, 255, 255, 0.03) !important",
+
                   backdropFilter: "blur(25px) !important",
+
                   border: "1px solid rgba(255, 255, 255, 0.1) !important",
+
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
                 }}
               >
@@ -276,10 +344,12 @@ export default function Home() {
                       />
                     </svg>
                   </div>
+
                   <div className="text-left sm:text-center lg:text-left">
                     <h1 className="text-lg md:text-xl lg:text-2xl font-sans font-bold text-gray-100 leading-tight">
                       Integrated Visual Feedback
                     </h1>
+
                     <p className="text-xs md:text-sm text-gray-400 mt-1">
                       Maintenance Utility
                     </p>
@@ -288,6 +358,7 @@ export default function Home() {
               </motion.div>
 
               {/* Main Headline */}
+
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -295,7 +366,9 @@ export default function Home() {
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans text-gray-100 leading-tight mb-8 !important"
                 style={{
                   fontWeight: "800 !important",
+
                   letterSpacing: "-0.05em !important",
+
                   marginBottom: "2rem !important",
                 }}
               >
@@ -306,6 +379,7 @@ export default function Home() {
               </motion.h1>
 
               {/* Description */}
+
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -313,7 +387,9 @@ export default function Home() {
                 className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed px-4 !important"
                 style={{
                   maxWidth: "550px !important",
+
                   margin: "0 auto 3rem auto !important",
+
                   lineHeight: "2 !important",
                 }}
               >
@@ -323,6 +399,7 @@ export default function Home() {
               </motion.p>
 
               {/* CTA Buttons */}
+
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -353,6 +430,7 @@ export default function Home() {
               </motion.div>
 
               {/* Trust Indicators - Real Data */}
+
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -362,22 +440,33 @@ export default function Home() {
                 {[
                   {
                     value: stats.totalRequests.toString(),
+
                     label: "Total Requests",
+
                     gradient: "from-teal-500 to-cyan-600",
                   },
+
                   {
                     value: stats.completedRequests.toString(),
+
                     label: "Completed",
+
                     gradient: "from-green-500 to-emerald-600",
                   },
+
                   {
                     value: stats.pendingRequests.toString(),
+
                     label: "Pending",
+
                     gradient: "from-amber-500 to-orange-600",
                   },
+
                   {
                     value: stats.inProgressRequests.toString(),
+
                     label: "In Progress",
+
                     gradient: "from-blue-500 to-indigo-600",
                   },
                 ].map((stat, i) => (
@@ -388,31 +477,39 @@ export default function Home() {
                     transition={{ delay: 0.7 + i * 0.1 }}
                     whileHover={{
                       scale: 1.02,
+
                       y: -2,
                     }}
                     className="relative group"
                   >
                     {/* Glassmorphic card with gradient border */}
+
                     <div
                       className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"
                       style={{
                         background: `linear-gradient(135deg, ${stat.gradient.replace("from-", "").replace(" to-", ", ")})`,
                       }}
                     />
+
                     <div className="relative text-center p-6 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
                       {/* Animated number display */}
+
                       <motion.div
                         className="text-3xl md:text-4xl font-mono font-bold mb-2"
                         style={{
                           background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("green") ? "#10b981" : stat.gradient.includes("amber") ? "#f59e0b" : "#3b82f6"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("emerald") ? "#059669" : stat.gradient.includes("orange") ? "#ea580c" : "#6366f1"})`,
+
                           WebkitBackgroundClip: "text",
+
                           WebkitTextFillColor: "transparent",
+
                           backgroundClip: "text",
                         }}
                         whileHover={{ scale: 1.1 }}
                       >
                         {stat.value}
                       </motion.div>
+
                       <div className="text-xs md:text-sm text-gray-300 font-medium uppercase tracking-wider">
                         {stat.label}
                       </div>
@@ -424,6 +521,7 @@ export default function Home() {
           </div>
 
           {/* Scroll Indicator */}
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -441,11 +539,13 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
+
         <section
           id="features"
           className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-[#0B0E11] relative"
         >
           {/* Technical Grid Background */}
+
           <div className="absolute inset-0 opacity-10">
             <svg
               width="40"
@@ -461,6 +561,7 @@ export default function Home() {
               </g>
             </svg>
           </div>
+
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -473,6 +574,7 @@ export default function Home() {
                 Powerful Features for
                 <span className="text-teal-400"> Modern Maintenance</span>
               </h2>
+
               <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
                 Everything you need to manage, track, and optimize your
                 maintenance operations with visual feedback in one comprehensive
@@ -498,10 +600,14 @@ export default function Home() {
                       />
                     </svg>
                   ),
+
                   title: "Real-time Analytics",
+
                   description: "Live dashboards for performance insights.",
+
                   color: "from-teal-500 to-cyan-600",
                 },
+
                 {
                   icon: (
                     <svg
@@ -518,10 +624,14 @@ export default function Home() {
                       />
                     </svg>
                   ),
+
                   title: "Smart Automation",
+
                   description: "Automate tasks and prioritize by urgency.",
+
                   color: "from-lime-400 to-green-500",
                 },
+
                 {
                   icon: (
                     <svg
@@ -538,10 +648,14 @@ export default function Home() {
                       />
                     </svg>
                   ),
+
                   title: "Mobile Access",
+
                   description: "Access your system from any device.",
+
                   color: "from-blue-400 to-indigo-500",
                 },
+
                 {
                   icon: (
                     <svg
@@ -558,10 +672,14 @@ export default function Home() {
                       />
                     </svg>
                   ),
+
                   title: "Instant Notifications",
+
                   description: "Real-time alerts for request updates.",
+
                   color: "from-amber-400 to-orange-500",
                 },
+
                 {
                   icon: (
                     <svg
@@ -578,10 +696,14 @@ export default function Home() {
                       />
                     </svg>
                   ),
+
                   title: "Performance Tracking",
+
                   description: "Track KPIs and generate reports.",
+
                   color: "from-purple-400 to-pink-500",
                 },
+
                 {
                   icon: (
                     <svg
@@ -598,8 +720,11 @@ export default function Home() {
                       />
                     </svg>
                   ),
+
                   title: "Secure Platform",
+
                   description: "Enterprise security with role access.",
+
                   color: "from-rose-400 to-red-500",
                 },
               ].map((feature, i) => (
@@ -618,9 +743,11 @@ export default function Home() {
                   >
                     {feature.icon}
                   </motion.div>
+
                   <h3 className="text-base md:text-lg font-sans font-bold text-gray-100 mb-2 md:mb-3">
                     {feature.title}
                   </h3>
+
                   <p className="text-gray-300 leading-relaxed text-xs md:text-sm">
                     {feature.description}
                   </p>
@@ -631,8 +758,10 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
+
         <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-[#0B0E11] relative">
           {/* Teal Mesh Gradient Glow */}
+
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
 
           <div className="max-w-4xl mx-auto text-center px-4 relative z-10">
@@ -646,12 +775,14 @@ export default function Home() {
                 Streamline Facility
                 <span className="block text-teal-400">Management Today</span>
               </h2>
+
               <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
                 Our system makes maintenance management simple and efficient.
                 Easily track repairs, schedule work orders, and coordinate with
                 your team. Reduce paperwork and keep your facilities running
                 smoothly with our easy-to-use platform.
               </p>
+
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -673,11 +804,13 @@ export default function Home() {
         </section>
 
         {/* About Section */}
+
         <section
           id="about"
           className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 bg-[#0B0E11] relative"
         >
           {/* Technical Grid Background */}
+
           <div className="absolute inset-0 opacity-10">
             <svg
               width="40"
@@ -705,6 +838,7 @@ export default function Home() {
                 About IVF
                 <span className="block text-teal-400">Maintenance Utility</span>
               </h2>
+
               <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto">
                 Integrated Visual Feedback Maintenance Utility is a
                 comprehensive solution designed specifically for educational
@@ -737,9 +871,11 @@ export default function Home() {
                       />
                     </svg>
                   </div>
+
                   <h3 className="text-lg font-semibold text-gray-100 mb-2">
                     Mission
                   </h3>
+
                   <p className="text-gray-300 text-sm">
                     Empowering educational institutions with intelligent
                     maintenance solutions
@@ -768,9 +904,11 @@ export default function Home() {
                       />
                     </svg>
                   </div>
+
                   <h3 className="text-lg font-semibold text-gray-100 mb-2">
                     Vision
                   </h3>
+
                   <p className="text-gray-300 text-sm">
                     Creating seamless, efficient maintenance experiences for
                     schools
@@ -799,9 +937,11 @@ export default function Home() {
                       />
                     </svg>
                   </div>
+
                   <h3 className="text-lg font-semibold text-gray-100 mb-2">
                     Values
                   </h3>
+
                   <p className="text-gray-300 text-sm">
                     Innovation, reliability, and educational excellence
                   </p>
@@ -812,6 +952,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
+
         <footer className="bg-[#0B0E11] text-gray-100 py-8 md:py-12 px-4 sm:px-6 lg:px-12 border-t border-white/10">
           <div className="max-w-7xl mx-auto text-center">
             <div className="flex flex-col items-center justify-center mb-8">
@@ -831,13 +972,16 @@ export default function Home() {
                     />
                   </svg>
                 </div>
+
                 <div>
                   <h3 className="text-lg font-sans font-bold text-gray-100">
                     Integrated Visual Feedback
                   </h3>
+
                   <p className="text-xs text-gray-400">Maintenance Utility</p>
                 </div>
               </div>
+
               <p className="text-gray-400 text-sm">
                 Modern maintenance solution with visual feedback for
                 organizations of all sizes.
