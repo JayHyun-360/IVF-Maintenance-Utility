@@ -1415,41 +1415,75 @@ export default function AdminDashboard() {
                           }}
                         />
 
-                        {/* Premium Glassmorphic Card */}
+                        {/* Premium Glassmorphism Card */}
                         <div
-                          className="relative bg-gray-800/50 border border-gray-700 rounded-lg p-4 transition-all duration-300 overflow-hidden group-hover:bg-gray-800/70"
+                          className="relative bg-white/5 border border-white/10 rounded-xl p-4 transition-all duration-300 overflow-hidden group-hover:bg-white/10 group-hover:border-white/20"
                           style={{
-                            background: "rgba(255, 255, 255, 0.03) !important",
-                            backdropFilter: "blur(25px) !important",
+                            background: "rgba(255, 255, 255, 0.05) !important",
+                            backdropFilter:
+                              "blur(20px) saturate(180%) !important",
+                            WebkitBackdropFilter:
+                              "blur(20px) saturate(180%) !important",
                             border:
                               "1px solid rgba(255, 255, 255, 0.1) !important",
                             boxShadow:
-                              "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
+                              "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important",
                           }}
                         >
-                          {/* Dynamic border overlay for hover effect */}
+                          {/* Shimmer effect for glass */}
                           <div
-                            className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                             style={{
-                              border: `2px solid ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}`,
-                              boxShadow: `0 0 20px ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}40`,
+                              background:
+                                "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.1) 100%)",
+                            }}
+                          />
+
+                          {/* Subtle border glow on hover */}
+                          <div
+                            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                            style={{
+                              border: `1px solid ${stat.gradient.includes("teal") ? "#14b8a640" : stat.gradient.includes("amber") ? "#f59e0b40" : stat.gradient.includes("blue") ? "#3b82f640" : "#10b98140"}`,
+                              boxShadow: `0 0 20px ${stat.gradient.includes("teal") ? "#14b8a620" : stat.gradient.includes("amber") ? "#f59e0b20" : stat.gradient.includes("blue") ? "#3b82f620" : "#10b98120"}`,
                             }}
                           />
                           <div className="relative z-10">
                             <div className="flex items-start justify-between mb-3">
                               <div
-                                className="p-2 rounded-lg bg-gradient-to-br opacity-80 group-hover:opacity-100 transition-all duration-300"
+                                className="p-2.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-white/15 group-hover:border-white/30 transition-all duration-300"
                                 style={{
-                                  background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
+                                  background:
+                                    "rgba(255, 255, 255, 0.08) !important",
+                                  backdropFilter:
+                                    "blur(10px) saturate(150%) !important",
+                                  WebkitBackdropFilter:
+                                    "blur(10px) saturate(150%) !important",
+                                  border:
+                                    "1px solid rgba(255, 255, 255, 0.15) !important",
+                                  boxShadow:
+                                    "inset 0 1px 0 rgba(255, 255, 255, 0.2) !important",
                                 }}
                               >
-                                <div className="text-lg font-bold text-white transition-colors duration-300">
+                                <div className="text-lg font-bold text-white/90 group-hover:text-white transition-colors duration-300">
                                   {stat.icon}
                                 </div>
                               </div>
                               <div className="flex flex-col items-end gap-2">
                                 <span
-                                  className={`text-xs font-mono px-2 py-1 rounded-full transition-colors duration-300 ${stat.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400 border border-lime-500/30 group-hover:bg-lime-500/30 group-hover:text-lime-300" : "bg-red-500/20 text-red-400 border border-red-500/30 group-hover:bg-red-500/30 group-hover:text-red-300"}`}
+                                  className={`text-xs font-mono px-2.5 py-1 rounded-full backdrop-blur-sm border transition-all duration-300 ${stat.trend.startsWith("+") ? "bg-lime-500/10 text-lime-300 border-lime-500/20 group-hover:bg-lime-500/20 group-hover:text-lime-200 group-hover:border-lime-500/30" : "bg-red-500/10 text-red-300 border-red-500/20 group-hover:bg-red-500/20 group-hover:text-red-200 group-hover:border-red-500/30"}`}
+                                  style={{
+                                    background: stat.trend.startsWith("+")
+                                      ? "rgba(132, 204, 22, 0.1) !important"
+                                      : "rgba(239, 68, 68, 0.1) !important",
+                                    backdropFilter: "blur(8px) !important",
+                                    WebkitBackdropFilter:
+                                      "blur(8px) !important",
+                                    border: stat.trend.startsWith("+")
+                                      ? "1px solid rgba(132, 204, 22, 0.2) !important"
+                                      : "1px solid rgba(239, 68, 68, 0.2) !important",
+                                    boxShadow:
+                                      "inset 0 1px 0 rgba(255, 255, 255, 0.1) !important",
+                                  }}
                                 >
                                   {loading ? "..." : stat.trend}
                                 </span>
@@ -1479,10 +1513,43 @@ export default function AdminDashboard() {
 
                               <div className="flex items-center gap-3">
                                 <div
-                                  className={`w-2 h-2 rounded-full transition-colors duration-300 ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
+                                  className={`w-2 h-2 rounded-full backdrop-blur-sm border transition-all duration-300 ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
+                                  style={{
+                                    background: getStatusColor(
+                                      stat.status,
+                                    ).includes("green")
+                                      ? "rgba(16, 185, 129, 0.3) !important"
+                                      : getStatusColor(stat.status).includes(
+                                            "blue",
+                                          )
+                                        ? "rgba(59, 130, 246, 0.3) !important"
+                                        : getStatusColor(stat.status).includes(
+                                              "yellow",
+                                            )
+                                          ? "rgba(245, 158, 11, 0.3) !important"
+                                          : "rgba(156, 163, 175, 0.3) !important",
+                                    backdropFilter: "blur(6px) !important",
+                                    WebkitBackdropFilter:
+                                      "blur(6px) !important",
+                                    border: getStatusColor(
+                                      stat.status,
+                                    ).includes("green")
+                                      ? "1px solid rgba(16, 185, 129, 0.5) !important"
+                                      : getStatusColor(stat.status).includes(
+                                            "blue",
+                                          )
+                                        ? "1px solid rgba(59, 130, 246, 0.5) !important"
+                                        : getStatusColor(stat.status).includes(
+                                              "yellow",
+                                            )
+                                          ? "1px solid rgba(245, 158, 11, 0.5) !important"
+                                          : "1px solid rgba(156, 163, 175, 0.5) !important",
+                                    boxShadow:
+                                      "inset 0 1px 0 rgba(255, 255, 255, 0.2) !important",
+                                  }}
                                 />
                                 <span
-                                  className={`text-xs font-mono transition-colors duration-300 group-hover:text-white ${getStatusColor(stat.status)}`}
+                                  className={`text-xs font-mono transition-colors duration-300 group-hover:text-white/90 ${getStatusColor(stat.status)}`}
                                 >
                                   {stat.status}
                                 </span>
