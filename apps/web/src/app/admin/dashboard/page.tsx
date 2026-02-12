@@ -799,7 +799,9 @@ export default function AdminDashboard() {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-    return `${startOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} - ${endOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+    const startStr = startOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    const endStr = endOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    return `${startStr} - ${endStr}`;
   };
 
   const handleDownloadReport = (report: any) => {
@@ -1487,15 +1489,8 @@ export default function AdminDashboard() {
                       ) : recentRequests.length > 0 ? (
                         <div className="space-y-3">
                           {recentRequests.map((request, i) => (
-                            <motion.div
+                            <div
                               key={request.id}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{
-                                delay: 0.05 * i,
-                                duration: 0.3,
-                                ease: "easeOut",
-                              }}
                               className="group relative bg-white/5 border border-white/10 rounded-lg overflow-hidden hover:border-white/20 transition-all duration-200 hover:shadow-lg hover:shadow-white/5"
                             >
                               {/* Top Border Accent */}
@@ -1788,8 +1783,8 @@ export default function AdminDashboard() {
                                   </div>
                                 )}
                               </div>
-                            </motion.div>
-                          ))}
+                            </div>
+                          ))
                         </div>
                       ) : (
                         <div className="text-center py-8">
