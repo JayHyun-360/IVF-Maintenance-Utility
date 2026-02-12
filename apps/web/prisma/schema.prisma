@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -12,7 +12,7 @@ model User {
   email               String               @unique
   name                String
   password            String
-  role                Role                 @default(STUDENT)
+  role                String               @default("STUDENT")
   avatar              String?
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
@@ -66,9 +66,9 @@ model MaintenanceRequest {
   id          String    @id @default(cuid())
   title       String
   description String
-  category    Category
-  status      Status    @default(PENDING)
-  priority    Priority  @default(MEDIUM)
+  category    String
+  status      String    @default("PENDING")
+  priority    String    @default("MEDIUM")
   location    String?
   images      String?
   documents   String?
@@ -97,50 +97,15 @@ model Comment {
 }
 
 model Notification {
-  id        String           @id @default(cuid())
+  id        String    @id @default(cuid())
   title     String
   message   String
-  type      NotificationType
+  type      String
   userId    String
   requestId String?
-  read      Boolean          @default(false)
-  createdAt DateTime         @default(now())
+  read      Boolean   @default(false)
+  createdAt DateTime  @default(now())
 
   @@map("notifications")
 }
 
-enum Role {
-  ADMIN
-  STUDENT
-  STAFF
-}
-
-enum Status {
-  PENDING
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
-}
-
-enum Category {
-  PLUMBING
-  ELECTRICAL
-  CARPENTRY
-  PERSONNEL
-}
-
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-  URGENT
-}
-
-enum NotificationType {
-  REQUEST_CREATED
-  REQUEST_UPDATED
-  REQUEST_ASSIGNED
-  REQUEST_COMPLETED
-  COMMENT_ADDED
-  SYSTEM_ANNOUNCEMENT
-}

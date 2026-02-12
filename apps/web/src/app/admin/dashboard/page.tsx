@@ -215,549 +215,125 @@ export default function AdminDashboard() {
       setLoading(true);
       setError(null);
 
-      // Use mock data directly for development
-      const transformedStats: DashboardStats[] = [
-        {
-          label: "Total Requests",
-          value: 20,
-          trend: "+12%",
-          status: "Active",
-          icon: (
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-          ),
-          gradient: "from-blue-500 to-cyan-600",
-        },
-        {
-          label: "Pending",
-          value: 8,
-          trend: "+3%",
-          status: "Pending",
-          icon: (
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          ),
-          gradient: "from-amber-500 to-orange-600",
-        },
-        {
-          label: "In Progress",
-          value: 5,
-          trend: "-2%",
-          status: "Processing",
-          icon: (
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
-          ),
-          gradient: "from-purple-500 to-pink-600",
-        },
-        {
-          label: "Completed",
-          value: 7,
-          trend: "+8%",
-          status: "Completed",
-          icon: (
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          ),
-          gradient: "from-green-500 to-emerald-600",
-        },
-      ];
+      // Fetch real stats from API
+      const statsResponse = await fetch("/api/admin/stats");
+      if (statsResponse.ok) {
+        const statsData = await statsResponse.json();
 
-      setStats(transformedStats);
+        // Transform API data to match DashboardStats interface
+        const transformedStats: DashboardStats[] = statsData.map(
+          (stat: any, index: number) => {
+            const gradientMap = {
+              "Total Requests": "from-blue-500 to-cyan-600",
+              Pending: "from-amber-500 to-orange-600",
+              "In Progress": "from-purple-500 to-pink-600",
+              Completed: "from-green-500 to-emerald-600",
+            };
 
-      // Create 20 mock maintenance requests with images - Aligned with Physical Plant Request Form
-      const mockRequests: MaintenanceRequest[] = [
-        {
-          id: "PPR-2026-001",
-          title: "Air Conditioning Unit Not Working",
-          description:
-            "AC unit in Room 203 is not cooling properly, temperature is too high.",
-          category: "HVAC/Air Conditioning",
-          priority: "High Priority",
-          status: "Pending",
-          requestedBy: "John Smith",
-          createdAt: "02/10/2026 14:30:00",
-          updatedAt: "02/10/2026 14:30:00",
-          building: "Main Building",
-          roomNumber: "203",
-          floor: "2nd Floor",
-          location: "Near main entrance, Back corner",
-          contactPhone: "0912-345-6789",
-          department: "Academic",
-          images: [
-            "https://images.unsplash.com/photo-1532187863246-bf5ecb5c5b1c?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1581092798368-9bc9e0e1b3c6?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-002",
-          title: "Water Leak in Bathroom",
-          description:
-            "Water leaking from ceiling in men's bathroom on 2nd floor.",
-          category: "Plumbing Issues",
-          priority: "Urgent - Emergency",
-          status: "In Progress",
-          requestedBy: "Maria Garcia",
-          createdAt: "02/10/2026 12:15:00",
-          updatedAt: "02/10/2026 13:45:00",
-          building: "Science Building",
-          roomNumber: "Men's Bathroom",
-          floor: "2nd Floor",
-          location: "Center of building",
-          contactPhone: "0917-234-5678",
-          department: "Administrative",
-          images: [
-            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1571064792597-89b8126c8975?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-003",
-          title: "Broken Window in Classroom",
-          description: "Window cracked in classroom 105 due to storm damage.",
-          category: "Structural",
-          priority: "Medium Priority",
-          status: "Pending",
-          requestedBy: "Robert Johnson",
-          createdAt: "02/10/2026 10:45:00",
-          updatedAt: "02/10/2026 10:45:00",
-          building: "Academic Building",
-          roomNumber: "105",
-          floor: "1st Floor",
-          location: "North side of building",
-          contactPhone: "0918-345-6789",
-          department: "Academic",
-          images: [
-            "https://images.unsplash.com/photo-1518608608685-8a8b502c1a7b?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-004",
-          title: "Electrical Outlet Not Working",
-          description:
-            "Power outlet not working in library study area, multiple students affected.",
-          category: "Electrical",
-          priority: "Medium Priority",
-          status: "Completed",
-          requestedBy: "Sarah Williams",
-          createdAt: "02/10/2026 09:30:00",
-          updatedAt: "02/10/2026 16:20:00",
-          building: "Library",
-          roomNumber: "Study Area A",
-          floor: "3rd Floor",
-          location: "East wing",
-          contactPhone: "0919-456-7890",
-          department: "Academic",
-          images: [
-            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-005",
-          title: "Elevator Malfunction",
-          description: "Elevator stuck between floors, making strange noises.",
-          category: "Mechanical",
-          priority: "Urgent - Emergency",
-          status: "In Progress",
-          requestedBy: "David Brown",
-          createdAt: "02/10/2026 15:20:00",
-          updatedAt: "02/10/2026 15:45:00",
-          building: "Administration Building",
-          roomNumber: "Elevator 1",
-          floor: "Between 3rd and 4th",
-          location: "Main elevator shaft",
-          contactPhone: "0920-567-8901",
-          department: "Administrative",
-          images: [
-            "https://images.unsplash.com/photo-1578612273634-7a3b5c5e5c71?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-006",
-          title: "Lighting Fixture Broken",
-          description:
-            "Fluorescent light fixture broken in hallway, flickering constantly.",
-          category: "Electrical",
-          priority: "Low Priority",
-          status: "Pending",
-          requestedBy: "Jennifer Davis",
-          createdAt: "02/10/2026 11:00:00",
-          updatedAt: "02/10/2026 11:00:00",
-          building: "Dormitory Building A",
-          roomNumber: "Hallway 2B",
-          floor: "2nd Floor",
-          location: "Near stairwell",
-          contactPhone: "0921-678-9012",
-          department: "Student Services",
-          images: [
-            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-007",
-          title: "Door Lock Jammed",
-          description:
-            "Classroom door lock is jammed, cannot open or close properly.",
-          category: "Structural",
-          priority: "Medium Priority",
-          status: "Pending",
-          requestedBy: "Michael Wilson",
-          createdAt: "02/10/2026 13:15:00",
-          updatedAt: "02/10/2026 13:15:00",
-          building: "Engineering Building",
-          roomNumber: "Lab 301",
-          floor: "3rd Floor",
-          location: "West corridor",
-          contactPhone: "0922-789-0123",
-          department: "Academic",
-          images: [
-            "https://images.unsplash.com/photo-1560440021-33e82a849b8b?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-008",
-          title: "Fire Alarm System Test",
-          description:
-            "Monthly fire alarm system inspection and testing required.",
-          category: "Safety",
-          priority: "High Priority",
-          status: "Completed",
-          requestedBy: "Linda Martinez",
-          createdAt: "02/10/2026 08:00:00",
-          updatedAt: "02/10/2026 17:30:00",
-          building: "All Buildings",
-          roomNumber: "Multiple",
-          floor: "All Floors",
-          location: "System-wide",
-          contactPhone: "0923-890-1234",
-          department: "Safety",
-          images: [
-            "https://images.unsplash.com/photo-1604214204982-269c9fb27c8f?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-009",
-          title: "Roof Leak After Rain",
-          description:
-            "Water dripping from ceiling in cafeteria after heavy rain.",
-          category: "Plumbing Issues",
-          priority: "High Priority",
-          status: "In Progress",
-          requestedBy: "James Anderson",
-          createdAt: "02/10/2026 16:45:00",
-          updatedAt: "02/10/2026 17:00:00",
-          building: "Cafeteria",
-          roomNumber: "Main Dining Area",
-          floor: "1st Floor",
-          location: "Center of room",
-          contactPhone: "0924-901-2345",
-          department: "Food Services",
-          images: [
-            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1571064792597-89b8126c8975?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-010",
-          title: "Computer Lab Equipment Failure",
-          description: "Multiple computers not booting up in computer lab.",
-          category: "IT/Equipment",
-          priority: "Medium Priority",
-          status: "Pending",
-          requestedBy: "Patricia Taylor",
-          createdAt: "02/10/2026 14:20:00",
-          updatedAt: "02/10/2026 14:20:00",
-          building: "Technology Building",
-          roomNumber: "Computer Lab 201",
-          floor: "2nd Floor",
-          location: "North wall",
-          contactPhone: "0925-012-3456",
-          department: "IT Services",
-          images: [
-            "https://images.unsplash.com/photo-1558494949-ef010cbff31e?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-011",
-          title: "Parking Lot Lighting",
-          description:
-            "Several parking lot lights not working, safety concern for evening hours.",
-          category: "Electrical",
-          priority: "Medium Priority",
-          status: "Pending",
-          requestedBy: "Christopher Lee",
-          createdAt: "02/10/2026 10:30:00",
-          updatedAt: "02/10/2026 10:30:00",
-          building: "Parking Lot A",
-          roomNumber: "Outdoor",
-          floor: "Ground Level",
-          location: "West section",
-          contactPhone: "0926-123-4567",
-          department: "Facilities",
-          images: [
-            "https://images.unsplash.com/photo-1581091226825-a6a1a2e2b5f9?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-012",
-          title: "Gym Equipment Repair",
-          description:
-            "Treadmill making grinding noise, needs immediate attention.",
-          category: "Mechanical",
-          priority: "Low Priority",
-          status: "Pending",
-          requestedBy: "Nancy Thomas",
-          createdAt: "02/10/2026 12:45:00",
-          updatedAt: "02/10/2026 12:45:00",
-          building: "Recreation Center",
-          roomNumber: "Gym Floor",
-          floor: "1st Floor",
-          location: "Cardio area",
-          contactPhone: "0927-234-5678",
-          department: "Athletics",
-          images: [
-            "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1540497079280-1d915e2c3ab3?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-013",
-          title: "Handicap Access Ramp",
-          description: "Wheelchair ramp needs repair for safety compliance.",
-          category: "Structural",
-          priority: "High Priority",
-          status: "Completed",
-          requestedBy: "Daniel Jackson",
-          createdAt: "02/10/2026 09:15:00",
-          updatedAt: "02/10/2026 15:30:00",
-          building: "Main Building",
-          roomNumber: "Main Entrance",
-          floor: "Ground Level",
-          location: "Front entrance",
-          contactPhone: "0928-345-6789",
-          department: "Facilities",
-          images: [
-            "https://images.unsplash.com/photo-1584297585098-5cf93242ee9b?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-014",
-          title: "Lab Chemical Spill",
-          description: "Small chemical spill in chemistry lab, needs cleanup.",
-          category: "Safety",
-          priority: "Urgent - Emergency",
-          status: "Completed",
-          requestedBy: "Karen White",
-          createdAt: "02/10/2026 11:30:00",
-          updatedAt: "02/10/2026 12:45:00",
-          building: "Science Building",
-          roomNumber: "Chemistry Lab 205",
-          floor: "2nd Floor",
-          location: "Near fume hood",
-          contactPhone: "0929-456-7890",
-          department: "Science",
-          images: [
-            "https://images.unsplash.com/photo-1532187863246-bf5ecb5c5b1c?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1571064792597-89b8126c8975?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-015",
-          title: "Cafeteria Equipment",
-          description: "Dishwasher not draining properly, backing up water.",
-          category: "Mechanical",
-          priority: "Medium Priority",
-          status: "In Progress",
-          requestedBy: "Paul Harris",
-          createdAt: "02/10/2026 13:00:00",
-          updatedAt: "02/10/2026 14:15:00",
-          building: "Cafeteria",
-          roomNumber: "Kitchen",
-          floor: "1st Floor",
-          location: "Back area",
-          contactPhone: "0930-567-8901",
-          department: "Food Services",
-          images: [
-            "https://images.unsplash.com/photo-1556909114-e4a1b5b8c3f0?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-016",
-          title: "Network Connection Issues",
-          description: "Internet connection unstable in faculty offices.",
-          category: "IT/Equipment",
-          priority: "High Priority",
-          status: "Pending",
-          requestedBy: "Lisa Martin",
-          createdAt: "02/10/2026 10:00:00",
-          updatedAt: "02/10/2026 10:00:00",
-          building: "Faculty Building",
-          roomNumber: "Offices 201-205",
-          floor: "2nd Floor",
-          location: "East wing",
-          contactPhone: "0931-678-9012",
-          department: "IT Services",
-          images: [
-            "https://images.unsplash.com/photo-1558494949-ef010cbff31e?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-017",
-          title: "Emergency Exit Sign",
-          description:
-            "Emergency exit sign not illuminated, needs bulb replacement.",
-          category: "Safety",
-          priority: "High Priority",
-          status: "Completed",
-          requestedBy: "Anthony Thompson",
-          createdAt: "02/10/2026 08:30:00",
-          updatedAt: "02/10/2026 09:45:00",
-          building: "Library",
-          roomNumber: "Main Exit",
-          floor: "1st Floor",
-          location: "Front entrance",
-          contactPhone: "0932-789-0123",
-          department: "Safety",
-          images: [
-            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-018",
-          title: "Air Filter Replacement",
-          description:
-            "HVAC air filters need replacement in multiple classrooms.",
-          category: "HVAC/Air Conditioning",
-          priority: "Low Priority",
-          status: "Pending",
-          requestedBy: "Michelle Garcia",
-          createdAt: "02/10/2026 15:30:00",
-          updatedAt: "02/10/2026 15:30:00",
-          building: "Academic Building",
-          roomNumber: "Multiple Rooms",
-          floor: "All Floors",
-          location: "Various classrooms",
-          contactPhone: "0933-890-1234",
-          department: "Facilities",
-          images: [
-            "https://images.unsplash.com/photo-1578963016352-6c0306b6fcd8?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1581885480583-32c1e5496472?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-019",
-          title: "Flooring Damage",
-          description: "Carpet tiles damaged in hallway, need replacement.",
-          category: "Structural",
-          priority: "Low Priority",
-          status: "Pending",
-          requestedBy: "Kevin Rodriguez",
-          createdAt: "02/10/2026 11:45:00",
-          updatedAt: "02/10/2026 11:45:00",
-          building: "Dormitory Building B",
-          roomNumber: "Hallway 3A",
-          floor: "3rd Floor",
-          location: "Near elevator",
-          contactPhone: "0934-901-2345",
-          department: "Student Services",
-          images: [
-            "https://images.unsplash.com/photo-1581091226825-a6a1a2e2b5f9?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1560440021-33e82a849b8b?w=400&h=300&fit=crop",
-          ],
-        },
-        {
-          id: "PPR-2026-020",
-          title: "Security Camera Maintenance",
-          description: "Security camera offline, needs repair or replacement.",
-          category: "Safety",
-          priority: "Medium Priority",
-          status: "In Progress",
-          requestedBy: "Ashley Martinez",
-          createdAt: "02/10/2026 16:00:00",
-          updatedAt: "02/10/2026 16:30:00",
-          building: "Parking Lot B",
-          roomNumber: "Security Post",
-          floor: "Ground Level",
-          location: "Entrance gate",
-          contactPhone: "0935-012-3456",
-          department: "Security",
-          images: [
-            "https://images.unsplash.com/photo-1560440021-33e82a849b8b?w=400&h=300&fit=crop",
-            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
-          ],
-        },
-      ];
+            const iconMap = {
+              "Total Requests": (
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+              ),
+              Pending: (
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              ),
+              "In Progress": (
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+              ),
+              Completed: (
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              ),
+            };
 
-      // Try to fetch user-submitted requests from API
-      try {
-        const response = await fetch("/api/requests");
-        if (response.ok) {
-          const userRequests = await response.json();
-          // Combine mock requests with user requests
-          const allRequests = [...userRequests, ...mockRequests];
-          setRecentRequests(allRequests);
-        } else {
-          // Fallback to mock requests only
-          setRecentRequests(mockRequests);
-        }
-      } catch (error) {
-        console.log("API not available, using mock data only");
-        setRecentRequests(mockRequests);
+            const statusMap = {
+              "Total Requests": "Active",
+              Pending: "Pending",
+              "In Progress": "Processing",
+              Completed: "Completed",
+            };
+
+            return {
+              label: stat.label,
+              value: stat.value,
+              trend: stat.trend,
+              status:
+                statusMap[stat.label as keyof typeof statusMap] || "Active",
+              icon:
+                iconMap[stat.label as keyof typeof iconMap] ||
+                iconMap["Total Requests"],
+              gradient:
+                gradientMap[stat.label as keyof typeof gradientMap] ||
+                gradientMap["Total Requests"],
+            };
+          },
+        );
+
+        setStats(transformedStats);
+      } else {
+        throw new Error("Failed to fetch stats");
+      }
+
+      // Fetch real maintenance requests from API
+      const requestsResponse = await fetch("/api/admin/requests");
+      if (requestsResponse.ok) {
+        const requestsData = await requestsResponse.json();
+        setRecentRequests(requestsData);
+      } else {
+        throw new Error("Failed to fetch requests");
       }
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
-      setError("Failed to load dashboard data. Please try again.");
+      setError("Failed to load dashboard data");
 
-      // Keep default data on error
+      // Fallback to default data on error
       setStats(defaultStats);
       setRecentRequests([]);
     } finally {
@@ -766,17 +342,16 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleTabClick = (tabId: string) => {
-    setActiveTab(tabId);
-    // All tabs now stay on the same dashboard page
-  };
-
   const handleRequestClick = (requestId: string) => {
     const request = recentRequests.find((r) => r.id === requestId);
     if (request) {
       setSelectedRequest(request);
       setShowRequestDetails(true);
     }
+  };
+
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
   };
 
   const handleViewAllRequests = () => {

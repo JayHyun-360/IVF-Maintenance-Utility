@@ -5,9 +5,7 @@ import { config } from "dotenv";
 // Load environment variables
 config();
 
-const prisma = new PrismaClient({
-  adapter: undefined,
-});
+const prisma = new PrismaClient();
 
 // Define enums locally to avoid import issues
 enum Role {
@@ -158,26 +156,49 @@ async function main() {
     }
   }
 
-  // Create sample comments
+  // Create sample comments after requests are created
   const comments = [
     {
       content:
         "I have inspected the issue and will need to order a replacement part. Should be fixed by tomorrow.",
-      requestId: "2", // This would be the actual ID from the created request
+      requestId: "", // Will be set after creating requests
       userId: staff.id,
     },
     {
       content:
         "The door handle has been replaced. The door is now working properly.",
-      requestId: "3", // This would be the actual ID from the created request
+      requestId: "", // Will be set after creating requests
       userId: staff.id,
     },
   ];
 
-  for (const commentData of comments) {
-    await prisma.comment.create({
-      data: commentData,
+  // Create requests first and get their IDs
+  const createdRequests = [];
+  for (const requestData of sampleRequests) {
+    const existing = await prisma.maintenanceRequest.findFirst({
+      where: { title: requestData.title },
     });
+
+    if (!existing) {
+      const created = await prisma.maintenanceRequest.create({
+        data: requestData,
+      });
+      createdRequests.push(created);
+    }
+  }
+
+  // Update comments with actual request IDs and create them
+  if (createdRequests.length >= 2) {
+    comments[0].requestId = createdRequests[1].id; // Second request
+    comments[1].requestId = createdRequests[2].id; // Third request
+
+    for (const commentData of comments) {
+      if (commentData.requestId) {
+        await prisma.comment.create({
+          data: commentData,
+        });
+      }
+    }
   }
 
   // Create sample notifications
@@ -185,13 +206,13 @@ async function main() {
     {
       title: "New Maintenance Request",
       message: "A new maintenance request has been submitted by John Student",
-      type: NotificationType.REQUEST_CREATED,
+      type: "REQUEST_CREATED",
       userId: admin.id,
     },
     {
       title: "Request Assigned",
       message: "You have been assigned to a new maintenance request",
-      type: NotificationType.REQUEST_ASSIGNED,
+      type: "REQUEST_ASSIGNED",
       userId: staff.id,
     },
   ];
