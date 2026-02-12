@@ -39,12 +39,21 @@ export default function AccountDropdown() {
   }, []);
 
   const handleLogout = async () => {
-    await signOut({ redirect: false });
-    router.push("/login");
-    setIsOpen(false);
+    console.log("Logging out...");
+    try {
+      await signOut({ redirect: false });
+      console.log("SignOut successful, redirecting to login");
+      router.push("/login");
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Fallback redirect
+      window.location.href = "/login";
+    }
   };
 
   const handleSwitchAccount = () => {
+    console.log("Switching account...");
     // For demo purposes, we'll just redirect to login
     // In a real app, you might show a modal to select different accounts
     router.push("/login");
@@ -58,6 +67,7 @@ export default function AccountDropdown() {
         "Are you sure you want to remove your account? This action cannot be undone.",
       )
     ) {
+      console.log("Removing account...");
       handleLogout();
     }
     setIsOpen(false);

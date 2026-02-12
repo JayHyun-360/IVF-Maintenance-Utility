@@ -153,9 +153,17 @@ export default function LoginPage() {
     );
   }
 
-  // If user is already logged in and mounted, redirect immediately without showing loading
-  if (session && mounted) {
-    return null; // Will redirect in the useEffect
+  // Always show login page content, even if user is logged in
+  // The redirect will happen in the useEffect above
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-[#0B0E11] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
+          <p className="text-gray-100">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

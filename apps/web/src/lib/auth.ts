@@ -174,21 +174,30 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
+      console.log("NextAuth redirect callback:", { url, baseUrl });
+
       // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (url.startsWith("/")) {
+        const fullUrl = `${baseUrl}${url}`;
+        console.log("Redirecting to relative URL:", fullUrl);
+        return fullUrl;
+      }
 
       // Allows callback URLs on the same origin
       try {
-        const urlObj = new URL(url);
+        const urlObj = new URL(url, baseUrl);
         if (urlObj.origin === baseUrl) {
+          console.log("Redirecting to same origin URL:", url);
           return url;
         }
       } catch (e) {
-        // If URL parsing fails, it might be a relative path without a leading slash
-        // which we'll handle by falling back to baseUrl
+        console.log("URL parsing failed, treating as relative:", e);
+        // If URL parsing fails, it might be a relative path
+        return `${baseUrl}${url}`;
       }
 
       // Default to baseUrl if the URL is from a different origin or invalid
+      console.log("Defaulting to baseUrl:", baseUrl);
       return baseUrl;
     },
   },
