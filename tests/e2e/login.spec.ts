@@ -5,7 +5,7 @@ test("should allow admin to login and access dashboard", async ({ page }) => {
 
   // Fill in login form
   await page.fill('input[name="email"]', "admin@test.com");
-  await page.fill('input[name="password"]', "admin12345");
+  await page.fill('input[name="password"]', "admin123");
 
   // Submit form
   await page.click('button[type="submit"]');
@@ -46,7 +46,7 @@ test("should allow student to submit maintenance request", async ({ page }) => {
   // Login as student
   await page.goto("/login");
   await page.fill('input[name="email"]', "user@test.com");
-  await page.fill('input[name="password"]', "user12345");
+  await page.fill('input[name="password"]', "user123");
   await page.click('button[type="submit"]');
 
   // Should redirect to role selection
