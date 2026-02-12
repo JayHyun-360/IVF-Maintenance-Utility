@@ -603,6 +603,41 @@ export default function AdminDashboard() {
     router.push("/admin/requests");
   };
 
+  // Helper functions for reports
+  const getWeekRange = () => {
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+    return `${startOfWeek.toLocaleDateString()} - ${endOfWeek.toLocaleDateString()}`;
+  };
+
+  const getMonthRange = () => {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    return `${startOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} - ${endOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+  };
+
+  const handleDownloadReport = (report: any) => {
+    // Simulate report download
+    console.log(`Downloading ${report.title} (${report.type})`);
+    // In a real implementation, this would trigger file download
+    alert(`Downloading ${report.title} (${report.type}) - ${report.size}`);
+  };
+
+  const handleGenerateCustomReport = (type: string) => {
+    // Simulate custom report generation
+    console.log(`Generating ${type} custom report`);
+    // In a real implementation, this would trigger report generation
+    alert(
+      `Generating custom ${type} report... This feature will be available soon!`,
+    );
+  };
+
   // Request management functions
   const handleViewImages = (
     request: MaintenanceRequest,
@@ -2118,7 +2153,7 @@ export default function AdminDashboard() {
                 </motion.div>
               )}
 
-              {/* Reports Tab Content */}
+              {/* Reports Tab Content - Aligned with Physical Plant Maintenance */}
               {activeTab === "reports" && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -2126,77 +2161,394 @@ export default function AdminDashboard() {
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="space-y-6"
                 >
+                  {/* Physical Plant Maintenance Reports */}
                   <div className="backdrop-blur-xl rounded-2xl border border-white/10 bg-white/5 p-6">
                     <h2 className="text-2xl font-bold text-gray-100 mb-6">
-                      System Reports
+                      Physical Plant Maintenance Reports
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                      {[
-                        {
-                          title: "Monthly Summary",
-                          date: "2024-02-01",
-                          type: "PDF",
-                          size: "2.4 MB",
-                        },
-                        {
-                          title: "Maintenance Analytics",
-                          date: "2024-02-01",
-                          type: "Excel",
-                          size: "1.8 MB",
-                        },
-                        {
-                          title: "User Activity Report",
-                          date: "2024-01-31",
-                          type: "PDF",
-                          size: "956 KB",
-                        },
-                        {
-                          title: "Performance Metrics",
-                          date: "2024-01-30",
-                          type: "PDF",
-                          size: "1.2 MB",
-                        },
-                      ].map((report, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            delay: 0.05 * i,
-                            duration: 0.3,
-                            ease: "easeOut",
-                          }}
-                          className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                        >
-                          <div className="flex items-start justify-between mb-4">
-                            <div className="p-2 rounded-lg bg-teal-500/10">
-                              <svg
-                                className="w-5 h-5 text-teal-400"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                                />
-                              </svg>
-                            </div>
-                            <span className="text-xs font-mono text-gray-400">
-                              {report.type}
-                            </span>
+                    <p className="text-gray-400 text-sm mb-6">
+                      Comprehensive maintenance reports and documentation for
+                      facility management
+                    </p>
+
+                    {/* Report Categories */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                      {/* Daily Reports */}
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-teal-400 mb-3">
+                          📊 Daily Reports
+                        </h3>
+                        <div className="space-y-3">
+                          {[
+                            {
+                              title: "Daily Work Order Summary",
+                              description:
+                                "Summary of all maintenance work orders completed today",
+                              date: new Date().toLocaleDateString(),
+                              type: "PDF",
+                              size: "1.2 MB",
+                              icon: "📋",
+                              status: "ready",
+                              priority: "high",
+                            },
+                            {
+                              title: "Emergency Response Log",
+                              description:
+                                "Log of all urgent maintenance requests and response times",
+                              date: new Date().toLocaleDateString(),
+                              type: "PDF",
+                              size: "856 KB",
+                              icon: "🚨",
+                              status: "ready",
+                              priority: "high",
+                            },
+                            {
+                              title: "Staff Attendance Report",
+                              description:
+                                "Daily attendance and work hours of maintenance staff",
+                              date: new Date().toLocaleDateString(),
+                              type: "Excel",
+                              size: "445 KB",
+                              icon: "👥",
+                              status: "ready",
+                              priority: "medium",
+                            },
+                          ].map((report, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{
+                                delay: 0.05 * i,
+                                duration: 0.3,
+                                ease: "easeOut",
+                              }}
+                              className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                              onClick={() => handleDownloadReport(report)}
+                            >
+                              <div className="flex items-start justify-between mb-3">
+                                <div className="p-2 rounded-lg bg-blue-500/10">
+                                  <span className="text-lg">{report.icon}</span>
+                                </div>
+                                <div className="flex flex-col items-end gap-1">
+                                  <span className="text-xs font-mono text-gray-400">
+                                    {report.type}
+                                  </span>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded-full font-mono ${
+                                      report.priority === "high"
+                                        ? "bg-red-500/20 text-red-400"
+                                        : report.priority === "medium"
+                                          ? "bg-amber-500/20 text-amber-400"
+                                          : "bg-green-500/20 text-green-400"
+                                    }`}
+                                  >
+                                    {report.status}
+                                  </span>
+                                </div>
+                              </div>
+                              <h3 className="text-gray-100 font-medium mb-2">
+                                {report.title}
+                              </h3>
+                              <p className="text-xs text-gray-500 mb-3">
+                                {report.description}
+                              </p>
+                              <div className="flex items-center justify-between text-xs text-gray-400">
+                                <span>{report.date}</span>
+                                <span>{report.size}</span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Weekly Reports */}
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-purple-400 mb-3">
+                          📈 Weekly Reports
+                        </h3>
+                        <div className="space-y-3">
+                          {[
+                            {
+                              title: "Weekly Maintenance Summary",
+                              description:
+                                "Comprehensive weekly overview of all maintenance activities",
+                              date: getWeekRange(),
+                              type: "PDF",
+                              size: "3.8 MB",
+                              icon: "📊",
+                              status: "ready",
+                              priority: "high",
+                            },
+                            {
+                              title: "Budget Utilization Report",
+                              description:
+                                "Weekly budget spending and cost analysis",
+                              date: getWeekRange(),
+                              type: "Excel",
+                              size: "1.2 MB",
+                              icon: "💰",
+                              status: "ready",
+                              priority: "high",
+                            },
+                            {
+                              title: "Preventive Maintenance Schedule",
+                              description:
+                                "Upcoming preventive maintenance tasks and inspections",
+                              date: getWeekRange(),
+                              type: "PDF",
+                              size: "2.1 MB",
+                              icon: "🔧",
+                              status: "ready",
+                              priority: "medium",
+                            },
+                          ].map((report, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{
+                                delay: 0.05 * i,
+                                duration: 0.3,
+                                ease: "easeOut",
+                              }}
+                              className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                              onClick={() => handleDownloadReport(report)}
+                            >
+                              <div className="flex items-start justify-between mb-3">
+                                <div className="p-2 rounded-lg bg-purple-500/10">
+                                  <span className="text-lg">{report.icon}</span>
+                                </div>
+                                <div className="flex flex-col items-end gap-1">
+                                  <span className="text-xs font-mono text-gray-400">
+                                    {report.type}
+                                  </span>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded-full font-mono ${
+                                      report.priority === "high"
+                                        ? "bg-red-500/20 text-red-400"
+                                        : report.priority === "medium"
+                                          ? "bg-amber-500/20 text-amber-400"
+                                          : "bg-green-500/20 text-green-400"
+                                    }`}
+                                  >
+                                    {report.status}
+                                  </span>
+                                </div>
+                              </div>
+                              <h3 className="text-gray-100 font-medium mb-2">
+                                {report.title}
+                              </h3>
+                              <p className="text-xs text-gray-500 mb-3">
+                                {report.description}
+                              </p>
+                              <div className="flex items-center justify-between text-xs text-gray-400">
+                                <span>{report.date}</span>
+                                <span>{report.size}</span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Monthly Reports */}
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-green-400 mb-3">
+                          📅 Monthly Reports
+                        </h3>
+                        <div className="space-y-3">
+                          {[
+                            {
+                              title: "Monthly Performance Analysis",
+                              description:
+                                "Detailed analysis of maintenance team performance and KPIs",
+                              date: getMonthRange(),
+                              type: "PDF",
+                              size: "5.2 MB",
+                              icon: "📈",
+                              status: "ready",
+                              priority: "high",
+                            },
+                            {
+                              title: "Inventory & Supplies Report",
+                              description:
+                                "Monthly inventory status and supplies consumption report",
+                              date: getMonthRange(),
+                              type: "Excel",
+                              size: "2.8 MB",
+                              icon: "📦",
+                              status: "ready",
+                              priority: "medium",
+                            },
+                            {
+                              title: "Vendor Performance Report",
+                              description:
+                                "Monthly evaluation of external vendors and contractors",
+                              date: getMonthRange(),
+                              type: "PDF",
+                              size: "1.9 MB",
+                              icon: "🤝",
+                              status: "ready",
+                              priority: "low",
+                            },
+                            {
+                              title: "Compliance & Safety Report",
+                              description:
+                                "Monthly safety inspections and compliance documentation",
+                              date: getMonthRange(),
+                              type: "PDF",
+                              size: "3.1 MB",
+                              icon: "🛡️",
+                              status: "ready",
+                              priority: "high",
+                            },
+                          ].map((report, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{
+                                delay: 0.05 * i,
+                                duration: 0.3,
+                                ease: "easeOut",
+                              }}
+                              className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                              onClick={() => handleDownloadReport(report)}
+                            >
+                              <div className="flex items-start justify-between mb-3">
+                                <div className="p-2 rounded-lg bg-green-500/10">
+                                  <span className="text-lg">{report.icon}</span>
+                                </div>
+                                <div className="flex flex-col items-end gap-1">
+                                  <span className="text-xs font-mono text-gray-400">
+                                    {report.type}
+                                  </span>
+                                  <span
+                                    className={`text-xs px-2 py-1 rounded-full font-mono ${
+                                      report.priority === "high"
+                                        ? "bg-red-500/20 text-red-400"
+                                        : report.priority === "medium"
+                                          ? "bg-amber-500/20 text-amber-400"
+                                          : "bg-green-500/20 text-green-400"
+                                    }`}
+                                  >
+                                    {report.status}
+                                  </span>
+                                </div>
+                              </div>
+                              <h3 className="text-gray-100 font-medium mb-2">
+                                {report.title}
+                              </h3>
+                              <p className="text-xs text-gray-500 mb-3">
+                                {report.description}
+                              </p>
+                              <div className="flex items-center justify-between text-xs text-gray-400">
+                                <span>{report.date}</span>
+                                <span>{report.size}</span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Quick Actions */}
+                    <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <motion.button
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        onClick={() => handleGenerateCustomReport("daily")}
+                        className="p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
+                      >
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="p-2 rounded-lg bg-blue-500/10">
+                            <svg
+                              className="w-5 h-5 text-blue-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 6v6m-3.013-3.013l-2.933 2.933m0 5.866V6a2 2 0 002 2H5a2 2 0 002-2V6a2 2 0 012-2h3.28a1 1 0 011 .948.684l1.498 4.493a1 1 0 00-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 00.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"
+                              />
+                            </svg>
                           </div>
-                          <h3 className="text-gray-100 font-medium mb-2">
-                            {report.title}
-                          </h3>
-                          <div className="flex items-center justify-between text-sm text-gray-400">
-                            <span>{report.date}</span>
-                            <span>{report.size}</span>
+                          <span className="text-gray-100 font-medium">
+                            Generate Daily Report
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            Custom daily summary
+                          </span>
+                        </div>
+                      </motion.button>
+
+                      <motion.button
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        onClick={() => handleGenerateCustomReport("weekly")}
+                        className="p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
+                      >
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="p-2 rounded-lg bg-purple-500/10">
+                            <svg
+                              className="w-5 h-5 text-purple-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002 2v6m-6 0V9a2 2 0 012 2h2a2 2 0 012-2V9a2 2 0 00-2-2H9a2 2 0 00-2-2V9z"
+                              />
+                            </svg>
                           </div>
-                        </motion.div>
-                      ))}
+                          <span className="text-gray-100 font-medium">
+                            Generate Weekly Report
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            Custom weekly analysis
+                          </span>
+                        </div>
+                      </motion.button>
+
+                      <motion.button
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                        onClick={() => handleGenerateCustomReport("monthly")}
+                        className="p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
+                      >
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="p-2 rounded-lg bg-green-500/10">
+                            <svg
+                              className="w-5 h-5 text-green-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 17v-2m3 2v-6m0 0V9m0 6h6m-6-2v6m6 6v-6m0 0h6m-6-6h6"
+                              />
+                            </svg>
+                          </div>
+                          <span className="text-gray-100 font-medium">
+                            Generate Monthly Report
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            Comprehensive monthly data
+                          </span>
+                        </div>
+                      </motion.button>
                     </div>
                   </div>
                 </motion.div>
