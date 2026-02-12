@@ -1365,7 +1365,8 @@ export default function AdminDashboard() {
                               className="group backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300"
                             >
                               <div className="flex items-start justify-between">
-                                <div className="flex-1 min-w-0">
+                                {/* Left Column - Main Information */}
+                                <div className="flex-1 min-w-0 pr-4">
                                   <div className="flex items-center gap-3 mb-2">
                                     <span className="text-xs font-mono text-teal-400">
                                       {request.id}
@@ -1418,63 +1419,100 @@ export default function AdminDashboard() {
                                     </div>
                                   </div>
 
-                                  <h3 className="text-gray-100 font-medium mb-1 truncate">
+                                  <h3 className="text-gray-100 font-medium mb-2 truncate">
                                     {request.title}
                                   </h3>
 
-                                  <div className="flex items-center gap-4 text-xs text-gray-400 mb-2">
-                                    <span className="font-mono">
-                                      {request.category}
-                                    </span>
-                                    <span>•</span>
-                                    <span>{request.requestedBy}</span>
-                                    <span>•</span>
-                                    <span className="font-mono">
-                                      {request.createdAt}
-                                    </span>
-                                  </div>
+                                  {/* Two-Column Layout for Details */}
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {/* Left Details Column */}
+                                    <div className="space-y-1">
+                                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                                        <svg
+                                          className="w-3 h-3"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                                          />
+                                        </svg>
+                                        <span className="font-mono">
+                                          {request.category}
+                                        </span>
+                                      </div>
 
-                                  {/* Structured Location Information - Aligned with Paper Form */}
-                                  <div className="flex items-center gap-3 text-xs text-gray-500 mb-2">
-                                    <div className="flex items-center gap-1">
-                                      <svg
-                                        className="w-3 h-3"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth={2}
-                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                        />
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth={2}
-                                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                      </svg>
-                                      <span>
-                                        {request.building} -{" "}
-                                        {request.roomNumber}
-                                      </span>
+                                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                                        <svg
+                                          className="w-3 h-3"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                          />
+                                        </svg>
+                                        <span>{request.requestedBy}</span>
+                                      </div>
+
+                                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                                        <svg
+                                          className="w-3 h-3"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                          />
+                                        </svg>
+                                        <span className="font-mono">
+                                          {request.createdAt}
+                                        </span>
+                                      </div>
                                     </div>
-                                    {request.floor && (
-                                      <>
-                                        <span>•</span>
-                                        <span>{request.floor}</span>
-                                      </>
-                                    )}
-                                  </div>
 
-                                  {/* Contact Information */}
-                                  {(request.contactPhone ||
-                                    request.department) && (
-                                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-2">
-                                      {request.contactPhone && (
-                                        <div className="flex items-center gap-1">
+                                    {/* Right Details Column */}
+                                    <div className="space-y-1">
+                                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                                        <svg
+                                          className="w-3 h-3"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                          />
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                          />
+                                        </svg>
+                                        <span>
+                                          {request.building} -{" "}
+                                          {request.roomNumber}
+                                        </span>
+                                      </div>
+
+                                      {request.floor && (
+                                        <div className="flex items-center gap-2 text-xs text-gray-400">
                                           <svg
                                             className="w-3 h-3"
                                             fill="none"
@@ -1485,41 +1523,37 @@ export default function AdminDashboard() {
                                               strokeLinecap="round"
                                               strokeLinejoin="round"
                                               strokeWidth={2}
-                                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"
+                                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                                             />
                                           </svg>
-                                          <span>{request.contactPhone}</span>
+                                          <span>{request.floor}</span>
                                         </div>
                                       )}
+
                                       {request.department && (
-                                        <>
-                                          {request.contactPhone && (
-                                            <span>•</span>
-                                          )}
-                                          <div className="flex items-center gap-1">
-                                            <svg
-                                              className="w-3 h-3"
-                                              fill="none"
-                                              stroke="currentColor"
-                                              viewBox="0 0 24 24"
-                                            >
-                                              <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                              />
-                                            </svg>
-                                            <span>{request.department}</span>
-                                          </div>
-                                        </>
+                                        <div className="flex items-center gap-2 text-xs text-gray-400">
+                                          <svg
+                                            className="w-3 h-3"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                          >
+                                            <path
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              strokeWidth={2}
+                                              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                            />
+                                          </svg>
+                                          <span>{request.department}</span>
+                                        </div>
                                       )}
                                     </div>
-                                  )}
+                                  </div>
 
-                                  {/* Images Display */}
+                                  {/* Images Display - Full Width */}
                                   {request.images.length > 0 && (
-                                    <div className="flex items-center gap-2">
+                                    <div className="mt-3 flex items-center gap-2">
                                       <div className="flex gap-1">
                                         {request.images
                                           .slice(0, 3)
@@ -1533,7 +1567,7 @@ export default function AdminDashboard() {
                                                   index,
                                                 );
                                               }}
-                                              className="relative w-12 h-12 rounded-lg overflow-hidden border border-white/10 hover:border-teal-500/50 transition-colors duration-200"
+                                              className="relative w-10 h-10 rounded-lg overflow-hidden border border-white/10 hover:border-teal-500/50 transition-colors duration-200"
                                             >
                                               <img
                                                 src={image}
@@ -1566,8 +1600,8 @@ export default function AdminDashboard() {
                                   )}
                                 </div>
 
-                                {/* Action Buttons */}
-                                <div className="flex flex-col gap-2 ml-4">
+                                {/* Right Column - Actions */}
+                                <div className="flex flex-col gap-2 items-end">
                                   <button
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -1596,6 +1630,27 @@ export default function AdminDashboard() {
                                       />
                                     </svg>
                                   </button>
+
+                                  {request.contactPhone && (
+                                    <div className="text-xs text-gray-400 text-right">
+                                      <div className="flex items-center gap-1">
+                                        <svg
+                                          className="w-3 h-3"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"
+                                          />
+                                        </svg>
+                                        <span>{request.contactPhone}</span>
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </motion.div>
