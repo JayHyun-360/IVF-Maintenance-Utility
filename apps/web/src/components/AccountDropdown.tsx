@@ -33,6 +33,10 @@ interface AccountDropdownConfig {
   position?: "bottom" | "top";
   /** Preferred dropdown alignment (default: "right") */
   alignment?: "left" | "right";
+  /** Whether to redirect to login page after logout (default: true) */
+  redirectOnLogout?: boolean;
+  /** Custom logout callback function (optional) */
+  onLogoutComplete?: () => void;
 }
 
 interface AccountDropdownProps {
@@ -67,6 +71,7 @@ export default function AccountDropdown({
     dropdownMaxHeight: config.dropdownMaxHeight ?? "max-h-60",
     showDebugInfo: config.showDebugInfo ?? false,
     avatarSize: config.avatarSize ?? "w-8 h-8",
+    redirectOnLogout: config.redirectOnLogout ?? true,
   };
 
   // Debug session data
@@ -125,15 +130,34 @@ export default function AccountDropdown({
 
       console.log("SignOut successful:", result);
 
-      // Force a small delay to ensure session is cleared
+      // Handle post-logout actions based on configuration
+      if (dropdownConfig.redirectOnLogout) {
+        // Force a small delay to ensure session is cleared
+        setTimeout(() => {
+          router.push("/login");
+        }, 200);
+      } else {
+        // Stay on current page, just clear the session
+        console.log("Logout complete, staying on current page");
+      }
+
+      // Reset loading state after a short delay
       setTimeout(() => {
-        router.push("/login");
-      }, 200);
+        setIsLoggingOut(false);
+      }, 100);
+
+      // Call custom logout callback if provided
+      if (config.onLogoutComplete) {
+        config.onLogoutComplete();
+      }
     } catch (error) {
       console.error("Logout error:", error);
       setIsLoggingOut(false); // Reset loading state on error
-      // Fallback redirect
-      window.location.href = "/login";
+
+      // Fallback redirect only if redirect is enabled
+      if (dropdownConfig.redirectOnLogout) {
+        window.location.href = "/login";
+      }
     }
   };
 

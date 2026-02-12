@@ -191,6 +191,12 @@ export default function Home() {
                         position: "bottom",
                         alignment: "right",
                         showDebugInfo: false,
+                        redirectOnLogout: false, // Stay on current page after logout
+                        onLogoutComplete: () => {
+                          console.log(
+                            "Logout completed - custom callback triggered",
+                          );
+                        },
                       }}
                     />
                   </>
