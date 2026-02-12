@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import BackButton from "@/components/BackButton";
@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
   const [email, setEmail] = useState("");
@@ -21,9 +22,24 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // Redirect logged-in users away from login page
   useEffect(() => {
     setMounted(true);
-  }, []);
+
+    if (status === "loading") return;
+
+    if (session) {
+      console.log("User already logged in, redirecting based on role...");
+      if (session.user?.role === "ADMIN") {
+        router.replace("/admin/dashboard");
+      } else if (session.user?.role === "STAFF") {
+        router.replace("/staff");
+      } else {
+        router.replace("/student");
+      }
+      return;
+    }
+  }, [session, status, router]);
 
   const handleAdminDemo = async () => {
     setEmail("admin@test.com");
@@ -109,10 +125,12 @@ export default function LoginPage() {
 
         if (session?.user?.role === "ADMIN") {
           router.push("/admin/dashboard");
-        } else if (session?.user?.role === "USER") {
+        } else if (session?.user?.role === "STAFF") {
+          router.push("/staff");
+        } else if (session?.user?.role === "STUDENT") {
           router.push("/student");
         } else {
-          // Default fallback for other roles
+          // Default fallback for unknown roles
           router.push("/dashboard");
         }
       }
@@ -122,6 +140,18 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
+
+  // Show loading state while checking session or redirecting
+  if (status === "loading" || (session && mounted)) {
+    return (
+      <div className="min-h-screen bg-[#0B0E11] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
+          <p className="text-gray-100">Redirecting...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0B0E11] relative overflow-hidden">
