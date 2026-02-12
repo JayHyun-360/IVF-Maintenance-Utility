@@ -75,18 +75,36 @@ export const clearSessionStorage = (): void => {
 };
 
 export const getUserDisplayName = (session: any): string => {
-  // Debug logging to identify the issue
-  console.log("🔍 getUserDisplayName - Session data:", {
-    session: session,
-    user: session?.user,
-    name: session?.user?.name,
-    email: session?.user?.email,
-    emailType: typeof session?.user?.email,
+  // Enhanced debugging to identify the exact issue
+  console.log("🔍 getUserDisplayName - Full Session Analysis:", {
+    sessionExists: !!session,
+    sessionType: typeof session,
+    userExists: !!session?.user,
+    userType: typeof session?.user,
+    fullSession: session,
+    fullUser: session?.user,
+    userName: session?.user?.name,
+    userEmail: session?.user?.email,
+    userId: session?.user?.id,
+    userRole: session?.user?.role,
+    allUserKeys: session?.user ? Object.keys(session.user) : "no user object",
   });
 
   // Check if session and user exist
-  if (!session || !session.user) {
-    console.warn("⚠️ No session or user data found");
+  if (!session) {
+    console.warn("⚠️ No session found - returning 'User'");
+    return "User";
+  }
+
+  if (!session.user) {
+    console.warn("⚠️ Session exists but no user object - returning 'User'");
+    return "User";
+  }
+
+  // Check if user object is empty or has no meaningful data
+  const userKeys = Object.keys(session.user);
+  if (userKeys.length === 0) {
+    console.warn("⚠️ User object is empty - returning 'User'");
     return "User";
   }
 
@@ -113,6 +131,16 @@ export const getUserDisplayName = (session: any): string => {
     }
   }
 
+  // Try to get email without @ validation (fallback)
+  if (
+    session.user.email &&
+    typeof session.user.email === "string" &&
+    session.user.email.trim()
+  ) {
+    console.log("✅ Using full email as fallback:", session.user.email);
+    return session.user.email.trim();
+  }
+
   // Last resort - check if there's any other identifier
   if (session.user.id) {
     const identifier = session.user.id;
@@ -121,7 +149,10 @@ export const getUserDisplayName = (session: any): string => {
     return `User ${shortId}`;
   }
 
-  console.warn("⚠️ No valid user identifier found, defaulting to 'User'");
+  console.warn(
+    "⚠️ No valid user identifier found in any field - returning 'User'",
+  );
+  console.log("🔍 Available user fields:", userKeys);
   return "User";
 };
 
