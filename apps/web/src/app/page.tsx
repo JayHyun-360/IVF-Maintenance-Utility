@@ -155,13 +155,13 @@ export default function Home() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 }}
-                      onClick={() => router.push("/dashboard")}
+                      onClick={() => router.push("/student")}
                       className="px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-lg font-medium text-sm hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-1"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <span className="hidden sm:inline">Dashboard</span>
-                      <span className="sm:hidden">📊</span>
+                      <span className="hidden sm:inline">User Portal</span>
+                      <span className="sm:hidden">�</span>
                     </motion.button>
                     <AccountDropdown />
                   </>
