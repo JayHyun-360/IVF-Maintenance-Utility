@@ -7,7 +7,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import { Z_INDEX } from "@/lib/z-index";
 
 export default function AccountDropdown() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const { themeConfig } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +18,18 @@ export default function AccountDropdown() {
     "right",
   );
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Debug session data
+  useEffect(() => {
+    if (session) {
+      console.log("AccountDropdown - Session data:", {
+        user: session.user,
+        name: session.user?.name,
+        email: session.user?.email,
+        role: session.user?.role,
+      });
+    }
+  }, [session]);
 
   useEffect(() => {
     // Only run on client-side
@@ -125,6 +137,10 @@ export default function AccountDropdown() {
     setIsOpen(!isOpen);
   };
 
+  if (status === "loading") {
+    return <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />;
+  }
+
   if (!session) {
     return (
       <button
@@ -179,14 +195,22 @@ export default function AccountDropdown() {
               background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
             }}
           >
-            {session.user?.name?.charAt(0).toUpperCase() || "U"}
+            {(
+              session.user?.name ||
+              session.user?.email?.split("@")[0] ||
+              "User"
+            )
+              .charAt(0)
+              .toUpperCase()}
           </div>
           <div className="text-left">
             <div
               className="text-sm font-medium"
               style={{ color: themeConfig.colors.text }}
             >
-              {session.user?.name || "User"}
+              {session.user?.name ||
+                session.user?.email?.split("@")[0] ||
+                "User"}
             </div>
             <div
               className="text-xs"

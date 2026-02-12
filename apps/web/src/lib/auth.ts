@@ -160,6 +160,8 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role;
         token.id = user.id;
         token.sub = user.id; // Set sub to user ID for session compatibility
+        if (user.name) token.name = user.name;
+        if (user.email) token.email = user.email;
       }
       return token;
     },
@@ -169,6 +171,8 @@ export const authOptions: NextAuthOptions = {
       if (token && session.user) {
         session.user.id = token.sub!;
         session.user.role = token.role as string;
+        if (token.name) session.user.name = token.name as string;
+        if (token.email) session.user.email = token.email as string;
         console.log("Session updated:", session.user);
       }
       return session;

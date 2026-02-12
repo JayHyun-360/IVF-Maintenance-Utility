@@ -2,8 +2,10 @@
 
 import React, { forwardRef } from "react";
 import { useTheme } from "@/components/ThemeProvider";
-import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
-import { useHapticFeedback } from "@/hooks/useMobileOptimizations";
+import {
+  useMobileOptimizations,
+  useHapticFeedback,
+} from "@/hooks/useMobileOptimizations";
 
 // Mobile-optimized input component
 interface MobileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -23,6 +23,9 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$middleware$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/middleware.js [middleware-edge] (ecmascript)");
 ;
 const __TURBOPACK__default__export__ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$middleware$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["withAuth"])({
+    pages: {
+        signIn: "/login"
+    },
     callbacks: {
         authorized: ({ token })=>{
             // Simple authentication check - let NextAuth handle the rest
@@ -37,6 +40,8 @@ const config = {
         "!/_next/:path*",
         "!/favicon.ico",
         "!/robots.txt",
+        "!/sitemap.xml",
+        "!/manifest.json",
         // Only protect routes that need authentication
         "/admin/:path*",
         "/student/:path*",

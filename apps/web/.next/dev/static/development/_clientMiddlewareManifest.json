@@ -16,6 +16,14 @@
     "originalSource": "!/robots.txt"
   },
   {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\!\\/sitemap\\.xml(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "!/sitemap.xml"
+  },
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\!\\/manifest\\.json(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "!/manifest.json"
+  },
+  {
     "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/admin(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
     "originalSource": "/admin/:path*"
   },

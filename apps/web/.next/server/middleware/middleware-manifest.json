@@ -1,0 +1,75 @@
+{
+  "sorted_middleware": [],
+  "middleware": {
+    "/": {
+      "files": [
+        "server/edge/chunks/node_modules_next_dist_esm_build_templates_edge-wrapper_91c53540.js",
+        "server/edge/chunks/[root-of-the-server]__853622e1._.js",
+        "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_ee6d66b1.js"
+      ],
+      "name": "middleware",
+      "page": "/",
+      "matchers": [
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?!/api/auth/:path*{(\\\\.json)}?",
+          "originalSource": "!/api/auth/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?!/_next/:path*{(\\\\.json)}?",
+          "originalSource": "!/_next/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?!/favicon.ico{(\\\\.json)}?",
+          "originalSource": "!/favicon.ico"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?!/robots.txt{(\\\\.json)}?",
+          "originalSource": "!/robots.txt"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/admin/:path*{(\\\\.json)}?",
+          "originalSource": "/admin/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/student/:path*{(\\\\.json)}?",
+          "originalSource": "/student/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/staff/:path*{(\\\\.json)}?",
+          "originalSource": "/staff/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/settings/:path*{(\\\\.json)}?",
+          "originalSource": "/settings/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/emergency/:path*{(\\\\.json)}?",
+          "originalSource": "/emergency/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/dashboard/:path*{(\\\\.json)}?",
+          "originalSource": "/dashboard/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/role-selection{(\\\\.json)}?",
+          "originalSource": "/role-selection"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/admin-pin-verification{(\\\\.json)}?",
+          "originalSource": "/admin-pin-verification"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "uQWvgKQAsrI5rDowhx-f2",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "h4Wbo6uJ+L/cur1+addZzUw6x5dMrDvgE45WR5an+aQ=",
+        "__NEXT_PREVIEW_MODE_ID": "32074085f4a5b5914ebc2625152c656c",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "bea57694b29835901f086df690faf6f8e85230f192f1841d896a07b75bb24981",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "9334e365e2914ef2d9957f603712f06bac34f84ae024a116df7b447d6f3feb9b"
+      }
+    }
+  },
+  "instrumentation": null,
+  "functions": {}
+}
