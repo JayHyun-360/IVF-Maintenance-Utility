@@ -99,8 +99,8 @@ function getUserDisplayName(session) {
     }
   }
 
-  if (session.user.id || session.user.sub) {
-    const identifier = session.user.id || session.user.sub;
+  if (session.user.id) {
+    const identifier = session.user.id;
     return `User ${identifier.toString().slice(0, 8)}`;
   }
 

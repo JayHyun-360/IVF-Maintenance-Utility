@@ -209,6 +209,24 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../src/app/test-account-dropdown/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/test-account-dropdown">> = Specific
+  const handler = {} as typeof import("../../../src/app/test-account-dropdown/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/verify-account-dropdown/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/verify-account-dropdown">> = Specific
+  const handler = {} as typeof import("../../../src/app/verify-account-dropdown/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../src/app/api/admin/requests/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/admin/requests">> = Specific

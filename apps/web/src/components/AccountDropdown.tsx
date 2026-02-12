@@ -424,8 +424,8 @@ export default function AccountDropdown({
                 (session?.user?.email && session.user.email.includes("@")
                   ? session.user.email.split("@")[0]
                   : null) ||
-                (session?.user?.id || session?.user?.sub
-                  ? `User ${(session.user.id || session.user.sub).toString().slice(0, 8)}`
+                (session?.user?.id
+                  ? `User ${session.user.id.toString().slice(0, 8)}`
                   : "User");
 
               console.log("✅ Final display name:", displayName);
@@ -446,8 +446,8 @@ export default function AccountDropdown({
                   (session?.user?.email && session.user.email.includes("@")
                     ? session.user.email.split("@")[0]
                     : null) ||
-                  (session?.user?.id || session?.user?.sub
-                    ? `User ${(session.user.id || session.user.sub).toString().slice(0, 8)}`
+                  (session?.user?.id
+                    ? `User ${session.user.id.toString().slice(0, 8)}`
                     : "User");
                 return displayName;
               })()}

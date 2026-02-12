@@ -114,8 +114,8 @@ export const getUserDisplayName = (session: any): string => {
   }
 
   // Last resort - check if there's any other identifier
-  if (session.user.id || session.user.sub) {
-    const identifier = session.user.id || session.user.sub;
+  if (session.user.id) {
+    const identifier = session.user.id;
     const shortId = identifier.toString().slice(0, 8);
     console.log("✅ Using user ID as fallback:", shortId);
     return `User ${shortId}`;
