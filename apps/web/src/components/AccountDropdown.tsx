@@ -6,19 +6,68 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { Z_INDEX } from "@/lib/z-index";
 
-export default function AccountDropdown() {
+/**
+ * Configuration interface for AccountDropdown component
+ * Allows customization of dropdown behavior and appearance
+ */
+interface AccountDropdownConfig {
+  /** Show Account Settings button (default: true) */
+  showAccountSettings?: boolean;
+  /** Show Admin Dashboard button for ADMIN users (default: true) */
+  showAdminDashboard?: boolean;
+  /** Show User Portal button for non-ADMIN users (default: true) */
+  showUserPortal?: boolean;
+  /** Show Switch Account button (default: true) */
+  showSwitchAccount?: boolean;
+  /** Show Remove Account button (default: true) */
+  showRemoveAccount?: boolean;
+  /** Dropdown width using Tailwind classes (default: "w-48") */
+  dropdownWidth?: string;
+  /** Dropdown max height using Tailwind classes (default: "max-h-60") */
+  dropdownMaxHeight?: string;
+  /** Show debug information like email in dropdown (default: false) */
+  showDebugInfo?: boolean;
+  /** Avatar size using Tailwind classes (default: "w-8 h-8") */
+  avatarSize?: string;
+  /** Preferred dropdown position (default: "bottom") */
+  position?: "bottom" | "top";
+  /** Preferred dropdown alignment (default: "right") */
+  alignment?: "left" | "right";
+}
+
+interface AccountDropdownProps {
+  /** Configuration object for customizing dropdown behavior */
+  config?: AccountDropdownConfig;
+}
+
+export default function AccountDropdown({
+  config = {},
+}: AccountDropdownProps = {}) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { themeConfig } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
-    "bottom",
+    config.position || "bottom",
   );
   const [dropdownAlignment, setDropdownAlignment] = useState<"left" | "right">(
-    "right",
+    config.alignment || "right",
   );
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Default configuration values
+  const dropdownConfig = {
+    showAccountSettings: config.showAccountSettings ?? true,
+    showAdminDashboard: config.showAdminDashboard ?? true,
+    showUserPortal: config.showUserPortal ?? true,
+    showSwitchAccount: config.showSwitchAccount ?? true,
+    showRemoveAccount: config.showRemoveAccount ?? true,
+    dropdownWidth: config.dropdownWidth ?? "w-48",
+    dropdownMaxHeight: config.dropdownMaxHeight ?? "max-h-60",
+    showDebugInfo: config.showDebugInfo ?? false,
+    avatarSize: config.avatarSize ?? "w-8 h-8",
+  };
 
   // Debug session data
   useEffect(() => {
@@ -209,7 +258,7 @@ export default function AccountDropdown() {
       >
         <div className="flex items-center space-x-2">
           <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold"
+            className={`${dropdownConfig.avatarSize} rounded-full flex items-center justify-center text-white font-semibold`}
             style={{
               background: `linear-gradient(135deg, ${themeConfig.colors.primary} 0%, ${themeConfig.colors.secondary} 100%)`,
             }}
@@ -236,6 +285,11 @@ export default function AccountDropdown() {
               style={{ color: themeConfig.colors.textSecondary }}
             >
               {session.user?.role || "User"}
+              {dropdownConfig.showDebugInfo && (
+                <span className="ml-2 text-xs opacity-50">
+                  ({session.user?.email})
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -256,7 +310,7 @@ export default function AccountDropdown() {
 
       {isOpen && (
         <div
-          className={`absolute w-48 rounded-xl shadow-xl border max-h-60 overflow-y-auto backdrop-blur-xl ${
+          className={`absolute ${dropdownConfig.dropdownWidth} rounded-xl shadow-xl border ${dropdownConfig.dropdownMaxHeight} overflow-y-auto backdrop-blur-xl ${
             dropdownPosition === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
           } ${dropdownAlignment === "left" ? "left-0" : "right-0"}`}
           style={{
@@ -268,48 +322,9 @@ export default function AccountDropdown() {
           }}
         >
           <div className="p-2">
-            <button
-              onClick={() => router.push("/settings")}
-              className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
-              style={{
-                color: themeConfig.colors.text,
-              }}
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="3"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                  fill="none"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M12 1v6m0 6v6m11-7h-6m-6 0H1"
-                />
-              </svg>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium">Account Settings</div>
-                <div
-                  className="text-xs"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Manage your preferences
-                </div>
-              </div>
-            </button>
-
-            {session.user?.role === "ADMIN" && (
+            {dropdownConfig.showAccountSettings && (
               <button
-                onClick={() => router.push("/admin/dashboard")}
+                onClick={() => router.push("/settings")}
                 className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
                 style={{
                   color: themeConfig.colors.text,
@@ -321,132 +336,42 @@ export default function AccountDropdown() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                    fill="none"
+                  />
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2.5}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    d="M12 1v6m0 6v6m11-7h-6m-6 0H1"
                   />
                 </svg>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium">Admin Dashboard</div>
+                  <div className="text-sm font-medium">Account Settings</div>
                   <div
                     className="text-xs"
                     style={{ color: themeConfig.colors.textSecondary }}
                   >
-                    Manage maintenance requests
+                    Manage your preferences
                   </div>
                 </div>
               </button>
             )}
 
-            {session.user?.role !== "ADMIN" && (
-              <button
-                onClick={() => router.push("/student")}
-                className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
-                style={{
-                  color: themeConfig.colors.text,
-                }}
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            {dropdownConfig.showAdminDashboard &&
+              session.user?.role === "ADMIN" && (
+                <button
+                  onClick={() => router.push("/admin/dashboard")}
+                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
+                  style={{
+                    color: themeConfig.colors.text,
+                  }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  />
-                </svg>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium">Request Portal</div>
-                  <div
-                    className="text-xs"
-                    style={{ color: themeConfig.colors.textSecondary }}
-                  >
-                    Submit maintenance requests
-                  </div>
-                </div>
-              </button>
-            )}
-
-            <div
-              className="border-t my-1"
-              style={{ borderColor: themeConfig.colors.border }}
-            />
-
-            <button
-              onClick={handleSwitchAccount}
-              className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
-              style={{
-                color: themeConfig.colors.text,
-              }}
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4"
-                />
-              </svg>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium">Switch Account</div>
-                <div
-                  className="text-xs"
-                  style={{ color: themeConfig.colors.textSecondary }}
-                >
-                  Change user account
-                </div>
-              </div>
-            </button>
-
-            <button
-              onClick={handleRemoveAccount}
-              disabled={isLoggingOut}
-              className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                color: themeConfig.colors.error,
-              }}
-            >
-              {isLoggingOut ? (
-                <>
-                  <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24">
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      fill="none"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    />
-                  </svg>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium">Removing...</div>
-                    <div
-                      className="text-xs"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Please wait
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -457,21 +382,153 @@ export default function AccountDropdown() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2.5}
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6"
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002 2v6m0 0V9a2 2 0 012-2h6a2 2 0 012 2v10m-6 0a2 2 0 00-2 2h2a2 2 0 002 2v6m0 0V5a2 2 0 012-2h6a2 2 0 012 2v6"
                     />
                   </svg>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium">Remove Account</div>
+                    <div className="text-sm font-medium">Admin Dashboard</div>
                     <div
                       className="text-xs"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
-                      Delete your account
+                      Manage maintenance requests
                     </div>
                   </div>
-                </>
+                </button>
               )}
-            </button>
+
+            {dropdownConfig.showUserPortal &&
+              session.user?.role !== "ADMIN" && (
+                <button
+                  onClick={() => router.push("/student")}
+                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
+                  style={{
+                    color: themeConfig.colors.text,
+                  }}
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M12 6v6m0 0v6m0-6H6"
+                    />
+                  </svg>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium">Request Portal</div>
+                    <div
+                      className="text-xs"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Submit maintenance requests
+                    </div>
+                  </div>
+                </button>
+              )}
+
+            {dropdownConfig.showSwitchAccount && (
+              <button
+                onClick={handleSwitchAccount}
+                className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left"
+                style={{
+                  color: themeConfig.colors.text,
+                }}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M8 7h12m0 0l-4 4m4 4H4"
+                  />
+                </svg>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium">Switch Account</div>
+                  <div
+                    className="text-xs"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Change user account
+                  </div>
+                </div>
+              </button>
+            )}
+
+            {dropdownConfig.showRemoveAccount && (
+              <button
+                onClick={handleRemoveAccount}
+                disabled={isLoggingOut}
+                className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  color: themeConfig.colors.error,
+                }}
+              >
+                {isLoggingOut ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24">
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium">Removing...</div>
+                      <div
+                        className="text-xs"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
+                        Please wait
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6"
+                      />
+                    </svg>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium">Remove Account</div>
+                      <div
+                        className="text-xs"
+                        style={{ color: themeConfig.colors.textSecondary }}
+                      >
+                        Delete your account
+                      </div>
+                    </div>
+                  </>
+                )}
+              </button>
+            )}
 
             <div
               className="border-t my-1"

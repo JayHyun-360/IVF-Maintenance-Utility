@@ -178,7 +178,21 @@ export default function Home() {
                         <span className="sm:hidden">👤</span>
                       </motion.button>
                     )}
-                    <AccountDropdown />
+                    <AccountDropdown
+                      config={{
+                        showAccountSettings: true,
+                        showAdminDashboard: true,
+                        showUserPortal: true,
+                        showSwitchAccount: true,
+                        showRemoveAccount: true,
+                        dropdownWidth: "w-56",
+                        dropdownMaxHeight: "max-h-72",
+                        avatarSize: "w-10 h-10",
+                        position: "bottom",
+                        alignment: "right",
+                        showDebugInfo: false,
+                      }}
+                    />
                   </>
                 ) : (
                   <motion.button
