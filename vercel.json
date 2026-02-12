@@ -9,11 +9,5 @@
       "destination": "/api/auth/:path*"
     }
   ],
-  "redirects": [
-    {
-      "source": "/login",
-      "destination": "/login",
-      "permanent": false
-    }
-  ]
+  "redirects": []
 }
