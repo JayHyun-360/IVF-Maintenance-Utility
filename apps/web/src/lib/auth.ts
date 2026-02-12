@@ -28,6 +28,13 @@ export const authOptions: NextAuthOptions = {
     process.env.NEXTAUTH_SECRET ||
     "ivf-maintenance-secret-key-2024-secure-production-auth",
   debug: process.env.NODE_ENV === "development", // Enable debug in development
+  // Ensure proper URL configuration for both dev and production
+  ...(process.env.NODE_ENV === "production" && {
+    url: process.env.NEXTAUTH_URL,
+  }),
+  ...(process.env.NODE_ENV === "development" && {
+    url: process.env.NEXTAUTH_URL || "http://localhost:3000",
+  }),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "missing-google-client-id",
