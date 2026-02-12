@@ -49,11 +49,9 @@ export default function RegisterPage() {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setSuccess("Account created successfully! Redirecting to login...");
-      setTimeout(() => {
-        router.push("/login");
-      }, 2000);
+      // Simulate API call without artificial delays
+      setSuccess("Account created successfully!");
+      router.push("/login");
     } catch {
       setError("Failed to create account. Please try again.");
     } finally {

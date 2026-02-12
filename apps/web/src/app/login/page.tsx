@@ -141,16 +141,21 @@ export default function LoginPage() {
     }
   };
 
-  // Show loading state while checking session or redirecting
-  if (status === "loading" || (session && mounted)) {
+  // Show loading state only while checking session initially
+  if (status === "loading" && !mounted) {
     return (
       <div className="min-h-screen bg-[#0B0E11] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
-          <p className="text-gray-100">Redirecting...</p>
+          <p className="text-gray-100">Loading...</p>
         </div>
       </div>
     );
+  }
+
+  // If user is already logged in and mounted, redirect immediately without showing loading
+  if (session && mounted) {
+    return null; // Will redirect in the useEffect
   }
 
   return (

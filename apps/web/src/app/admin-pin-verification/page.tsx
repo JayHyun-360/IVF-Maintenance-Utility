@@ -23,13 +23,30 @@ export default function AdminPinVerificationPage() {
     const checkSession = async () => {
       const session = await getSession();
       if (!session) {
-        router.push("/login");
+        router.replace("/login");
         return;
       }
       setUser(session.user);
     };
     checkSession();
   }, [router]);
+
+  // Show minimal loading only while checking session
+  if (!user) {
+    return (
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: themeConfig.colors.background }}
+      >
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-current border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+          <p style={{ color: themeConfig.colors.text, fontSize: "14px" }}>
+            Loading...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const handlePinSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,20 +81,6 @@ export default function AdminPinVerificationPage() {
       setPin(value);
     }
   };
-
-  if (!user) {
-    return (
-      <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ backgroundColor: themeConfig.colors.background }}
-      >
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-current border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p style={{ color: themeConfig.colors.text }}>Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div

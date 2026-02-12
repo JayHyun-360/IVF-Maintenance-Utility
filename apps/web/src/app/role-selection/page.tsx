@@ -28,13 +28,34 @@ function RoleSelectionContent() {
     const checkSession = async () => {
       const session = await getSession();
       if (!session) {
-        router.push("/login");
+        router.replace("/login");
         return;
       }
       setUser(session.user);
     };
     checkSession();
   }, [router]);
+
+  // Show minimal loading only while checking session initially
+  if (!mounted) {
+    return (
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: themeConfig.colors.background }}
+      >
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-current border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+          <p style={{ color: themeConfig.colors.text, fontSize: "14px" }}>
+            Loading...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null; // Will redirect in useEffect
+  }
 
   const handleRoleSelection = async (role: "admin" | "user") => {
     if (!user) return;
@@ -92,44 +113,6 @@ function RoleSelectionContent() {
     await signOut({ redirect: false });
     router.push("/login");
   };
-
-  if (!user) {
-    return (
-      <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ backgroundColor: themeConfig.colors.background }}
-      >
-        <div className="text-center">
-          <div
-            className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center animate-pulse"
-            style={{
-              background: `linear-gradient(135deg, ${themeConfig.colors.primary}40 0%, ${themeConfig.colors.secondary}40 100%)`,
-            }}
-          >
-            <div
-              className="w-8 h-8 border-3 border-current border-t-transparent rounded-full animate-spin"
-              style={{
-                borderColor: themeConfig.colors.primary,
-                borderTopColor: "transparent",
-              }}
-            />
-          </div>
-          <p
-            className="text-lg font-medium"
-            style={{ color: themeConfig.colors.text }}
-          >
-            Loading your profile...
-          </p>
-          <p
-            className="text-sm mt-2"
-            style={{ color: themeConfig.colors.textSecondary }}
-          >
-            Please wait a moment
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div
