@@ -6,13 +6,45 @@ import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
 import AccountDropdown from "@/components/AccountDropdown";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminAnalytics() {
   const { isMobile } = useMobileOptimizations();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Notifications state
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: "Analytics Report Generated",
+      message: "Weekly analytics report has been generated successfully",
+      type: "success",
+      time: "2 minutes ago",
+      read: false,
+      requestId: null,
+    },
+    {
+      id: 2,
+      title: "Performance Alert",
+      message: "System performance has degraded by 15% this week",
+      type: "high",
+      time: "1 hour ago",
+      read: false,
+      requestId: null,
+    },
+    {
+      id: 3,
+      title: "Data Sync Complete",
+      message: "Analytics data has been synchronized with latest metrics",
+      type: "info",
+      time: "3 hours ago",
+      read: true,
+      requestId: null,
+    },
+  ]);
 
   useEffect(() => {
     setMounted(true);
@@ -29,6 +61,126 @@ export default function AdminAnalytics() {
       </AuthGuard>
     );
   }
+
+  // Notification functions
+  const getNotificationIcon = (type: string) => {
+    switch (type) {
+      case "urgent":
+        return (
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732L13.732 4c-.77-1.333-2.694-1.732 3.464 0L3.34 16c-.77 1.333-2.694 1.732 3z"
+            />
+          </svg>
+        );
+      case "success":
+        return (
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        );
+      case "high":
+        return (
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732L13.732 4c-.77-1.333-2.694-1.732 3.464 0L3.34 16c-.77 1.333-2.694 1.732 3z"
+            />
+          </svg>
+        );
+      case "info":
+        return (
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0z"
+            />
+          </svg>
+        );
+      default:
+        return (
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0z"
+            />
+          </svg>
+        );
+    }
+  };
+
+  const getNotificationColor = (type: string) => {
+    switch (type) {
+      case "urgent":
+        return "text-red-400 bg-red-500/20 border-red-500/30";
+      case "success":
+        return "text-green-400 bg-green-500/20 border-green-500/30";
+      case "high":
+        return "text-amber-400 bg-amber-500/20 border-amber-500/30";
+      case "info":
+        return "text-blue-400 bg-blue-500/20 border-blue-500/30";
+      default:
+        return "text-gray-400 bg-gray-500/20 border-gray-500/30";
+    }
+  };
+
+  const markAsRead = (notificationId: number) => {
+    setNotifications((prev) =>
+      prev.map((notif) =>
+        notif.id === notificationId ? { ...notif, read: true } : notif,
+      ),
+    );
+  };
+
+  const markAllAsRead = () => {
+    setNotifications((prev) => prev.map((notif) => ({ ...notif, read: true })));
+  };
+
+  const handleNotificationClick = (notification: any) => {
+    markAsRead(notification.id);
+    setShowNotifications(false);
+  };
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
     <AuthGuard requiredRole="ADMIN">
@@ -100,6 +252,38 @@ export default function AdminAnalytics() {
 
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
+                {/* Notifications Button */}
+                <motion.button
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="relative p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200 transform hover:-translate-y-1"
+                  title="Notifications"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-2-2H5a2 2 0 002-2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012-2v10m-6 0a2 2 0 002-2h2a2 2 0 012-2v14a2 2 0 01-2-2z"
+                    />
+                  </svg>
+                  {unreadCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold"
+                    >
+                      {unreadCount}
+                    </motion.span>
+                  )}
+                </motion.button>
+
                 <BackButton fallback="/admin/dashboard" />
                 <AccountDropdown />
               </div>
@@ -206,6 +390,152 @@ export default function AdminAnalytics() {
             </motion.div>
           </div>
         </main>
+
+        {/* Notifications Dropdown */}
+        <AnimatePresence>
+          {showNotifications && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-40"
+                onClick={() => setShowNotifications(false)}
+              />
+
+              {/* Notifications Panel */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                className="fixed top-16 right-4 w-80 rounded-xl shadow-2xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden"
+                style={{
+                  background: "rgba(255, 255, 255, 0.08) !important",
+                  backdropFilter:
+                    "blur(25px) saturate(200%) brightness(1.1) !important",
+                  WebkitBackdropFilter:
+                    "blur(25px) saturate(200%) brightness(1.1) !important",
+                  border: "1px solid rgba(255, 255, 255, 0.15) !important",
+                  boxShadow:
+                    "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05) !important",
+                }}
+              >
+                <div className="flex items-center justify-between p-4 border-b border-white/10">
+                  <h3 className="text-lg font-semibold text-gray-100">
+                    Notifications
+                  </h3>
+                  <button
+                    onClick={() => setShowNotifications(false)}
+                    className="p-1 rounded-lg hover:bg-white/10 transition-colors duration-200"
+                  >
+                    <svg
+                      className="w-4 h-4 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6v12M18 6l-6-6"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Notifications List */}
+                <div className="flex-1 overflow-y-auto max-h-96">
+                  {notifications.length === 0 ? (
+                    <div className="p-8 text-center">
+                      <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800/50 flex items-center justify-center">
+                        <svg
+                          className="w-6 h-6 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 0a6 6 0 016 6m0 6M6 6v6a2 2 0 002-2h2a2 2 0 002-2m0 0V8a2 2 0 012-2h2a2 2 0 012-2z"
+                          />
+                        </svg>
+                      </div>
+                      <p className="text-gray-400 text-sm">No notifications</p>
+                    </div>
+                  ) : (
+                    <div className="p-2">
+                      {notifications.map((notification) => (
+                        <motion.div
+                          key={notification.id}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.2 }}
+                          onClick={() => handleNotificationClick(notification)}
+                          className={`p-3 rounded-lg cursor-pointer transition-all duration-200 mb-2 ${
+                            notification.read
+                              ? "bg-gray-800/30 hover:bg-gray-800/50"
+                              : "bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/20"
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div
+                              className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${getNotificationColor(
+                                notification.type,
+                              )}`}
+                            >
+                              {getNotificationIcon(notification.type)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1">
+                                <p
+                                  className={`text-sm font-medium truncate ${
+                                    notification.read
+                                      ? "text-gray-300"
+                                      : "text-gray-100"
+                                  }`}
+                                >
+                                  {notification.title}
+                                </p>
+                                {!notification.read && (
+                                  <div className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0" />
+                                )}
+                              </div>
+                              <p
+                                className={`text-xs text-gray-400 line-clamp-2 ${
+                                  notification.read
+                                    ? "text-gray-500"
+                                    : "text-gray-400"
+                                }`}
+                              >
+                                {notification.message}
+                              </p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {notification.time}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Footer */}
+                <div className="border-t border-white/10 p-3 bg-gray-800/50">
+                  <button
+                    onClick={markAllAsRead}
+                    className="w-full text-center text-sm text-teal-400 hover:text-teal-300 transition-colors duration-200"
+                  >
+                    Mark All as Read
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </AuthGuard>
   );
