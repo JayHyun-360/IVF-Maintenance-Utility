@@ -1,45 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+
+// Mock data storage (in a real app, this would be a database)
+let mockRequests: any[] = [];
+let requestIdCounter = 1;
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { searchParams } = new URL(request.url);
-    const status = searchParams.get("status");
-    const category = searchParams.get("category");
-    const priority = searchParams.get("priority");
-
-    const where: any = {};
-    if (status) where.status = status;
-    if (category) where.category = category;
-    if (priority) where.priority = priority;
-
-    // If not admin, only show own requests
-    if (session.user.role !== "ADMIN") {
-      where.requestedBy = session.user.id;
-    }
-
-    const requests = await prisma.maintenanceRequest.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      include: {
-        user: {
-          select: {
-            name: true,
-            email: true,
-            avatar: true,
-          },
-        },
-      },
-    });
-
-    return NextResponse.json(requests);
+    // Return mock requests
+    return NextResponse.json(mockRequests);
   } catch (error) {
     console.error("Error fetching requests:", error);
     return NextResponse.json(
@@ -51,13 +19,20 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const body = await request.json();
-    const { title, description, category, priority, location, images } = body;
+    const {
+      title,
+      description,
+      category,
+      priority,
+      building,
+      roomNumber,
+      floor,
+      location,
+      contactPhone,
+      department,
+      images,
+    } = body;
 
     if (!title || !description || !category || !priority) {
       return NextResponse.json(
@@ -66,17 +41,55 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newRequest = await prisma.maintenanceRequest.create({
-      data: {
-        title,
-        description,
-        category,
-        priority,
-        location,
-        images: images ? JSON.stringify(images) : null,
-        requestedBy: session.user.id,
-      },
-    });
+    // Create new request with proper ID format
+    const newRequest = {
+      id: `PPR-2026-${String(requestIdCounter++).padStart(3, "0")}`,
+      title,
+      description,
+      category: category.charAt(0) + category.slice(1).toLowerCase(), // Capitalize first letter
+      priority:
+        priority === "URGENT"
+          ? "Urgent - Emergency"
+          : priority === "HIGH"
+            ? "High Priority"
+            : priority === "MEDIUM"
+              ? "Medium Priority"
+              : "Low Priority",
+      status: "Pending",
+      requestedBy: "Student User", // In a real app, get from session
+      createdAt: new Date()
+        .toLocaleString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        })
+        .replace(/\//g, "/"),
+      updatedAt: new Date()
+        .toLocaleString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        })
+        .replace(/\//g, "/"),
+      building: building || "Main Building",
+      roomNumber: roomNumber || "TBD",
+      floor: floor || "1st Floor",
+      location: location || `${building} - Room ${roomNumber}`,
+      contactPhone: contactPhone || "N/A",
+      department: department || "Student",
+      images: images || [],
+    };
+
+    // Add to mock requests
+    mockRequests.unshift(newRequest);
 
     return NextResponse.json(newRequest, { status: 201 });
   } catch (error) {

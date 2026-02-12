@@ -329,8 +329,8 @@ export default function AdminDashboard() {
           contactPhone: "0912-345-6789",
           department: "Academic",
           images: [
-            "https://picsum.photos/seed/ac-unit/400/300.jpg",
-            "https://picsum.photos/seed/ac-unit2/400/300.jpg",
+            "https://images.unsplash.com/photo-1581885480583-32c1e5496472?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1578963016352-6c0306b6fcd8?w=400&h=300&fit=crop",
           ],
         },
         {
@@ -350,52 +350,72 @@ export default function AdminDashboard() {
           location: "Center of building",
           contactPhone: "0917-234-5678",
           department: "Administrative",
-          images: ["https://picsum.photos/seed/water-leak/400/300.jpg"],
-        },
-        {
-          id: "REQ-003",
-          title: "Broken Window",
-          description: "Window cracked in classroom 105 due to storm damage.",
-          category: "Structural",
-          priority: "Medium",
-          status: "Completed",
-          requestedBy: "Robert Johnson",
-          createdAt: "02/09/2026 09:00:00",
-          updatedAt: "02/10/2026 11:30:00",
-          location: "Classroom 105, Building A",
           images: [
-            "https://picsum.photos/seed/broken-window/400/300.jpg",
-            "https://picsum.photos/seed/window-repair/400/300.jpg",
+            "https://images.unsplash.com/photo-1584297585098-5cf93242ee9b?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1571064792597-89b8126c8975?w=400&h=300&fit=crop",
           ],
         },
         {
-          id: "REQ-004",
-          title: "Electrical Outlet Not Working",
-          description: "Power outlet near teacher's desk not functioning.",
-          category: "Electrical",
-          priority: "Low",
+          id: "PPR-2026-003",
+          title: "Broken Window in Classroom",
+          description: "Window cracked in classroom 105 due to storm damage.",
+          category: "Structural",
+          priority: "Medium Priority",
           status: "Pending",
-          requestedBy: "Sarah Williams",
-          createdAt: "02/10/2026 16:20:00",
-          updatedAt: "02/10/2026 16:20:00",
-          location: "Classroom 201, Building A",
-          images: ["https://picsum.photos/seed/outlet/400/300.jpg"],
+          requestedBy: "Robert Johnson",
+          createdAt: "02/10/2026 10:45:00",
+          updatedAt: "02/10/2026 10:45:00",
+          building: "Academic Building",
+          roomNumber: "105",
+          floor: "1st Floor",
+          location: "North side of building",
+          contactPhone: "0918-345-6789",
+          department: "Academic",
+          images: [
+            "https://images.unsplash.com/photo-1518608608685-8a8b502c1a7b?w=400&h=300&fit=crop",
+          ],
         },
         {
-          id: "REQ-005",
-          title: "Fire Alarm System Check",
+          id: "PPR-2026-004",
+          title: "Electrical Outlet Not Working",
           description:
-            "Monthly fire alarm system inspection and testing required.",
-          category: "Safety",
-          priority: "High",
+            "Power outlet not working in library study area, multiple students affected.",
+          category: "Electrical",
+          priority: "Medium Priority",
+          status: "Completed",
+          requestedBy: "Sarah Williams",
+          createdAt: "02/10/2026 09:30:00",
+          updatedAt: "02/10/2026 16:20:00",
+          building: "Library",
+          roomNumber: "Study Area A",
+          floor: "3rd Floor",
+          location: "East wing",
+          contactPhone: "0919-456-7890",
+          department: "Academic",
+          images: [
+            "https://images.unsplash.com/photo-1593696148823-7545eb49b8fb?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1581094794479-317e2b0b9c2f?w=400&h=300&fit=crop",
+          ],
+        },
+        {
+          id: "PPR-2026-005",
+          title: "Elevator Malfunction",
+          description: "Elevator stuck between floors, making strange noises.",
+          category: "Mechanical",
+          priority: "Urgent - Emergency",
           status: "In Progress",
           requestedBy: "David Brown",
-          createdAt: "02/10/2026 08:00:00",
-          updatedAt: "02/10/2026 10:15:00",
-          location: "Main Building, All Floors",
+          createdAt: "02/10/2026 15:20:00",
+          updatedAt: "02/10/2026 15:45:00",
+          building: "Administration Building",
+          roomNumber: "Elevator 1",
+          floor: "Between 3rd and 4th",
+          location: "Main elevator shaft",
+          contactPhone: "0920-567-8901",
+          department: "Administrative",
           images: [
-            "https://picsum.photos/seed/fire-alarm/400/300.jpg",
-            "https://picsum.photos/seed/alarm-panel/400/300.jpg",
+            "https://images.unsplash.com/photo-1578612273634-7a3b5c5e5c71?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
           ],
         },
         {
@@ -618,7 +638,22 @@ export default function AdminDashboard() {
         },
       ];
 
-      setRecentRequests(mockRequests); // Show all 20 requests
+      // Try to fetch user-submitted requests from API
+      try {
+        const response = await fetch("/api/requests");
+        if (response.ok) {
+          const userRequests = await response.json();
+          // Combine mock requests with user requests
+          const allRequests = [...userRequests, ...mockRequests];
+          setRecentRequests(allRequests);
+        } else {
+          // Fallback to mock requests only
+          setRecentRequests(mockRequests);
+        }
+      } catch (error) {
+        console.log("API not available, using mock data only");
+        setRecentRequests(mockRequests);
+      }
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
       setError("Failed to load dashboard data. Please try again.");
