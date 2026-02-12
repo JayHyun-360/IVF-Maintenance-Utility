@@ -38,13 +38,14 @@ export default function LoginPage() {
         const result = await signIn("credentials", {
           email: "admin@test.com",
           password: "admin123",
-          redirect: true,
+          redirect: false,
         });
 
         if (result?.error) {
           setError("Admin demo login failed");
-        } else {
+        } else if (result?.ok) {
           console.log("Admin demo login successful, redirecting...");
+          router.push("/admin/dashboard");
         }
       } catch {
         setError("Admin demo login failed. Please try again.");
@@ -67,13 +68,14 @@ export default function LoginPage() {
         const result = await signIn("credentials", {
           email: "user@test.com",
           password: "user123",
-          redirect: true,
+          redirect: false,
         });
 
         if (result?.error) {
           setError("User demo login failed");
-        } else {
+        } else if (result?.ok) {
           console.log("User demo login successful, redirecting...");
+          router.push("/student");
         }
       } catch {
         setError("User demo login failed. Please try again.");
@@ -92,14 +94,27 @@ export default function LoginPage() {
       const result = await signIn("credentials", {
         email,
         password,
-        redirect: true, // Enable automatic redirect
+        redirect: false, // Disable automatic redirect to handle it manually
       });
 
       if (result?.error) {
         setError("Invalid email or password");
-      } else {
-        // Success - NextAuth will handle redirect automatically
-        console.log("Login successful, redirecting...");
+      } else if (result?.ok) {
+        // Successful login - redirect based on user role
+        console.log("Login successful, checking user role...");
+
+        // Get the session to determine user role
+        const response = await fetch("/api/auth/session");
+        const session = await response.json();
+
+        if (session?.user?.role === "ADMIN") {
+          router.push("/admin/dashboard");
+        } else if (session?.user?.role === "USER") {
+          router.push("/student");
+        } else {
+          // Default fallback for other roles
+          router.push("/dashboard");
+        }
       }
     } catch {
       setError("Login failed. Please try again.");
