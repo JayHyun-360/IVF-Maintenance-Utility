@@ -280,7 +280,7 @@ export default function Home() {
                 className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed px-4 !important"
                 style={{
                   maxWidth: "600px !important",
-                  margin: "0 auto 4rem auto !important",
+                  margin: "0 auto 6rem auto !important",
                   lineHeight: "1.8 !important",
                 }}
               >
