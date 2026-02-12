@@ -86,39 +86,60 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
     setIsLoggingOut(true);
 
     try {
-      // Clear storage
+      // Clear storage first
       clearSessionStorage();
 
-      // Sign out
-      const result = await signOut({ redirect: false });
+      // Sign out with explicit redirect: false
+      console.log("🔐 Calling signOut...");
+      const result = await signOut({
+        redirect: false,
+        callbackUrl: undefined, // Ensure no callback URL interference
+      });
       console.log("✅ SignOut successful:", result);
 
-      // Handle post-logout
-      if (finalConfig.redirectOnLogout) {
-        console.log("🔄 Redirecting to login...");
-        setTimeout(() => router.push("/login"), 200);
-      } else {
-        console.log("🏠 Staying on current page...");
-        setTimeout(() => {
+      // Additional session cleanup
+      setTimeout(() => {
+        // Force clear any remaining session data
+        clearSessionStorage();
+
+        // Handle post-logout
+        if (finalConfig.redirectOnLogout) {
+          console.log("🔄 Redirecting to login...");
+          router.push("/login");
+        } else {
+          console.log("🏠 Staying on current page...");
+
+          // Multiple attempts to refresh the UI
           router.refresh();
+
           setTimeout(() => {
-            console.log("🔄 Forcing page reload...");
+            console.log("🔄 Attempting router refresh again...");
+            router.refresh();
+          }, 200);
+
+          setTimeout(() => {
+            console.log("🔄 Forcing page reload as last resort...");
             window.location.reload();
-          }, 500);
-        }, 100);
-      }
+          }, 800);
+        }
 
-      // Reset loading state
-      setTimeout(() => setIsLoggingOut(false), 100);
+        // Reset loading state after a delay
+        setTimeout(() => setIsLoggingOut(false), 1000);
 
-      // Custom callback
-      finalConfig.onLogoutComplete?.();
+        // Custom callback
+        finalConfig.onLogoutComplete?.();
+      }, 300);
     } catch (error) {
       console.error("❌ Logout error:", error);
+
+      // Fallback: force clear everything and reload
+      clearSessionStorage();
       setIsLoggingOut(false);
 
       if (finalConfig.redirectOnLogout) {
         window.location.href = "/login";
+      } else {
+        window.location.reload();
       }
     }
   }, [finalConfig, router, isLoggingOut]);

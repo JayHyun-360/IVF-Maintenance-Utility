@@ -20,23 +20,62 @@ export const DEFAULT_CONFIG = {
 // Session utilities
 export const clearSessionStorage = (): void => {
   if (typeof window === "undefined") return;
-  
+
   console.log("🧹 Clearing session storage...");
-  const items = [
+
+  // Clear all NextAuth related storage items
+  const storageItems = [
     "next-auth.session-token",
     "next-auth.callback-url",
+    "next-auth.csrf-token",
+    "next-auth.pkce.code_verifier",
   ];
-  
-  items.forEach(item => {
-    localStorage.removeItem(item);
-    sessionStorage.removeItem(item);
+
+  // Clear localStorage
+  storageItems.forEach((item) => {
+    try {
+      localStorage.removeItem(item);
+      console.log(`✅ Cleared localStorage: ${item}`);
+    } catch (error) {
+      console.warn(`⚠️ Failed to clear localStorage ${item}:`, error);
+    }
   });
+
+  // Clear sessionStorage
+  storageItems.forEach((item) => {
+    try {
+      sessionStorage.removeItem(item);
+      console.log(`✅ Cleared sessionStorage: ${item}`);
+    } catch (error) {
+      console.warn(`⚠️ Failed to clear sessionStorage ${item}:`, error);
+    }
+  });
+
+  // Clear any additional session data that might be stored
+  try {
+    // Clear all keys that start with "next-auth"
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith("next-auth")) {
+        localStorage.removeItem(key);
+        console.log(`✅ Cleared additional localStorage: ${key}`);
+      }
+    }
+
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
+      if (key && key.startsWith("next-auth")) {
+        sessionStorage.removeItem(key);
+        console.log(`✅ Cleared additional sessionStorage: ${key}`);
+      }
+    }
+  } catch (error) {
+    console.warn("⚠️ Failed to clear additional session data:", error);
+  }
 };
 
 export const getUserDisplayName = (session: any): string => {
-  return session?.user?.name || 
-         session?.user?.email?.split("@")[0] || 
-         "User";
+  return session?.user?.name || session?.user?.email?.split("@")[0] || "User";
 };
 
 export const getUserInitial = (session: any): string => {
@@ -46,21 +85,19 @@ export const getUserInitial = (session: any): string => {
 // Position calculation utilities
 export const calculateDropdownPosition = (
   buttonRect: DOMRect,
-  viewport: { width: number; height: number }
+  viewport: { width: number; height: number },
 ): { position: DropdownPosition; alignment: DropdownAlignment } => {
   const dropdownHeight = 300;
   const dropdownWidth = 192;
   const safetyMargin = 20;
 
-  const position: DropdownPosition = 
+  const position: DropdownPosition =
     buttonRect.bottom + dropdownHeight + safetyMargin > viewport.height
       ? "top"
       : "bottom";
 
-  const alignment: DropdownAlignment = 
-    buttonRect.left - dropdownWidth < safetyMargin
-      ? "left"
-      : "right";
+  const alignment: DropdownAlignment =
+    buttonRect.left - dropdownWidth < safetyMargin ? "left" : "right";
 
   return { position, alignment };
 };
@@ -68,53 +105,105 @@ export const calculateDropdownPosition = (
 // Icon components
 export const Icons = {
   Settings: () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <circle cx="12" cy="12" r="3" strokeWidth={2.5} fill="none" />
       <path strokeWidth={2.5} d="M12 1v6m0 6v6m11-7h-6m-6 0H1" />
     </svg>
   ),
-  
+
   AdminDashboard: () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeWidth={2.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002 2v6m0 0V9a2 2 0 012-2h6a2 2 0 012 2v10m-6 0a2 2 0 00-2 2h6a2 2 0 002 2v6m0 0V5a2 2 0 012-2h6a2 2 0 012 2v6" />
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeWidth={2.5}
+        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002 2v6m0 0V9a2 2 0 012-2h6a2 2 0 012 2v10m-6 0a2 2 0 00-2 2h6a2 2 0 002 2v6m0 0V5a2 2 0 012-2h6a2 2 0 012 2v6"
+      />
     </svg>
   ),
-  
+
   UserPortal: () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <path strokeWidth={2.5} d="M12 6v6m0 0v6m0-6H6" />
     </svg>
   ),
-  
+
   SwitchAccount: () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <path strokeWidth={2.5} d="M8 7h12m0 0l-4 4m4 4H4" />
     </svg>
   ),
-  
+
   Logout: () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <path strokeWidth={2.5} d="M17 16l4-4m0 0l-4 4m4-4H3m4 4v-4m0 0v4" />
     </svg>
   ),
-  
+
   RemoveAccount: () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeWidth={2.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6" />
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeWidth={2.5}
+        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m0-6v6m0-6V3a2 2 0 012-2h6a2 2 0 012 2v6"
+      />
     </svg>
   ),
-  
+
   Login: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <circle cx="12" cy="8" r="3" strokeWidth={2.5} fill="none" />
       <path strokeWidth={2.5} d="M16 19a4 4 0 00-8 0" />
     </svg>
   ),
-  
+
   LoadingSpinner: () => (
     <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24">
-      <circle className="opacity-25" cx="12" cy="12" r="10" strokeWidth="4" fill="none" />
-      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        strokeWidth="4"
+        fill="none"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      />
     </svg>
   ),
 };
