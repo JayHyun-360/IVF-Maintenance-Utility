@@ -1419,32 +1419,52 @@ export default function AdminDashboard() {
                         <div
                           className="relative bg-white/5 border border-white/10 rounded-xl p-4 transition-all duration-300 overflow-hidden group-hover:bg-white/10 group-hover:border-white/20"
                           style={{
-                            background: "rgba(255, 255, 255, 0.05) !important",
+                            background: "rgba(255, 255, 255, 0.08) !important",
                             backdropFilter:
-                              "blur(20px) saturate(180%) !important",
+                              "blur(25px) saturate(200%) brightness(1.1) !important",
                             WebkitBackdropFilter:
-                              "blur(20px) saturate(180%) !important",
+                              "blur(25px) saturate(200%) brightness(1.1) !important",
                             border:
-                              "1px solid rgba(255, 255, 255, 0.1) !important",
+                              "1px solid rgba(255, 255, 255, 0.15) !important",
                             boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important",
+                              "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05) !important",
                           }}
                         >
-                          {/* Shimmer effect for glass */}
+                          {/* Animated shimmer effect for glass */}
                           <div
                             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                             style={{
                               background:
-                                "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.1) 100%)",
+                                "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%, rgba(255, 255, 255, 0.15) 100%)",
+                              animation: "shimmer 3s ease-in-out infinite",
                             }}
                           />
 
-                          {/* Subtle border glow on hover */}
+                          {/* Enhanced border glow with animation */}
                           <div
                             className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                             style={{
-                              border: `1px solid ${stat.gradient.includes("teal") ? "#14b8a640" : stat.gradient.includes("amber") ? "#f59e0b40" : stat.gradient.includes("blue") ? "#3b82f640" : "#10b98140"}`,
-                              boxShadow: `0 0 20px ${stat.gradient.includes("teal") ? "#14b8a620" : stat.gradient.includes("amber") ? "#f59e0b20" : stat.gradient.includes("blue") ? "#3b82f620" : "#10b98120"}`,
+                              border: `1px solid ${stat.gradient.includes("teal") ? "#14b8a630" : stat.gradient.includes("amber") ? "#f59e0b30" : stat.gradient.includes("blue") ? "#3b82f630" : "#10b98130"}`,
+                              boxShadow: `0 0 25px ${stat.gradient.includes("teal") ? "#14b8a625" : stat.gradient.includes("amber") ? "#f59e0b25" : stat.gradient.includes("blue") ? "#3b82f625" : "#10b98125"}, inset 0 1px 0 rgba(255, 255, 255, 0.2)`,
+                              animation:
+                                "glow 2s ease-in-out infinite alternate",
+                            }}
+                          />
+
+                          {/* Floating particles effect */}
+                          <div
+                            className="absolute top-2 right-2 w-1 h-1 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            style={{
+                              animation: "float 3s ease-in-out infinite",
+                              boxShadow: "0 0 6px rgba(255, 255, 255, 0.3)",
+                            }}
+                          />
+                          <div
+                            className="absolute bottom-3 left-3 w-1 h-1 bg-white/15 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                            style={{
+                              animation:
+                                "float 4s ease-in-out infinite reverse",
+                              boxShadow: "0 0 4px rgba(255, 255, 255, 0.2)",
                             }}
                           />
                           <div className="relative z-10">
