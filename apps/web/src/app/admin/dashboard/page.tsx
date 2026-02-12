@@ -997,7 +997,7 @@ export default function AdminDashboard() {
                         className="group relative"
                         whileHover={{ y: -2 }}
                       >
-                        {/* Enhanced Vercel-style hover spotlight */}
+                        {/* Enhanced hover effect with proper text color change */}
                         <div
                           className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl"
                           style={{
@@ -1007,7 +1007,7 @@ export default function AdminDashboard() {
 
                         {/* Premium Glassmorphic Card */}
                         <div
-                          className="relative bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:bg-gray-700/50 transition-all duration-300 overflow-hidden"
+                          className="relative bg-gray-800/50 border border-gray-700 rounded-lg p-4 transition-all duration-300 overflow-hidden group-hover:bg-gray-800/70"
                           style={{
                             background: "rgba(255, 255, 255, 0.03) !important",
                             backdropFilter: "blur(25px) !important",
@@ -1025,13 +1025,13 @@ export default function AdminDashboard() {
                                   background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
                                 }}
                               >
-                                <div className="text-lg font-bold text-white group-hover:text-white transition-colors duration-300">
+                                <div className="text-lg font-bold text-white transition-colors duration-300">
                                   {stat.icon}
                                 </div>
                               </div>
                               <div className="flex flex-col items-end gap-2">
                                 <span
-                                  className={`text-xs font-mono px-2 py-1 rounded-full ${stat.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400 border border-lime-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"}`}
+                                  className={`text-xs font-mono px-2 py-1 rounded-full transition-colors duration-300 ${stat.trend.startsWith("+") ? "bg-lime-500/20 text-lime-400 border border-lime-500/30 group-hover:bg-lime-500/30 group-hover:text-lime-300" : "bg-red-500/20 text-red-400 border border-red-500/30 group-hover:bg-red-500/30 group-hover:text-red-300"}`}
                                 >
                                   {loading ? "..." : stat.trend}
                                 </span>
@@ -1040,12 +1040,12 @@ export default function AdminDashboard() {
 
                             <div className="space-y-3">
                               <div>
-                                <h3 className="text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wider mb-2">
+                                <h3 className="text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wider mb-2 transition-colors duration-300 group-hover:text-white">
                                   {stat.label}
                                 </h3>
                                 <div className="flex items-baseline gap-2">
                                   <motion.div
-                                    className="text-2xl font-mono font-bold"
+                                    className="text-2xl font-mono font-bold transition-colors duration-300 group-hover:text-white"
                                     style={{
                                       background: `linear-gradient(135deg, ${stat.gradient.includes("teal") ? "#14b8a6" : stat.gradient.includes("amber") ? "#f59e0b" : stat.gradient.includes("blue") ? "#3b82f6" : "#10b981"}, ${stat.gradient.includes("cyan") ? "#06b6d4" : stat.gradient.includes("orange") ? "#ea580c" : "#059669"})`,
                                       WebkitBackgroundClip: "text",
@@ -1061,10 +1061,10 @@ export default function AdminDashboard() {
 
                               <div className="flex items-center gap-3">
                                 <div
-                                  className={`w-2 h-2 rounded-full ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
+                                  className={`w-2 h-2 rounded-full transition-colors duration-300 ${getStatusColor(stat.status)} ${!loading && "animate-pulse"}`}
                                 />
                                 <span
-                                  className={`text-xs font-mono ${getStatusColor(stat.status)}`}
+                                  className={`text-xs font-mono transition-colors duration-300 group-hover:text-white ${getStatusColor(stat.status)}`}
                                 >
                                   {stat.status}
                                 </span>
