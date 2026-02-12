@@ -161,7 +161,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#0B0E11] relative overflow-hidden">
       {/* Technical Grid Background */}
-      <div className="absolute inset-0 opacity-20">
+      <div className="absolute inset-0 opacity-10">
         <svg
           width="40"
           height="40"
@@ -177,8 +177,8 @@ export default function LoginPage() {
         </svg>
       </div>
 
-      {/* Teal Mesh Gradient Glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 blur-3xl"></div>
+      {/* Subtle Teal Mesh Gradient Glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-cyan-500/5 blur-2xl pointer-events-none"></div>
 
       {/* Theme Switcher */}
       <div className="fixed top-6 right-6 z-50">
@@ -191,7 +191,7 @@ export default function LoginPage() {
       </div>
 
       {/* Main Content */}
-      <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
