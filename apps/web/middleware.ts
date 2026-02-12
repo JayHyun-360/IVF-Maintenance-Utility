@@ -19,6 +19,8 @@ export const config = {
     "!/_next/:path*",
     "!/favicon.ico",
     "!/robots.txt",
+    "!/sitemap.xml",
+    "!/manifest.json",
     // Only protect routes that need authentication
     "/admin/:path*",
     "/student/:path*",
