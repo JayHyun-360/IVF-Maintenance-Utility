@@ -108,13 +108,17 @@ export default function AccountDropdown({
   const handleLogout = async () => {
     if (isLoggingOut) return; // Prevent multiple logout attempts
 
-    console.log("Logging out...");
+    console.log(
+      "Logging out... redirectOnLogout:",
+      dropdownConfig.redirectOnLogout,
+    );
     setIsOpen(false); // Close dropdown immediately
     setIsLoggingOut(true); // Set loading state
 
     try {
       // Clear any potential session storage first
       if (typeof window !== "undefined") {
+        console.log("Clearing session storage...");
         localStorage.removeItem("next-auth.session-token");
         sessionStorage.removeItem("next-auth.session-token");
         // Clear any additional auth-related storage
@@ -125,13 +129,16 @@ export default function AccountDropdown({
       // Sign out with redirect false to handle manually
       const result = await signOut({
         redirect: false,
-        callbackUrl: window.location.origin + "/login",
+        callbackUrl: dropdownConfig.redirectOnLogout
+          ? window.location.origin + "/login"
+          : window.location.href,
       });
 
       console.log("SignOut successful:", result);
 
       // Handle post-logout actions based on configuration
       if (dropdownConfig.redirectOnLogout) {
+        console.log("Redirecting to login page...");
         // Force a small delay to ensure session is cleared
         setTimeout(() => {
           router.push("/login");
@@ -139,15 +146,23 @@ export default function AccountDropdown({
       } else {
         // Stay on current page, just clear the session
         console.log("Logout complete, staying on current page");
+
+        // Force a re-render to update the UI
+        setTimeout(() => {
+          console.log("Refreshing page to update session state...");
+          router.refresh(); // Refresh the current page to update session state
+        }, 100);
       }
 
       // Reset loading state after a short delay
       setTimeout(() => {
         setIsLoggingOut(false);
+        console.log("Loading state reset");
       }, 100);
 
       // Call custom logout callback if provided
       if (config.onLogoutComplete) {
+        console.log("Calling custom logout callback...");
         config.onLogoutComplete();
       }
     } catch (error) {
@@ -156,6 +171,7 @@ export default function AccountDropdown({
 
       // Fallback redirect only if redirect is enabled
       if (dropdownConfig.redirectOnLogout) {
+        console.log("Fallback redirect to login...");
         window.location.href = "/login";
       }
     }
