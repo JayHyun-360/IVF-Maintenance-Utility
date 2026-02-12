@@ -122,6 +122,12 @@
       "namedRegex": "^/admin\\-pin\\-verification(?:/)?$"
     },
     {
+      "page": "/api/admin/requests",
+      "regex": "^/api/admin/requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/requests(?:/)?$"
+    },
+    {
       "page": "/api/admin/stats",
       "regex": "^/api/admin/stats(?:/)?$",
       "routeKeys": {},
@@ -152,10 +158,22 @@
       "namedRegex": "^/api/auth/register(?:/)?$"
     },
     {
+      "page": "/api/notifications",
+      "regex": "^/api/notifications(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/notifications(?:/)?$"
+    },
+    {
       "page": "/api/requests",
       "regex": "^/api/requests(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/requests(?:/)?$"
+    },
+    {
+      "page": "/api/test-data",
+      "regex": "^/api/test\\-data(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/test\\-data(?:/)?$"
     },
     {
       "page": "/dashboard",

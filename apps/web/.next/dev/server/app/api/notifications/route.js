@@ -1,0 +1,10 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/notifications/route.js")
+R.c("server/chunks/node_modules_next_4f2b7a41._.js")
+R.c("server/chunks/node_modules_next-auth_882d5fc4._.js")
+R.c("server/chunks/node_modules_openid-client_d15f72b3._.js")
+R.c("server/chunks/node_modules_jose_dist_node_cjs_bd88468e._.js")
+R.c("server/chunks/[root-of-the-server]__fb257248._.js")
+R.c("server/chunks/[root-of-the-server]__6512e2a5._.js")
+R.c("server/chunks/apps_web__next-internal_server_app_api_notifications_route_actions_212c52f1.js")
+R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/apps/web/src/app/api/notifications/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/apps/web/src/app/api/notifications/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

@@ -157,53 +157,18 @@ export default function AdminDashboard() {
 
   // Notifications state
   const [showNotifications, setShowNotifications] = useState(false);
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: "New Urgent Request",
-      message: "Water leak reported in Science Building - Room 203",
-      type: "urgent",
-      time: "2 minutes ago",
-      read: false,
-      requestId: "PPR-2026-002",
-    },
-    {
-      id: 2,
-      title: "Request Completed",
-      message: "AC Unit repair in Main Building has been completed",
-      type: "success",
-      time: "15 minutes ago",
-      read: false,
-      requestId: "PPR-2026-001",
-    },
-    {
-      id: 3,
-      title: "High Priority Request",
-      message: "Electrical issue in Administrative Building needs attention",
-      type: "high",
-      time: "1 hour ago",
-      read: true,
-      requestId: "PPR-2026-003",
-    },
-    {
-      id: 4,
-      title: "System Update",
-      message: "Monthly maintenance report is now available",
-      type: "info",
-      time: "2 hours ago",
-      read: true,
-      requestId: null,
-    },
-  ]);
+  const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
     setMounted(true);
     fetchDashboardData();
+    fetchNotifications();
 
     // Auto-refresh every 30 seconds
     const interval = setInterval(() => {
       if (activeTab === "overview") {
         fetchDashboardData();
+        fetchNotifications();
       }
     }, 30000);
 
@@ -339,6 +304,20 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
       setLastUpdated(new Date());
+    }
+  };
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch("/api/notifications");
+      if (response.ok) {
+        const data = await response.json();
+        setNotifications(data.notifications || []);
+      } else {
+        console.error("Failed to fetch notifications");
+      }
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
     }
   };
 
@@ -531,16 +510,54 @@ export default function AdminDashboard() {
     }
   };
 
-  const markAsRead = (notificationId: number) => {
+  const markAsRead = async (notificationId: string) => {
+    // Update local state immediately for better UX
     setNotifications((prev) =>
       prev.map((notif) =>
         notif.id === notificationId ? { ...notif, read: true } : notif,
       ),
     );
+
+    // Update on server
+    try {
+      await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          notificationIds: [notificationId],
+        }),
+      });
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+      // Revert on error
+      setNotifications((prev) =>
+        prev.map((notif) =>
+          notif.id === notificationId ? { ...notif, read: false } : notif,
+        ),
+      );
+    }
   };
 
-  const markAllAsRead = () => {
+  const markAllAsRead = async () => {
+    // Update local state immediately for better UX
     setNotifications((prev) => prev.map((notif) => ({ ...notif, read: true })));
+
+    // Update on server
+    try {
+      await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          markAll: true,
+        }),
+      });
+    } catch (error) {
+      console.error("Error marking all notifications as read:", error);
+    }
   };
 
   const handleNotificationClick = (notification: any) => {
