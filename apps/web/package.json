@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "prisma generate",
+    "prebuild": "npx prisma generate",
+    "postinstall": "npx prisma generate",
     "build": "next build",
-    "build:web": "prisma generate && next build",
+    "build:web": "npx prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint . --fix",
@@ -17,13 +18,13 @@
     "test:unit": "jest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy",
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
+    "db:deploy": "npx prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
-    "db:studio": "prisma studio",
-    "db:reset": "prisma migrate reset",
-    "db:deploy:prod": "prisma migrate deploy && npm run db:seed"
+    "db:studio": "npx prisma studio",
+    "db:reset": "npx prisma migrate reset",
+    "db:deploy:prod": "npx prisma migrate deploy && npm run db:seed"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
