@@ -155,6 +155,47 @@ export default function AdminDashboard() {
   const [editingStatus, setEditingStatus] = useState<string | null>(null);
   const [showRequestDetails, setShowRequestDetails] = useState(false);
 
+  // Notifications state
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: "New Urgent Request",
+      message: "Water leak reported in Science Building - Room 203",
+      type: "urgent",
+      time: "2 minutes ago",
+      read: false,
+      requestId: "PPR-2026-002",
+    },
+    {
+      id: 2,
+      title: "Request Completed",
+      message: "AC Unit repair in Main Building has been completed",
+      type: "success",
+      time: "15 minutes ago",
+      read: false,
+      requestId: "PPR-2026-001",
+    },
+    {
+      id: 3,
+      title: "High Priority Request",
+      message: "Electrical issue in Administrative Building needs attention",
+      type: "high",
+      time: "1 hour ago",
+      read: true,
+      requestId: "PPR-2026-003",
+    },
+    {
+      id: 4,
+      title: "System Update",
+      message: "Monthly maintenance report is now available",
+      type: "info",
+      time: "2 hours ago",
+      read: true,
+      requestId: null,
+    },
+  ]);
+
   useEffect(() => {
     setMounted(true);
     fetchDashboardData();
@@ -670,6 +711,66 @@ export default function AdminDashboard() {
     setSelectedRequest(null);
   };
 
+  // Notification functions
+  const getNotificationIcon = (type: string) => {
+    switch (type) {
+      case "urgent":
+        return "🚨";
+      case "success":
+        return "✅";
+      case "high":
+        return "⚠️";
+      case "info":
+        return "ℹ️";
+      default:
+        return "📢";
+    }
+  };
+
+  const getNotificationColor = (type: string) => {
+    switch (type) {
+      case "urgent":
+        return "text-red-400 bg-red-500/20 border-red-500/30";
+      case "success":
+        return "text-green-400 bg-green-500/20 border-green-500/30";
+      case "high":
+        return "text-amber-400 bg-amber-500/20 border-amber-500/30";
+      case "info":
+        return "text-blue-400 bg-blue-500/20 border-blue-500/30";
+      default:
+        return "text-gray-400 bg-gray-500/20 border-gray-500/30";
+    }
+  };
+
+  const markAsRead = (notificationId: number) => {
+    setNotifications((prev) =>
+      prev.map((notif) =>
+        notif.id === notificationId ? { ...notif, read: true } : notif,
+      ),
+    );
+  };
+
+  const markAllAsRead = () => {
+    setNotifications((prev) => prev.map((notif) => ({ ...notif, read: true })));
+  };
+
+  const handleNotificationClick = (notification: any) => {
+    markAsRead(notification.id);
+    setShowNotifications(false);
+
+    if (notification.requestId) {
+      const request = recentRequests.find(
+        (r) => r.id === notification.requestId,
+      );
+      if (request) {
+        setSelectedRequest(request);
+        setShowRequestDetails(true);
+      }
+    }
+  };
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
   const handleStatusChange = (requestId: string, newStatus: string) => {
     setRecentRequests((prev) =>
       prev.map((req) =>
@@ -881,6 +982,38 @@ export default function AdminDashboard() {
 
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
+                {/* Notifications Button */}
+                <motion.button
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="relative p-2 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200 transform hover:-translate-y-1"
+                  title="Notifications"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                    />
+                  </svg>
+                  {unreadCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold"
+                    >
+                      {unreadCount}
+                    </motion.span>
+                  )}
+                </motion.button>
+
                 {/* Settings Button - Standalone */}
                 <motion.button
                   onClick={() => router.push("/admin/settings")}
@@ -2832,6 +2965,157 @@ export default function AdminDashboard() {
                 </div>
               </motion.div>
             </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Notifications Dropdown */}
+        <AnimatePresence>
+          {showNotifications && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-40"
+                onClick={() => setShowNotifications(false)}
+              />
+
+              {/* Notifications Panel */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                transition={{ type: "spring", bounce: 0.3, duration: 0.3 }}
+                className="fixed top-16 right-4 md:right-8 z-50 w-80 max-h-[500px] bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
+              >
+                {/* Header */}
+                <div className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border-b border-white/10 p-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-gray-100">
+                      Notifications
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      {unreadCount > 0 && (
+                        <motion.button
+                          onClick={markAllAsRead}
+                          className="text-sm text-teal-400 hover:text-teal-300 transition-colors duration-200"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          Mark all read
+                        </motion.button>
+                      )}
+                      <button
+                        onClick={() => setShowNotifications(false)}
+                        className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all duration-200"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notifications List */}
+                <div className="max-h-[400px] overflow-y-auto">
+                  {notifications.length === 0 ? (
+                    <div className="p-8 text-center">
+                      <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800/50 flex items-center justify-center">
+                        <svg
+                          className="w-6 h-6 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                          />
+                        </svg>
+                      </div>
+                      <p className="text-gray-400 text-sm">No notifications</p>
+                    </div>
+                  ) : (
+                    <div className="p-2">
+                      {notifications.map((notification) => (
+                        <motion.div
+                          key={notification.id}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.05 * notification.id }}
+                          className={`p-3 rounded-xl border transition-all duration-200 cursor-pointer mb-2 ${
+                            !notification.read
+                              ? "bg-white/5 border-white/20 hover:bg-white/10"
+                              : "bg-gray-800/30 border-white/5 hover:bg-gray-800/50"
+                          }`}
+                          onClick={() => handleNotificationClick(notification)}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div
+                              className={`p-2 rounded-lg border ${getNotificationColor(notification.type)}`}
+                            >
+                              <span className="text-lg">
+                                {getNotificationIcon(notification.type)}
+                              </span>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1">
+                                <h4
+                                  className={`text-sm font-medium truncate ${
+                                    !notification.read
+                                      ? "text-gray-100"
+                                      : "text-gray-400"
+                                  }`}
+                                >
+                                  {notification.title}
+                                </h4>
+                                {!notification.read && (
+                                  <div className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0 ml-2" />
+                                )}
+                              </div>
+                              <p className="text-xs text-gray-400 line-clamp-2 mb-2">
+                                {notification.message}
+                              </p>
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs text-gray-500">
+                                  {notification.time}
+                                </span>
+                                {notification.requestId && (
+                                  <span className="text-xs text-teal-400 hover:text-teal-300">
+                                    View Request →
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Footer */}
+                <div className="border-t border-white/10 p-3 bg-gray-800/50">
+                  <button className="w-full text-center text-sm text-teal-400 hover:text-teal-300 transition-colors duration-200">
+                    View All Notifications
+                  </button>
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>
