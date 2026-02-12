@@ -91,7 +91,6 @@ export const getSmartTheme = (): Theme => {
   const currentHour = new Date().getHours();
   const isMorning = currentHour >= 6 && currentHour < 12;
   const isAfternoon = currentHour >= 12 && currentHour < 18;
-  const isEvening = currentHour >= 18 && currentHour < 22;
   const isNight = currentHour >= 22 || currentHour < 6;
 
   // Smart theme logic

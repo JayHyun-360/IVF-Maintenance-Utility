@@ -20,10 +20,21 @@ export default function UserHistoryPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setMounted(true);
-    const allRequests = getMaintenanceRequests();
-    // In a real app, we'd filter by current user ID
-    setRequests(allRequests);
+    const loadData = () => {
+      const allRequests = getMaintenanceRequests();
+      // In a real app, we'd filter by current user ID
+      setRequests(allRequests);
+    };
+
+    // Set mounted after a tiny delay to avoid synchronous setState
+    const timer = setTimeout(() => setMounted(true), 0);
+    loadData();
+    const interval = setInterval(loadData, 30000);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, []);
 
   const getStatusColor = (status: string) => {

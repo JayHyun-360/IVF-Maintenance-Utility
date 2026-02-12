@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
-import { Z_INDEX } from "@/lib/z-index";
 
 export default function AccountDropdown() {
   const { data: session } = useSession();

@@ -38,70 +38,58 @@ export function useMobileOptimizations(): MobileOptimizations {
   });
 
   useEffect(() => {
-    // Defer the heavy DOM operations to prevent blocking
-    const timer = setTimeout(() => {
-      const updateOptimizations = () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const isMobile = width < 768;
-        const isTablet = width >= 768 && width < 1024;
-        const isDesktop = width >= 1024;
+    const updateOptimizations = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const isMobile = width < 768;
+      const isTablet = width >= 768 && width < 1024;
+      const isDesktop = width >= 1024;
 
-        // Get safe area insets
-        const computedStyle = getComputedStyle(document.documentElement);
-        const safeAreaInsets = {
-          top: parseInt(
-            computedStyle.getPropertyValue("--mobile-safe-area-top") || "0",
-          ),
-          right: parseInt(
-            computedStyle.getPropertyValue("--mobile-safe-area-right") || "0",
-          ),
-          bottom: parseInt(
-            computedStyle.getPropertyValue("--mobile-safe-area-bottom") || "0",
-          ),
-          left: parseInt(
-            computedStyle.getPropertyValue("--mobile-safe-area-left") || "0",
-          ),
-        };
-
-        setOptimizations({
-          isMobile,
-          isTablet,
-          isDesktop,
-          screenWidth: width,
-          screenHeight: height,
-          orientation: width > height ? "landscape" : "portrait",
-          supportsTouch:
-            "ontouchstart" in window || navigator.maxTouchPoints > 0,
-          supportsHaptic: "vibrate" in navigator,
-          safeAreaInsets,
-        });
+      const computedStyle = getComputedStyle(document.documentElement);
+      const safeAreaInsets = {
+        top: parseInt(
+          computedStyle.getPropertyValue("--mobile-safe-area-top") || "0",
+        ),
+        right: parseInt(
+          computedStyle.getPropertyValue("--mobile-safe-area-right") || "0",
+        ),
+        bottom: parseInt(
+          computedStyle.getPropertyValue("--mobile-safe-area-bottom") || "0",
+        ),
+        left: parseInt(
+          computedStyle.getPropertyValue("--mobile-safe-area-left") || "0",
+        ),
       };
 
-      updateOptimizations();
+      setOptimizations({
+        isMobile,
+        isTablet,
+        isDesktop,
+        screenWidth: width,
+        screenHeight: height,
+        orientation: width > height ? "landscape" : "portrait",
+        supportsTouch: "ontouchstart" in window || navigator.maxTouchPoints > 0,
+        supportsHaptic: "vibrate" in navigator,
+        safeAreaInsets,
+      });
+    };
 
-      const resizeObserver = new ResizeObserver(updateOptimizations);
-      resizeObserver.observe(document.body);
+    updateOptimizations();
 
-      const handleOrientationChange = () => {
-        setTimeout(updateOptimizations, 100); // Delay for orientation change completion
-      };
+    const handleOrientationChange = () => {
+      setTimeout(updateOptimizations, 100); // Delay for orientation change completion
+    };
 
-      window.addEventListener("orientationchange", handleOrientationChange);
-      window.addEventListener("resize", updateOptimizations);
-
-      return () => {
-        resizeObserver.disconnect();
-        window.removeEventListener(
-          "orientationchange",
-          handleOrientationChange,
-        );
-        window.removeEventListener("resize", updateOptimizations);
-      };
-    }, 100); // Small delay to allow page to render first
+    window.addEventListener("orientationchange", handleOrientationChange);
+    const resizeObserver = new ResizeObserver(updateOptimizations);
+    resizeObserver.observe(document.body);
 
     return () => {
-      // Cleanup timer if component unmounts quickly
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+      window.removeEventListener("orientationchange", handleOrientationChange);
+      window.removeEventListener("resize", updateOptimizations);
     };
   }, []);
 
