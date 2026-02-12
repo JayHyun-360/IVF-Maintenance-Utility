@@ -5,38 +5,17 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { Z_INDEX } from "@/lib/z-index";
+import { DEFAULT_CONFIG, clearSessionStorage, getUserDisplayName, getUserInitial, calculateDropdownPosition, Icons } from "./utils";
+import type { AccountDropdownConfig } from "./types";
 
-// Types
-type DropdownPosition = "top" | "bottom";
-type DropdownAlignment = "left" | "right";
-
-interface AccountDropdownConfig {
-  /** Show Account Settings button (default: true) */
-  showAccountSettings?: boolean;
-  /** Show Admin Dashboard button for ADMIN users (default: true) */
-  showAdminDashboard?: boolean;
-  /** Show User Portal button for non-ADMIN users (default: true) */
-  showUserPortal?: boolean;
-  /** Show Switch Account button (default: true) */
-  showSwitchAccount?: boolean;
-  /** Show Remove Account button (default: true) */
-  showRemoveAccount?: boolean;
-  /** Dropdown width using Tailwind classes (default: "w-48") */
-  dropdownWidth?: string;
-  /** Dropdown max height using Tailwind classes (default: "max-h-60") */
-  dropdownMaxHeight?: string;
-  /** Show debug information like email in dropdown (default: false) */
-  showDebugInfo?: boolean;
-  /** Avatar size using Tailwind classes (default: "w-8 h-8") */
-  avatarSize?: string;
-  /** Preferred dropdown position (default: "bottom") */
-  position?: DropdownPosition;
-  /** Preferred dropdown alignment (default: "right") */
-  alignment?: DropdownAlignment;
-  /** Whether to redirect to login page after logout (default: true) */
-  redirectOnLogout?: boolean;
-  /** Custom logout callback function (optional) */
-  onLogoutComplete?: () => void;
+// MenuItem type for internal use
+interface MenuItem {
+  id: string;
+  label: string;
+  description: string;
+  icon: React.ReactNode;
+  action: () => void;
+  show: boolean;
 }
 
 interface AccountDropdownProps {
@@ -44,59 +23,17 @@ interface AccountDropdownProps {
   config?: AccountDropdownConfig;
 }
 
-// Constants
-const DEFAULT_CONFIG: Required<
-  Omit<AccountDropdownConfig, keyof AccountDropdownConfig>
-> = {
-  showAccountSettings: true,
-  showAdminDashboard: true,
-  showUserPortal: true,
-  showSwitchAccount: true,
-  showRemoveAccount: true,
-  dropdownWidth: "w-48",
-  dropdownMaxHeight: "max-h-60",
-  showDebugInfo: false,
-  avatarSize: "w-8 h-8",
-  position: "bottom",
-  alignment: "right",
-  redirectOnLogout: true,
-};
-
-// Helper Functions
-const clearSessionStorage = (): void => {
-  if (typeof window === "undefined") return;
-
-  console.log("🧹 Clearing session storage...");
-  const items = ["next-auth.session-token", "next-auth.callback-url"];
-
-  items.forEach((item) => {
-    localStorage.removeItem(item);
-    sessionStorage.removeItem(item);
-  });
-};
-
-const getUserDisplayName = (session: any): string => {
-  return session?.user?.name || session?.user?.email?.split("@")[0] || "User";
-};
-
-const getUserInitial = (session: any): string => {
-  return getUserDisplayName(session).charAt(0).toUpperCase();
-};
 export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { themeConfig } = useTheme();
-
+  
   // State
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState(
-    config.position || "bottom",
-  );
-  const [dropdownAlignment, setDropdownAlignment] = useState(
-    config.alignment || "right",
-  );
-
+  const [dropdownPosition, setDropdownPosition] = useState(config.position || "bottom");
+  const [dropdownAlignment, setDropdownAlignment] = useState(config.alignment || "right");
+  
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Merged configuration
@@ -117,10 +54,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   // Click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -153,7 +87,6 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
         console.log("🏠 Staying on current page...");
         setTimeout(() => {
           router.refresh();
-          // Fallback reload if refresh doesn't work
           setTimeout(() => {
             console.log("🔄 Forcing page reload...");
             window.location.reload();
@@ -166,10 +99,11 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
 
       // Custom callback
       finalConfig.onLogoutComplete?.();
+      
     } catch (error) {
       console.error("❌ Logout error:", error);
       setIsLoggingOut(false);
-
+      
       if (finalConfig.redirectOnLogout) {
         window.location.href = "/login";
       }
@@ -177,13 +111,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
   }, [finalConfig, router, isLoggingOut]);
 
   // Navigation handlers
-  const handleNavigation = useCallback(
-    (path: string) => {
-      setIsOpen(false);
-      router.push(path);
-    },
-    [router],
-  );
+  const handleNavigation = useCallback((path: string) => {
+    setIsOpen(false);
+    router.push(path);
+  }, [router]);
 
   const handleSwitchAccount = useCallback(() => {
     console.log("🔄 Switching account...");
@@ -192,15 +123,13 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
 
   const handleRemoveAccount = useCallback(async () => {
     if (isLoggingOut) return;
-
-    const confirmed = confirm(
-      "Are you sure you want to remove your account? This action cannot be undone.",
-    );
+    
+    const confirmed = confirm("Are you sure you want to remove your account? This action cannot be undone.");
     if (!confirmed) return;
 
     console.log("🗑️ Removing account...");
     setIsOpen(false);
-
+    
     // In real app: Call API to delete account
     // For now: Just logout
     await handleLogout();
@@ -221,10 +150,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
       height: window.innerHeight,
     };
 
-    const { position, alignment } = calculateDropdownPosition(
-      buttonRect,
-      viewport,
-    );
+    const { position, alignment } = calculateDropdownPosition(buttonRect, viewport);
     setDropdownPosition(position);
     setDropdownAlignment(alignment);
     setIsOpen(true);
@@ -232,11 +158,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
 
   // Loading state
   if (status === "loading") {
-    return (
-      <div
-        className={`${finalConfig.avatarSize} rounded-full bg-gray-200 animate-pulse`}
-      />
-    );
+    return <div className={`${finalConfig.avatarSize} rounded-full bg-gray-200 animate-pulse`} />;
   }
 
   // Not logged in state
@@ -318,16 +240,10 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
 
         {/* User Info */}
         <div className="text-left">
-          <div
-            className="text-sm font-medium"
-            style={{ color: themeConfig.colors.text }}
-          >
+          <div className="text-sm font-medium" style={{ color: themeConfig.colors.text }}>
             {getUserDisplayName(session)}
           </div>
-          <div
-            className="text-xs"
-            style={{ color: themeConfig.colors.textSecondary }}
-          >
+          <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
             {session.user?.role || "User"}
             {finalConfig.showDebugInfo && (
               <span className="ml-2 opacity-50">({session.user?.email})</span>
@@ -363,8 +279,8 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
           <div className="p-2">
             {/* Menu Items */}
             {menuItems
-              .filter((item) => item.show)
-              .map((item) => (
+              .filter(item => item.show)
+              .map(item => (
                 <button
                   key={item.id}
                   onClick={item.action}
@@ -374,10 +290,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                   {item.icon}
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium">{item.label}</div>
-                    <div
-                      className="text-xs"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
+                    <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
                       {item.description}
                     </div>
                   </div>
@@ -385,10 +298,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
               ))}
 
             {/* Separator */}
-            <div
-              className="border-t my-1"
-              style={{ borderColor: themeConfig.colors.border }}
-            />
+            <div className="border-t my-1" style={{ borderColor: themeConfig.colors.border }} />
 
             {/* Remove Account */}
             {finalConfig.showRemoveAccount && (
@@ -403,10 +313,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                     <Icons.LoadingSpinner />
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium">Removing...</div>
-                      <div
-                        className="text-xs"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
+                      <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
                         Please wait
                       </div>
                     </div>
@@ -416,10 +323,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                     <Icons.RemoveAccount />
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium">Remove Account</div>
-                      <div
-                        className="text-xs"
-                        style={{ color: themeConfig.colors.textSecondary }}
-                      >
+                      <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
                         Delete your account
                       </div>
                     </div>
@@ -440,10 +344,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                   <Icons.LoadingSpinner />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium">Signing out...</div>
-                    <div
-                      className="text-xs"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
+                    <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
                       Please wait
                     </div>
                   </div>
@@ -453,10 +354,7 @@ export default function AccountDropdown({ config = {} }: AccountDropdownProps) {
                   <Icons.Logout />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium">Log Out</div>
-                    <div
-                      className="text-xs"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
+                    <div className="text-xs" style={{ color: themeConfig.colors.textSecondary }}>
                       Sign out of your account
                     </div>
                   </div>
