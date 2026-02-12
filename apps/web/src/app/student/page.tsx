@@ -10,6 +10,7 @@ import { Z_INDEX } from "@/lib/z-index";
 import AuthGuard from "@/components/AuthGuard";
 import Image from "next/image";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
+import { motion } from "framer-motion";
 
 export default function UserPage() {
   const router = useRouter();
@@ -224,7 +225,7 @@ export default function UserPage() {
                 className="font-bold text-lg hidden sm:block"
                 style={{ color: themeConfig.colors.text }}
               >
-                Back to Home
+                User Portal
               </span>
             </button>
 
@@ -246,20 +247,60 @@ export default function UserPage() {
         {/* Main Content */}
         <div className={`pt-24 pb-12 ${isMobile ? "px-4" : "px-8"}`}>
           <div className="max-w-4xl mx-auto">
-            {/* Page Title */}
-            <div className="mb-8 text-center sm:text-left space-y-2">
-              <h1
-                className="text-3xl font-bold tracking-tight"
-                style={{ color: themeConfig.colors.text }}
+            {/* Page Title - Aligned with Homepage Design */}
+            <div className="mb-12 text-center space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="flex items-center justify-center gap-3 mb-6"
               >
-                New Maintenance Request
-              </h1>
-              <p
-                className="text-sm font-medium"
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg"
+                  style={{
+                    background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
+                  }}
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <h1
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold"
+                    style={{ color: themeConfig.colors.text }}
+                  >
+                    User Portal
+                  </h1>
+                  <p
+                    className="text-sm md:text-base font-medium mt-1"
+                    style={{ color: themeConfig.colors.textSecondary }}
+                  >
+                    Maintenance Request System
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
                 style={{ color: themeConfig.colors.textSecondary }}
               >
-                Fill out the details below to report a maintenance issue.
-              </p>
+                Submit maintenance requests quickly and efficiently. Our
+                streamlined system ensures your issues are addressed promptly.
+              </motion.p>
             </div>
 
             <form
@@ -281,18 +322,47 @@ export default function UserPage() {
                       boxShadow: `0 20px 40px -15px rgba(0, 0, 0, 0.1)`,
                     }}
                   >
-                    <h2
-                      className="text-xl font-bold flex items-center gap-3"
-                      style={{ color: themeConfig.colors.text }}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="flex items-center gap-3 mb-6"
                     >
-                      <span
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm"
-                        style={{ backgroundColor: themeConfig.colors.primary }}
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg"
+                        style={{
+                          background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
+                        }}
                       >
-                        1
-                      </span>
-                      Request Details
-                    </h2>
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <h2
+                          className="text-xl font-bold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          Request Details
+                        </h2>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Provide information about the maintenance issue
+                        </p>
+                      </div>
+                    </motion.div>
 
                     <div className="space-y-6">
                       {/* Title */}
@@ -529,20 +599,47 @@ export default function UserPage() {
                       boxShadow: `0 20px 40px -15px rgba(0, 0, 0, 0.1)`,
                     }}
                   >
-                    <h2
-                      className="text-xl font-bold flex items-center gap-3"
-                      style={{ color: themeConfig.colors.text }}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="flex items-center gap-3 mb-6"
                     >
-                      <span
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm"
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg"
                         style={{
-                          backgroundColor: themeConfig.colors.secondary,
+                          background: `linear-gradient(135deg, ${themeConfig.colors.secondary}, ${themeConfig.colors.accent})`,
                         }}
                       >
-                        2
-                      </span>
-                      Classification
-                    </h2>
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <h2
+                          className="text-xl font-bold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          Classification
+                        </h2>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Set the priority and category of your request
+                        </p>
+                      </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-4">
@@ -751,25 +848,47 @@ export default function UserPage() {
                       boxShadow: `0 20px 40px -15px rgba(0, 0, 0, 0.1)`,
                     }}
                   >
-                    <h3
-                      className="text-lg font-bold flex items-center gap-2"
-                      style={{ color: themeConfig.colors.text }}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="flex items-center gap-3 mb-6"
                     >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg"
+                        style={{
+                          background: `linear-gradient(135deg, #10b981, #059669)`,
+                        }}
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                      Photos
-                    </h3>
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3
+                          className="text-lg font-bold"
+                          style={{ color: themeConfig.colors.text }}
+                        >
+                          Photo Documentation
+                        </h3>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: themeConfig.colors.textSecondary }}
+                        >
+                          Add images to help describe the issue
+                        </p>
+                      </div>
+                    </motion.div>
 
                     <div className="space-y-4">
                       <label
@@ -888,7 +1007,7 @@ export default function UserPage() {
                   </div>
 
                   {/* Final Action */}
-                  <button
+                  <motion.button
                     type="submit"
                     disabled={isSubmitting}
                     className="w-full py-4 rounded-3xl font-bold text-white transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:transform-none shadow-2xl"
@@ -896,6 +1015,8 @@ export default function UserPage() {
                       background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.secondary})`,
                       boxShadow: `0 12px 24px ${themeConfig.colors.primary}40`,
                     }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     {isSubmitting ? (
                       <div className="flex items-center justify-center gap-2">
@@ -923,7 +1044,7 @@ export default function UserPage() {
                     ) : (
                       "Confirm & Submit"
                     )}
-                  </button>
+                  </motion.button>
                 </div>
               </div>
             </form>
