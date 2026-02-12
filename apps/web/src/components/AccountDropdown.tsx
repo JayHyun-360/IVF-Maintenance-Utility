@@ -129,9 +129,6 @@ export default function AccountDropdown({
       // Sign out with redirect false to handle manually
       const result = await signOut({
         redirect: false,
-        callbackUrl: dropdownConfig.redirectOnLogout
-          ? window.location.origin + "/login"
-          : window.location.href,
       });
 
       console.log("SignOut successful:", result);
@@ -147,10 +144,16 @@ export default function AccountDropdown({
         // Stay on current page, just clear the session
         console.log("Logout complete, staying on current page");
 
-        // Force a re-render to update the UI
+        // Force immediate UI update with multiple approaches
         setTimeout(() => {
           console.log("Refreshing page to update session state...");
           router.refresh(); // Refresh the current page to update session state
+
+          // Additional force update if refresh doesn't work
+          setTimeout(() => {
+            console.log("Forcing window reload as fallback...");
+            window.location.reload(); // Force reload as last resort
+          }, 500);
         }, 100);
       }
 
