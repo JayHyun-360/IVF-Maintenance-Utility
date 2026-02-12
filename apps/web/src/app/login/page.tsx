@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -12,15 +12,42 @@ import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: session, status } = useSession();
   const { themeConfig } = useTheme();
   const { isMobile } = useMobileOptimizations();
+  
+  // Form state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  // Get dynamic origin and callback URL
+  const getOrigin = useCallback(() => {
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "";
+  }, []);
+
+  const getCallbackUrl = useCallback(() => {
+    const callbackParam = searchParams?.get("callbackUrl");
+    if (callbackParam) {
+      // Validate callback URL to prevent open redirects
+      try {
+        const url = new URL(callbackParam, getOrigin());
+        if (url.origin === getOrigin()) {
+          return callbackParam;
+        }
+      } catch {
+        // Invalid URL, ignore
+      }
+    }
+    return null;
+  }, [searchParams, getOrigin]);
 
   // Redirect logged-in users away from login page
   useEffect(() => {
@@ -30,6 +57,15 @@ export default function LoginPage() {
 
     if (session) {
       console.log("User already logged in, redirecting based on role...");
+      
+      // Use callback URL if valid and user is logged in
+      const callbackUrl = getCallbackUrl();
+      if (callbackUrl) {
+        router.replace(callbackUrl);
+        return;
+      }
+      
+      // Default role-based redirects
       if (session.user?.role === "ADMIN") {
         router.replace("/admin/dashboard");
       } else if (session.user?.role === "STAFF") {
@@ -39,9 +75,10 @@ export default function LoginPage() {
       }
       return;
     }
-  }, [session, status, router]);
+  }, [session, status, router, getCallbackUrl]);
 
-  const handleAdminDemo = async () => {
+  // Optimized demo handlers
+  const handleAdminDemo = useCallback(async () => {
     setEmail("admin@test.com");
     setPassword("admin123");
 
@@ -61,17 +98,19 @@ export default function LoginPage() {
           setError("Admin demo login failed");
         } else if (result?.ok) {
           console.log("Admin demo login successful, redirecting...");
-          router.push("/admin/dashboard");
+          const callbackUrl = getCallbackUrl();
+          router.push(callbackUrl || "/admin/dashboard");
         }
-      } catch {
+      } catch (err) {
+        console.error("Admin demo login error:", err);
         setError("Admin demo login failed. Please try again.");
       } finally {
         setIsLoading(false);
       }
     }, 500);
-  };
+  }, [getCallbackUrl, router]);
 
-  const handleUserDemo = async () => {
+  const handleUserDemo = useCallback(async () => {
     setEmail("user@test.com");
     setPassword("user123");
 
@@ -91,38 +130,57 @@ export default function LoginPage() {
           setError("User demo login failed");
         } else if (result?.ok) {
           console.log("User demo login successful, redirecting...");
-          router.push("/student");
+          const callbackUrl = getCallbackUrl();
+          router.push(callbackUrl || "/student");
         }
-      } catch {
+      } catch (err) {
+        console.error("User demo login error:", err);
         setError("User demo login failed. Please try again.");
       } finally {
         setIsLoading(false);
       }
     }, 500);
-  };
+  }, [getCallbackUrl, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Optimized form submission handler
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
+
     setIsLoading(true);
     setError("");
 
     try {
+      // Sign in without automatic redirect to handle it manually
       const result = await signIn("credentials", {
         email,
         password,
-        redirect: false, // Disable automatic redirect to handle it manually
+        redirect: false,
       });
 
       if (result?.error) {
         setError("Invalid email or password");
-      } else if (result?.ok) {
-        // Successful login - redirect based on user role
+        return;
+      }
+
+      if (result?.ok) {
         console.log("Login successful, checking user role...");
-
-        // Get the session to determine user role
-        const response = await fetch("/api/auth/session");
-        const session = await response.json();
-
+        
+        // Brief delay to ensure session is updated
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Use callback URL if valid
+        const callbackUrl = getCallbackUrl();
+        if (callbackUrl) {
+          router.push(callbackUrl);
+          return;
+        }
+        
+        // Default role-based redirects
         if (session?.user?.role === "ADMIN") {
           router.push("/admin/dashboard");
         } else if (session?.user?.role === "STAFF") {
@@ -130,16 +188,31 @@ export default function LoginPage() {
         } else if (session?.user?.role === "STUDENT") {
           router.push("/student");
         } else {
-          // Default fallback for unknown roles
-          router.push("/dashboard");
+          // Fallback - get fresh session data
+          try {
+            const response = await fetch("/api/auth/session");
+            const freshSession = await response.json();
+            
+            if (freshSession?.user?.role === "ADMIN") {
+              router.push("/admin/dashboard");
+            } else if (freshSession?.user?.role === "STAFF") {
+              router.push("/staff");
+            } else {
+              router.push("/student");
+            }
+          } catch {
+            // Ultimate fallback
+            router.push("/dashboard");
+          }
         }
       }
-    } catch {
+    } catch (err) {
+      console.error("Login error:", err);
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [email, password, session, getCallbackUrl, router]);
 
   // Show loading state only while checking session initially
   if (status === "loading" && !mounted) {
@@ -147,332 +220,195 @@ export default function LoginPage() {
       <div className="min-h-screen bg-[#0B0E11] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
-          <p className="text-gray-100">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Always show login page content, even if user is logged in
-  // The redirect will happen in the useEffect above
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-[#0B0E11] flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
-          <p className="text-gray-100">Loading...</p>
+          <p className="text-gray-400">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0E11] relative overflow-hidden">
-      {/* Technical Grid Background */}
-      <div className="absolute inset-0 opacity-10">
-        <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full"
+    <div className="min-h-screen bg-[#0B0E11] flex items-center justify-center p-4">
+      <BackButton />
+      <ThemeSwitcher />
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
+      >
+        <div
+          className="rounded-2xl p-8 shadow-2xl"
+          style={{
+            backgroundColor: themeConfig.colors.surface,
+            border: `1px solid ${themeConfig.colors.border}`,
+          }}
         >
-          <g fill="none" fillRule="evenodd">
-            <g stroke="#14b8a6" strokeWidth="0.5" opacity="0.3">
-              <path d="M0 0h40v40H0z M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40M10 0v40M20 0v40M30 0v40M0 10h40M0 20h40M0 30h40" />
-            </g>
-          </g>
-        </svg>
-      </div>
-
-      {/* Subtle Teal Mesh Gradient Glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-cyan-500/5 blur-2xl pointer-events-none"></div>
-
-      {/* Theme Switcher */}
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeSwitcher />
-      </div>
-
-      {/* Back Button */}
-      <div className="fixed top-6 left-6 z-50">
-        <BackButton fallback="/" />
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="w-full max-w-md"
-        >
-          {/* Glassmorphic Login Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="backdrop-blur-xl rounded-2xl p-8 shadow-2xl max-w-md mx-auto"
-            style={{
-              background: "rgba(255, 255, 255, 0.03) !important",
-              backdropFilter: "blur(25px) !important",
-              border: "1px solid rgba(255, 255, 255, 0.1) !important",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5) !important",
-            }}
-          >
-            {/* Logo Section */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-xl shadow-teal-500/30 flex-shrink-0">
-                <svg
-                  className="w-6 h-6 sm:w-8 sm:h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
-              </div>
-              <div className="text-left sm:text-center">
-                <h1 className="text-xl sm:text-2xl font-sans font-bold text-gray-100 leading-tight">
-                  IVF Maintenance
-                  <span className="block text-teal-400">Utility</span>
-                </h1>
-                <p className="text-sm text-gray-400 mt-1">
-                  School Facility Management System
-                </p>
-              </div>
-            </div>
-
-            {/* Login Form */}
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-              autoComplete="on"
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1
+              className="text-3xl font-bold mb-2"
+              style={{ color: themeConfig.colors.text }}
             >
-              {/* Email Field */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-100 mb-2"
-                >
-                  Email Address
-                </label>
-                <div className="relative">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
-                    style={{
-                      backdropFilter: "blur(10px)",
-                    }}
-                    placeholder="Enter your email"
-                  />
-                </div>
-              </div>
+              Welcome Back
+            </h1>
+            <p
+              className="text-sm"
+              style={{ color: themeConfig.colors.textSecondary }}
+            >
+              Sign in to your IVF Maintenance account
+            </p>
+          </div>
 
-              {/* Password Field */}
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-100 mb-2"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
-                    required
-                    className="w-full px-4 py-3 pr-12 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
-                    style={{
-                      backdropFilter: "blur(10px)",
-                    }}
-                    placeholder="Enter your password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-200"
-                  >
-                    {showPassword ? (
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                        />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-              </div>
+          {/* Error Message */}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mb-6 p-4 rounded-lg text-sm text-center"
+              style={{
+                backgroundColor: `${themeConfig.colors.error}20`,
+                color: themeConfig.colors.error,
+                border: `1px solid ${themeConfig.colors.error}40`,
+              }}
+            >
+              {error}
+            </motion.div>
+          )}
 
-              {/* Error Display */}
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-100 text-sm"
-                >
-                  {error}
-                </motion.div>
-              )}
-
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                disabled={isLoading}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 text-gray-900 font-semibold text-base hover:from-teal-400 hover:to-cyan-500 transition-all duration-300 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} className="space-y-6" autoComplete="on">
+            {/* Email Field */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-2"
+                style={{ color: themeConfig.colors.text }}
               >
-                {isLoading ? (
-                  <>
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        fill="none"
-                      />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      />
-                    </svg>
-                    <span>Authenticating...</span>
-                  </>
-                ) : (
-                  <>
-                    Sign In
-                    <svg
-                      className="w-4 h-4 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                  </>
-                )}
-              </motion.button>
+                Email Address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                style={{
+                  backdropFilter: "blur(10px)",
+                }}
+                placeholder="Enter your email"
+                disabled={isLoading}
+              />
+            </div>
 
-              {/* Demo Login Buttons */}
-              <div className="space-y-3">
-                <motion.button
-                  type="button"
-                  onClick={handleAdminDemo}
+            {/* Password Field */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium mb-2"
+                style={{ color: themeConfig.colors.text }}
+              >
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="current-password"
+                  className="w-full px-4 py-3 pr-12 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                  style={{
+                    backdropFilter: "blur(10px)",
+                  }}
+                  placeholder="Enter your password"
                   disabled={isLoading}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold text-base hover:from-red-400 hover:to-pink-500 transition-all duration-300 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                    />
-                  </svg>
-                  Admin Demo (admin@test.com)
-                </motion.button>
-
-                <motion.button
+                />
+                <button
                   type="button"
-                  onClick={handleUserDemo}
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
                   disabled={isLoading}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold text-base hover:from-amber-400 hover:to-orange-500 transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  User Demo (user@test.com)
-                </motion.button>
-              </div>
-            </form>
-
-            {/* Footer */}
-            <div className="mt-8 text-center">
-              <div className="text-center mt-6">
-                <p className="text-sm text-gray-400">Don't have an account? </p>
-                <motion.a
-                  href="/register"
-                  className="text-teal-400 hover:text-teal-300 font-medium transition-colors duration-200"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  Register here
-                </motion.a>
+                  {showPassword ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29-3.29" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7a1 1 0 11-1.842 0C18.268 7.943 14.478 5 10 5 5.523 5 1.732 7.943.418 12a1 1 0 101.842 0z" />
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
-      </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-3 px-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              style={{
+                backgroundColor: themeConfig.colors.primary,
+                color: themeConfig.colors.secondary,
+              }}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <span>Signing In...</span>
+                </div>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
+
+          {/* Demo Accounts */}
+          <div className="mt-8 pt-6 border-t" style={{ borderColor: themeConfig.colors.border }}>
+            <p
+              className="text-sm text-center mb-4"
+              style={{ color: themeConfig.colors.textSecondary }}
+            >
+              Demo Accounts (Click to auto-fill)
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                onClick={handleAdminDemo}
+                disabled={isLoading}
+                className="p-3 rounded-xl border transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  backgroundColor: `${themeConfig.colors.primary}20`,
+                  borderColor: themeConfig.colors.primary,
+                  color: themeConfig.colors.primary,
+                }}
+              >
+                <div className="text-sm font-medium">Admin Demo</div>
+                <div className="text-xs opacity-75">admin@test.com</div>
+              </button>
+              <button
+                onClick={handleUserDemo}
+                disabled={isLoading}
+                className="p-3 rounded-xl border transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  backgroundColor: `${themeConfig.colors.secondary}20`,
+                  borderColor: themeConfig.colors.secondary,
+                  color: themeConfig.colors.secondary,
+                }}
+              >
+                <div className="text-sm font-medium">User Demo</div>
+                <div className="text-xs opacity-75">user@test.com</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
