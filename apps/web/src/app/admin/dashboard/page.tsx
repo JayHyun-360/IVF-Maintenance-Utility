@@ -702,14 +702,6 @@ export default function AdminDashboard() {
 
   // Generate analytics from mock requests
   const generateAnalyticsFromRequests = (requests: MaintenanceRequest[]) => {
-    // Monthly trends - extract from request dates and generate realistic data
-    const monthlyData = [
-      { month: "Jan", count: Math.floor(Math.random() * 20) + 30 },
-      { month: "Feb", count: requests.length }, // Current month from actual data
-      { month: "Mar", count: Math.floor(Math.random() * 20) + 25 },
-      { month: "Apr", count: Math.floor(Math.random() * 20) + 35 },
-    ];
-
     // Calculate actual metrics from requests
     const completedRequests = requests.filter(
       (r) => r.status === "Completed",
@@ -754,7 +746,6 @@ export default function AdminDashboard() {
       totalRequests > 0 ? (4.5 + Math.random() * 0.4).toFixed(1) + "/5" : "0/5";
 
     return {
-      monthlyData,
       completionRate,
       avgResponseTime,
       satisfactionScore,
@@ -1809,9 +1800,6 @@ export default function AdminDashboard() {
                   {(() => {
                     const analytics =
                       generateAnalyticsFromRequests(recentRequests);
-                    const maxMonthlyCount = Math.max(
-                      ...analytics.monthlyData.map((d) => d.count),
-                    );
 
                     return (
                       <div className="space-y-4">
@@ -1868,38 +1856,141 @@ export default function AdminDashboard() {
 
                         {/* Charts Row - Compact */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {/* Request Trends */}
+                          {/* Recent Activity */}
                           <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
                             <h3 className="text-sm font-semibold text-gray-100 mb-3">
-                              Monthly Trends
+                              Recent Activity (Last 7 Days)
                             </h3>
                             <div className="space-y-2">
-                              {analytics.monthlyData.map((item, i) => (
-                                <div
-                                  key={i}
-                                  className="flex items-center justify-between"
-                                >
-                                  <span className="text-xs text-gray-400 w-8">
-                                    {item.month}
-                                  </span>
-                                  <div className="flex-1 mx-2 bg-gray-700 rounded-full h-2">
-                                    <motion.div
-                                      className="bg-teal-500 h-2 rounded-full"
-                                      style={{
-                                        width: `${(item.count / maxMonthlyCount) * 100}%`,
-                                      }}
-                                      initial={{ width: 0 }}
-                                      animate={{
-                                        width: `${(item.count / maxMonthlyCount) * 100}%`,
-                                      }}
-                                      transition={{ delay: 0.1 * i }}
-                                    />
+                              {(() => {
+                                // Generate last 7 days activity
+                                const last7Days = [];
+                                const today = new Date();
+
+                                for (let i = 6; i >= 0; i--) {
+                                  const date = new Date(today);
+                                  date.setDate(date.getDate() - i);
+                                  const dateStr = date.toLocaleDateString(
+                                    "en-US",
+                                    { month: "short", day: "numeric" },
+                                  );
+
+                                  // Simulate some activity based on current requests
+                                  const baseCount = Math.floor(
+                                    recentRequests.length * 0.3,
+                                  );
+                                  const randomVariation =
+                                    Math.floor(Math.random() * 5) - 2;
+                                  const count = Math.max(
+                                    0,
+                                    baseCount + randomVariation,
+                                  );
+
+                                  last7Days.push({
+                                    date: dateStr,
+                                    count:
+                                      i === 0
+                                        ? recentRequests.filter((r) => {
+                                            const requestDate = new Date(
+                                              r.createdAt,
+                                            );
+                                            return (
+                                              requestDate.toDateString() ===
+                                              today.toDateString()
+                                            );
+                                          }).length
+                                        : count,
+                                  });
+                                }
+
+                                const maxCount = Math.max(
+                                  ...last7Days.map((d) => d.count),
+                                );
+
+                                return last7Days.map((day, i) => (
+                                  <div
+                                    key={i}
+                                    className="flex items-center justify-between"
+                                  >
+                                    <span className="text-xs text-gray-400 w-16">
+                                      {day.date}
+                                    </span>
+                                    <div className="flex-1 mx-2 bg-gray-700 rounded-full h-2">
+                                      <motion.div
+                                        className="bg-teal-500 h-2 rounded-full"
+                                        style={{
+                                          width: `${maxCount > 0 ? (day.count / maxCount) * 100 : 0}%`,
+                                        }}
+                                        initial={{ width: 0 }}
+                                        animate={{
+                                          width: `${maxCount > 0 ? (day.count / maxCount) * 100 : 0}%`,
+                                        }}
+                                        transition={{ delay: 0.05 * i }}
+                                      />
+                                    </div>
+                                    <span className="text-xs font-mono text-gray-300 w-6 text-right">
+                                      {day.count}
+                                    </span>
                                   </div>
-                                  <span className="text-xs font-mono text-gray-300 w-6 text-right">
-                                    {item.count}
-                                  </span>
-                                </div>
-                              ))}
+                                ));
+                              })()}
+                            </div>
+                          </div>
+
+                          {/* Building Distribution */}
+                          <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                            <h3 className="text-sm font-semibold text-gray-100 mb-3">
+                              Requests by Building
+                            </h3>
+                            <div className="space-y-2">
+                              {(() => {
+                                // Calculate building distribution
+                                const buildingCounts = recentRequests.reduce(
+                                  (acc, request) => {
+                                    if (request.building) {
+                                      acc[request.building] =
+                                        (acc[request.building] || 0) + 1;
+                                    }
+                                    return acc;
+                                  },
+                                  {} as Record<string, number>,
+                                );
+
+                                const maxBuildingCount = Math.max(
+                                  ...Object.values(buildingCounts),
+                                  1,
+                                );
+
+                                return Object.entries(buildingCounts)
+                                  .sort(([, a], [, b]) => b - a)
+                                  .slice(0, 5)
+                                  .map(([building, count], i) => (
+                                    <div
+                                      key={i}
+                                      className="flex items-center justify-between"
+                                    >
+                                      <span className="text-xs text-gray-400 truncate flex-1">
+                                        {building}
+                                      </span>
+                                      <div className="flex-1 mx-2 bg-gray-700 rounded-full h-2">
+                                        <motion.div
+                                          className="bg-blue-500 h-2 rounded-full"
+                                          style={{
+                                            width: `${(count / maxBuildingCount) * 100}%`,
+                                          }}
+                                          initial={{ width: 0 }}
+                                          animate={{
+                                            width: `${(count / maxBuildingCount) * 100}%`,
+                                          }}
+                                          transition={{ delay: 0.05 * i }}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-mono text-gray-300 w-6 text-right">
+                                        {count}
+                                      </span>
+                                    </div>
+                                  ));
+                              })()}
                             </div>
                           </div>
 
