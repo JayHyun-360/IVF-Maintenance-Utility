@@ -28,12 +28,12 @@ interface MaintenanceRequest {
   requestedBy: string;
   createdAt: string;
   updatedAt: string;
-  building: string;
-  roomNumber: string;
-  floor: string;
-  location: string;
-  contactPhone: string;
-  department: string;
+  building?: string;
+  roomNumber?: string;
+  floor?: string;
+  location?: string;
+  contactPhone?: string;
+  department?: string;
   images: string[];
   user?: {
     name: string;
