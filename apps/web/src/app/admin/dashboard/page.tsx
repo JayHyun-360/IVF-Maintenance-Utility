@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -799,8 +799,16 @@ export default function AdminDashboard() {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-    const startStr = startOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-    const endStr = endOfMonth.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    const startStr = startOfMonth.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+    const endStr = endOfMonth.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
     return `${startStr} - ${endStr}`;
   };
 
@@ -851,15 +859,15 @@ export default function AdminDashboard() {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case "urgent":
-        return "🚨";
+        return "ðŸš¨";
       case "success":
-        return "✅";
+        return "âœ…";
       case "high":
-        return "⚠️";
+        return "âš ï¸";
       case "info":
-        return "ℹ️";
+        return "â„¹ï¸";
       default:
-        return "📢";
+        return "ðŸ“¢";
     }
   };
 
@@ -956,7 +964,7 @@ export default function AdminDashboard() {
     const totalRequests = requests.length;
     const completionRate =
       totalRequests > 0
-        ? Math.round((completedRequests / totalRequests) * 100)
+        ? Math.round((Number(completedRequests) / Number(totalRequests)) * 100)
         : 0;
 
     // Calculate priority distribution
@@ -1309,7 +1317,7 @@ export default function AdminDashboard() {
                       <span>
                         Last updated: {lastUpdated.toLocaleTimeString()}
                       </span>
-                      <span className="mx-2">•</span>
+                      <span className="mx-2">â€¢</span>
                       <span>Auto-refresh every 30s</span>
                     </motion.div>
                   )}
@@ -1628,7 +1636,7 @@ export default function AdminDashboard() {
                                   <div className="flex items-center gap-2 text-xs text-gray-400 min-w-0">
                                     <div className="w-2 h-2 bg-teal-500 rounded-full flex-shrink-0" />
                                     <span className="font-mono truncate">
-                                      {request.createdAt.split(' ')[0]}
+                                      {request.createdAt.split(" ")[0]}
                                     </span>
                                   </div>
 
@@ -1662,7 +1670,9 @@ export default function AdminDashboard() {
                                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                       />
                                     </svg>
-                                    <span className="truncate">{request.location}</span>
+                                    <span className="truncate">
+                                      {request.location}
+                                    </span>
                                   </div>
                                   <div className="flex items-center gap-2 truncate">
                                     <svg
@@ -1678,49 +1688,15 @@ export default function AdminDashboard() {
                                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                                       />
                                     </svg>
-                                    <span className="truncate">{request.contactPhone}</span>
+                                    <span className="truncate">
+                                      {request.contactPhone}
+                                    </span>
                                   </div>
                                 </div>
-                                  <div className="flex items-center gap-4">
-                                    {request.floor && (
-                                      <span className="flex items-center gap-1">
-                                        <svg
-                                          className="w-3 h-3"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                                          />
-                                        </svg>
-                                        {request.floor}
-                                      </span>
-                                    )}
-                                    {request.department && (
-                                      <span className="flex items-center gap-1">
-                                        <svg
-                                          className="w-3 h-3"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                          />
-                                        </svg>
-                                        {request.department}
-                                      </span>
-                                    )}
-                                  </div>
 
-                                  {request.contactPhone && (
+                                {/* Floor and Department */}
+                                <div className="flex items-center gap-4">
+                                  {request.floor && (
                                     <span className="flex items-center gap-1">
                                       <svg
                                         className="w-3 h-3"
@@ -1732,10 +1708,28 @@ export default function AdminDashboard() {
                                           strokeLinecap="round"
                                           strokeLinejoin="round"
                                           strokeWidth={2}
-                                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                                         />
                                       </svg>
-                                      {request.contactPhone}
+                                      {request.floor}
+                                    </span>
+                                  )}
+                                  {request.department && (
+                                    <span className="flex items-center gap-1">
+                                      <svg
+                                        className="w-3 h-3"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth={2}
+                                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                        />
+                                      </svg>
+                                      {request.department}
                                     </span>
                                   )}
                                 </div>
@@ -1784,7 +1778,7 @@ export default function AdminDashboard() {
                                 )}
                               </div>
                             </div>
-                          ))
+                          ))}
                         </div>
                       ) : (
                         <div className="text-center py-8">
@@ -2615,7 +2609,7 @@ export default function AdminDashboard() {
                               new Date().toLocaleDateString().split("/")[1],
                             ),
                           ).length,
-                          icon: "📝",
+                          icon: "ðŸ“",
                           type: "PDF",
                         },
                         {
@@ -2626,7 +2620,7 @@ export default function AdminDashboard() {
                               r.priority.includes("High") ||
                               r.priority.includes("Urgent"),
                           ).length,
-                          icon: "🚨",
+                          icon: "ðŸš¨",
                           type: "PDF",
                         },
                         {
@@ -2634,7 +2628,7 @@ export default function AdminDashboard() {
                           description: "Requests by building location",
                           count: recentRequests.filter((r) => r.building)
                             .length,
-                          icon: "🏢",
+                          icon: "ðŸ¢",
                           type: "Excel",
                         },
                         {
@@ -2642,21 +2636,21 @@ export default function AdminDashboard() {
                           description: "Requests by department",
                           count: recentRequests.filter((r) => r.department)
                             .length,
-                          icon: "🏛️",
+                          icon: "ðŸ›ï¸",
                           type: "Excel",
                         },
                         {
                           title: "Category Report",
                           description: "Requests by maintenance category",
                           count: recentRequests.length,
-                          icon: "🔧",
+                          icon: "ðŸ”§",
                           type: "PDF",
                         },
                         {
                           title: "Status Report",
                           description: "Current status of all requests",
                           count: recentRequests.length,
-                          icon: "📊",
+                          icon: "ðŸ“Š",
                           type: "PDF",
                         },
                       ].map((report, i) => (
@@ -2742,7 +2736,7 @@ export default function AdminDashboard() {
                         {selectedRequest.title}
                       </h3>
                       <p className="text-sm text-gray-300">
-                        {selectedRequest.id} • {selectedRequest.location}
+                        {selectedRequest.id} â€¢ {selectedRequest.location}
                       </p>
                     </div>
                     <button
@@ -2896,7 +2890,7 @@ export default function AdminDashboard() {
                           {selectedRequest.title}
                         </h3>
                         <p className="text-sm text-gray-400">
-                          {selectedRequest.id} • {selectedRequest.createdAt}
+                          {selectedRequest.id} â€¢ {selectedRequest.createdAt}
                         </p>
                       </div>
                     </div>
@@ -3251,9 +3245,9 @@ export default function AdminDashboard() {
                         >
                           <div className="flex items-start gap-3">
                             <div
-                              className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                getNotificationColor(notification.type)
-                              }`}
+                              className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${getNotificationColor(
+                                notification.type,
+                              )}`}
                             >
                               {getNotificationIcon(notification.type)}
                             </div>
@@ -3261,7 +3255,9 @@ export default function AdminDashboard() {
                               <div className="flex items-center justify-between mb-1">
                                 <p
                                   className={`text-sm font-medium truncate ${
-                                    notification.read ? "text-gray-300" : "text-gray-100"
+                                    notification.read
+                                      ? "text-gray-300"
+                                      : "text-gray-100"
                                   }`}
                                 >
                                   {notification.title}
