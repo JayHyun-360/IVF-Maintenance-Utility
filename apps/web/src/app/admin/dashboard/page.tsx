@@ -722,10 +722,10 @@ export default function AdminDashboard() {
 
     // Calculate priority distribution
     const priorityDistribution = {
-      Critical: requests.filter((r) => r.priority === "Critical").length,
-      High: requests.filter((r) => r.priority === "High").length,
-      Medium: requests.filter((r) => r.priority === "Medium").length,
-      Low: requests.filter((r) => r.priority === "Low").length,
+      Urgent: requests.filter((r) => r.priority.includes("Urgent")).length,
+      High: requests.filter((r) => r.priority.includes("High")).length,
+      Medium: requests.filter((r) => r.priority.includes("Medium")).length,
+      Low: requests.filter((r) => r.priority.includes("Low")).length,
     };
 
     // Calculate category distribution
@@ -784,6 +784,8 @@ export default function AdminDashboard() {
   const getPriorityColor = (priority: string) => {
     switch (priority.toLowerCase()) {
       case "urgent":
+        return "text-purple-400";
+      case "critical":
         return "text-purple-400";
       case "high":
         return "text-red-400";
