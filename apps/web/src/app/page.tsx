@@ -29,11 +29,8 @@ export default function Home() {
 
   const [stats, setStats] = useState({
     totalRequests: 0,
-
     pendingRequests: 0,
-
     inProgressRequests: 0,
-
     completedRequests: 0,
   });
 
@@ -51,11 +48,6 @@ export default function Home() {
       mounted,
     });
   }, [session, status, mounted]);
-
-    inProgressRequests: 0,
-
-    completedRequests: 0,
-  });
 
   useEffect(() => {
     // Fix hydration issue by setting mounted after component mounts
