@@ -130,11 +130,7 @@ export default function Home() {
               <nav className="hidden md:flex items-center justify-center gap-4 !important flex-1">
                 {[
                   { label: "Home", href: "/", active: true },
-
                   { label: "Features", href: "#features" },
-
-                  { label: "Dashboard", href: "/dashboard" },
-
                   { label: "About", href: "#about" },
                 ].map((item, i) => (
                   <motion.button
@@ -208,7 +204,6 @@ export default function Home() {
                         whileTap={{ scale: 0.95 }}
                       >
                         <span className="hidden sm:inline">Dashboard</span>
-
                         <span className="sm:hidden">📊</span>
                       </motion.button>
                     ) : (
@@ -222,7 +217,6 @@ export default function Home() {
                         whileTap={{ scale: 0.95 }}
                       >
                         <span className="hidden sm:inline">User Portal</span>
-
                         <span className="sm:hidden">👤</span>
                       </motion.button>
                     )}
