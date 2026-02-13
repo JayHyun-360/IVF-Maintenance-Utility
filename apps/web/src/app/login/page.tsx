@@ -256,25 +256,25 @@ export default function LoginPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full max-w-md"
+                className="w-full max-w-lg"
               >
                 <div
-                  className="rounded-2xl p-8 shadow-2xl"
+                  className="rounded-2xl p-8 shadow-2xl border"
                   style={{
                     backgroundColor: themeConfig.colors.surface,
-                    border: `1px solid ${themeConfig.colors.border}`,
+                    borderColor: themeConfig.colors.border,
                   }}
                 >
                   {/* Header */}
                   <div className="text-center mb-8">
                     <h1
-                      className="text-3xl font-bold mb-2"
+                      className="text-3xl font-bold mb-3"
                       style={{ color: themeConfig.colors.text }}
                     >
                       Welcome Back
                     </h1>
                     <p
-                      className="text-sm"
+                      className="text-base leading-relaxed"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Sign in to your IVF Maintenance account
@@ -286,21 +286,36 @@ export default function LoginPage() {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="mb-6 p-4 rounded-lg text-sm text-center"
+                      className="mb-6 p-4 rounded-xl text-sm text-center border"
                       style={{
                         backgroundColor: `${themeConfig.colors.error}20`,
                         color: themeConfig.colors.error,
-                        border: `1px solid ${themeConfig.colors.error}40`,
+                        borderColor: `${themeConfig.colors.error}40`,
                       }}
                     >
-                      {error}
+                      <div className="flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 mr-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        {error}
+                      </div>
                     </motion.div>
                   )}
 
                   {/* Login Form */}
                   <form
                     onSubmit={handleSubmit}
-                    className="space-y-6"
+                    className="space-y-5"
                     autoComplete="on"
                   >
                     {/* Email Field */}
@@ -320,9 +335,10 @@ export default function LoginPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         autoComplete="email"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                        className="w-full px-4 py-3 rounded-xl border bg-white/5 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                         style={{
                           backdropFilter: "blur(10px)",
+                          borderColor: themeConfig.colors.border,
                         }}
                         placeholder="Enter your email"
                         disabled={isLoading}
@@ -347,9 +363,10 @@ export default function LoginPage() {
                           onChange={(e) => setPassword(e.target.value)}
                           required
                           autoComplete="current-password"
-                          className="w-full px-4 py-3 pr-12 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 pr-12 rounded-xl border bg-white/5 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                           style={{
                             backdropFilter: "blur(10px)",
+                            borderColor: themeConfig.colors.border,
                           }}
                           placeholder="Enter your password"
                           disabled={isLoading}
@@ -357,7 +374,7 @@ export default function LoginPage() {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors p-1"
                           disabled={isLoading}
                         >
                           {showPassword ? (
@@ -421,7 +438,7 @@ export default function LoginPage() {
                   </form>
 
                   {/* Social Login Divider */}
-                  <div className="relative my-6">
+                  <div className="relative my-8">
                     <div className="absolute inset-0 flex items-center">
                       <div
                         className="w-full border-t"
@@ -459,7 +476,26 @@ export default function LoginPage() {
                     />
                   </div>
 
-                  {/* No demo accounts - removed for clean authentication */}
+                  {/* Register Link */}
+                  <div className="text-center mt-6">
+                    <p
+                      className="text-sm"
+                      style={{ color: themeConfig.colors.textSecondary }}
+                    >
+                      Don't have an account?{" "}
+                      <button
+                        type="button"
+                        onClick={() => router.push("/register")}
+                        className="text-sm font-medium hover:underline transition-colors"
+                        style={{
+                          color: themeConfig.colors.primary,
+                        }}
+                        disabled={isLoading || socialLoading !== null}
+                      >
+                        Sign up
+                      </button>
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             </div>
