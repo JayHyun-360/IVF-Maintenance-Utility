@@ -101,70 +101,7 @@ export default function LoginPage() {
             }
           }, [session, status, router, getCallbackUrl]);
 
-          // Optimized demo handlers
-          const handleAdminDemo = useCallback(async () => {
-            setEmail("admin@test.com");
-            setPassword("admin123");
-
-            // Auto-submit after a brief delay to show the filled fields
-            setTimeout(async () => {
-              setIsLoading(true);
-              setError("");
-
-              try {
-                const result = await signIn("credentials", {
-                  email: "admin@test.com",
-                  password: "admin123",
-                  redirect: false,
-                });
-
-                if (result?.error) {
-                  setError("Admin demo login failed");
-                } else if (result?.ok) {
-                  console.log("Admin demo login successful, redirecting...");
-                  const callbackUrl = getCallbackUrl();
-                  router.push(callbackUrl || "/admin/dashboard");
-                }
-              } catch (err) {
-                console.error("Admin demo login error:", err);
-                setError("Admin demo login failed. Please try again.");
-              } finally {
-                setIsLoading(false);
-              }
-            }, 500);
-          }, [getCallbackUrl, router]);
-
-          const handleUserDemo = useCallback(async () => {
-            setEmail("user@test.com");
-            setPassword("user123");
-
-            // Auto-submit after a brief delay to show the filled fields
-            setTimeout(async () => {
-              setIsLoading(true);
-              setError("");
-
-              try {
-                const result = await signIn("credentials", {
-                  email: "user@test.com",
-                  password: "user123",
-                  redirect: false,
-                });
-
-                if (result?.error) {
-                  setError("User demo login failed");
-                } else if (result?.ok) {
-                  console.log("User demo login successful, redirecting...");
-                  const callbackUrl = getCallbackUrl();
-                  router.push(callbackUrl || "/student");
-                }
-              } catch (err) {
-                console.error("User demo login error:", err);
-                setError("User demo login failed. Please try again.");
-              } finally {
-                setIsLoading(false);
-              }
-            }, 500);
-          }, [getCallbackUrl, router]);
+          // Real authentication only - no demo accounts
 
           // Optimized form submission handler
           const handleSubmit = useCallback(
@@ -426,46 +363,7 @@ export default function LoginPage() {
                     </button>
                   </form>
 
-                  {/* Demo Accounts */}
-                  <div
-                    className="mt-8 pt-6 border-t"
-                    style={{ borderColor: themeConfig.colors.border }}
-                  >
-                    <p
-                      className="text-sm text-center mb-4"
-                      style={{ color: themeConfig.colors.textSecondary }}
-                    >
-                      Demo Accounts (Click to auto-fill)
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <button
-                        onClick={handleAdminDemo}
-                        disabled={isLoading}
-                        className="p-3 rounded-xl border transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.primary}20`,
-                          borderColor: themeConfig.colors.primary,
-                          color: themeConfig.colors.primary,
-                        }}
-                      >
-                        <div className="text-sm font-medium">Admin Demo</div>
-                        <div className="text-xs opacity-75">admin@test.com</div>
-                      </button>
-                      <button
-                        onClick={handleUserDemo}
-                        disabled={isLoading}
-                        className="p-3 rounded-xl border transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.secondary}20`,
-                          borderColor: themeConfig.colors.secondary,
-                          color: themeConfig.colors.secondary,
-                        }}
-                      >
-                        <div className="text-sm font-medium">User Demo</div>
-                        <div className="text-xs opacity-75">user@test.com</div>
-                      </button>
-                    </div>
-                  </div>
+                  {/* No demo accounts - removed for clean authentication */}
                 </div>
               </motion.div>
             </div>
