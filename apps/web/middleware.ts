@@ -23,7 +23,6 @@ export const config = {
     "!/manifest.json",
     // Only protect routes that need authentication
     "/admin/:path*",
-    "/student/:path*",
     "/staff/:path*",
     "/settings/:path*",
     "/emergency/:path*",
