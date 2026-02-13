@@ -42,18 +42,7 @@ export const authOptions: NextAuthOptions = {
     "ivf-maintenance-secret-key-2024-secure-production-auth",
   debug: process.env.NODE_ENV === "development", // Enable debug in development
 
-  // Debug environment variables
   providers: [
-    (() => {
-      console.log("Environment Variables Debug:");
-      console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
-      console.log(
-        "GOOGLE_CLIENT_SECRET:",
-        process.env.GOOGLE_CLIENT_SECRET ? "SET" : "MISSING",
-      );
-      console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
-      return null as any;
-    })(),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "missing-google-client-id",
       clientSecret:
