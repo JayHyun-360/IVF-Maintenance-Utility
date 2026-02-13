@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
-import AccountDropdown from "@/components/AccountDropdown";
 import { motion } from "framer-motion";
 
 export default function PhysicalPlantRequest() {
@@ -98,7 +97,6 @@ export default function PhysicalPlantRequest() {
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 <BackButton fallback="/admin" />
-                <AccountDropdown />
               </div>
             </div>
           </div>
@@ -133,7 +131,8 @@ export default function PhysicalPlantRequest() {
                   Physical Plant Requests
                 </h2>
                 <p className="text-gray-400">
-                  Manage physical plant maintenance requests and facility operations
+                  Manage physical plant maintenance requests and facility
+                  operations
                 </p>
               </div>
             </motion.div>

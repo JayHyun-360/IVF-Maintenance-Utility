@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
-import AccountDropdown from "@/components/AccountDropdown";
 import { motion } from "framer-motion";
 
 export default function AdminReportsPage() {
@@ -80,7 +79,6 @@ export default function AdminReportsPage() {
 
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 <BackButton fallback="/admin/dashboard" />
-                <AccountDropdown />
               </div>
             </div>
           </div>
@@ -95,8 +93,18 @@ export default function AdminReportsPage() {
               className="text-center"
             >
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
               </div>
               <h1 className="text-2xl font-bold text-gray-100 mb-2">Reports</h1>

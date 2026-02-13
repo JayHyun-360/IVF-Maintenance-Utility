@@ -6,6 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import BackButton from "@/components/BackButton";
+import { SocialLoginButton } from "@/components/SocialLoginButton";
 import { Z_INDEX } from "@/lib/z-index";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import { motion } from "framer-motion";
@@ -30,6 +31,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -95,76 +97,70 @@ export default function LoginPage() {
               } else if (session.user?.role === "STAFF") {
                 router.replace("/staff");
               } else {
-                router.replace("/student");
+                router.replace("/dashboard");
               }
               return;
             }
           }, [session, status, router, getCallbackUrl]);
 
-          // Optimized demo handlers
-          const handleAdminDemo = useCallback(async () => {
-            setEmail("admin@test.com");
-            setPassword("admin123");
-
-            // Auto-submit after a brief delay to show the filled fields
-            setTimeout(async () => {
-              setIsLoading(true);
-              setError("");
-
+          // Social login handler with error handling
+          const handleSocialLogin = useCallback(
+            async (provider: "google" | "facebook") => {
               try {
-                const result = await signIn("credentials", {
-                  email: "admin@test.com",
-                  password: "admin123",
+                setSocialLoading(provider);
+                setError("");
+
+                const result = await signIn(provider, {
+                  callbackUrl: getCallbackUrl() || window.location.origin,
                   redirect: false,
                 });
 
                 if (result?.error) {
-                  setError("Admin demo login failed");
-                } else if (result?.ok) {
-                  console.log("Admin demo login successful, redirecting...");
+                  if (
+                    result.error === "OAuthSignin" ||
+                    result.error === "OAuthCallback"
+                  ) {
+                    setError("Login cancelled. Please try again.");
+                  } else {
+                    setError(
+                      `Failed to sign in with ${provider}. Please try again.`,
+                    );
+                  }
+                  return;
+                }
+
+                if (result?.ok) {
+                  // Brief delay to ensure session is updated
+                  await new Promise((resolve) => setTimeout(resolve, 100));
+
+                  // Use callback URL if valid
                   const callbackUrl = getCallbackUrl();
-                  router.push(callbackUrl || "/admin/dashboard");
+                  if (callbackUrl) {
+                    router.push(callbackUrl);
+                    return;
+                  }
+
+                  // Default role-based redirects
+                  const freshSession = await fetch("/api/auth/session").then(
+                    (res) => res.json(),
+                  );
+                  if (freshSession?.user?.role === "ADMIN") {
+                    router.push("/admin/dashboard");
+                  } else if (freshSession?.user?.role === "STAFF") {
+                    router.push("/staff");
+                  } else {
+                    router.push("/dashboard");
+                  }
                 }
               } catch (err) {
-                console.error("Admin demo login error:", err);
-                setError("Admin demo login failed. Please try again.");
+                console.error(`${provider} login error:`, err);
+                setError("Login cancelled. Please try again.");
               } finally {
-                setIsLoading(false);
+                setSocialLoading(null);
               }
-            }, 500);
-          }, [getCallbackUrl, router]);
-
-          const handleUserDemo = useCallback(async () => {
-            setEmail("user@test.com");
-            setPassword("user123");
-
-            // Auto-submit after a brief delay to show the filled fields
-            setTimeout(async () => {
-              setIsLoading(true);
-              setError("");
-
-              try {
-                const result = await signIn("credentials", {
-                  email: "user@test.com",
-                  password: "user123",
-                  redirect: false,
-                });
-
-                if (result?.error) {
-                  setError("User demo login failed");
-                } else if (result?.ok) {
-                  console.log("User demo login successful, redirecting...");
-                  const callbackUrl = getCallbackUrl();
-                  router.push(callbackUrl || "/student");
-                }
-              } catch (err) {
-                console.error("User demo login error:", err);
-                setError("User demo login failed. Please try again.");
-              } finally {
-                setIsLoading(false);
-              }
-            }, 500);
-          }, [getCallbackUrl, router]);
+            },
+            [getCallbackUrl, router],
+          );
 
           // Optimized form submission handler
           const handleSubmit = useCallback(
@@ -210,8 +206,6 @@ export default function LoginPage() {
                     router.push("/admin/dashboard");
                   } else if (session?.user?.role === "STAFF") {
                     router.push("/staff");
-                  } else if (session?.user?.role === "STUDENT") {
-                    router.push("/student");
                   } else {
                     // Fallback - get fresh session data
                     try {
@@ -223,7 +217,7 @@ export default function LoginPage() {
                       } else if (freshSession?.user?.role === "STAFF") {
                         router.push("/staff");
                       } else {
-                        router.push("/student");
+                        router.push("/dashboard");
                       }
                     } catch {
                       // Ultimate fallback
@@ -262,25 +256,25 @@ export default function LoginPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full max-w-md"
+                className="w-full max-w-lg"
               >
                 <div
-                  className="rounded-2xl p-8 shadow-2xl"
+                  className="rounded-2xl p-8 shadow-2xl border"
                   style={{
                     backgroundColor: themeConfig.colors.surface,
-                    border: `1px solid ${themeConfig.colors.border}`,
+                    borderColor: themeConfig.colors.border,
                   }}
                 >
                   {/* Header */}
                   <div className="text-center mb-8">
                     <h1
-                      className="text-3xl font-bold mb-2"
+                      className="text-3xl font-bold mb-3"
                       style={{ color: themeConfig.colors.text }}
                     >
                       Welcome Back
                     </h1>
                     <p
-                      className="text-sm"
+                      className="text-base leading-relaxed"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
                       Sign in to your IVF Maintenance account
@@ -292,21 +286,36 @@ export default function LoginPage() {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="mb-6 p-4 rounded-lg text-sm text-center"
+                      className="mb-6 p-4 rounded-xl text-sm text-center border"
                       style={{
                         backgroundColor: `${themeConfig.colors.error}20`,
                         color: themeConfig.colors.error,
-                        border: `1px solid ${themeConfig.colors.error}40`,
+                        borderColor: `${themeConfig.colors.error}40`,
                       }}
                     >
-                      {error}
+                      <div className="flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 mr-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        {error}
+                      </div>
                     </motion.div>
                   )}
 
                   {/* Login Form */}
                   <form
                     onSubmit={handleSubmit}
-                    className="space-y-6"
+                    className="space-y-5"
                     autoComplete="on"
                   >
                     {/* Email Field */}
@@ -326,9 +335,10 @@ export default function LoginPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         autoComplete="email"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                        className="w-full px-4 py-3 rounded-xl border bg-white/5 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                         style={{
                           backdropFilter: "blur(10px)",
+                          borderColor: themeConfig.colors.border,
                         }}
                         placeholder="Enter your email"
                         disabled={isLoading}
@@ -353,9 +363,10 @@ export default function LoginPage() {
                           onChange={(e) => setPassword(e.target.value)}
                           required
                           autoComplete="current-password"
-                          className="w-full px-4 py-3 pr-12 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 pr-12 rounded-xl border bg-white/5 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                           style={{
                             backdropFilter: "blur(10px)",
+                            borderColor: themeConfig.colors.border,
                           }}
                           placeholder="Enter your password"
                           disabled={isLoading}
@@ -363,7 +374,7 @@ export default function LoginPage() {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors p-1"
                           disabled={isLoading}
                         >
                           {showPassword ? (
@@ -426,45 +437,64 @@ export default function LoginPage() {
                     </button>
                   </form>
 
-                  {/* Demo Accounts */}
-                  <div
-                    className="mt-8 pt-6 border-t"
-                    style={{ borderColor: themeConfig.colors.border }}
-                  >
+                  {/* Social Login Divider */}
+                  <div className="relative my-8">
+                    <div className="absolute inset-0 flex items-center">
+                      <div
+                        className="w-full border-t"
+                        style={{
+                          borderColor: `${themeConfig.colors.border}40`,
+                        }}
+                      />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span
+                        className="px-4 bg-transparent"
+                        style={{
+                          backgroundColor: themeConfig.colors.surface,
+                          color: themeConfig.colors.textSecondary,
+                        }}
+                      >
+                        Or continue with
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Social Login Buttons */}
+                  <div className="space-y-3">
+                    <SocialLoginButton
+                      provider="google"
+                      onClick={() => handleSocialLogin("google")}
+                      isLoading={socialLoading === "google"}
+                      disabled={isLoading || socialLoading !== null}
+                    />
+                    <SocialLoginButton
+                      provider="facebook"
+                      onClick={() => handleSocialLogin("facebook")}
+                      isLoading={socialLoading === "facebook"}
+                      disabled={isLoading || socialLoading !== null}
+                    />
+                  </div>
+
+                  {/* Register Link */}
+                  <div className="text-center mt-6">
                     <p
-                      className="text-sm text-center mb-4"
+                      className="text-sm"
                       style={{ color: themeConfig.colors.textSecondary }}
                     >
-                      Demo Accounts (Click to auto-fill)
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      Don't have an account?{" "}
                       <button
-                        onClick={handleAdminDemo}
-                        disabled={isLoading}
-                        className="p-3 rounded-xl border transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        type="button"
+                        onClick={() => router.push("/register")}
+                        className="text-sm font-medium hover:underline transition-colors"
                         style={{
-                          backgroundColor: `${themeConfig.colors.primary}20`,
-                          borderColor: themeConfig.colors.primary,
                           color: themeConfig.colors.primary,
                         }}
+                        disabled={isLoading || socialLoading !== null}
                       >
-                        <div className="text-sm font-medium">Admin Demo</div>
-                        <div className="text-xs opacity-75">admin@test.com</div>
+                        Sign up
                       </button>
-                      <button
-                        onClick={handleUserDemo}
-                        disabled={isLoading}
-                        className="p-3 rounded-xl border transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{
-                          backgroundColor: `${themeConfig.colors.secondary}20`,
-                          borderColor: themeConfig.colors.secondary,
-                          color: themeConfig.colors.secondary,
-                        }}
-                      >
-                        <div className="text-sm font-medium">User Demo</div>
-                        <div className="text-xs opacity-75">user@test.com</div>
-                      </button>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </motion.div>
