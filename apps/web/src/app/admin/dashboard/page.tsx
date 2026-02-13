@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
-import AccountDropdown from "@/components/AccountDropdown";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Types
@@ -852,7 +851,6 @@ export default function AdminDashboard() {
                 {/* Navigation */}
                 <div className="flex items-center gap-3">
                   <BackButton fallback="/" />
-                  <AccountDropdown />
                 </div>
               </div>
             </div>

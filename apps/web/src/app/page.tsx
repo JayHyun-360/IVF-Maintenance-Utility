@@ -12,9 +12,6 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 import { useSession } from "next-auth/react";
 
-import AccountDropdown from "@/components/AccountDropdown/index";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-
 import { MobileNavigationWrapper } from "@/components/MobileNavigation";
 
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
@@ -30,8 +27,6 @@ export default function Home() {
 
   const { isMobile } = useMobileOptimizations();
 
-  const [mounted, setMounted] = useState(false);
-
   const [stats, setStats] = useState({
     totalRequests: 0,
 
@@ -42,24 +37,40 @@ export default function Home() {
     completedRequests: 0,
   });
 
+  const [mounted, setMounted] = useState(false);
+
+  // Add session state logging to debug race condition
   useEffect(() => {
+    console.log("🔍 Page Session State:", {
+      status,
+      hasSession: !!session,
+      userName: session?.user?.name,
+      userEmail: session?.user?.email,
+      userId: session?.user?.id,
+      userRole: session?.user?.role,
+      mounted,
+    });
+  }, [session, status, mounted]);
+
+    inProgressRequests: 0,
+
+    completedRequests: 0,
+  });
+
+  useEffect(() => {
+    // Fix hydration issue by setting mounted after component mounts
+    setMounted(true);
+
     const loadData = () => {
       const realStats = getMaintenanceStats();
-
       setStats(realStats);
     };
-
-    // Set mounted after a tiny delay to avoid synchronous setState
-
-    const timer = setTimeout(() => setMounted(true), 0);
 
     loadData();
 
     const interval = setInterval(loadData, 30000);
 
     return () => {
-      clearTimeout(timer);
-
       clearInterval(interval);
     };
   }, []);
@@ -223,42 +234,6 @@ export default function Home() {
                         <span className="sm:hidden">👤</span>
                       </motion.button>
                     )}
-
-                    <ErrorBoundary>
-                      <AccountDropdown
-                        config={{
-                          showAccountSettings: true,
-
-                          showAdminDashboard: true,
-
-                          showUserPortal: true,
-
-                          showSwitchAccount: true,
-
-                          showRemoveAccount: true,
-
-                          dropdownWidth: "w-56",
-
-                          dropdownMaxHeight: "max-h-72",
-
-                          avatarSize: "w-10 h-10",
-
-                          position: "bottom",
-
-                          alignment: "right",
-
-                          showDebugInfo: false,
-
-                          redirectOnLogout: false, // Stay on current page after logout
-
-                          onLogoutComplete: () => {
-                            console.log(
-                              "Logout completed - custom callback triggered",
-                            );
-                          },
-                        }}
-                      />
-                    </ErrorBoundary>
                   </>
                 ) : (
                   <motion.button

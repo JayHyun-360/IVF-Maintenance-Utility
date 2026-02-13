@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
-import AccountDropdown from "@/components/AccountDropdown";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface MaintenanceRequest {
@@ -327,7 +326,6 @@ export default function AdminAnalytics() {
                 </motion.button>
 
                 <BackButton fallback="/admin/dashboard" />
-                <AccountDropdown />
               </div>
             </div>
           </div>

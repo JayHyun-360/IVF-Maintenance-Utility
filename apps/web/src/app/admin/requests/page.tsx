@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
-import AccountDropdown from "@/components/AccountDropdown";
 import { motion } from "framer-motion";
 
 export default function AdminRequestsPage() {
@@ -66,9 +65,10 @@ export default function AdminRequestsPage() {
     }
   };
 
-  const filteredRequests = requests.filter(request =>
-    request.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    request.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredRequests = requests.filter(
+    (request) =>
+      request.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      request.category.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -142,7 +142,6 @@ export default function AdminRequestsPage() {
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 <BackButton fallback="/admin/dashboard" />
-                <AccountDropdown />
               </div>
             </div>
           </div>
@@ -185,19 +184,21 @@ export default function AdminRequestsPage() {
                     />
                   </div>
                   <div className="flex gap-2">
-                    {["ALL", "PENDING", "IN_PROGRESS", "COMPLETED"].map((status) => (
-                      <button
-                        key={status}
-                        onClick={() => setFilterStatus(status)}
-                        className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                          filterStatus === status
-                            ? "bg-teal-500 text-white"
-                            : "bg-white/10 text-gray-300 hover:bg-white/20"
-                        }`}
-                      >
-                        {status.replace("_", " ")}
-                      </button>
-                    ))}
+                    {["ALL", "PENDING", "IN_PROGRESS", "COMPLETED"].map(
+                      (status) => (
+                        <button
+                          key={status}
+                          onClick={() => setFilterStatus(status)}
+                          className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                            filterStatus === status
+                              ? "bg-teal-500 text-white"
+                              : "bg-white/10 text-gray-300 hover:bg-white/20"
+                          }`}
+                        >
+                          {status.replace("_", " ")}
+                        </button>
+                      ),
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -212,7 +213,10 @@ export default function AdminRequestsPage() {
                 {loading ? (
                   <div className="space-y-4">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <div key={i} className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4">
+                      <div
+                        key={i}
+                        className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4"
+                      >
                         <div className="animate-pulse">
                           <div className="h-4 bg-gray-600 rounded w-1/4 mb-2"></div>
                           <div className="h-3 bg-gray-600 rounded w-3/4 mb-1"></div>
@@ -231,33 +235,45 @@ export default function AdminRequestsPage() {
                         transition={{ delay: 0.4 + i * 0.05 }}
                         className="backdrop-blur-md rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition-all duration-300 cursor-pointer"
                         whileHover={{ x: 5 }}
-                        onClick={() => router.push(`/admin/requests/${request.id}`)}
+                        onClick={() =>
+                          router.push(`/admin/requests/${request.id}`)
+                        }
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-2">
                               <span className="text-xs font-mono text-teal-400">
-                                REQ-{String(request.id).padStart(3, '0')}
+                                REQ-{String(request.id).padStart(3, "0")}
                               </span>
-                              <span className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}>
+                              <span
+                                className={`text-xs px-2 py-1 rounded-full font-mono ${getPriorityColor(request.priority)} bg-current/10`}
+                              >
                                 {request.priority}
                               </span>
-                              <span className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10`}>
-                                {request.status.replace('_', ' ')}
+                              <span
+                                className={`text-xs px-2 py-1 rounded-full font-mono ${getStatusColor(request.status)} bg-current/10`}
+                              >
+                                {request.status.replace("_", " ")}
                               </span>
                             </div>
-                            
+
                             <h3 className="text-gray-100 font-medium mb-1 truncate">
                               {request.title}
                             </h3>
-                            
+
                             <div className="flex items-center gap-4 text-xs text-gray-400">
-                              <span className="font-mono">{request.category}</span>
+                              <span className="font-mono">
+                                {request.category}
+                              </span>
                               <span>•</span>
-                              <span>{request.user?.name || 'Unknown User'}</span>
+                              <span>
+                                {request.user?.name || "Unknown User"}
+                              </span>
                               <span>•</span>
                               <span className="font-mono">
-                                {new Date(request.createdAt).toLocaleDateString()}
+                                {new Date(
+                                  request.createdAt,
+                                ).toLocaleDateString()}
                               </span>
                             </div>
                           </div>
@@ -268,11 +284,23 @@ export default function AdminRequestsPage() {
                 ) : (
                   <div className="text-center py-8">
                     <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center opacity-50">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
                       </svg>
                     </div>
-                    <p className="text-gray-400">No maintenance requests found</p>
+                    <p className="text-gray-400">
+                      No maintenance requests found
+                    </p>
                   </div>
                 )}
               </motion.div>

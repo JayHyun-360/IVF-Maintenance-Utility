@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import AuthGuard from "@/components/AuthGuard";
 import BackButton from "@/components/BackButton";
-import AccountDropdown from "@/components/AccountDropdown";
 import { motion } from "framer-motion";
 
 interface User {
@@ -146,7 +145,6 @@ export default function AdminUsersPage() {
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 md:gap-4 ml-auto">
                 <BackButton fallback="/admin/dashboard" />
-                <AccountDropdown />
               </div>
             </div>
           </div>
