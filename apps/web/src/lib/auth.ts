@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 import bcrypt from "bcryptjs";
 
 declare module "next-auth" {
@@ -10,6 +11,7 @@ declare module "next-auth" {
       email: string;
       name: string;
       role: string;
+      image?: string;
     };
   }
 }
@@ -57,6 +59,7 @@ export const authOptions: NextAuthOptions = {
             email: existingUser.email,
             name: existingUser.name,
             role: existingUser.role,
+            image: profile.picture,
           };
         } else {
           // For Google users not in our system, create a default USER role
@@ -65,7 +68,38 @@ export const authOptions: NextAuthOptions = {
             id: profile.sub,
             email: profile.email,
             name: profile.name,
-            role: "STUDENT", // Default role for new Google users
+            role: "STAFF", // Default role for new Google users (changed from STUDENT)
+            image: profile.picture,
+          };
+        }
+      },
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID || "missing-facebook-client-id",
+      clientSecret:
+        process.env.FACEBOOK_CLIENT_SECRET || "missing-facebook-client-secret",
+      async profile(profile) {
+        console.log("Facebook profile:", profile);
+        // Check if user exists in our system
+        const existingUser = await findUserByEmail(profile.email!);
+
+        if (existingUser) {
+          // Return existing user with their role
+          return {
+            id: existingUser.id,
+            email: existingUser.email,
+            name: existingUser.name,
+            role: existingUser.role,
+            image: profile.picture?.data?.url,
+          };
+        } else {
+          // For Facebook users not in our system, create a default role
+          return {
+            id: profile.id,
+            email: profile.email,
+            name: profile.name,
+            role: "STAFF", // Default role for new Facebook users
+            image: profile.picture?.data?.url,
           };
         }
       },
@@ -127,6 +161,7 @@ export const authOptions: NextAuthOptions = {
         token.sub = user.id; // Set sub to user ID for session compatibility
         if (user.name) token.name = user.name;
         if (user.email) token.email = user.email;
+        if (user.image) token.picture = user.image; // Store profile image
       }
       return token;
     },
@@ -138,6 +173,7 @@ export const authOptions: NextAuthOptions = {
         session.user.role = token.role as string;
         if (token.name) session.user.name = token.name as string;
         if (token.email) session.user.email = token.email as string;
+        if (token.picture) session.user.image = token.picture as string; // Add profile image
         console.log("Session updated:", session.user);
       }
       return session;

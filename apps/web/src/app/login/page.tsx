@@ -6,6 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import BackButton from "@/components/BackButton";
+import { SocialLoginButton } from "@/components/SocialLoginButton";
 import { Z_INDEX } from "@/lib/z-index";
 import { useMobileOptimizations } from "@/hooks/useMobileOptimizations";
 import { motion } from "framer-motion";
@@ -30,6 +31,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -95,13 +97,70 @@ export default function LoginPage() {
               } else if (session.user?.role === "STAFF") {
                 router.replace("/staff");
               } else {
-                router.replace("/student");
+                router.replace("/dashboard");
               }
               return;
             }
           }, [session, status, router, getCallbackUrl]);
 
-          // Real authentication only - no demo accounts
+          // Social login handler with error handling
+          const handleSocialLogin = useCallback(
+            async (provider: "google" | "facebook") => {
+              try {
+                setSocialLoading(provider);
+                setError("");
+
+                const result = await signIn(provider, {
+                  callbackUrl: getCallbackUrl() || window.location.origin,
+                  redirect: false,
+                });
+
+                if (result?.error) {
+                  if (
+                    result.error === "OAuthSignin" ||
+                    result.error === "OAuthCallback"
+                  ) {
+                    setError("Login cancelled. Please try again.");
+                  } else {
+                    setError(
+                      `Failed to sign in with ${provider}. Please try again.`,
+                    );
+                  }
+                  return;
+                }
+
+                if (result?.ok) {
+                  // Brief delay to ensure session is updated
+                  await new Promise((resolve) => setTimeout(resolve, 100));
+
+                  // Use callback URL if valid
+                  const callbackUrl = getCallbackUrl();
+                  if (callbackUrl) {
+                    router.push(callbackUrl);
+                    return;
+                  }
+
+                  // Default role-based redirects
+                  const freshSession = await fetch("/api/auth/session").then(
+                    (res) => res.json(),
+                  );
+                  if (freshSession?.user?.role === "ADMIN") {
+                    router.push("/admin/dashboard");
+                  } else if (freshSession?.user?.role === "STAFF") {
+                    router.push("/staff");
+                  } else {
+                    router.push("/dashboard");
+                  }
+                }
+              } catch (err) {
+                console.error(`${provider} login error:`, err);
+                setError("Login cancelled. Please try again.");
+              } finally {
+                setSocialLoading(null);
+              }
+            },
+            [getCallbackUrl, router],
+          );
 
           // Optimized form submission handler
           const handleSubmit = useCallback(
@@ -147,8 +206,6 @@ export default function LoginPage() {
                     router.push("/admin/dashboard");
                   } else if (session?.user?.role === "STAFF") {
                     router.push("/staff");
-                  } else if (session?.user?.role === "STUDENT") {
-                    router.push("/student");
                   } else {
                     // Fallback - get fresh session data
                     try {
@@ -160,7 +217,7 @@ export default function LoginPage() {
                       } else if (freshSession?.user?.role === "STAFF") {
                         router.push("/staff");
                       } else {
-                        router.push("/student");
+                        router.push("/dashboard");
                       }
                     } catch {
                       // Ultimate fallback
@@ -362,6 +419,45 @@ export default function LoginPage() {
                       )}
                     </button>
                   </form>
+
+                  {/* Social Login Divider */}
+                  <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div
+                        className="w-full border-t"
+                        style={{
+                          borderColor: `${themeConfig.colors.border}40`,
+                        }}
+                      />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span
+                        className="px-4 bg-transparent"
+                        style={{
+                          backgroundColor: themeConfig.colors.surface,
+                          color: themeConfig.colors.textSecondary,
+                        }}
+                      >
+                        Or continue with
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Social Login Buttons */}
+                  <div className="space-y-3">
+                    <SocialLoginButton
+                      provider="google"
+                      onClick={() => handleSocialLogin("google")}
+                      isLoading={socialLoading === "google"}
+                      disabled={isLoading || socialLoading !== null}
+                    />
+                    <SocialLoginButton
+                      provider="facebook"
+                      onClick={() => handleSocialLogin("facebook")}
+                      isLoading={socialLoading === "facebook"}
+                      disabled={isLoading || socialLoading !== null}
+                    />
+                  </div>
 
                   {/* No demo accounts - removed for clean authentication */}
                 </div>
